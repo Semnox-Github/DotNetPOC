@@ -1,0 +1,131 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Table>
+    <Message>Please Insert Card</Message>
+    <SlNo>00</SlNo>
+  </Table>
+  <Table>
+    <Message>Card Inserted</Message>
+    <SlNo>01</SlNo>
+  </Table>
+  <Table>
+    <Message>Please Remove Card</Message>
+    <SlNo>02</SlNo>
+  </Table>
+  <Table>
+    <Message>Processing...</Message>
+    <SlNo>03</SlNo>
+  </Table>
+  <Table>
+    <Message>Please Enter PIN</Message>
+    <SlNo>04</SlNo>
+  </Table>
+  <Table>
+    <Message>PIN Entered</Message>
+    <SlNo>05</SlNo>
+  </Table>
+  <Table>
+    <Message>Connecting to Host</Message>
+    <SlNo>06</SlNo>
+  </Table>
+  <Table>
+    <Message>Connection Made</Message>
+    <SlNo>07</SlNo>
+  </Table>
+  <Table>
+    <Message>PIN Blocked</Message>
+    <SlNo>08</SlNo>
+  </Table>
+  <Table>
+    <Message>PIN try Exceeded</Message>
+    <SlNo>09</SlNo>
+  </Table>
+  <Table>
+    <Message>Incorrect PIN</Message>
+    <SlNo>10</SlNo>
+  </Table>
+  <Table>
+    <Message>Socket Failed</Message>
+    <SlNo>11</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>12</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>13</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>14</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>15</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>16</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>17</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>18</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>19</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>20</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>21</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>22</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>23</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>24</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>25</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>26</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>27</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>28</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>29</SlNo>
+  </Table>
+  <Table>
+    <Message>RFU</Message>
+    <SlNo>30</SlNo>
+  </Table>
+  <Table>
+    <Message>Transaction Completed</Message>
+    <SlNo>99</SlNo>
+  </Table>
+</NewDataSet>

@@ -1,0 +1,43 @@
+<Settings>
+  <TCP>
+    <Enabled>True</Enabled>
+    <PortType>TCPIP</PortType>
+    <ScanInterval>5000</ScanInterval>
+    <TryCounter>5</TryCounter>
+    <IPAddress>127.0.0.0</IPAddress>
+    <TcpPortNo>3344</TcpPortNo>
+    <TransactTimeOut>120</TransactTimeOut>
+    <PacketFlowTimeOut>30</PacketFlowTimeOut>
+    <Description>Test desc</Description>
+    <ShowHexData>False</ShowHexData>
+    <TraceType>Full</TraceType>
+    <TracePath>C:\Work\CreditcardAlmunthaza\FAB_Kiosk\logs_Vx520</TracePath>
+  </TCP>
+  <GENERAL>
+    <TraceEnabled>True</TraceEnabled>
+    <TracePath>
+    </TracePath>
+    <PortType>Direct</PortType>
+    <RFU1>
+    </RFU1>
+  </GENERAL>
+  <COM>
+    <Enabled>True</Enabled>
+    <PortType>Direct</PortType>
+    <ScanInterval>3000</ScanInterval>
+    <TryCounter>5</TryCounter>
+    <PortName>COM8</PortName>
+    <StopBits>One</StopBits>
+    <BaudRate>19200</BaudRate>
+    <Parity>None</Parity>
+    <DataBits>8</DataBits>
+    <RTS>True</RTS>
+    <DTR>True</DTR>
+    <TransactTimeOut>120</TransactTimeOut>
+    <PacketFlowTimeOut>10</PacketFlowTimeOut>
+    <Description>NA</Description>
+    <ShowHexData>True</ShowHexData>
+    <TraceType>Full</TraceType>
+    <TracePath>C:\Work\CreditcardAlmunthaza\FAB_Kiosk\logs</TracePath>
+  </COM>
+</Settings>
