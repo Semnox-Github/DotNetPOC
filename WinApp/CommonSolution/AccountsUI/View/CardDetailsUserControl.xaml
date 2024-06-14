@@ -1,0 +1,350 @@
+﻿<UserControl x:Class="Semnox.Parafait.AccountsUI.CardDetailsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:customcontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+             xmlns:local="clr-namespace:Semnox.Parafait.AccountsUI"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="CommonTextBlockStyle"
+               TargetType="{x:Type customcontrols:CustomTextBlock}"
+               BasedOn="{StaticResource {x:Type customcontrols:CustomTextBlock}}">
+            <Setter Property="TextSize"
+                    Value="XSmall"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="TextTrimming"
+                    Value="CharacterEllipsis"/>
+        </Style>
+        <Style x:Key="BoldTextBlockStyle"
+               TargetType="{x:Type customcontrols:CustomTextBlock}"
+               BasedOn="{StaticResource CommonTextBlockStyle}">
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}"/>
+        </Style>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CardDetailsUserControl}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Border x:Name="BackrgroundBorder"
+            CornerRadius="{StaticResource CornerRadius}"
+            Background="{StaticResource Grid.Background}"
+            BorderThickness="0,0,0,3"
+            MaxHeight="72"
+            BorderBrush="{StaticResource Control.BorderBrush}"
+            Padding="8,2">
+        <Grid x:Name="MainGrid">
+            <Grid x:Name="AccountDTOGrid">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AccountDTO}"
+                                         Value="{x:Null}">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="CustomerDetailsGrid"
+                      Background="Transparent"
+                      Grid.Column="0"
+                      Margin="0,0,16,0"
+                      VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding CustomerDetailsClickedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"
+                          Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="CardPath"
+                                  Grid.Column="0"
+                                  Data="M18.029 20c.56 0 1.03-.245 1.406-.734.377-.489.565-1.082.565-1.781V2.515c0-.699-.188-1.292-.565-1.781C19.058.244 18.59 0 18.03 0H1.97C1.411 0 .941.245.565.734.188 1.223 0 1.816 0 2.515v14.97c0 .699.188 1.292.565 1.781.377.49.845.734 1.406.734H18.03zm0-14.97H1.97V2.515H18.03V5.03zm0 12.455H1.97V10H18.03v7.485z"
+                                  Margin="0,0,4,0"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  Stretch="Uniform" />
+                            <customcontrols:CustomTextBlock x:Name="tbCardNo"
+                                                            Grid.Column="1"
+                                                            Text="{Binding AccountDTO.TagNumber}" 
+                                                            Style="{StaticResource BoldTextBlockStyle}"/>
+                        </Grid>
+                        <customcontrols:CustomTextBlock x:Name="tbStatus"
+                                                        Margin="32,0,0,0"
+                                                        Grid.Column="1"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1"
+                          Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <customcontrols:CustomTextBlock x:Name="tbCustomerName"
+                                                        Grid.Column="0"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                        <Grid x:Name="MembershipGrid"
+                              Grid.Column="1"
+                              Margin="12,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="MembershipPath"
+                                  Grid.Column="0"
+                                  Data="M10 0l3.09 6.584L20 7.639l-5 5.125L16.18 20 10 16.584 3.82 20 5 12.764 0 7.639l6.91-1.055L10 0zm1.481 8.679L10 5.482 8.519 8.679l-3.52.544 2.554 2.65-.582 3.609L10 13.786l3.028 1.696-.58-3.608 2.551-2.65-3.518-.545z"
+                                  Margin="0,0,4,0"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  Stretch="Uniform" />
+                            <customcontrols:CustomTextBlock x:Name="tbMemberShip"
+                                                            Grid.Column="1"
+                                                            Style="{StaticResource BoldTextBlockStyle}"/>
+                        </Grid>
+                    </Grid>
+                    <Grid x:Name="DateGrid"
+                          Grid.Row="2"
+                          Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Path x:Name="DatePath"
+                              Grid.Column="0"
+                              Data="M17.917 20c.555 0 1.041-.208 1.458-.625.417-.417.625-.903.625-1.458V3.75c0-.556-.208-1.042-.625-1.458-.417-.417-.903-.625-1.458-.625h-1.25V0h-2.5v1.667H5.833V0h-2.5v1.667h-1.25c-.555 0-1.041.208-1.458.625C.208 2.708 0 3.194 0 3.75v14.167c0 .555.208 1.041.625 1.458.417.417.903.625 1.458.625h15.834zm0-2.083H2.083V6.875h15.834v11.042zm-2.084-2.084v-5h-5v5h5z"
+                              Margin="0,0,4,0"
+                              Fill="{StaticResource Control.BorderBrush.Focused}"
+                              Stretch="Uniform" />
+                        <customcontrols:CustomTextBlock x:Name="tbDate"
+                                                        Grid.Column="1"
+                                                        Text="{Binding AccountDTO.ExpiryDate}" 
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </Grid>
+                </Grid>
+                <UniformGrid x:Name="CardDetailsUnformGrid"
+                             Rows="2"
+                             Columns="5"
+                             Grid.Column="1">
+                    <UniformGrid x:Name="CreditUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbCreditsHeader"
+                                                        Text="Credits"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbCreditsValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    <UniformGrid x:Name="TicketsUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbTickets"
+                                                        Text="Tickets"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbTicketsValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    <UniformGrid x:Name="TimeUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbTimeHeader"
+                                                        Text="Time"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbTimeValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    <UniformGrid x:Name="GameUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbGameHeader"
+                                                        Text="Games"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbGameValue" 
+                                                        Text="{Binding AccountGameBalance}"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    <UniformGrid x:Name="PointsUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbPointsHeader"
+                                                        Text="Loyalty Points"
+                                                        TextWrapping="Wrap"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbPointsValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                     </UniformGrid>
+                    <UniformGrid Rows="2"
+                                 x:Name="PlayCreditsUniformGrid">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <customcontrols:CustomTextBlock x:Name="tbPlayCreditsHeader"
+                                                        Text="Play Credits"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbPlayCreditsValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+
+                    <UniformGrid Rows="2"
+                                 x:Name="CounterItemsUniformGrid">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbCounterItemsHeader"
+                                                        Text="Counter Items"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbCounterItemsValue"
+                                                          Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    
+                    <UniformGrid Rows="2"
+                                 x:Name="BonusUniformGrid">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbBonusHeader"
+                                                        Text="Bonus"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbBonusValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}" />
+                    </UniformGrid>
+                    <UniformGrid x:Name="CourtesyUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbCourtesyHeader"
+                                                        Text="Courtesy"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbCourtesyValue"
+                                                        Text="{Binding AccountDTO.Courtesy,StringFormat={}{0:0}}"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                    <UniformGrid x:Name="CardDeposittUniformGrid"
+                                 Rows="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UniformGrid}}"
+                                                       Command="{Binding CardDetailClickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <customcontrols:CustomTextBlock x:Name="tbCardDeposit"
+                                                        Text="Card Deposit"
+                                                        Style="{StaticResource CommonTextBlockStyle}"/>
+                        <customcontrols:CustomTextBlock x:Name="tbCardDepositValue"
+                                                        Style="{StaticResource BoldTextBlockStyle}"/>
+                    </UniformGrid>
+                </UniformGrid>
+            </Grid>
+            <StackPanel x:Name="InputCardStackPanel"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="Visibility"
+                                Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Visibility, ElementName=AccountDTOGrid}"
+                                         Value="Collapsed">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <customcontrols:CustomTextBlock x:Name="tbTapCard"
+                                                Text="Tap Card"
+                                                TextSize="Medium"
+                                                VerticalAlignment="Center"
+                                                Margin="0,0,16,0"
+                                                FontWeight="{StaticResource FontWeight.Bold}" />
+                <StackPanel x:Name="ManuallyEnterCardNoStackPanel"
+                            Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding EnableManualEntry}"
+                                             Value="False">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <customcontrols:CustomTextBlock x:Name="tbOR"
+                                                    Text="OR"
+                                                    VerticalAlignment="Center"
+                                                    Margin="0,0,16,0"
+                                                    TextSize="Medium"
+                                                    FontWeight="{StaticResource FontWeight.Bold}" />
+                    <customcontrols:CustomActionButton x:Name="btnEnterCardNo"
+                                                       Content="ENTER CARD NO"
+                                                       Padding="12,0"
+                                                       Height="{StaticResource CustomActionButton.Height.Medium}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CardDetailsUserControl}}"
+                                                       Command="{Binding EnterCardNoClickedCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

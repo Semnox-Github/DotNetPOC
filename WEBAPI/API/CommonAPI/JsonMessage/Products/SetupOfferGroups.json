@@ -1,0 +1,47 @@
+[
+  {
+    "SaleGroupId": 1,
+    "Name": "ddd",
+    "IsUpsell": true,
+    "IsActive": true,
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-21T11:50:19.447",
+    "LastUpdatedUserId": "semnox",
+    "LastUpdatedDate": "2019-01-21T11:50:19.447",
+    "SiteId": -1,
+    "Guid": "e6ef066e-a98a-4945-9d3a-6179313ed04d",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "SaleGroupId": 2,
+    "Name": "test",
+    "IsUpsell": false,
+    "IsActive": false,
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-21T11:50:28.703",
+    "LastUpdatedUserId": "semnox",
+    "LastUpdatedDate": "2019-01-21T11:51:12.52",
+    "SiteId": -1,
+    "Guid": "b44ec410-8757-4e45-8c50-ecccc7b75297",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "SaleGroupId": 3,
+    "Name": "tes",
+    "IsUpsell": false,
+    "IsActive": true,
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-21T11:51:56.903",
+    "LastUpdatedUserId": "semnox",
+    "LastUpdatedDate": "2019-01-21T11:51:56.903",
+    "SiteId": -1,
+    "Guid": "d3c8c11f-3289-4032-a14b-18e723ec02c2",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

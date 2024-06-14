@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="9.10000101725261in" Name="TrafficChart" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait4" SelectCommand="select datepart(HH,dbo.ConvertToLocalTime(play_date, -1 * @offSet)) [Hour], count(g.card_id) [Guest Count]&#xD;&#xA;                                  from gameplay g, machines m,cards c&#xD;&#xA;&#xD;&#xA;                                 where (machine_name like '%Entry%' or machine_name like '%Entrance%')&#xD;&#xA;                                   and m.machine_id = g.machine_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   and c.card_id=g.card_id and c.technician_card='N'&#xD;&#xA;                                   and play_date between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA; AND (  g.site_id IN ( @site )  &#xD;&#xA;                                 OR  -1 IN ( @site )  )  &#xD;&#xA;                                 group by datepart(HH,dbo.ConvertToLocalTime(play_date, -1 * @offSet))&#xD;&#xA;                                     order by 1" Name="dsHourlyData">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FromDate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@ToDate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="MLRLT087SQLEXPRESS" SelectCommand="&#xD;&#xA;select Convert(varchar(12), dbo.ConvertToLocalTime(play_date, -1 * @offSet), 6) [Date], count(g.card_id) [Guest Count]&#xD;&#xA;                                  from gameplay g, machines m,cards c&#xD;&#xA;                                 where (machine_name like '%Entry%' or machine_name like '%Entrance%')&#xD;&#xA;                                   and m.machine_id = g.machine_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   &#x9;   and c.card_id=g.card_id and c.technician_card='N'&#xD;&#xA;                                   and play_date between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;                            AND (  g.site_id IN ( @site )   OR  -1 IN ( @site )  )     &#xD;&#xA;  group by Convert(varchar(12), dbo.ConvertToLocalTime(play_date, -1 * @offSet), 6)&#xD;&#xA;                                     order by 1" CommandTimeout="600" Name="dsDailyData">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+      <CalculatedFields>
+        <CalculatedField Name="TotalAmount" Expression="=iif(Parameters.CreditSelected.Value, Fields.Credits, 0) + iif(Parameters.CourtesySelected.Value, Fields.Courtesy, 0) + iif(Parameters.BonusSelected.Value, Fields.Bonus, 0) + iif(Parameters.TimeSelected.Value, Fields.Time, 0) + iif(Parameters.CardGameSelected.Value, Fields.CardGame, 0)">
+          <DataType>System.Double</DataType>
+        </CalculatedField>
+      </CalculatedFields>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait4" SelectCommand="&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; &#xD;&#xA;select Convert(VARCHAR(10), dbo.ConvertToLocalTime(play_date, -1 * @offSet) +  (case datename(weekday, dbo.ConvertToLocalTime(play_date, -1 * @offSet)) &#xD;&#xA;&#x9;&#x9;                        when 'Monday' then 5  &#xD;&#xA;&#x9;&#x9;                        when 'Tuesday' then 4 &#xD;&#xA;&#x9;&#x9;                        when 'Wednesday' then 3  &#xD;&#xA;&#x9;&#x9;                        when 'Thursday' then 2  &#xD;&#xA;&#x9;&#x9;                        when 'Friday' then 1 &#xD;&#xA;&#x9;&#x9;                        when 'Saturday' then 0  &#xD;&#xA;&#x9;&#x9;                        when 'Sunday' then 6 end), 7) as Weekend, count(g.card_id) [Guest Count]&#xD;&#xA;                                  from gameplay g, machines m,cards c&#xD;&#xA;                                 where( machine_name like '%Entry%' or machine_name like '%Entrance%')&#xD;&#xA;                                   and m.machine_id = g.machine_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   &#x9;   and c.card_id=g.card_id and c.technician_card='N'&#xD;&#xA;                                   and play_date between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;                                AND (  g.site_id IN ( @site )   OR  -1 IN ( @site )  ) &#xD;&#xA; group by Convert(VARCHAR(10), dbo.ConvertToLocalTime(play_date, -1 * @offSet) +  (case datename(weekday, dbo.ConvertToLocalTime(play_date, -1 * @offSet)) &#xD;&#xA;&#x9;&#x9;                        when 'Monday' then 5  &#xD;&#xA;&#x9;&#x9;                        when 'Tuesday' then 4 &#xD;&#xA;&#x9;&#x9;                        when 'Wednesday' then 3  &#xD;&#xA;&#x9;&#x9;                        when 'Thursday' then 2  &#xD;&#xA;&#x9;&#x9;                        when 'Friday' then 1 &#xD;&#xA;&#x9;&#x9;                        when 'Saturday' then 0  &#xD;&#xA;&#x9;&#x9;                        when 'Sunday' then 6 end), 7)&#xD;&#xA;                                     order by 1" Name="dsWeeklyData">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FromDate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@ToDate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait4" SelectCommand="&#xD;&#xA;&#xD;&#xA;select REPLACE(RIGHT(CONVERT(VARCHAR(9), dbo.ConvertToLocalTime(play_date, -1 * @offSet), 6), 6), ' ', '-') Month, count(g.card_id) [Guest Count]&#xD;&#xA;                                  from gameplay g, machines m,cards c&#xD;&#xA;                                 where (machine_name like '%Entry%' or machine_name like '%Entrance%')&#xD;&#xA;                                   and m.machine_id = g.machine_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;      and c.card_id=g.card_id and c.technician_card='N'&#xD;&#xA;                                   and play_date between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;  AND (  g.site_id IN ( @site )   OR  -1 IN ( @site )  )                                  &#xD;&#xA; group by REPLACE(RIGHT(CONVERT(VARCHAR(9), dbo.ConvertToLocalTime(play_date, -1 * @offSet), 6), 6), ' ', '-')&#xD;&#xA;                                     order by 1" CommandTimeout="600" Name="dsMonthlyData">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+      <CalculatedFields>
+        <CalculatedField Name="TotalAmount" Expression="=iif(Parameters.CreditSelected.Value, Fields.Credits, 0) + iif(Parameters.CourtesySelected.Value, Fields.Courtesy, 0) + iif(Parameters.BonusSelected.Value, Fields.Bonus, 0) + iif(Parameters.TimeSelected.Value, Fields.Time, 0) + iif(Parameters.CardGameSelected.Value, Fields.CardGame, 0)">
+          <DataType>System.Double</DataType>
+        </CalculatedField>
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="7.89992141723633in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Graph DataSourceName="dsHourlyData" Width="9.10000038146973in" Height="3.69992136955261in" Left="0in" Top="0in" Name="graph1">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Hour">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N0}" Title="Total Count">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style LineColor="LightGray">
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="= Fields.Hour" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.Hour" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="= Fields.[Guest Count]" DataPointLabel="=sum(Fields.[Guest Count])" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.reportType.Value = 1, true, false)" />
+          </Bindings>
+        </Graph>
+        <Graph DataSourceName="dsDailyData" Width="9.10000038146973in" Height="3.69992136955261in" Left="0in" Top="3.70000012715658in" Name="graph2">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Date">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N0}" Title="Total Amount">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style VerticalAlign="Middle" LineColor="LightGray">
+            <Font Name="Arial Unicode MS" />
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="= Fields.Date" />
+              </Groupings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="= Fields.[Guest Count]" DataPointLabel="= Fields.[Guest Count]" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.reportType.Value = 2, true, false)" />
+          </Bindings>
+        </Graph>
+        <Graph DataSourceName="dsWeeklyData" Width="9.10000038146973in" Height="3.69992136955261in" Left="0in" Top="0in" Name="graph3">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Weekend">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N0}" Title="Guest Count">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style LineColor="LightGray">
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="= Fields.Weekend" />
+              </Groupings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="= Fields.[Guest Count]" DataPointLabel="=sum(Fields.[Guest Count])" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.reportType.Value = 3, true, false)" />
+          </Bindings>
+        </Graph>
+        <Graph DataSourceName="dsMonthlyData" Width="9.10000038146973in" Height="3.69992136955261in" Left="0in" Top="0in" Name="graph4">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Month">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N0}" Title="Guest Count">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style VerticalAlign="Middle" LineColor="LightGray">
+            <Font Name="Arial Unicode MS" />
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="= Fields.Month" />
+              </Groupings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="= Fields.[Guest Count]" DataPointLabel="= Fields.[Guest Count]" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.reportType.Value = 4, true, false)" />
+          </Bindings>
+        </Graph>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.099999745686849in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.299999872843425in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="3.60000006357829in" Top="0.099999745686849in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.600000063578288in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="9.09996175765992in" Height="0.19999997317791in" Left="0in" Top="0.400000095367432in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox97">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.09996159871419in" Height="0.19999997317791in" Left="0in" Top="0.19999997317791in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox96">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.09996159871419in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Traffic by') + ' ' + iif(Parameters.reportType.Value = 1, &quot;hour&quot;, iif(Parameters.reportType.Value = 2, &quot;day&quot;, iif(Parameters.reportType.Value = 3, &quot;week&quot;, &quot;month&quot;)))" Name="textBox46">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="reportType" Type="Integer" Mergeable="False" Text="Report Type" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.Label" ValueMember="= Fields.value" />
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Mergeable="False" Text="AmountWithCurSymbolCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

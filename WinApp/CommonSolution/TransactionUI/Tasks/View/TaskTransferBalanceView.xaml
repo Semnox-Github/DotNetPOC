@@ -1,0 +1,382 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskTransferBalanceView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:customcontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:accountsui="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        mc:Ignorable="d"
+        Title="TaskTransferBalanceView"
+        Style="{StaticResource TaskWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}"
+               x:Key="ClearButtonStyle">
+            <Style.Setters>
+                <Setter Property="Margin"
+                        Value="16,0" />
+                <Setter Property="Width"
+                        Value="48" />
+                <Setter Property="Height"
+                        Value="{Binding ActualWidth,RelativeSource={RelativeSource Mode=Self}}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Padding="14"
+                                    CornerRadius="{Binding ActualWidth,RelativeSource={RelativeSource Mode=Self}}"
+                                    Background="{StaticResource Action.Active.Background}">
+                                <Path Stroke="{StaticResource Action.Active.Foreground}"
+                                      Data="M0,0 L1,1 M0,1 L1,0"
+                                      Stretch="Uniform"
+                                      StrokeThickness="2" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border BorderThickness="0,0,0,1"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                Grid.Row="0">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="8*" />
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource LeftPane.Selected.Border}"
+                        CornerRadius="8,0,8,0"
+                        Padding="8"
+                        Grid.Column="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnBack"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                Command="{Binding BackButtonCommand}"
+                                Style="{StaticResource TaskPopupBackButtonStyle}" />
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="16,0,32,0"
+                                    Grid.Column="1">
+                            <customcontrols:CustomTextBlock x:Name="tbTransfer"
+                                                            Text="Transfer"
+                                                            Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                                            TextSize="Medium"
+                                                            VerticalAlignment="Center" />
+                            <customcontrols:CustomTextBlock x:Name="tbBalance"
+                                                            Text="Balance"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                                            TextSize="Medium"
+                                                            VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <accountsui:CardDetailsUserControl x:Name="ParentCardDetailsUserControl"
+                                                   DataContext="{Binding InputCardDetailsVM}"
+                                                   Grid.Column="1"
+                                                   Margin="16,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CardAdded">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsui:CardDetailsUserControl}}"
+                                                   Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </accountsui:CardDetailsUserControl>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1"
+              Margin="16,4,16,8"
+              x:Name="ContentAreaGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <UniformGrid Grid.Row="0"
+                         Margin="34,0,136,0"
+                         Columns="7">
+                <customcontrols:CustomTextBox x:Name="txtInputCardCredits"
+                                              
+                                              Text="{Binding InputCardDetailsVM.AccountDTO.Credits,StringFormat={}{0:0}}"
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Credits"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,16,0" />
+                <customcontrols:CustomTextBox x:Name="txtInputCardPlayCredits"
+                                              
+                                              Text=""
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="PlayCredits"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,16,0" />
+                <customcontrols:CustomTextBox x:Name="txtInputCardBonus"
+                                              
+                                              Text="{Binding InputCardDetailsVM.AccountDTO.Bonus,StringFormat={}{0:0}}"
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Bonus"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,16,0" />
+                <customcontrols:CustomTextBox x:Name="txtInputCardTickets"
+                                              
+                                              Text="{Binding InputCardDetailsVM.AccountDTO.TicketCount,StringFormat={}{0:0}}"
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Tickets"
+                                              ErrorTextVisible="False" 
+                                              Margin="0,0,16,0" />
+                <customcontrols:CustomTextBox x:Name="txtInputCardCourtesy"
+                                              
+                                              Text=""
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Courtesy"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,16,0" />
+                <customcontrols:CustomTextBox x:Name="txtInputCardTime"
+                                              
+                                              Text=""
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Time"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,16,0"/>
+                <customcontrols:CustomTextBox x:Name="txtInputCardCounterItems"
+                                              
+                                              Text=" "
+                                              Focusable="False"
+                                              IsReadOnly="True"
+                                              Size="Small"
+                                              Heading="Counter Items"
+                                              ErrorTextVisible="False"
+                                              Margin="0,0,0,0"/>
+            </UniformGrid>
+
+            <customcontrols:CustomScrollViewer x:Name="scvChildControls"
+                                               HorizontalScrollBarVisibility="Disabled"
+                                               VerticalScrollBarVisibility="Visible"
+                                               Grid.Row="1"
+                                               Margin="0,6,0,0">
+                <ItemsControl ItemsSource="{Binding ChildCardsCollection}"
+                              x:Name="ChildCardsCollectionItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Path Data="M390 2795 l0 -25 -105 0 -105 0 0 -1160 0 -1160 109 0 c108 0 110 0 139 -30 17 -17 39 -30 50 -30 58 0 88 85 42 122 -32 26 -57 22 -92 -12 -29 -29 -32 -30 -129 -30 l-99 0 0 1140 0 1140 95 0 95 0 0 -30 0 -30 58 26 c31 14 61 29 66 34 7 7 -100 70 -119 70 -3 0 -5 -11 -5 -25z"
+                                      Fill="{StaticResource Action.Active.Background}"
+                                      StrokeThickness="1"
+                                      Stretch="Uniform"
+                                      VerticalAlignment="Center"
+                                      RenderTransformOrigin=".5,.5"
+                                      Margin="0,30,16,0"
+                                      Height="123"
+                                      x:Name="ArrowPath" />
+                                <Grid Margin="0,6"
+                                      Grid.Column="1"
+                                      x:Name="ChildContentAreaGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <UniformGrid Grid.Row="0"
+                                                 Columns="7">
+                                        <customcontrols:CustomTextBox x:Name="txtTransferCredits"
+                                                                      Heading="Transfer"
+                                                                      Text="{Binding CreditToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Credits"
+                                                                      ErrorTextVisible="False"
+                                                                      Margin="0,0,16,0"
+                                                                      Size="Small"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferPlayCredits"
+                                                                      Heading=" "
+                                                                      Text="{Binding PlayCreditsToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Play Credits"
+                                                                      ErrorTextVisible="False"
+                                                                      Margin="0,0,16,0" 
+                                                                      Size="Small"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferBonus"
+                                                                      Heading=" "
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Bonus"
+                                                                      Text="{Binding BonusToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ErrorTextVisible="False"
+                                                                      Margin="0,0,16,0" 
+                                                                      Size="Small"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferTickets"
+                                                                      Heading=" "
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Tickets"
+                                                                      Text="{Binding TicketsToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ErrorTextVisible="False" 
+                                                                      Margin="0,0,16,0"
+                                                                      Size="Small"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferCourtesy"
+                                                                      Heading=" "
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Courtesy"
+                                                                      Text="{Binding CourtesyToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ErrorTextVisible="False" 
+                                                                      Margin="0,0,16,0"
+                                                                      Size="Small"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferTime"
+                                                                      Heading=" "
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="Time"
+                                                                      Text="{Binding TimeToBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ErrorTextVisible="False" 
+                                                                      Size="Small"
+                                                                      Margin="0,0,16,0"
+                                                                      />
+                                        <customcontrols:CustomTextBox x:Name="txtTransferCounterItems"
+                                                                      Heading=" "
+                                                                      ValidationType="DecimalOnly"
+                                                                      DefaultValue="CounterItems"
+                                                                      Text="{Binding CounterItemstoBeTransfer,UpdateSourceTrigger=PropertyChanged}"
+                                                                      ErrorTextVisible="False" 
+                                                                      Size="Small"
+                                                                      />
+                                    </UniformGrid>
+                                    <accountsui:CardDetailsUserControl x:Name="ChildCardDetailsUserControl"
+                                                                       DataContext="{Binding CardDetailsVM}"
+                                                                       Grid.Row="1"
+                                                                       MinHeight="104"
+                                                                       Margin="0,6">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="CardAdded">
+                                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsui:CardDetailsUserControl}}"
+                                                                       Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </accountsui:CardDetailsUserControl>
+                                </Grid>
+                                <Button x:Name="btnClear"
+                                        Grid.Column="2"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding DataContext.CardDetailsClearCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                        Style="{StaticResource ClearButtonStyle}">
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </customcontrols:CustomScrollViewer>
+            <Grid Grid.Row="2"
+                  Margin="0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <customcontrols:CustomTextBox x:Name="txtRemarks"
+                                              Grid.Row="0"
+                                              Size="Small"
+                                              ValidationType="Login"
+                                              Heading="Remarks"
+                                              Margin="0,0,16,0"
+                                              IsMandatory="{Binding IsRemarkMandatory}"
+                                              Text="{Binding Remarks}"
+                                              ErrorTextVisible="False" />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Grid.Column="1"
+                            x:Name="TapOrEnterStackPanel">
+                    <customcontrols:CustomTextBlock x:Name="tbTapCard"
+                                                    Text="Tap multiple cards"
+                                                    TextSize="Medium"
+                                                    VerticalAlignment="Center"
+                                                    Margin="0,0,16,0"
+                                                    FontWeight="{StaticResource FontWeight.Bold}" />
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EnableManualEntry}"
+                                                 Value="False">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <customcontrols:CustomTextBlock x:Name="tbOR"
+                                                        Text="OR"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,0,16,0"
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}" />
+                        <customcontrols:CustomActionButton x:Name="btnEnterCardNo"
+                                                           Content="ENTER CARD NO"
+                                                           Padding="12,0"
+                                                           Height="{StaticResource CustomActionButton.Height.Medium}"
+                                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsui:CardDetailsUserControl}}"
+                                                           Command="{Binding EnterCardNoClickedCommand}">
+                            <customcontrols:CustomActionButton.Style>
+                                <Style TargetType="{x:Type customcontrols:CustomActionButton}"
+                                       BasedOn="{StaticResource {x:Type customcontrols:CustomActionButton}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InputCardDetailsVM}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="IsEnabled"
+                                                    Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding InputCardDetailsVM.AccountDTO}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="IsEnabled"
+                                                    Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </customcontrols:CustomActionButton.Style>
+                        </customcontrols:CustomActionButton>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

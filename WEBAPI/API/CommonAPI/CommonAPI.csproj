@@ -1,0 +1,1146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9FEF29D7-FC84-4FF8-8A4E-508332472885}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.CommonAPI</RootNamespace>
+    <AssemblyName>CommonAPI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AngleSharp">
+      <HintPath>..\..\..\..\OTS\AngleSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BarcodeLib, Version=1.0.0.23, Culture=neutral, PublicKeyToken=5eb605bede49d0d5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="GenCode128, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\GenCode128.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizer">
+      <HintPath>..\..\..\..\OTS\HtmlSanitizer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\OTS\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\..\OTS\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=37.35.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="JsonMessage\Game\Hub Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\HubAudit Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\Hub English New.json" />
+    <Content Include="JsonMessage\Game\Game Profile Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\Game Profile English.json" />
+    <Content Include="JsonMessage\Game\Machines Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\Machines English.json" />
+    <Content Include="JsonMessage\Game\Games Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\Games English.json" />
+    <Content Include="JsonMessage\Game\Generic Calender Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\Generic Calender English.json" />
+    <Content Include="JsonMessage\Game\CustomAttributes Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\CustomAttributes English.json" />
+    <Content Include="JsonMessage\Game\InputDevices Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\InputDevices English.json" />
+    <Content Include="JsonMessage\Game\ReaderThemes Chinees RPC.json" />
+    <Content Include="JsonMessage\Game\ReaderThemes English.json" />
+    <Content Include="JsonMessage\Digital Signage\ContentList.json" />
+    <Content Include="JsonMessage\Digital Signage\ContentMedia.json" />
+    <Content Include="JsonMessage\Digital Signage\ContentTicker.json" />
+    <Content Include="JsonMessage\Digital Signage\Event.json" />
+    <Content Include="JsonMessage\Digital Signage\SetupPanel.json" />
+    <Content Include="JsonMessage\Digital Signage\SetupScreenContentMap.json" />
+    <Content Include="JsonMessage\Digital Signage\SetupScreenDesign.json" />
+    <Content Include="JsonMessage\Digital Signage\SetupScreenZone.json" />
+    <Content Include="JsonMessage\Digital Signage\SignageSchedulePanelThemeMap.json" />
+    <Content Include="JsonMessage\Digital Signage\SignageSchedulePanelThemeMapIncExcl.json" />
+    <Content Include="JsonMessage\Digital Signage\ScreenTransitionThemes.json" />
+    <Content Include="JsonMessage\Digital Signage\Signage Schedule.json" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\test.pubxml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Cards\CustomerDetailsController.cs" />
+    <Compile Include="Controllers\CommonServices\BarCodeController.cs" />
+    <Compile Include="Controllers\CommonServices\ExSysSynchLogController.cs" />
+    <Compile Include="Controllers\CommonServices\GenericOTPController.cs" />
+    <Compile Include="Controllers\Common\ApplicationContentContainerController.cs" />
+    <Compile Include="Controllers\Common\ApplicationContentController.cs" />
+    <Compile Include="Controllers\Common\CountryContainerController.cs" />
+    <Compile Include="Controllers\Common\CountryController.cs" />
+    <Compile Include="Controllers\Common\CustomAttributeController.cs" />
+    <Compile Include="Controllers\Communication\MessagingRequestSummaryViewController.cs" />
+    <Compile Include="Controllers\Configuration\CreateMasterDataDBSynchLogController.cs" />
+    <Compile Include="Controllers\Configuration\DbSyncLogSummaryController.cs" />
+    <Compile Include="Controllers\Configuration\SystemOptionController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitDefaultValuesContainerController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountEntitlementController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountGamePlayController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountGameSummaryCountController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountGameSummaryController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountCreditPlusSummaryCountController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountCreditPlusSummaryController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountActivityViewController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountDiscountsSummaryViewController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountGamePlaysViewController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountGamesSummaryViewController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountRelationshipUseCaseController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\LostCardController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountSummaryViewController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\GamePlayInfoUseCaseController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\GamePlayTicketsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\LinkedAccountSummaryController.cs" />
+    <Compile Include="Controllers\Customer\CustomerFingerPrintController.cs" />
+    <Compile Include="Controllers\Customer\CustomerNickNameController.cs" />
+    <Compile Include="Controllers\Customer\CustomerRelationshipTypeContainerController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedBackSurveyDataSetController.cs" />
+    <Compile Include="Controllers\Games\AllowedMachineNamesController.cs" />
+    <Compile Include="Controllers\DigitalSignage\DisplayPanelContainerController.cs" />
+    <Compile Include="Controllers\GameServer\GameServerEnvironmentController.cs" />
+    <Compile Include="Controllers\Games\AdManagement\AdContentDataRefreshController.cs" />
+    <Compile Include="Controllers\Games\AdManagement\AdShowContextController.cs" />
+    <Compile Include="Controllers\Games\AdManagement\AttachAdContextController.cs" />
+    <Compile Include="Controllers\Games\AdManagement\AttachAdShowContextController.cs" />
+    <Compile Include="Controllers\Games\GamePlayStatusController.cs" />
+    <Compile Include="Controllers\Games\HubStatusController.cs" />
+    <Compile Include="Controllers\Games\MachineCommunicationLogController.cs" />
+    <Compile Include="Controllers\Games\MachineConfigurationController.cs" />
+    <Compile Include="Controllers\Games\RefreshMachineController.cs" />
+    <Compile Include="Controllers\HR\MaskUIFieldController.cs" />
+    <Compile Include="Controllers\HR\RecordAttendanceController.cs" />
+    <Compile Include="Controllers\HR\UserAccessController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryDocumentTypeContainerController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryLotController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryPhysicalCountStatusController.cs" />
+    <Compile Include="Controllers\Inventory\InventorySummaryController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderReceiveLineCountController.cs" />
+    <Compile Include="Controllers\Inventory\UserMessagesCountController.cs" />
+    <Compile Include="Controllers\Job\FiscalizationConcurrentRequestController.cs" />
+    <Compile Include="Controllers\Log\CommunicationLogController.cs" />
+    <Compile Include="Controllers\Log\EventLogController.cs" />
+    <Compile Include="Controllers\Log\MonitorLogController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintenanceCommentsController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintenanceImagesController.cs" />
+    <Compile Include="Controllers\Organization\DeliveryChannelController.cs" />
+    <Compile Include="Controllers\Common\FileResourceController.cs" />
+    <Compile Include="Controllers\Common\FileResourceHashController.cs" />
+    <Compile Include="Controllers\Common\ImagesController.cs" />
+    <Compile Include="Controllers\Common\ObjectTranslationController.cs" />
+    <Compile Include="Controllers\Common\OrderStatusController.cs" />
+    <Compile Include="Controllers\Common\ParafaitMessageQueueController.cs" />
+    <Compile Include="Controllers\Common\RemoteConnectionCheckController.cs" />
+    <Compile Include="Controllers\Common\ScheduleCalendarController.cs" />
+    <Compile Include="Controllers\Common\SheetUploadController.cs" />
+    <Compile Include="Controllers\Communication\CampaignMessageController.cs" />
+    <Compile Include="Controllers\Communication\EmailTemplateController.cs" />
+    <Compile Include="Controllers\Communication\MessagesController.cs" />
+    <Compile Include="Controllers\Communication\ParafaitFunctionEventController.cs" />
+    <Compile Include="Controllers\Communication\ParafaitFunctionsController.cs" />
+    <Compile Include="Controllers\Communication\MessagingClientController.cs" />
+    <Compile Include="Controllers\Communication\MessagingClientFunctionLookupController.cs" />
+    <Compile Include="Controllers\Communication\MessagingCommunicationController.cs" />
+    <Compile Include="Controllers\Communication\MessagingRequestsController.cs" />
+    <Compile Include="Controllers\Communication\MessagingTriggerController.cs" />
+    <Compile Include="Controllers\Communication\MessageContainerController.cs" />
+    <Compile Include="Controllers\Configuration\DbSyncTableController.cs" />
+    <Compile Include="Controllers\Configuration\InvoiceSequenceMappingController.cs" />
+    <Compile Include="Controllers\Configuration\InvoiceSequenceSetupController.cs" />
+    <Compile Include="Controllers\Configuration\LanguagesController.cs" />
+    <Compile Include="Controllers\Configuration\LookupContainerController.cs" />
+    <Compile Include="Controllers\Configuration\LookupsController.cs" />
+    <Compile Include="Controllers\Configuration\LanguageContainerController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitDefaultsController.cs" />
+    <Compile Include="Controllers\Configuration\SystemOptionContainerController.cs" />
+    <Compile Include="Controllers\Configuration\MifareKeyContainerController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitDefaultContainerController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitOptionsController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitOptionValuesController.cs" />
+    <Compile Include="Controllers\Configuration\ParafaitVersionController.cs" />
+    <Compile Include="Controllers\Configuration\ProductKeyController.cs" />
+    <Compile Include="Controllers\Configuration\PurgeDataController.cs" />
+    <Compile Include="Controllers\Configuration\SequenceController.cs" />
+    <Compile Include="Controllers\Configuration\ULCKeyController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountIdentifierController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountRelationshipController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\DeactivateAccountController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\ExchangeCreditsAndTokensController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\ExchangeTimeAndCreditsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\LinkAccountsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\LinkAccountToCustomersController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\PauseAccountsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\RedeemBonusAndTicketsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\RefundAccountsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\TransferAccountsController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountService\TransferBalancesController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\LinkedAccountController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\ScanIdentifierController.cs" />
+    <Compile Include="Controllers\Customer\AddressTypeContainerController.cs" />
+    <Compile Include="Controllers\Customer\CampaignController.cs" />
+    <Compile Include="Controllers\Customer\CustomerImageController.cs" />
+    <Compile Include="Controllers\Customer\CustomerSummaryController.cs" />
+    <Compile Include="Controllers\Customer\CustomerSearchController.cs" />
+    <Compile Include="Controllers\Customer\CustomerUIMetadataContainerController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedbackQuestionController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedbackResponseController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedbackSurveyController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedBackSurveyDataController.cs" />
+    <Compile Include="Controllers\Customer\FeedBackSurvey\CustomerFeedbackSurveyDetailController.cs" />
+    <Compile Include="Controllers\Customer\Membership\MembershipContainerController.cs" />
+    <Compile Include="Controllers\Customer\PasswordResetController.cs" />
+    <Compile Include="Controllers\Customer\Membership\CardTypeController.cs" />
+    <Compile Include="Controllers\Customer\Membership\MembershipMigrationController.cs" />
+    <Compile Include="Controllers\Customer\Membership\MembershipRuleController.cs" />
+    <Compile Include="Controllers\Communication\PushNotificationDeviceController.cs" />
+    <Compile Include="Controllers\Customer\DefaultAddressController.cs" />
+    <Compile Include="Controllers\Customer\Waivers\WaiverSetContainerController.cs" />
+    <Compile Include="Controllers\Device\CashdrawerContainerController.cs" />
+    <Compile Include="Controllers\Device\CashdrawerController.cs" />
+    <Compile Include="Controllers\Discount\DiscountsCountController.cs" />
+    <Compile Include="Controllers\Games\MachineAttributeLogController.cs" />
+    <Compile Include="Controllers\Games\ScoringEventPolicyController.cs" />
+    <Compile Include="Controllers\HR\UserIdentificationTagsController.cs" />
+    <Compile Include="Controllers\HR\AssignCashdrawerController.cs" />
+    <Compile Include="Controllers\HR\UnAssignCashdrawerController.cs" />
+    <Compile Include="Controllers\HR\UserPayRateController.cs" />
+    <Compile Include="Controllers\Inventory\CategoryContainerController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryIssueLinesController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryReceiveLinesController.cs" />
+    <Compile Include="Controllers\Inventory\InventoyIssueStatusController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderEmailController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderLinesController.cs" />
+    <Compile Include="Controllers\Inventory\ReceivePurchaseOrderController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderStatusController.cs" />
+    <Compile Include="Controllers\Customer\Waivers\WaiverLinkController.cs" />
+    <Compile Include="Controllers\Games\CustomerGamePlayLevelResultController.cs" />
+    <Compile Include="Controllers\Games\GameCountController.cs" />
+    <Compile Include="Controllers\Games\GameMachineFileController.cs" />
+    <Compile Include="Controllers\Games\GameMachineLevelController.cs" />
+    <Compile Include="Controllers\Games\GameMachineTranslationController.cs" />
+    <Compile Include="Controllers\Games\GamePlayCountController.cs" />
+    <Compile Include="Controllers\Games\GamePlayWinningController.cs" />
+    <Compile Include="Controllers\Games\GameMachineImagesController.cs" />
+    <Compile Include="Controllers\Games\GameProfileCountController.cs" />
+    <Compile Include="Controllers\Games\HubCountController.cs" />
+    <Compile Include="Controllers\Games\LeaderBoardController.cs" />
+    <Compile Include="Controllers\Games\MachineCountController.cs" />
+    <Compile Include="Controllers\Games\MachineGroupsCountController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\RecipeEstimationPlanController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\RecipeManufacturingPlanDetailsController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionEmailController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionLinesController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionStatusController.cs" />
+    <Compile Include="Controllers\Games\ThemeContainerController.cs" />
+    <Compile Include="Controllers\Job\ProgramParameterValueController.cs" />
+    <Compile Include="Controllers\Login\LogoutController.cs" />
+    <Compile Include="Controllers\Organization\OnlineOrderDeliveryIntegrationController.cs" />
+    <Compile Include="Controllers\Organization\UTCDateTimeController.cs" />
+    <Compile Include="Controllers\Organization\SiteTimeController.cs" />
+    <Compile Include="Controllers\POS\OverrideItemsController.cs" />
+    <Compile Include="Controllers\POS\POSPrinterOverrideOptionsController.cs" />
+    <Compile Include="Controllers\POS\POSPrinterOverrideRulesController.cs" />
+    <Compile Include="Controllers\Products\CustomerProfilingGroupsController.cs" />
+    <Compile Include="Controllers\Promotion\GamePromotionDetailController.cs" />
+    <Compile Include="Controllers\Products\ProductGroupCountController.cs" />
+    <Compile Include="Controllers\Products\ProductGroupController.cs" />
+    <Compile Include="Controllers\Promotion\LoyaltyAttributesContainerController.cs" />
+    <Compile Include="Controllers\Products\AddProductMenuPanelContentController.cs" />
+    <Compile Include="Controllers\Products\ProductPriceController.cs" />
+    <Compile Include="Controllers\Products\ProductPriceContainerController.cs" />
+    <Compile Include="Controllers\Products\ProductMenuPanelContainerController.cs" />
+    <Compile Include="Controllers\Products\ProductMenuContainerController.cs" />
+    <Compile Include="Controllers\Products\ProductMenuPanelController.cs" />
+    <Compile Include="Controllers\Products\ProductMenuController.cs" />
+    <Compile Include="Controllers\Products\ProductCalendarContainerController.cs" />
+    <Compile Include="Controllers\Products\PriceContainerController.cs" />
+    <Compile Include="Controllers\Promotion\PromotionDetailGameAttributeController.cs" />
+    <Compile Include="Controllers\Promotion\PromotionGameAttributeController.cs" />
+    <Compile Include="Controllers\Promotion\LoyaltyRedemptionRulesContainerController.cs" />
+    <Compile Include="Controllers\Redemption\TicketStationContainerController.cs" />
+    <Compile Include="Controllers\SiteSetup\HQSiteManagementController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\AttributeEnabledTablesContainerController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\AttributeEnabledTablesController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\EnabledAttributesContainerController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\EnabledAttributesController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\TableAttributeDetailsController.cs" />
+    <Compile Include="Controllers\TableAttributeSetup\TableAttributeDetailsSQLDataController.cs" />
+    <Compile Include="Controllers\Report\SalesDashboardController.cs" />
+    <Compile Include="Controllers\Tag\NotificationTagController.cs" />
+    <Compile Include="Controllers\Tag\NotificationTagPatternController.cs" />
+    <Compile Include="Controllers\Device\TicketStationController.cs" />
+    <Compile Include="Controllers\DigitalSignage\DisplayPanelThemeMapController.cs" />
+    <Compile Include="Controllers\DigitalSignage\DSLookUpController.cs" />
+    <Compile Include="Controllers\DigitalSignage\MediaController.cs" />
+    <Compile Include="Controllers\DigitalSignage\ScreenController.cs" />
+    <Compile Include="Controllers\DigitalSignage\ShutdownPCController.cs" />
+    <Compile Include="Controllers\DigitalSignage\SignagePatternController.cs" />
+    <Compile Include="Controllers\DigitalSignage\StartPCController.cs" />
+    <Compile Include="Controllers\DigitalSignage\ThemeController.cs" />
+    <Compile Include="Controllers\DigitalSignage\TickerController.cs" />
+    <Compile Include="Controllers\Discount\DiscountsController.cs" />
+    <Compile Include="Controllers\Discount\DiscountsCouponsController.cs" />
+    <Compile Include="Controllers\Discount\DiscountsCouponExportController.cs" />
+    <Compile Include="Controllers\Discount\DiscountsUsedCouponsController.cs" />
+    <Compile Include="Controllers\Environment\DefaultDataTypeController.cs" />
+    <Compile Include="Controllers\Environment\MonitorAssetsController.cs" />
+    <Compile Include="Controllers\Environment\MonitorController.cs" />
+    <Compile Include="Controllers\Environment\MonitorPriorityController.cs" />
+    <Compile Include="Controllers\GameServer\AdsController.cs" />
+    <Compile Include="Controllers\GameServer\TurnstileController.cs" />
+    <Compile Include="Controllers\GameServer\TurnstileSetupControlPanelController.cs" />
+    <Compile Include="Controllers\Games\GameContainerController.cs" />
+    <Compile Include="Controllers\Games\GameProfileContainerController.cs" />
+    <Compile Include="Controllers\Games\HubContainerController.cs" />
+    <Compile Include="Controllers\Games\MachineContainerController.cs" />
+    <Compile Include="Controllers\Games\MachineGroupController.cs" />
+    <Compile Include="Controllers\Games\ReaderConfigurationContainerController.cs" />
+    <Compile Include="Controllers\Games\ReaderThemeController.cs" />
+    <Compile Include="Controllers\HR\AgentGroupsController.cs" />
+    <Compile Include="Controllers\HR\AgentsController.cs" />
+    <Compile Include="Controllers\HR\AttendanceController.cs" />
+    <Compile Include="Controllers\HR\AttendanceReaderController.cs" />
+    <Compile Include="Controllers\HR\AttendanceRoleController.cs" />
+    <Compile Include="Controllers\HR\DataAccessRuleController.cs" />
+    <Compile Include="Controllers\HR\DepartmentController.cs" />
+    <Compile Include="Controllers\HR\GenerateLeaveController.cs" />
+    <Compile Include="Controllers\HR\HolidayController.cs" />
+    <Compile Include="Controllers\HR\InboxController.cs" />
+    <Compile Include="Controllers\HR\LeaveActivityController.cs" />
+    <Compile Include="Controllers\HR\LeaveController.cs" />
+    <Compile Include="Controllers\HR\LeaveCycleController.cs" />
+    <Compile Include="Controllers\HR\LeaveTemplateController.cs" />
+    <Compile Include="Controllers\HR\ManagementFormAccessController.cs" />
+    <Compile Include="Controllers\HR\PayConfigurationController.cs" />
+    <Compile Include="Controllers\HR\PayConfigurationMapController.cs" />
+    <Compile Include="Controllers\HR\RefreshFunctionController.cs" />
+    <Compile Include="Controllers\HR\ShiftConfigurationController.cs" />
+    <Compile Include="Controllers\HR\ShiftController .cs" />
+    <Compile Include="Controllers\HR\UserContainerController.cs" />
+    <Compile Include="Controllers\HR\UserController.cs" />
+    <Compile Include="Controllers\HR\UserRoleContainerController.cs" />
+    <Compile Include="Controllers\HR\UserRoleController.cs" />
+    <Compile Include="Controllers\HR\UserToAttendanceRoleMapController.cs" />
+    <Compile Include="Controllers\HR\WorkShiftController.cs" />
+    <Compile Include="Controllers\Inventory\ApprovalRuleController.cs" />
+    <Compile Include="Controllers\Inventory\ApprovalRuleCountController.cs" />
+    <Compile Include="Controllers\Inventory\BarcodeController.cs" />
+    <Compile Include="Controllers\Inventory\CategoryController.cs" />
+    <Compile Include="Controllers\Inventory\CategoryCountController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryActivityController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryActivityCountController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryAdjustmentController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryAdjustmentCountController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryDocumentTypeController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryIssueController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryIssueCountController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryLocationMachinesController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryNoteController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryPhysicalCountController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryWastageController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryWastageCountController.cs" />
+    <Compile Include="Controllers\Inventory\LocationContainerController.cs" />
+    <Compile Include="Controllers\Inventory\LocationController.cs" />
+    <Compile Include="Controllers\Inventory\LocationCountController.cs" />
+    <Compile Include="Controllers\Inventory\LocationTypeContainerController.cs" />
+    <Compile Include="Controllers\Inventory\LocationTypeController.cs" />
+    <Compile Include="Controllers\Inventory\PhysicalCountInventoryController.cs" />
+    <Compile Include="Controllers\Inventory\ProductActivityCountController.cs" />
+    <Compile Include="Controllers\Inventory\ProductCountController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderCountController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderPrintController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderReceiveController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderTaxViewController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryIssuePrintController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryReceivePrintController.cs" />
+    <Compile Include="Controllers\Inventory\InventoryRequisitionPrintController.cs" />
+    <Compile Include="Controllers\Inventory\ProductActivityController.cs" />
+    <Compile Include="Controllers\Inventory\ProductController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderReceiptController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseOrderReceiptCountController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyContainerController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyCountController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyRuleContainerController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyRuleCountController.cs" />
+    <Compile Include="Controllers\Inventory\RelatedUOMController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionCountController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionTemplateController.cs" />
+    <Compile Include="Controllers\Inventory\RequisitionTemplateCountController.cs" />
+    <Compile Include="Controllers\Inventory\SegmentCountController.cs" />
+    <Compile Include="Controllers\Inventory\StockController.cs" />
+    <Compile Include="Controllers\Inventory\TableColumnController.cs" />
+    <Compile Include="Controllers\Inventory\TaxController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\AccountingCalendarController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\RecipeEstimationController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\RecipeManufacturingController.cs" />
+    <Compile Include="Controllers\Inventory\Recipe\RecipePlanController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyController.cs" />
+    <Compile Include="Controllers\Inventory\RedemptionCurrencyRuleController.cs" />
+    <Compile Include="Controllers\Inventory\SegmentController.cs" />
+    <Compile Include="Controllers\Inventory\UOMController.cs" />
+    <Compile Include="Controllers\Inventory\UOMCountController.cs" />
+    <Compile Include="Controllers\Inventory\UPCBarcodeController.cs" />
+    <Compile Include="Controllers\Inventory\UserMessageController.cs" />
+    <Compile Include="Controllers\Inventory\VendorController.cs" />
+    <Compile Include="Controllers\Inventory\VendorCountController.cs" />
+    <Compile Include="Controllers\Job\ConcurrentProgramController.cs" />
+    <Compile Include="Controllers\Job\ConcurrentProgramJobStatusController.cs" />
+    <Compile Include="Controllers\Kiosk\AppPanelController.cs" />
+    <Compile Include="Controllers\Kiosk\AppScreenController.cs" />
+    <Compile Include="Controllers\Kiosk\KioskSetupController.cs" />
+    <Compile Include="Controllers\Locker\LockerAccessPointController.cs" />
+    <Compile Include="Controllers\Locker\LockerController.cs" />
+    <Compile Include="Controllers\Login\LoginUserController.cs" />
+    <Compile Include="Controllers\Login\LoginSystemUserController.cs" />
+    <Compile Include="Controllers\Maintenance\AssetGroupAssetController.cs" />
+    <Compile Include="Controllers\Maintenance\AssetGroupController.cs" />
+    <Compile Include="Controllers\Maintenance\AssetImportMachineController.cs" />
+    <Compile Include="Controllers\Maintenance\AssetTechnicianMappingController.cs" />
+    <Compile Include="Controllers\Maintenance\AssetTypeController.cs" />
+    <Compile Include="Controllers\Maintenance\GenericAssetController.cs" />
+    <Compile Include="Controllers\Maintenance\MachineOutOfServiceController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintenanceServiceController.cs" />
+    <Compile Include="Controllers\Maintenance\TaskController.cs" />
+    <Compile Include="Controllers\Maintenance\TaskGroupController.cs" />
+    <Compile Include="Controllers\Customer\Waivers\WaiverSetupController.cs" />
+    <Compile Include="Controllers\Games\AchievementController.cs" />
+    <Compile Include="Controllers\Games\AchievementProjectController.cs" />
+    <Compile Include="Controllers\Maintenance\TechnicianLookupController.cs" />
+    <Compile Include="Controllers\Organization\CompanyController.cs" />
+    <Compile Include="Controllers\Organization\PartnerController.cs" />
+    <Compile Include="Controllers\Organization\PartnerRevenueController.cs" />
+    <Compile Include="Controllers\Organization\SiteController.cs" />
+    <Compile Include="Controllers\Organization\SiteContainerController.cs" />
+    <Compile Include="Controllers\POS\POSMachineContainerController.cs" />
+    <Compile Include="Controllers\Print\PrintSetupController.cs" />
+    <Compile Include="Controllers\Print\PrintTemplateController.cs" />
+    <Compile Include="Controllers\Print\TicketTemplateController.cs" />
+    <Compile Include="Controllers\Products\AttractionPlaysController.cs" />
+    <Compile Include="Controllers\Products\CheckOutPricesController.cs" />
+    <Compile Include="Controllers\Products\ComboProductDetailsController.cs" />
+    <Compile Include="Controllers\Products\FacilityController.cs" />
+    <Compile Include="Controllers\Products\FacilityMapController.cs" />
+    <Compile Include="Controllers\Products\FormatDisplayGroupsController.cs" />
+    <Compile Include="Controllers\Products\BOMProductCostController.cs" />
+    <Compile Include="Controllers\Products\InventoryProductController.cs" />
+    <Compile Include="Controllers\Products\ProductsAllowedInFacilityMapController.cs" />
+    <Compile Include="Controllers\Products\MasterScheduleController.cs" />
+    <Compile Include="Controllers\Products\MembershipExclusionRuleController.cs" />
+    <Compile Include="Controllers\Products\PriceListController.cs" />
+    <Compile Include="Controllers\Products\ProductAvailabilityController.cs" />
+    <Compile Include="Controllers\Products\ProductBarCodeController.cs" />
+    <Compile Include="Controllers\Products\ProductBOMController.cs" />
+    <Compile Include="Controllers\Products\ProductDescriptionController.cs" />
+    <Compile Include="Controllers\Products\ProductDuplicateController.cs" />
+    <Compile Include="Controllers\Products\ProductsContainerController.cs" />
+    <Compile Include="Controllers\Products\ProductSegmentsController.cs" />
+    <Compile Include="Controllers\Products\ProductsModifierSetController.cs" />
+    <Compile Include="Controllers\Products\ProductUpsellOffersController.cs" />
+    <Compile Include="Controllers\Products\ProductDiscountsController.cs" />
+    <Compile Include="Controllers\Products\ProductDisplayGroupsController.cs" />
+    <Compile Include="Controllers\Products\ProductModifiersController.cs" />
+    <Compile Include="Controllers\Products\ProductsCalendarController.cs" />
+    <Compile Include="Controllers\Products\ProductsController.cs" />
+    <Compile Include="Controllers\Products\ProductsCreditPlusController.cs" />
+    <Compile Include="Controllers\Products\ProductsEntityExclusionController.cs" />
+    <Compile Include="Controllers\Products\FacilityPOSAssignmentController.cs" />
+    <Compile Include="Controllers\Products\ProductGamesController.cs" />
+    <Compile Include="Controllers\Products\ProductUserGroupsController.cs" />
+    <Compile Include="Controllers\Products\SpecialPricingController.cs" />
+    <Compile Include="Controllers\Products\ProductTypeController.cs" />
+    <Compile Include="Controllers\Products\SaleGroupProductMapController.cs" />
+    <Compile Include="Controllers\Products\SalesOfferGroupsController.cs" />
+    <Compile Include="Controllers\Products\SpecialPricingOptionsController.cs" />
+    <Compile Include="Controllers\Products\ProductSubscriptionController.cs" />
+    <Compile Include="Controllers\Products\WaiversController.cs" />
+    <Compile Include="Controllers\Products\WaiverSigningOptionController.cs" />
+    <Compile Include="Controllers\Promotion\CampaignCustomersSearchController.cs" />
+    <Compile Include="Controllers\Promotion\LoyaltyAttributeController.cs" />
+    <Compile Include="Controllers\Promotion\LoyaltyController.cs" />
+    <Compile Include="Controllers\Promotion\LoyaltyRedemptionRuleController.cs" />
+    <Compile Include="Controllers\Promotion\PromotionController.cs" />
+    <Compile Include="Controllers\Promotion\UploadCustomerController.cs" />
+    <Compile Include="Controllers\Redemption\ApplicationRemarksController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionPriceContainerController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionOrderCurrencyController.cs" />
+    <Compile Include="Controllers\Redemption\SuspendRedemptionOrderController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionPrintController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionReverseController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionStatusController.cs" />
+    <Compile Include="Controllers\Redemption\ConsolidateTicketController.cs" />
+    <Compile Include="Controllers\Redemption\LoadToCardController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionCardController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionGiftController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionOrderController.cs" />
+    <Compile Include="Controllers\Redemption\PhysicalTicketController.cs" />
+    <Compile Include="Controllers\Redemption\RedemptionTicketController.cs" />
+    <Compile Include="Controllers\Redemption\TicketLimitController.cs" />
+    <Compile Include="Controllers\Redemption\TicketReceiptController.cs" />
+    <Compile Include="Controllers\Redemption\SuspendRedemptionPrintController.cs" />
+    <Compile Include="Controllers\Redemption\TicketReceiptRePrintController.cs" />
+    <Compile Include="Controllers\Redemption\TicketValidateController.cs" />
+    <Compile Include="Controllers\Redemption\TurnInCardsController.cs" />
+    <Compile Include="Controllers\Redemption\TicketReceiptPrintController.cs" />
+    <Compile Include="Controllers\Redemption\TurnInGiftsController.cs" />
+    <Compile Include="Controllers\Report\ClientAppController.cs" />
+    <Compile Include="Controllers\Report\ClientAppUserController.cs" />
+    <Compile Include="Controllers\Report\ClientAppVersionController.cs" />
+    <Compile Include="Controllers\Report\EventReportsController.cs" />
+    <Compile Include="Controllers\Report\GamePerformanceReportsController.cs" />
+    <Compile Include="Controllers\Report\GameServerReportsController.cs" />
+    <Compile Include="Controllers\Report\GetMachinesReportsController.cs" />
+    <Compile Include="Controllers\Report\ParafaitDashboardController.cs" />
+    <Compile Include="Controllers\Report\ParafaitDashBoardDTO.cs" />
+    <Compile Include="Controllers\Report\POSShiftReportsController.cs" />
+    <Compile Include="Controllers\Report\ReportsController.cs" />
+    <Compile Include="Controllers\Report\TableauDashboardsController.cs" />
+    <Compile Include="Controllers\Report\TransactionDiscountReportsController.cs" />
+    <Compile Include="Controllers\Report\TransactionPaymentReportsController.cs" />
+    <Compile Include="Controllers\Report\TransactionReportsController.cs" />
+    <Compile Include="Controllers\Report\TrxUserReportsController.cs" />
+    <Compile Include="Controllers\Report\UserPeriodController.cs" />
+    <Compile Include="Controllers\Report\UserTargetController.cs" />
+    <Compile Include="Controllers\Report\WirelessDashboardController.cs" />
+    <Compile Include="Controllers\Report\WirelessDashBoardMachinesReportsController.cs" />
+    <Compile Include="Controllers\Security\SecurityPolicyController.cs" />
+    <Compile Include="Controllers\Tag\NotificationTagStatusController.cs" />
+    <Compile Include="Controllers\Tag\NotificationTagStorageStatusController.cs" />
+    <Compile Include="Controllers\Task\BalanceTransferController.cs" />
+    <Compile Include="Controllers\Task\ExchangeEntitlementsController.cs" />
+    <Compile Include="Controllers\Task\ExchangeTokenController.cs" />
+    <Compile Include="Controllers\Task\LoadBonusPrintController.cs" />
+    <Compile Include="Controllers\Task\MasterCard\ConfigureCardController.cs" />
+    <Compile Include="Controllers\Task\MasterCard\InvalidateFreePlayCardController.cs" />
+    <Compile Include="Controllers\Task\MasterCard\UpdateEnterFreePlayModeController.cs" />
+    <Compile Include="Controllers\Task\MasterCard\UpdateExitFreePlayModeController.cs" />
+    <Compile Include="Controllers\Task\PauseTimeController.cs" />
+    <Compile Include="Controllers\Task\RedeemEntitlementsController.cs" />
+    <Compile Include="Controllers\Task\RefundCardController.cs" />
+    <Compile Include="Controllers\Task\TaskLoadBonusController.cs" />
+    <Compile Include="Controllers\Task\TicketModeController.cs" />
+    <Compile Include="Controllers\Task\TokenInventoryController.cs" />
+    <Compile Include="Controllers\ThirdParty\AlohaBSP\AlohaBSPErrorStateController.cs" />
+    <Compile Include="Controllers\ThirdParty\AlohaBSP\AlohaBSPErrorStateCountController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\CapabilityController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\CardController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\CardNumberFormatController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\Cards\CardCombineController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\Cards\CardPinController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\GamesController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\AuthenticateController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\Games\GameTransactionController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\PrivilegeGroupController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\TimePlayGroupController.cs" />
+    <Compile Include="Controllers\ThirdParty\CenterEdge\CardTransactionController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardActivateController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardActivityController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardGenerateController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardHoldController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardIdentifierController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCardTransferController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalConfigurationController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCustomerController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCustomerGamePlayLevelResultsController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCustomerNicknameController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalCustomerUIMetaDataController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalExecutionContextController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalBalanceTransferController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalNicknameController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalRefundAccountController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalPauseTimeController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalGamePlayController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalGamePlayWinningController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalLeaderBoardController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalLinkCardToCustomerController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalLocationController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalLoginController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalMachineController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalMachineLevelController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalPaymentModesController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalProductController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalProductGroupController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionCompleteController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionCreateController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionCreditsController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionDiscountController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionPaymentController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionProductController.cs" />
+    <Compile Include="Controllers\ThirdParty\External\ExternalTransactionReverseController.cs" />
+    <Compile Include="Controllers\ThirdParty\TET\TETController.cs" />
+    <Compile Include="Controllers\Transaction\ApplyDebitCardPaymentController.cs" />
+    <Compile Include="Controllers\Transaction\ExecuteOnlineReceiptController.cs" />
+    <Compile Include="Controllers\Transaction\FiscalizationGetPendingTransactionCountController.cs" />
+    <Compile Include="Controllers\Transaction\FiscalizationController.cs" />
+    <Compile Include="Controllers\Transaction\NotificationTagIssuedTimeController.cs" />
+    <Compile Include="Controllers\Transaction\NotificationTagIssuedController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionSummaryViewController.cs" />
+    <Compile Include="Controllers\Transaction\ApplyDiscountController.cs" />
+    <Compile Include="Controllers\Transaction\AttractionBookingsController.cs" />
+    <Compile Include="Controllers\Transaction\AttractionBookingsViewController.cs" />
+    <Compile Include="Controllers\Transaction\CustomerTransactionStatusController.cs" />
+    <Compile Include="Controllers\Transaction\DayAttractionSchedulesController.cs" />
+    <Compile Include="Controllers\Transaction\CompositeAttractionBookingsController.cs" />
+    <Compile Include="Controllers\Transaction\CurrencyController.cs" />
+    <Compile Include="Controllers\Transaction\GamePlayController.cs" />
+    <Compile Include="Controllers\Transaction\GamePlayInfoController.cs" />
+    <Compile Include="Controllers\Transaction\HostedPaymentCallbackController.cs" />
+    <Compile Include="Controllers\Transaction\KDSController.cs" />
+    <Compile Include="Controllers\Transaction\LoyaltyRedemptionController.cs" />
+    <Compile Include="Controllers\Transaction\NotificationTagManualEventController.cs" />
+    <Compile Include="Controllers\Transaction\NotificationTagProfileController.cs" />
+    <Compile Include="Controllers\Transaction\OrderTypeContainerController.cs" />
+    <Compile Include="Controllers\Transaction\OrderTypeController.cs" />
+    <Compile Include="Controllers\Transaction\TrxExtSysRefController.cs" />
+    <Compile Include="Controllers\Transaction\OrderTypeGroupController.cs" />
+    <Compile Include="Controllers\Transaction\Order\OrderHeaderController.cs" />
+    <Compile Include="Controllers\Transaction\PaymentLinkController.cs" />
+    <Compile Include="Controllers\Transaction\CustomerCreditCardsController.cs" />
+    <Compile Include="Controllers\Transaction\PrintableTransactionLinesController.cs" />
+    <Compile Include="Controllers\Transaction\StaffCardController.cs" />
+    <Compile Include="Controllers\Transaction\PaymentModesContainerController.cs" />
+    <Compile Include="Controllers\Transaction\SettleTransactionPaymentsController.cs" />
+    <Compile Include="Controllers\Transaction\SubscriptionController.cs" />
+    <Compile Include="Controllers\Transaction\ReservationsController.cs" />
+    <Compile Include="Controllers\Transaction\HostedPaymentRequestController.cs" />
+    <Compile Include="Controllers\Transaction\ReservationStatusController.cs" />
+    <Compile Include="Controllers\Transaction\TaskTypeController.cs" />
+    <Compile Include="Controllers\Transaction\TaskTypeContainerController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionAttendeeController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionLineController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionPaymentStatusController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionProfileController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\AttractionSchedulesController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\AttractionSchedulesViewController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\ConsolidateCardsController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\LoadBonusController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\MoveAttractionSchedulesController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\MoveAttractionBookingsController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\RedeemLoyaltyPointsController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionService\RescheduleAttractionBookingsController.cs" />
+    <Compile Include="Controllers\Transaction\LatestSignedWaiverCustomerController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionWaiverMapController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionStatusController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionUnAssignRiderController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionUpdateRiderAssignmentRemarksController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionUpdateRiderDeliveryStatusController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionUpdatePaymentModeDetailsController.cs" />
+    <Compile Include="Controllers\Transaction\TrxPOSPrinterOverrideRulesController.cs" />
+    <Compile Include="Controllers\Transaction\SubmitUrbanPiperOrderCancellationRequestController.cs" />
+    <Compile Include="Controllers\WebCMS\CMSBannerController.cs" />
+    <Compile Include="Controllers\WebCMS\CMSConfigurationsController.cs" />
+    <Compile Include="Controllers\CommonServices\CustomAttributesController.cs" />
+    <Compile Include="Controllers\CommonServices\OTPController.cs" />
+    <Compile Include="Controllers\CommonServices\SendEmailController.cs" />
+    <Compile Include="Controllers\Customer\CustomerLoginController.cs" />
+    <Compile Include="Controllers\Customer\CustomerRelationshipController.cs" />
+    <Compile Include="Controllers\Customer\Membership\MembershipsController.cs" />
+    <Compile Include="Controllers\Customer\Waivers\CustomerSignedWaiversController.cs" />
+    <Compile Include="Controllers\ParafaitEnvironment\ExecutionContextController.cs" />
+    <Compile Include="Controllers\POS\POSMachineTypeController.cs" />
+    <Compile Include="Controllers\Security\SecurityTokensController.cs" />
+    <Compile Include="Controllers\ThirdParty\GoogleCaptchaController.cs" />
+    <Compile Include="Controllers\Transaction\HostedPaymentGatewayController.cs" />
+    <Compile Include="Controllers\Transaction\PaymentModesController.cs" />
+    <Compile Include="Controllers\WebCMS\CMSMenuController.cs" />
+    <Compile Include="Controllers\WebCMS\CMSModuleController.cs" />
+    <Compile Include="Controllers\WebCMS\CMSPageController.cs" />
+    <Compile Include="Helpers\ExceptionSerializer.cs" />
+    <Compile Include="Helpers\ExecutionContextBuilder.cs" />
+    <Compile Include="Helpers\ManagementFormAccessService.cs" />
+    <Compile Include="Helpers\RequestIdentifierHelper.cs" />
+    <Compile Include="Localization\AchievementsLocalizationBL.cs" />
+    <Compile Include="Localization\CustomerRegistrationLocalizationBL.cs" />
+    <Compile Include="Localization\MaintenanceLocalizationBL.cs" />
+    <Compile Include="Localization\PromotionsLocalizationBL.cs" />
+    <Compile Include="Localization\SiteSetupLocalizationBL.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountServicesController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountAuditTrailController.cs" />
+    <Compile Include="Controllers\Customer\AddressTypeController.cs" />
+    <Compile Include="Controllers\Customer\CardSerialMappingController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\TokenCardInventoryController.cs" />
+    <Compile Include="Controllers\CommonServices\AdvancedSearchController.cs" />
+    <Compile Include="Controllers\CommonServices\CommonAuditController.cs" />
+    <Compile Include="Controllers\CommonServices\CommonLookupController.cs" />
+    <Compile Include="Controllers\CommonServices\CommonLookupFilterController.cs" />
+    <Compile Include="Controllers\CommonServices\FileUploadController.cs" />
+    <Compile Include="Controllers\CommonServices\GamePlaysCardActivityController.cs" />
+    <Compile Include="Controllers\CommonServices\GamePlaysConsolidatedCardActivityController.cs" />
+    <Compile Include="Controllers\CommonServices\GamePlaysSummaryController.cs" />
+    <Compile Include="Controllers\CommonServices\GenericCalendarController.cs" />
+    <Compile Include="Controllers\CommonServices\LoggingController.cs" />
+    <Compile Include="Controllers\CustomerApp\CustomerAppConfigurationController.cs" />
+    <Compile Include="Controllers\CustomerApp\CustomerAppUserLogController.cs" />
+    <Compile Include="Controllers\CommonServices\RichContentController.cs" />
+    <Compile Include="Controllers\Customer\Accounts\AccountController.cs" />
+    <Compile Include="Controllers\Customer\ContactTypeController.cs" />
+    <Compile Include="Controllers\Customer\CustomerController.cs" />
+    <Compile Include="Controllers\Customer\CustomerServicesController.cs" />
+    <Compile Include="Controllers\Customer\CustomerUIMetaDataController.cs" />
+    <Compile Include="Controllers\Customer\CustomerDeviceVerificationController.cs" />
+    <Compile Include="Controllers\Customer\CustomerVerificationController.cs" />
+    <Compile Include="Controllers\CommonServices\LocalizationController.cs" />
+    <Compile Include="Controllers\DigitalSignage\DisplayPanelController.cs" />
+    <Compile Include="Controllers\DigitalSignage\EventController.cs" />
+    <Compile Include="Controllers\Games\GameController.cs" />
+    <Compile Include="Controllers\Games\GameProfileController.cs" />
+    <Compile Include="Controllers\Games\HubController.cs" />
+    <Compile Include="Controllers\Games\InputDevicesController.cs" />
+    <Compile Include="Controllers\Games\MachinesController.cs" />
+    <Compile Include="Controllers\CommonServices\PublishToSiteController.cs" />
+    <Compile Include="Controllers\Games\ReaderConfigurationsController.cs" />
+    <Compile Include="Controllers\Games\MachineServicesController.cs" />
+    <Compile Include="Controllers\Login\HomeController.cs" />
+    <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\POS\POSMachinesController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionController.cs" />
+    <Compile Include="Controllers\Transaction\TransactionServicesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AllFormates.cs" />
+    <Compile Include="Helpers\CustomAttributesWrapperBL.cs" />
+    <Compile Include="Localization\AccountsLocalizationBL.cs" />
+    <Compile Include="Localization\DigitalSignageLocalizationBL.cs" />
+    <Compile Include="Localization\GamesLocalizationBL.cs" />
+    <Compile Include="Localization\ProductsLocalizationBL.cs" />
+    <Compile Include="Localization\WaiverLocalizationBL.cs" />
+    <Compile Include="Lookups\AccountLookupBL.cs" />
+    <Compile Include="Lookups\AchievementsLookupBL.cs" />
+    <Compile Include="Lookups\CustomerFeedbackLookupBL.cs" />
+    <Compile Include="Lookups\DigitalSignageLookupBL.cs" />
+    <Compile Include="Lookups\GameLookupBL.cs" />
+    <Compile Include="Lookups\MaintenanceLookUpBL.cs" />
+    <Compile Include="Lookups\ProductsLookupBL.cs" />
+    <Compile Include="Lookups\PromotionsLookupBL.cs" />
+    <Compile Include="Lookups\SiteSetupLookupBL.cs" />
+    <Compile Include="Lookups\ToolsLookupBL.cs" />
+    <Compile Include="Lookups\WaiverLookupBL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Achievements\Achievements.csproj">
+      <Project>{CAC2D3C5-DA16-4605-BAF1-10E981903547}</Project>
+      <Name>Achievements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Authentication\Authentication.csproj">
+      <Project>{800edadc-f5a6-4a74-94ec-1267a91065d1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Booking\Booking.csproj">
+      <Project>{77771DFD-58F0-4A77-A46F-BC752075E760}</Project>
+      <Name>Booking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\CardCoreDTO\CardCoreDTO.csproj">
+      <Project>{d7b2505f-76db-46fe-a58b-2386268fd5ff}</Project>
+      <Name>CardCoreDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\CardCore\CardCore.csproj">
+      <Project>{e1bd4cc7-8efc-4565-a533-39802828d243}</Project>
+      <Name>CardCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Category\Category.csproj">
+      <Project>{1b64ec1e-f381-485b-8c69-a07f80a27775}</Project>
+      <Name>Category</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\ClientApp\ClientApp.csproj">
+      <Project>{953da20d-efd1-4e3f-8481-d879c9569ee6}</Project>
+      <Name>ClientApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Currency\Currency.csproj">
+      <Project>{D85E4F46-B1DB-4319-B8C8-9AAF5A81A5F3}</Project>
+      <Name>Currency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\CustomerApp\CustomerApp.csproj">
+      <Project>{0d916cda-469c-4134-ad7c-a9f3e864dcbe}</Project>
+      <Name>CustomerApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\DashBoard\DashBoard.csproj">
+      <Project>{059a5263-e17d-4133-a878-f8c22c554db1}</Project>
+      <Name>DashBoard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\DBSynch\DBSynch.csproj">
+      <Project>{0ba61f06-b401-4dde-b374-e54f8ecae187}</Project>
+      <Name>DBSynch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\DeliveryIntegration\DeliveryIntegration.csproj">
+      <Project>{5ba13e6a-641c-4c51-9c15-256003f0e063}</Project>
+      <Name>DeliveryIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\DigitalSignage\DigitalSignage.csproj">
+      <Project>{ca9e1908-ed0e-4f91-ace2-7ed7fc3c8d6c}</Project>
+      <Name>DigitalSignage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Discounts\Discounts.csproj">
+      <Project>{f0fde99a-725f-45c2-9cd8-b7961088ea2c}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Fiscalization\Fiscalization.csproj">
+      <Project>{446EC140-1049-459F-AAE3-96FC211D1928}</Project>
+      <Name>Fiscalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Fiscalization\Fiscalization.csproj">
+      <Project>{446ec140-1049-459f-aae3-96fc211d1928}</Project>
+      <Name>Fiscalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Inventory\Inventory.csproj">
+      <Project>{af244e4d-b6f8-4fb7-979d-3e82236fe4ad}</Project>
+      <Name>Inventory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\KioskUIFramework\KioskUIFramework.csproj">
+      <Project>{5B92BB54-879C-46D9-9C34-585DDA7DF71A}</Project>
+      <Name>KioskUIFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Lockers\Lockers.csproj">
+      <Project>{3B914EE9-767A-458E-83C3-6E434556A1A9}</Project>
+      <Name>Lockers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Maintenance\Maintenance.csproj">
+      <Project>{EE8E47B7-BA5D-49E1-8000-C8388C8F3B12}</Project>
+      <Name>Maintenance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\POS\POS.csproj">
+      <Project>{edd835a5-1862-4aed-b3f0-1c134b40fdb4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\PriceList\PriceList.csproj">
+      <Project>{0B195894-EAC2-4E9A-A5E3-AA8AE1A47E6B}</Project>
+      <Name>PriceList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\ProductPrice\ProductPrice.csproj">
+      <Project>{9ced5a08-f997-495a-8e2e-f1cc6b65e18b}</Project>
+      <Name>ProductPrice</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Promotions\Promotions.csproj">
+      <Project>{9F184AF5-E406-4FC8-AC22-DC29351D016C}</Project>
+      <Name>Promotions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Publish\Publish.csproj">
+      <Project>{a707f773-c706-429b-b031-70c69c9adfd1}</Project>
+      <Name>Publish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Redemption\RedemptionUtils.csproj">
+      <Project>{1A20E3DE-4198-46C4-8C5B-0AC1FCB727A1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Reports\Reports.csproj">
+      <Project>{41A713DA-1CA8-4C0B-86ED-FA33580248D9}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\ServerCore\ServerCore.csproj">
+      <Project>{7bb265ba-7fee-47c3-8e7e-11021f49a085}</Project>
+      <Name>ServerCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\TableAttributeDetailsUtils\TableAttributeDetailsUtils.csproj">
+      <Project>{aeb18543-ea36-40e4-b956-9b6def17209a}</Project>
+      <Name>TableAttributeDetailsUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\TableAttributeSetup\TableAttributeSetup.csproj">
+      <Project>{662f83d7-b7dd-4690-9d21-62188991cb29}</Project>
+      <Name>TableAttributeSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Tags\Tags.csproj">
+      <Project>{D682B493-8A01-45A2-A934-58F141923C0D}</Project>
+      <Name>Tags</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\ThirdParty\ThirdParty.csproj">
+      <Project>{45C69515-B9A7-44F3-882B-0B53548226F1}</Project>
+      <Name>ThirdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\User\User.csproj">
+      <Project>{e30d3295-e230-44d2-880d-22bf5a349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Vendor\Vendor.csproj">
+      <Project>{585E3765-3096-451D-89C0-97C9B845DBE7}</Project>
+      <Name>Vendor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\ViewContainer\ViewContainer.csproj">
+      <Project>{B73AF819-C0B5-4AA6-8C09-E8643F1437D1}</Project>
+      <Name>ViewContainer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\Waiver\Waiver.csproj">
+      <Project>{b4419625-2d92-4e3b-99b3-2df03a45cd59}</Project>
+      <Name>Waiver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WinApp\Semnox\CommonSolution\WebCMS\WebCMS.csproj">
+      <Project>{f73134af-2b47-49dd-af15-4bee29b519dd}</Project>
+      <Name>WebCMS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60875</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60875/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:60875/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost:8080/</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

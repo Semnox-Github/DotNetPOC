@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report DataSourceName="dsSite" Width="7.96013855732357in" Name="BookingCheckList" Zoom="1.00607765" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select site_address,logo from site" CommandTimeout="600" Name="dsSite" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select isnull(ReservationCode,'') ReservationCode from bookings&#xD;&#xA;where BookingId =@BookingId" Name="dsBookingInfo">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select TaskGroupName checkListName&#xD;&#xA;from Maint_TaskGroups MTG, BookingCheckList bcl&#xD;&#xA;where MTG.MaintTaskGroupId = bcl.ChecklistTaskGroupId&#xD;&#xA;and bcl.BookingId = @BookingId&#xD;&#xA;and bcl.BookingCheckListId = @BookingCheckListId " Name="dsCheckListName">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingCheckListId">
+          <Value>
+            <String>= Parameters.BookingCheckListId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select BookingHostTasks.taskName as JobName,&#xD;&#xA;   BookingHostTasks.ChklistValue as Checked,&#xD;&#xA;BookingHostTasks.ChklstScheduleTime as ScheduleDate,&#xD;&#xA;BookingHostTasks.Status,&#xD;&#xA;BookingHostTasks.AssignedUserId,&#xD;&#xA;BookingHostTasks.AssignedTo,&#xD;&#xA;BookingHostTasks.ChecklistCloseDate as CloseDate,&#xD;&#xA;BookingHostTasks.ChklistRemarks as Remarks,&#xD;&#xA;lp.Description,&#xD;&#xA;BookingHostTasks.IsActive BookingHostTasksActive,&#xD;&#xA;ChkListTask.isActive ChkListTask&#xD;&#xA;from Maint_Schedule bookingSchedule,&#xD;&#xA;      Maint_SchAssetTasks ChkListTask,&#xD;&#xA;      Maint_ChecklistDetails BookingHostTasks&#xD;&#xA;         left outer join LookupView lp on lp.LookupValueId = BookingHostTasks.Status and lp.LookupName='MAINT_JOB_STATUS'&#xD;&#xA;where bookingSchedule.MaintScheduleId = ChkListTask.MaintScheduleId&#xD;&#xA;and ChkListTask.BookingId =  @BookingId&#xD;&#xA;and ChkListTask.BookingCheckListId =  @BookingCheckListId &#xD;&#xA;and ChkListTask.MaintSchAssetTaskId = BookingHostTasks.MaintschAssetTaskId&#xD;&#xA;and ChkListTask.MaintScheduleId = BookingHostTasks.MaintScheduleId&#xD;&#xA;and ChkListTask.IsActive = 'Y'&#xD;&#xA;and BookingHostTasks.IsActive = 'Y'" Name="dsCheckinListData">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingCheckListId">
+          <Value>
+            <String>= Parameters.BookingCheckListId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection CanShrink="False" KeepTogether="False" Height="1.90007877349853in" Name="detailSection1">
+      <Style Visible="True">
+        <Font Name="Arial Unicode MS" Size="12pt" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsCheckinListData" Width="7.94624787364437in" Height="0.670754753745711in" Left="0in" Top="0.0999999865889549in" RowHeadersPrintOnEveryPage="False" ColumnHeadersPrintOnEveryPage="False" KeepTogether="False" Name="crosstab2" StyleName="Office.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.26204282228884in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.JobName" CanShrink="False" Name="textBox9" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.771011144447778in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.Checked" CanShrink="False" Name="textBox10" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.28287476294966in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.ScheduleDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" CanShrink="False" Name="textBox11" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.1974640257944in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.Description" CanShrink="False" Name="textBox12" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.991207412521728in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.AssignedTo" CanShrink="False" Name="textBox13" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24443485977366in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.CloseDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" CanShrink="False" Name="textBox14" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.19721264389082in" Height="0.335376057529594in" Left="0in" Top="0in" KeepTogether="False" Value="= Fields.Remarks" CanShrink="False" Name="textBox15" StyleName="Office.TableBody">
+                    <Style BackgroundColor="234, 238, 255" Color="Black" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="9pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="Linen" Top="Black" />
+                      <BorderWidth Top="2px" />
+                      <Padding Left="5pt" Top="3pt" Bottom="3pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.26204276906639in" />
+              <Column Width="0.771011219899239in" />
+              <Column Width="1.28287493692501in" />
+              <Column Width="1.19746381835873in" />
+              <Column Width="0.99120735849364in" />
+              <Column Width="1.24443485977366in" />
+              <Column Width="1.19721314794434in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.335376057529594in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="jobName">
+              <ReportItem>
+                <TextBox Width="1.26204282228884in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Job Name')" CanShrink="True" Name="textBox1" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Left">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="checked">
+              <ReportItem>
+                <TextBox Width="0.771011144447778in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Checked?')" CanShrink="True" Name="textBox3" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="scheduleDate">
+              <ReportItem>
+                <TextBox Width="1.28287476294966in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Schedule Date')" CanShrink="True" Name="textBox4" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="status">
+              <ReportItem>
+                <TextBox Width="1.1974640257944in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Status')" CanShrink="True" Name="textBox5" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="assignedTo">
+              <ReportItem>
+                <TextBox Width="0.991207412521728in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Assigned User')" CanShrink="True" Name="textBox6" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="closeDate">
+              <ReportItem>
+                <TextBox Width="1.24443485977366in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Close Date')" CanShrink="True" Name="textBox7" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="remarks">
+              <ReportItem>
+                <TextBox Width="1.19721264389082in" Height="0.335378696216117in" Left="0in" Top="0in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Remarks')" CanShrink="True" Name="textBox8" StyleName="Office.TableHeader">
+                  <Style BackgroundColor="157, 184, 253" Color="Black" TextAlign="Center">
+                    <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <Padding Left="5pt" Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageHeaderSection PrintOnFirstPage="True" Height="0.900000035762787in" Name="pageHeaderSection1">
+      <Items>
+        <HtmlTextBox Width="7.9601382513841in" Height="0.300000031789144in" Left="0in" Top="0.200000047683716in" Value="&lt;span style=&quot;font-size: 12pt&quot;&gt;&lt;span style=&quot;font-size: 13pt&quot;&gt;&lt;strong&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Reservation Code&quot;))} :&lt;/strong&gt;&amp;nbsp;{= HtmlEncode(Parameters.ReservationCode.Value)}&lt;/span&gt;&lt;/span&gt;" Name="htmlTextBox1">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="7.96013834079107in" Height="0.299999882777532in" Left="0in" Top="0.5in" Value="&lt;span style=&quot;font-size: 12pt&quot;&gt;&lt;span style=&quot;font-size: 13pt&quot;&gt;&lt;strong&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Check List Name&quot;))} :&lt;/strong&gt;&amp;nbsp;{= HtmlEncode(Parameters.CheckListname.Value)}&lt;/span&gt;&lt;/span&gt;" Name="htmlTextBox2">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+      </Items>
+    </PageHeaderSection>
+    <PageFooterSection Height="0.300000190734863in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="2.69441699981689in" Height="0.199960072835286in" Left="4.20000076293945in" Top="0.00003949638388197in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox2">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+  </Items>
+  <PageSettings PaperKind="A4" Landscape="True" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="0.100000001490116in" Right="0.100000001490116in" Top="0.200000002980232in" Bottom="0.200000002980232in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="188, 211, 241" Color="20, 34, 77">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="35, 92, 169" Color="238, 244, 251">
+        <Font Name="Calibri" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="238, 244, 251" Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowNull="True" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String>=AllValues(Fields.Id)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BookingId" Type="Integer" Text="BookindId" Visible="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CustomerPassPhrase" Text="CustomerPassPhrase" />
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Text="AmountWithCurSymbolCellFormat" />
+    <ReportParameter Name="ReservationCode" Mergeable="False" Text="ReservationCode" AllowNull="True">
+      <AvailableValues DataSourceName="dsBookingInfo" DisplayMember="= Fields.ReservationCode" ValueMember="= Fields.ReservationCode" />
+      <Value>
+        <String>= Fields.ReservationCode</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CheckListname" Mergeable="False" Text="CheckListname" AllowNull="True">
+      <AvailableValues DataSourceName="dsCheckListName" DisplayMember="= Fields.checkListName" ValueMember="= Fields.checkListName" />
+      <Value>
+        <String>= Fields.checkListName</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BookingCheckListId" Type="Integer" Text="BookingCheckListId" Visible="True" AllowNull="True" />
+  </ReportParameters>
+</Report>

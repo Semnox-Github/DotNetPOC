@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Plus_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Plus_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Keypad _Key_Purple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key_Purple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="game_price_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\game-price-table.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Keypad _Key" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow scroll down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Arrow scroll down.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Language.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="White_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\White_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pop up_Bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\Pop up_Bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Any amount_Purple1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount_Purple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Header_Bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\headeritems\Header_Bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Purple_Close btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Play Pass Package_Popup\Purple_Close btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Change Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Change Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Menu Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Menu Items\Menu Header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Lunch Buffet_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Buffet_Screen\Lunch Buffet_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Check_Yes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Check_Yes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="product_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\product-table.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Drinks Pop up Screen_White Bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Drinks Pop up Screen_White Bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Debit Card Pin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Debit Card Pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\Close_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProductSalePopUp1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\ProductSalePopUp1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bg_Purple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Bg_Purple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Terms of Use" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Terms of Use.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Drinks Pop up Screen_Purple Bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Drinks Pop up Screen_Purple Bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number Display_Orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Number Display_Orange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Appetizers_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Menu Items\Appetizers_Normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="White_Header_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\headeritems\White_Header_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProductSalePopUp2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\ProductSalePopUp2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Finished_Screen_Image_1216" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Finished_Screen_Image_1216.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Subs_Screen_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Subs_Screen_Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Key Pad_Right Arrow Key" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Key Pad_Right Arrow Key.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pizza_Screen_BYO Popup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Pizza_Screen_BYO Popup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Green_Popup_Bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Play Pass Package_Popup\Green_Popup_Bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="White_Drop Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\White_Drop Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Header_Bg_New" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\headeritems\Header_Bg_New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Key Pad_Left Arrow Key" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Key Pad_Left Arrow Key.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Number_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cancel Order" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Cancel Order.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minus_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Minus_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Header_MainMenu_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\headeritems\Header_MainMenu_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dropdown_Btn_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Dropdown_Btn_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="timeout_box_violet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\timeout-box-violet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dropdown_Btn_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Dropdown_Btn_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Allergen &amp; Nutrition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Allergen &amp; Nutrition.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Confirm_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Buffet_Screen\Confirm_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusMinus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\PlusMinus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Up Arrow_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Up Arrow_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cards_Info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Cards_Info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrderNumber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\OrderNumber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Popup 955x1845" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Popup 955x1845.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Check_No" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Check_No.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Other_Btn_Pressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Other_Btn_Pressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Key Pad_Key" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Key Pad_Key.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Any amount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Place Order" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Place Order.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Down Arrow_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Down Arrow_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number Display" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Checkout Screen _Popup\Number Display.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Credit Card_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Credit Card_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProductSalePopUp4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\ProductSalePopUp4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Any amount_Purple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount_Purple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Arrow Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Backspace_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Backspace_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Back toMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Back toMenu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dropdown_Btn_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Dropdown_Btn_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_Btn_Pressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Number_Btn_Pressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Keypad _Key_Green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key_Green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bg_Grey_Add Item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Checkout_Screen\Bg_Grey_Add Item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Any amount_Green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount_Green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Buffet_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Buffet_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Other_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Other_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProductSalePopUp3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\ProductSalePopUp3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Character_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Play Pass Package_Popup\Character_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Privacy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Open_Screen\Privacy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pop up_Purple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\EatPlay_Screen_Cards Pop Up\Pop up_Purple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Green_Btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\popupitems\Green_Btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dropdown_Btn_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Media\Control Images\Dropdown_Btn_11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cash_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cash_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

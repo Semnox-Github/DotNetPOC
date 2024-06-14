@@ -1,0 +1,243 @@
+﻿<Window x:Class="Semnox.Parafait.GamesUI.GMAddMachineView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.GamesUI"
+        mc:Ignorable="d"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        Style="{StaticResource PopupWithFooterWindowStyle}"
+        Title="Add Machine">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="MainGridHeaderRow"
+                           Height="Auto" />
+
+            <RowDefinition x:Name="MainGridContentRow"
+                           Height="7*" />
+            <RowDefinition x:Name="MainGridFooterRow"
+                           Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <common:CustomTextBlock x:Name="TitleLabel"
+                                Grid.Row="0"
+                                Margin="16"
+                                Text="Add New Machine"
+                                FontWeight="Bold"
+                                TextSize="Medium"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource Control.BorderBrush.Focused}" />
+
+        <Border x:Name="ContentTopBorder"
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <common:CustomScrollViewer x:Name="ContainerScrollViewer"
+                                       Margin="16"
+                                       CanContentScroll="True"
+                                       HorizontalScrollBarVisibility="Auto"
+                                       VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="GMAddMachineGridContainer">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="GMAddMachineGridFirstColumn"
+                                          Width="1*" />
+                        <ColumnDefinition x:Name="GMAddMachineGridSecondColumn"
+                                          Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="LeftContentGridContainer"
+                          Margin="0,0,8,0"
+                          Grid.Column="0">
+                        <StackPanel x:Name="LeftContentStackPanel"
+                                    Margin="16,0,8,0">
+                            <common:CustomComboBox x:Name="cmbGameName"
+                                                   DisplayMemberPath="GameName"
+                                                   IsMandatory="True"
+                                                   DefaultValue="Select"
+                                                   SelectedItem="{Binding SelectedGameName}"
+                                                   IsEditable="True"
+                                                   Size="Medium"
+                                                   DisplayMemberPathCollection="{Binding SelectedCollection}"
+                                                   EditableItemsSource="{Binding GameNames}"
+                                                   Heading="Game Name"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+                            <common:CustomComboBox x:Name="cmbTicketMode"
+                                                   ItemsSource="{Binding TicketModes}"                                                  
+                                                   IsMandatory="True"
+                                                   SelectedItem="{Binding SelectedTicketMode, Mode=TwoWay}"
+                                                   IsEditable="True"
+                                                   Size="Medium"
+                                                   Heading="Ticket Mode"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+                            <common:CustomTextBox x:Name="txtSerialNumber"
+                                                  Heading="Serial Number"
+                                                  Text="{Binding AddMachineDetails.SerialNumber,Mode=TwoWay}"
+                                                  DefaultValue="Enter"
+                                                  Size="Medium"
+                                                  MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+                            <common:CustomTextBox x:Name="txtMac"
+                                                  Heading="Mac Address"
+                                                  DefaultValue="Enter"
+                                                  Text="{Binding AddMachineDetails.MacAddress,Mode=TwoWay}"
+                                                  Size="Medium"
+                                                  MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+                            <common:CustomTextBox x:Name="txtPulseCount"
+                                                  Heading="Pulse Count"
+                                                  DefaultValue="Enter"
+                                                  Size="Medium"
+                                                  ValidationType="NumberOnly"
+                                                  Text="{Binding PulseCount,Mode=TwoWay}"
+                                                  MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+                            <common:CustomTextBox x:Name="txtMachineTag"
+                                                  Heading="Machine Tag"
+                                                  Size="Medium"
+                                                  Text="{Binding AddMachineDetails.MachineTag,Mode=TwoWay}"
+                                                  MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid x:Name="RightContentGridContainer"
+                          Margin="8,0,8,0"
+                          Grid.Column="1">
+                        <StackPanel x:Name="RightContentStackPanel"
+                                    Margin="8,0,16,0">
+
+                            <common:CustomTextBox x:Name="txtMachineName"
+                                                  Heading="Machine Name"
+                                                  IsMandatory="True"
+                                                  Size="Medium"
+                                                  IsEnabled="{Binding MachineNameEnabled}"
+                                                  Text="{Binding AddMachineName,UpdateSourceTrigger=PropertyChanged}"
+                                                  MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}">
+                                <common:CustomTextBox.Style>
+                                    <Style TargetType="{x:Type common:CustomTextBox}"
+                                   BasedOn="{StaticResource {x:Type common:CustomTextBox}}">
+                                        <Setter Property="Visibility"   
+                                        Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DataContext.ShowComboBox, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                Value="true">
+                                                <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </common:CustomTextBox.Style>
+
+                            </common:CustomTextBox>
+                            <common:CustomComboBox x:Name="cmbMachineName"
+                                                   ItemsSource="{Binding AllowedMachineNameKeyValuePairs}"
+                                                   Heading="Machine Name"
+                                                   IsMandatory="True"
+                                                   Size="Medium"
+                                                   DefaultValue="Select"
+                                                   IsEditable="True"
+                                                   DisplayMemberPath="Value"
+                                                   SelectedItem="{Binding SelectedAllowedMachineNameKeyValuePair,Mode=TwoWay}"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}">
+                                <common:CustomComboBox.Style>
+                                    <Style TargetType="{x:Type common:CustomComboBox}"
+                                   BasedOn="{StaticResource {x:Type common:CustomComboBox}}">
+                                        <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DataContext.ShowComboBox, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                Value="true">
+                                                <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </common:CustomComboBox.Style>
+                            </common:CustomComboBox>
+
+                            <common:CustomComboBox x:Name="cmbHubName"
+                                                   ItemsSource="{Binding HubNames}"
+                                                   IsMandatory="True"
+                                                   DisplayMemberPath="HubNameWithMachineCount"
+                                                   DefaultValue="Select"
+                                                   SelectedItem="{Binding SelectedHubName}"
+                                                   IsEditable="True"
+                                                   Size="Medium"
+                                                   Heading="Access Point"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+
+
+                            <common:CustomComboBox x:Name="cmbThemeName"
+                                                   ItemsSource="{Binding ThemeNames}"
+                                                   SelectedItem="{Binding SelectedThemeName}"
+                                                   DefaultValue="Select"
+                                                   DisplayMemberPath="ThemeNameWithThemeNumber"
+                                                   IsEditable="True"
+                                                   Size="Medium"
+                                                   Heading="Theme Number"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+                            <common:CustomCheckBox x:Name="cbxReverseDisplay"
+                                                   Size="Medium"
+                                                   Heading="Reverse Display"
+                                                   IsChecked="{Binding ReverseDisplay}"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+
+                            <common:CustomComboBox x:Name="cmbRefMachineName"
+                                                   ItemsSource="{Binding RefMachineNames}"
+                                                   SelectedItem="{Binding SelectedRefMachineName}"
+                                                   DisplayMemberPath="{Binding MachineDisplayMemberPath}"
+                                                   DefaultValue="Select"
+                                                   IsEditable="True"
+                                                   Size="Medium"
+                                                   Heading="Reference Machine"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContent_Grid}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </common:CustomScrollViewer>
+        </Border>
+
+        <Border x:Name="FooterTopBorder"
+                Grid.Row="2"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <Grid x:Name="FooterGrid"
+                  Margin="20,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="FooterActionAreaColumn"
+                                      Width="9*" />
+                    <ColumnDefinition x:Name="FooterKeyBoardColumn"
+                                      Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel x:Name="FooterActionAreaStackPanel"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center">
+
+                    <common:CustomActionButton x:Name="btnFooterCancel"
+                                               Grid.Column="1"
+                                               ActionStyle="Passive"
+                                               IsEnabled="True"
+                                               Width="{StaticResource ActionButtonWidth}"
+                                               Content="CANCEL"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                               Command="{Binding CancelMachineCommand}" />
+                    <common:CustomActionButton x:Name="btnFooterOk"
+                                               Grid.Row="2"
+                                               Margin="16,0,0,0"
+                                               Width="{StaticResource ActionButtonWidth}"
+                                               Command="{Binding AddMachineCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GMAddMachineView}}"
+                                               Content="ADD" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

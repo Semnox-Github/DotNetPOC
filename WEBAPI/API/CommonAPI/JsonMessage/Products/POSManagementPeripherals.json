@@ -1,0 +1,38 @@
+﻿[
+  {
+    "DeviceId": 2,
+    "DeviceName": "Indra",
+    "PosMachineId": 4,
+    "DeviceType": "BarcodeReader",
+    "DeviceSubType": "ACR122U",
+    "Vid": "",
+    "Pid": "",
+    "OptionalString": "",
+    "SiteId": -1,
+    "Guid": "42250483-ac21-4be3-8d03-7a635a06b392",
+    "SynchStatus": false,
+    "LastUpdatedDate": "2019-01-16T11:29:07.987",
+    "LastUpdatedUser": "semnox",
+    "Active": true,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "DeviceId": 3,
+    "DeviceName": "Device Indar",
+    "PosMachineId": 4,
+    "DeviceType": "CardReader",
+    "DeviceSubType": "KeyboardWedge",
+    "Vid": "",
+    "Pid": "",
+    "OptionalString": "",
+    "SiteId": -1,
+    "Guid": "358f93d9-d03e-4fd8-a1fd-3443878b7400",
+    "SynchStatus": false,
+    "LastUpdatedDate": "2019-01-23T11:58:06.13",
+    "LastUpdatedUser": "semnox",
+    "Active": true,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

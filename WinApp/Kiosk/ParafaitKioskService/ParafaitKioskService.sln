@@ -1,0 +1,143 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1800
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParafaitKioskService", "ParafaitKioskService\ParafaitKioskService.csproj", "{EC544F7C-C319-4544-9640-CED268DAEC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobUtils", "..\..\CommonSolution\JobUtils\JobUtils.csproj", "{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "..\..\CommonSolution\Communication\Communication.csproj", "{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\CommonSolution\Logging\Logging.csproj", "{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Languages", "..\..\CommonSolution\Languages\Languages.csproj", "{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\..\CommonSolution\Utilities\Utilities.csproj", "{667EAB12-6C89-48ED-9FCB-934697CC2779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Site", "..\..\CommonSolution\Site\Site.csproj", "{B0419249-F9F6-425F-9B56-13D2E12F319F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericUtilities", "..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj", "{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "logger", "..\..\CommonSolution\logger\logger.csproj", "{36B671D0-EF70-42DB-940B-6A3622023F58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Debug|x86.ActiveCfg = Debug|x86
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Debug|x86.Build.0 = Debug|x86
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{EC544F7C-C319-4544-9640-CED268DAEC4A}.Release|x86.Build.0 = Release|Any CPU
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Debug|x86.ActiveCfg = Debug|x86
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Debug|x86.Build.0 = Debug|x86
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Release|x86.ActiveCfg = Release|x86
+		{294CBA54-BBEA-40CF-BA8C-470D64DEF3D8}.Release|x86.Build.0 = Release|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|x86.ActiveCfg = Debug|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|x86.Build.0 = Debug|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|x86.ActiveCfg = Release|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|x86.Build.0 = Release|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|x86.ActiveCfg = Debug|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|x86.Build.0 = Debug|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|x86.ActiveCfg = Release|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|x86.Build.0 = Release|x86
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Debug|x86.ActiveCfg = Debug|x86
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Debug|x86.Build.0 = Debug|x86
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Release|x86.ActiveCfg = Release|x86
+		{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}.Release|x86.Build.0 = Release|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|x86.ActiveCfg = Debug|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|x86.Build.0 = Debug|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|x86.ActiveCfg = Release|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|x86.Build.0 = Release|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|x86.ActiveCfg = Debug|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|x86.Build.0 = Debug|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|x86.ActiveCfg = Release|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|x86.Build.0 = Release|x86
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Debug|x86.ActiveCfg = Debug|x86
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Debug|x86.Build.0 = Debug|x86
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Release|x86.ActiveCfg = Release|x86
+		{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}.Release|x86.Build.0 = Release|x86
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Debug|x86.ActiveCfg = Debug|x86
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Debug|x86.Build.0 = Debug|x86
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Release|x86.ActiveCfg = Release|x86
+		{36B671D0-EF70-42DB-940B-6A3622023F58}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {486521AC-2248-4AF0-A871-A2A186C57BFA}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.20.201:8080/tfs/semnox
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ParafaitKioskService\\ParafaitKioskService.csproj
+		SccProjectName1 = ParafaitKioskService
+		SccLocalPath1 = ParafaitKioskService
+		SccProjectUniqueName2 = ..\\..\\CommonSolution\\JobUtils\\JobUtils.csproj
+		SccProjectName2 = ../../CommonSolution/JobUtils
+		SccLocalPath2 = ..\\..\\CommonSolution\\JobUtils
+		SccProjectUniqueName3 = ..\\..\\CommonSolution\\Communication\\Communication.csproj
+		SccProjectName3 = ../../CommonSolution/Communication
+		SccLocalPath3 = ..\\..\\CommonSolution\\Communication
+		SccProjectUniqueName4 = ..\\..\\CommonSolution\\Logging\\Logging.csproj
+		SccProjectName4 = ../../CommonSolution/Logging
+		SccLocalPath4 = ..\\..\\CommonSolution\\Logging
+		SccProjectUniqueName5 = ..\\..\\CommonSolution\\Languages\\Languages.csproj
+		SccProjectName5 = ../../CommonSolution/Languages
+		SccLocalPath5 = ..\\..\\CommonSolution\\Languages
+		SccProjectUniqueName6 = ..\\..\\CommonSolution\\Utilities\\Utilities.csproj
+		SccProjectName6 = ../../CommonSolution/Utilities
+		SccLocalPath6 = ..\\..\\CommonSolution\\Utilities
+		SccProjectUniqueName7 = ..\\..\\CommonSolution\\Site\\Site.csproj
+		SccProjectName7 = ../../CommonSolution/Site
+		SccLocalPath7 = ..\\..\\CommonSolution\\Site
+		SccProjectUniqueName8 = ..\\..\\CommonSolution\\GenericUtilities\\GenericUtilities.csproj
+		SccProjectName8 = ../../CommonSolution/GenericUtilities
+		SccLocalPath8 = ..\\..\\CommonSolution\\GenericUtilities
+		SccProjectUniqueName9 = ..\\..\\CommonSolution\\logger\\logger.csproj
+		SccProjectName9 = ../../CommonSolution/logger
+		SccLocalPath9 = ..\\..\\CommonSolution\\logger
+	EndGlobalSection
+EndGlobal

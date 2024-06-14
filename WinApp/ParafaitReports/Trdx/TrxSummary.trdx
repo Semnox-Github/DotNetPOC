@@ -1,0 +1,1276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="8.17085393269857in" Name="TrxSummary" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=Parafait;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="select Convert(varchar(12), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 6) Date,&#xD;&#xA;    count(distinct trxid) ops, &#xD;&#xA;    sum(net_amount * (cashRatio + CreditCardRatio)) net_amount,&#xD;&#xA;    sum(tax * (cashRatio + CreditCardRatio)) net_tax,&#xD;&#xA;    sum(amount * (cashRatio + CreditCardRatio)) gross_total,&#xD;&#xA;&#x9;sum(net_amount * (GameCardRatio)) void_amount,&#xD;&#xA;&#x9;sum(tax * (GameCardRatio)) void_tax,&#xD;&#xA;&#x9;sum(tax) total_tax,&#xD;&#xA;    CONVERT(VARCHAR(8), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 112) sort&#xD;&#xA;from TransactionView &#xD;&#xA;where trxdate &gt; dbo.ConvertToServerTime(@fromDate,@offSet) and trxdate &lt; dbo.ConvertToServerTime(@toDate,@offSet) and ((site_id in (@site)) or (-1 in (@site)))&#xD;&#xA;AND ( pos_machine in (@pos)) &#xD;&#xA;group by Convert(varchar(12), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 6), CONVERT(VARCHAR(8), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 112)&#xD;&#xA;order by sort&#xD;&#xA;" CommandTimeout="600" Name="dsDaily">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="SELECT &#x9;datename(wk, dbo.ConvertToLocalTime(trxdate, -1 * @offSet)) as Week_Number,&#xD;&#xA;        Convert(VARCHAR(10), dbo.ConvertToLocalTime(trxdate, -1 * @offSet) +  (case datename(weekday, dbo.ConvertToLocalTime(trxdate, -1 * @offSet)) &#xD;&#xA;        WHEN 'Monday' THEN 5  &#xD;&#xA;&#x9;WHEN 'Tuesday' THEN 4 &#xD;&#xA;&#x9;WHEN 'Wednesday' THEN 3 &#xD;&#xA;&#x9;WHEN 'Thursday' THEN 2  &#xD;&#xA;&#x9;WHEN 'Friday' THEN 1&#xD;&#xA;        WHEN 'Saturday' THEN 0  &#xD;&#xA;        WHEN 'Sunday' then 6 END), 7) as Weekend,&#xD;&#xA;        COUNT(distinct trxid) ops, &#xD;&#xA;        SUM(net_amount * (cashRatio + CreditCardRatio)) net_amount,&#xD;&#xA;&#x9;&#x9;sum(tax * (cashRatio + CreditCardRatio)) net_tax, &#xD;&#xA;        sum(amount * (cashRatio + CreditCardRatio)) gross_total, &#xD;&#xA;                      sum(net_amount * (GameCardRatio)) void_amount,&#xD;&#xA;                      sum(tax * (GameCardRatio)) void_tax, &#xD;&#xA;                      sum(tax) total_tax, &#xD;&#xA;        Convert(integer, datename(wk, dbo.ConvertToLocalTime(trxdate, -1 * @offSet))) as SortWeek &#xD;&#xA;        FROM TransactionView &#xD;&#xA;        WHERE trxdate &gt;= dbo.ConvertToServerTime(@fromDate,@offSet) and trxdate &lt; dbo.ConvertToServerTime(@toDate,@offSet) AND ((site_id in (@site)) or (-1 in (@site)))&#xD;&#xA;&#x9;&#x9;and (pos_machine in (@pos))&#xD;&#xA;        GROUP BY datename(wk, dbo.ConvertToLocalTime(trxdate, -1 * @offSet)), &#xD;&#xA;        Convert(VARCHAR(10), dbo.ConvertToLocalTime(trxdate, -1 * @offSet) +  (case datename(weekday, dbo.ConvertToLocalTime(trxdate, -1 * @offSet)) &#xD;&#xA;        WHEN 'Monday' THEN 5  &#xD;&#xA;        WHEN 'Tuesday' THEN 4 &#xD;&#xA;        WHEN 'Wednesday' THEN 3  &#xD;&#xA;        WHEN 'Thursday' THEN 2  &#xD;&#xA;        WHEN 'Friday' THEN 1&#xD;&#xA;        WHEN 'Saturday' THEN 0 &#xD;&#xA;        WHEN 'Sunday' THEN 6 END), 7)&#xD;&#xA;        ORDER BY 1&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" CommandTimeout="600" Name="dsWeekly">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="SELECT REPLACE(RIGHT(CONVERT(VARCHAR(9), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 6), 6), ' ', '-') Month, &#xD;&#xA;COUNT(distinct trxid) ops,&#xD;&#xA;SUM(net_amount * (cashRatio + CreditCardRatio)) net_amount,&#xD;&#xA;sum(tax * (cashRatio + CreditCardRatio)) net_tax, &#xD;&#xA;sum(amount * (cashRatio + CreditCardRatio)) gross_total, &#xD;&#xA;sum(net_amount * (GameCardRatio)) void_amount, &#xD;&#xA;sum(tax * (GameCardRatio)) void_tax, &#xD;&#xA;sum(tax) total_tax, &#xD;&#xA;left(CONVERT(VARCHAR(10), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 102), 7) sort &#xD;&#xA;FROM TransactionView &#xD;&#xA;WHERE trxdate &gt;= dbo.ConvertToServerTime(@fromDate,@offSet) and trxdate &lt;dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;AND ((site_id in (@site)) or (-1 in (@site)))&#xD;&#xA;and (pos_machine in (@pos))&#xD;&#xA;GROUP BY REPLACE(RIGHT(CONVERT(VARCHAR(9), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 6), 6), ' ', '-'),&#xD;&#xA;left(CONVERT(VARCHAR(10), dbo.ConvertToLocalTime(trxdate, -1 * @offSet), 102), 7)&#xD;&#xA;ORDER BY sort" CommandTimeout="600" Name="dsMonthly">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int16" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.79999987284348in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsDaily" Width="7.29583863503475in" Height="0.599999830126812in" Left="0in" Top="0in" Name="crosstab2" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.935417686467958in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox20" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum( Fields.net_tax))" Format="{0:N2}" Name="textBox49" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox50" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.935417686467958in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox62" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value, sum(Fields.net_tax))" Format="{0:N2}" Name="textBox85" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox86" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox102" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Action>null</Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox103" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="= Fields.Date" Name="textBox104" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox105" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333427767558in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value, sum(Fields.void_amount))" Name="textBox11" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333427767558in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_amount))" Name="textBox24" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.822916765041426in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox30" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.822916765041426in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox31" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.916666723712155in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.total_tax))" Name="textBox39" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.916666723712155in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.total_tax))" Name="textBox40" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.0520841544186in" />
+              <Column Width="1.13541750112116in" />
+              <Column Width="0.935417686467958in" />
+              <Column Width="0.800001052434534in" />
+              <Column Width="0.800001052434534in" />
+              <Column Width="0.83333341266735in" />
+              <Column Width="0.82291674432953in" />
+              <Column Width="0.916667031161077in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.19999991357329in" />
+              <Row Height="0.19999991357329in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+            <TableGroup />
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.05208349227905in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Date')" Name="textBox106" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="1.13541686534882in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Ops')" Name="textBox107" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.935417686467958in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Amount')" Name="textBox108" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Tax')" Name="textBox109" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Total')" Name="textBox110" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group1">
+              <ReportItem>
+                <TextBox Width="0.833333427767558in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Amount')" Name="textBox7" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group4">
+              <ReportItem>
+                <TextBox Width="0.822916765041426in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Tax')" Name="textBox25" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group5">
+              <ReportItem>
+                <TextBox Width="0.916666723712155in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Tax')" Name="textBox38" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Bindings>
+            <Binding Path="Visible" Expression="= Parameters.type.Value=1" />
+          </Bindings>
+        </Crosstab>
+        <Crosstab DataSourceName="dsWeekly" Width="8.15000457486537in" Height="0.599999830126812in" Left="0in" Top="0.600000143051147in" Name="crosstab1" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.737500727176666in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox21" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.956250965183472in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox22" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_tax))" Format="{0:N2}" Name="textBox23" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.737500727176666in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox63" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.956250965183472in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox64" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_tax))" Format="{0:N2}" Name="textBox65" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Fields.Weekend" Format="{0:N2}" Name="textBox17" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Action>null</Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Format="{0:N2}" Name="textBox84" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="= Fields.Week_Number" Name="textBox18" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox19" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.927083339428734in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox5" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.927083339428734in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox6" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.885416561575459in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_amount))" Name="textBox51" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.885416561575459in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_amount))" Name="textBox52" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.802083451946637in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox54" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.802083451946637in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox55" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.85416668519715in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.total_tax))" Name="textBox57" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.85416668519715in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value, sum(Fields.total_tax))" Name="textBox58" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.05208405975161in" />
+              <Column Width="1.13541711154027in" />
+              <Column Width="0.737500763043113in" />
+              <Column Width="0.956251025905739in" />
+              <Column Width="0.800001037662737in" />
+              <Column Width="0.927083389067826in" />
+              <Column Width="0.885416802451229in" />
+              <Column Width="0.802083629218036in" />
+              <Column Width="0.854166816947082in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.19999991357329in" />
+              <Row Height="0.19999991357329in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+            <TableGroup />
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.05208349227905in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Week Number')" Name="textBox15" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="1.13541686534882in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Week Number')" Name="textBox16" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.737500727176666in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Ops')" Format="{0:N2}" Name="textBox1" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.956250965183472in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Amount')" Format="{0:N2}" Name="textBox2" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Tax')" Format="{0:N2}" Name="textBox3" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group">
+              <ReportItem>
+                <TextBox Width="0.927083339428734in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Total')" Format="{0:N2}" Name="textBox4" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group6">
+              <ReportItem>
+                <TextBox Width="0.885416561575459in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Amount')" Name="textBox42" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group7">
+              <ReportItem>
+                <TextBox Width="0.802083451946637in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Tax')" Name="textBox53" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group8">
+              <ReportItem>
+                <TextBox Width="0.85416668519715in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Tax')" Name="textBox56" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Bindings>
+            <Binding Path="Visible" Expression="= Parameters.type.Value= 2" />
+          </Bindings>
+        </Crosstab>
+        <Crosstab DataSourceName="dsMonthly" Width="7.55625318975762in" Height="0.599999830126812in" Left="0in" Top="1.20000012715658in" Name="crosstab3" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.966667758073209in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox8" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.83125116148311in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_tax))" Format="{0:N2}" Name="textBox9" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox10" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.966667758073209in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_amount))" Format="{0:N2}" Name="textBox12" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.83125116148311in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.net_tax))" Format="{0:N2}" Name="textBox13" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.gross_total))" Format="{0:N2}" Name="textBox14" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox26" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Action>null</Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.13541686534882in" Height="0.199999898672104in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,sum(Fields.ops))" Format="{0:N2}" Name="textBox27" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="= Fields.Month" Name="textBox28" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox29" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.885416628811836in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_amount))" Name="textBox60" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.885416628811836in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_amount))" Name="textBox61" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.937499837452121in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox67" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.937499837452121in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.void_tax))" Name="textBox68" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.947916663664011in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.total_tax))" Name="textBox70" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.947916663664011in" Height="0.19999991357329in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.total_tax))" Name="textBox71" StyleName="Civic.GrandTotal">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.05208357672339in" />
+              <Column Width="1.13541657705163in" />
+              <Column Width="0.966667645476262in" />
+              <Column Width="0.831250956958143in" />
+              <Column Width="0.800001194432001in" />
+              <Column Width="0.88541678788829in" />
+              <Column Width="0.937499575302597in" />
+              <Column Width="0.947916425537521in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.19999991357329in" />
+              <Row Height="0.19999991357329in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+            <TableGroup />
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.05208349227905in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Month')" Name="textBox32" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="1.13541686534882in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Ops')" Name="textBox33" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.966667758073209in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Amount')" Format="{0:N2}" Name="textBox34" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.83125116148311in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Tax')" Format="{0:N2}" Name="textBox35" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Total')" Format="{0:N2}" Name="textBox36" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group9">
+              <ReportItem>
+                <TextBox Width="0.885416628811836in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Amount')" Name="textBox59" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group10">
+              <ReportItem>
+                <TextBox Width="0.937499837452121in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Void Tax')" Name="textBox66" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group11">
+              <ReportItem>
+                <TextBox Width="0.947916663664011in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Tax')" Name="textBox69" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Bindings>
+            <Binding Path="Visible" Expression="= Parameters.type.Value=3" />
+          </Bindings>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.099999745686849in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="Magneto">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.299999872843425in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="Magneto">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="4.50000031789144in" Top="0.099999745686849in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount&#xD;&#xA;" Name="Magneto">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.800000031789144in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="8.14996544520059in" Height="0.19999997317791in" Left="0in" Top="0.400000095367432in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox46">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="7.97085332870483in" Height="0.19999997317791in" Left="0in" Top="0.197916666666667in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox232">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.14996528625488in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Transaction ' + iif(Parameters.type.Value = 1, MessagesFunctions.getMessage('Daily Report'), iif(Parameters.type.Value = 2, MessagesFunctions.getMessage('Weekly Report'), MessagesFunctions.getMessage('Monthly Report'))))&#xD;&#xA;" Name="textBox233">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="7.97085332870483in" Height="0.19999997317791in" Left="0in" Top="0.599999984105428in" Value="=MessagesFunctions.getMessage('Report Type' + &quot;: &quot; + iif(Parameters.type.Value = 1, MessagesFunctions.getMessage('Daily Report'), iif(Parameters.type.Value = 2, MessagesFunctions.getMessage('Weekly Report'), MessagesFunctions.getMessage('Monthly Report'))))&#xD;&#xA;" Format="{0:f}" Name="textBox75">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="type" Mergeable="False" Text="Report Type" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.Label" ValueMember="= Fields.value" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="pos" Mergeable="False" Text="POS" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SelectedPOSMachines" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

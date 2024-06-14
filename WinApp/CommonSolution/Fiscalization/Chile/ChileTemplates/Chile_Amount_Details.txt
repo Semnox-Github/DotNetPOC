@@ -1,0 +1,6 @@
+   "TOTALES": {
+    "MNTNETO": @NetAmt,
+    "IVA": @TaxAmt,
+    "MNTTOTAL": @TotalAmt
+  },
+

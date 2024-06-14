@@ -1,0 +1,406 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using System.Data.SqlClient;
+using ParafaitUtils;
+using USBListener;
+
+namespace ParafaitQueueManagement
+{
+     class Authenticate
+    {
+        static Form formLogin;
+        static TextBox txtLogin;
+        static TextBox txtPassword;
+        static string CardNumber = "";
+        static string manager_flag;
+        public static string username;
+        static string role;
+        static string cardNumber = string.Empty;
+        static int role_id;
+        static int user_id;
+        static string loginid;
+        static int leftTrimCard = 0;
+        static int rightTrimCard = 0;
+        static CardListener rfidCardListener;
+       // ParafaitUtils.Utilities authenticateUtility = new Utilities();
+        
+
+         private bool Login()
+        {
+            int xpos = 50;
+            int ypos = 100;
+            formLogin = new Form();
+
+            PictureBox loginLogo = new PictureBox();
+
+            Label lblLogin = new Label();
+            Label lblPassword = new Label(); 
+            
+            txtLogin = new TextBox();
+            txtPassword = new TextBox();
+
+            txtLogin.KeyDown += new KeyEventHandler(txtLogin_KeyDown);
+            txtPassword.KeyDown += new KeyEventHandler(txtPassword_KeyDown);
+            txtLogin.Enter += new EventHandler(txtLogin_Enter);
+            txtPassword.Enter += new EventHandler(txtPassword_Enter);
+            Button OKButton = new Button();
+            Button CancelButton = new Button();
+
+
+            System.Drawing.Font loginFont = new Font(Common.Utilities.getFont().FontFamily, 8f);
+
+            try
+            {
+                loginLogo.Image = Image.FromFile(Environment.CurrentDirectory + "\\Resources\\LoginLogo.png");
+            }
+            catch { }
+            loginLogo.SizeMode = PictureBoxSizeMode.StretchImage;
+            loginLogo.BorderStyle = BorderStyle.None;
+            loginLogo.Size = new Size(400, 70);
+
+            lblLogin.Font = loginFont;
+            lblPassword.Font = loginFont;
+            lblLogin.Width = 70;
+            lblPassword.Width = 80;
+
+            lblLogin.Location = new Point(xpos+10, ypos+3);
+            lblPassword.Location = new Point(xpos-1, ypos+33);
+
+            txtLogin.Font = loginFont;
+            txtPassword.Font = loginFont;
+
+            txtLogin.Location = new Point(xpos+80, ypos);
+            txtPassword.Location = new Point(xpos+80, ypos+30);
+
+            txtLogin.Width = txtPassword.Width = 170;
+
+            OKButton.Font = loginFont;
+            CancelButton.Font = loginFont;
+
+            OKButton.Location = new Point(xpos+80, ypos+60);
+            CancelButton.Location = new Point(xpos+175, ypos+60);
+
+            OKButton.BackColor = Color.White;
+            CancelButton.BackColor = Color.White;
+
+            OKButton.Height = CancelButton.Height = 25;
+            txtPassword.PasswordChar = '*';
+
+            lblLogin.Text = "Login ID:";
+            lblPassword.Text = "Password:";
+            
+            OKButton.Text = "OK";
+            CancelButton.Text = "Cancel";
+            
+            formLogin.CancelButton = CancelButton;
+
+            OKButton.Click +=new EventHandler(OKButton_Click);
+            CancelButton.Click +=new EventHandler(CancelButton_Click);
+
+            formLogin.Controls.Add(loginLogo);
+            formLogin.Controls.Add(lblLogin);
+            formLogin.Controls.Add(lblPassword);
+            formLogin.Controls.Add(txtLogin);
+            formLogin.Controls.Add(txtPassword);
+            formLogin.Controls.Add(OKButton);
+            formLogin.Controls.Add(CancelButton);
+
+            formLogin.StartPosition = FormStartPosition.CenterScreen;
+            formLogin.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            formLogin.Width = 400;
+            formLogin.Height = 240;
+            //formLogin.BackColor = Color.FromKnownColor(KnownColor.Control);
+            formLogin.BackColor = Color.CadetBlue;
+            formLogin.Text = "Queue Management Login";
+            formLogin.Name = "Authenticate";
+
+            try
+            {
+            //   formLogin.Icon = Image.FromFile(Environment.CurrentDirectory + "\\Resources\\LoginLogo.png";
+            }
+            catch { }
+
+            formLogin.FormClosing += new FormClosingEventHandler(formLogin_FormClosing);
+            formLogin.TopMost = true;
+            formLogin.Load += new EventHandler(formLogin_Load);
+            DialogResult DR = formLogin.ShowDialog();
+
+            if (DR == DialogResult.OK)
+                return true;
+            else
+                return false;
+        }
+
+        static void txtPassword_Enter(object sender, EventArgs e)
+        {
+            TextBox t = sender as TextBox;
+            t.SelectAll();
+            
+        }
+
+        static void txtLogin_Enter(object sender, EventArgs e)
+        {
+            TextBox t = sender as TextBox;
+            t.SelectAll();
+        }
+
+         void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                OKButton_Click(null, null);
+        }
+
+        static void txtLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                formLogin.ActiveControl = txtPassword;
+        }
+
+         void formLogin_Load(object sender, EventArgs e)
+        {
+            ((Form)sender).Activate();
+            ((Form)sender).Show();
+            txtLogin.Focus();
+            registerUSBDevice();
+        }
+
+        static void formLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           //CardReader.RequiredByOthers = false;
+        }
+                
+        static void CancelButton_Click(object sender, EventArgs e)
+        {
+            formLogin.DialogResult = DialogResult.Cancel;
+            formLogin.Close();
+        }
+
+         void OKButton_Click(object sender, EventArgs e)
+        {
+            bool success = checkLogin();
+            if (success)
+            {
+                formLogin.DialogResult = DialogResult.OK;
+                formLogin.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Username / Password. Please retry.");
+                txtPassword.SelectAll();
+            }
+        }
+
+        public  void cardSwiped()
+        {
+         //   CardNumber = CardReader.CardNumber;
+            bool success = checkLogin();
+            if (success)
+            {
+                formLogin.DialogResult = DialogResult.OK;
+                formLogin.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid User Card. Please retry.");
+            }
+        }
+
+         public bool checkLogin()
+        {
+            SqlCommand cmd = Common.Utilities.getCommand();
+
+            cmd.CommandText = "select u.user_id, loginid, username, card_number, " +
+                                "r.role, r.role_id, isnull(r.manager_flag, 'N') manager_flag " +
+                                "from users u, user_roles r " +
+                                "where u.role_id = r.role_id " +
+                                "and u.active_flag = 'Y' " +
+                                "and ((u.loginid = @loginid " +
+                                    "and u.password = @password) "+
+                                    "or card_number = @card_number)";
+            cmd.Parameters.AddWithValue("@loginid", txtLogin.Text);
+            string password = ParafaitUtils.Encryption.Encrypt(txtPassword.Text);
+            
+
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@card_number", CardNumber);
+
+            DataTable DT = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            try
+            {
+                da.Fill(DT);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (DT.Rows.Count == 0)
+                return false;
+
+            username = DT.Rows[0]["username"].ToString();
+            loginid = DT.Rows[0]["loginid"].ToString();
+            role = DT.Rows[0]["role"].ToString();
+            role_id = Convert.ToInt32(DT.Rows[0]["role_id"]);
+            string userCardNumber = DT.Rows[0]["card_number"].ToString();
+            manager_flag = DT.Rows[0]["manager_flag"].ToString().Trim();
+            user_id = Convert.ToInt32(DT.Rows[0]["user_id"]);
+
+            Common.ParafaitEnv.Username = username;
+            Common.ParafaitEnv.User_Id = user_id;
+            Common.ParafaitEnv.LoginID = loginid;
+            Common.ParafaitEnv.Role = role;
+            Common.ParafaitEnv.RoleId = role_id;
+            Common.ParafaitEnv.UserCardNumber = userCardNumber;
+            Common.ParafaitEnv.Manager_Flag = manager_flag;
+            Common.ParafaitEnv.Password = password;
+
+            cmd.CommandText = "update users set last_login_time = @time where user_id = @user_id; exec dbo.SetContextInfo @user_id";
+            cmd.Parameters.AddWithValue("@time", Common.Utilities.getServerTime());
+            cmd.Parameters.AddWithValue("@user_id", user_id);
+
+            cmd.ExecuteNonQuery();
+
+            return true;
+        }
+        public  bool checkLoginModeM(string loginIDModeM,string passwordModeM)
+        {
+            SqlCommand cmd = Common.Utilities.getCommand();
+
+            cmd.CommandText = "select u.user_id, loginid, username, card_number, " +
+                                "r.role, r.role_id, isnull(r.manager_flag, 'N') manager_flag " +
+                                "from users u, user_roles r " +
+                                "where u.role_id = r.role_id " +
+                                "and u.active_flag = 'Y' " +
+                                "and ((u.loginid = @loginid " +
+                                    "and u.password = @password) " +
+                                    "or card_number = @card_number)";
+            cmd.Parameters.AddWithValue("@loginid", loginIDModeM);
+            //string password = ParafaitUtils.Encryption.Encrypt(passwordModeM, ParafaitUtils.Encryption.encryptionKey);
+            string password = passwordModeM;
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@card_number", CardNumber);
+
+            DataTable DT = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            try
+            {
+                da.Fill(DT);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (DT.Rows.Count == 0)
+                return false;
+
+            username = DT.Rows[0]["username"].ToString();
+            loginid = DT.Rows[0]["loginid"].ToString();
+            role = DT.Rows[0]["role"].ToString();
+            role_id = Convert.ToInt32(DT.Rows[0]["role_id"]);
+            string userCardNumber = DT.Rows[0]["card_number"].ToString();
+            manager_flag = DT.Rows[0]["manager_flag"].ToString().Trim();
+            user_id = Convert.ToInt32(DT.Rows[0]["user_id"]);
+
+            Common.ParafaitEnv.Username = username;
+            Common.ParafaitEnv.User_Id = user_id;
+            Common.ParafaitEnv.LoginID = loginid;
+            Common.ParafaitEnv.Role = role;
+            Common.ParafaitEnv.RoleId = role_id;
+            Common.ParafaitEnv.UserCardNumber = userCardNumber;
+            Common.ParafaitEnv.Manager_Flag = manager_flag;
+            Common.ParafaitEnv.Password = password;
+
+            cmd.CommandText = "update users set last_login_time = @time where user_id = @user_id; exec dbo.SetContextInfo @user_id";
+            cmd.Parameters.AddWithValue("@time", Common.Utilities.getServerTime());
+            cmd.Parameters.AddWithValue("@user_id", user_id);
+
+            cmd.ExecuteNonQuery();
+
+            return true;
+        }
+            
+         public bool Manager()
+        {
+            if (Common.ParafaitEnv.Manager_Flag == "Y")
+            return true;
+
+            string tusername = Common.ParafaitEnv.Username;
+            int tuser_id = Common.ParafaitEnv.User_Id;
+            string tloginid = Common.ParafaitEnv.LoginID;
+            string trole = Common.ParafaitEnv.Role;
+            int troleId = Common.ParafaitEnv.RoleId;
+            string tCardNumber = Common.ParafaitEnv.UserCardNumber;
+            string tmanager_flag = Common.ParafaitEnv.Manager_Flag;
+            
+
+            bool success = Login();
+
+            Common.ParafaitEnv.Username = tusername;
+            Common.ParafaitEnv.User_Id = tuser_id;
+            Common.ParafaitEnv.LoginID = tloginid;
+            Common.ParafaitEnv.Role = trole;
+            Common.ParafaitEnv.RoleId = troleId;
+            Common.ParafaitEnv.UserCardNumber = tCardNumber;
+            Common.ParafaitEnv.Manager_Flag = tmanager_flag;
+            
+
+            if (success && manager_flag == "Y")
+                return true;
+            else
+                return false;
+        }
+
+         public bool User()
+        {
+            return Login();
+        }
+         bool registerUSBDevice()
+        {
+            string USBReaderVID = Common.Utilities.getParafaitDefaults("USB_READER_VID");
+            string USBReaderPID = Common.Utilities.getParafaitDefaults("USB_READER_PID");
+            string USBReaderOptionalString = Common.Utilities.getParafaitDefaults("USB_READER_OPT_STRING");
+
+             EventHandler currEventHandler = new EventHandler(CardScanCompleteEventHandle);
+            if (rfidCardListener != null)
+                rfidCardListener.Dispose();
+
+            if (IntPtr.Size == 8)
+                rfidCardListener = new CardListener64();
+            else
+                rfidCardListener = new CardListener32();
+            bool flag = rfidCardListener.InitializeUSBCardReader(formLogin, currEventHandler, USBReaderVID, USBReaderPID, USBReaderOptionalString);
+            if (rfidCardListener.isOpen)
+            {
+                //displayMessageLine(simpleCardListener.dInfo.deviceName, MESSAGE);
+                //MessageBox.Show("Connected USB Card Reader");
+                return true;
+            }
+            else
+            {
+              //  MessageBox.Show("Unable to find USB card reader");
+                return false;
+            }
+        }
+        private void CardScanCompleteEventHandle(object sender, EventArgs e)
+        {
+            if (e is CardReaderScannedEventArgs)
+            {
+                CardReaderScannedEventArgs checkScannedEvent = e as CardReaderScannedEventArgs;
+                cardNumber = checkScannedEvent.Message;
+                CardNumber = Common.Utilities.ProcessScannedCode(checkScannedEvent.Message, leftTrimCard, rightTrimCard); 
+                cardSwiped();
+                
+            }
+        }
+      
+       
+      
+       
+    }
+}

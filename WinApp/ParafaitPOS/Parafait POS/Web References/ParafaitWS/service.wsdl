@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://semnox.com/ParafaitWS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://semnox.com/ParafaitWS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://semnox.com/ParafaitWS/">
+      <s:element name="UploadSiteData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PlayData">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="ManagementData">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadSiteDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadSiteDataResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastUpdateTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SiteData">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastUpdateTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastUpdateTimeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="ManagementDataSet">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetServerDataResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="ManagementDataSet">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateServerUploadTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateServerUploadTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadSiteDataV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="SiteDataSet">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateTime" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadSiteDataV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadSiteDataV2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateInitialUploadStatusV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDone" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateInitialUploadStatusV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateInitialUploadStatusV2Result" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerDataV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="RoamingAllowed" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerDataV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetServerDataV2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastUpdateTimeV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SiteData">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastUpdateTimeV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastUpdateTimeV2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateServerUploadTimeV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="ServerUploadTime" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateServerUploadTimeV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetServerCardResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerCardActivity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServerCardActivityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetServerCardActivityResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRoamingSitesV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRoamingSitesV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRoamingSitesV2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UploadSiteDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadSiteData" />
+  </wsdl:message>
+  <wsdl:message name="UploadSiteDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadSiteDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastUpdateTime" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastUpdateTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetServerDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetServerData" />
+  </wsdl:message>
+  <wsdl:message name="GetServerDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetServerDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateServerUploadTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateServerUploadTime" />
+  </wsdl:message>
+  <wsdl:message name="UpdateServerUploadTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateServerUploadTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadSiteDataV2SoapIn">
+    <wsdl:part name="parameters" element="tns:UploadSiteDataV2" />
+  </wsdl:message>
+  <wsdl:message name="UploadSiteDataV2SoapOut">
+    <wsdl:part name="parameters" element="tns:UploadSiteDataV2Response" />
+  </wsdl:message>
+  <wsdl:message name="UpdateInitialUploadStatusV2SoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateInitialUploadStatusV2" />
+  </wsdl:message>
+  <wsdl:message name="UpdateInitialUploadStatusV2SoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateInitialUploadStatusV2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetServerDataV2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetServerDataV2" />
+  </wsdl:message>
+  <wsdl:message name="GetServerDataV2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetServerDataV2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateTimeV2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastUpdateTimeV2" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateTimeV2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastUpdateTimeV2Response" />
+  </wsdl:message>
+  <wsdl:message name="UpdateServerUploadTimeV2SoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateServerUploadTimeV2" />
+  </wsdl:message>
+  <wsdl:message name="UpdateServerUploadTimeV2SoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateServerUploadTimeV2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetServerCardSoapIn">
+    <wsdl:part name="parameters" element="tns:GetServerCard" />
+  </wsdl:message>
+  <wsdl:message name="GetServerCardSoapOut">
+    <wsdl:part name="parameters" element="tns:GetServerCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetServerCardActivitySoapIn">
+    <wsdl:part name="parameters" element="tns:GetServerCardActivity" />
+  </wsdl:message>
+  <wsdl:message name="GetServerCardActivitySoapOut">
+    <wsdl:part name="parameters" element="tns:GetServerCardActivityResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRoamingSitesV2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetRoamingSitesV2" />
+  </wsdl:message>
+  <wsdl:message name="GetRoamingSitesV2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetRoamingSitesV2Response" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="UploadSiteData">
+      <wsdl:input message="tns:UploadSiteDataSoapIn" />
+      <wsdl:output message="tns:UploadSiteDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTime">
+      <wsdl:input message="tns:GetLastUpdateTimeSoapIn" />
+      <wsdl:output message="tns:GetLastUpdateTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerData">
+      <wsdl:input message="tns:GetServerDataSoapIn" />
+      <wsdl:output message="tns:GetServerDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTime">
+      <wsdl:input message="tns:UpdateServerUploadTimeSoapIn" />
+      <wsdl:output message="tns:UpdateServerUploadTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSiteDataV2">
+      <wsdl:input message="tns:UploadSiteDataV2SoapIn" />
+      <wsdl:output message="tns:UploadSiteDataV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInitialUploadStatusV2">
+      <wsdl:input message="tns:UpdateInitialUploadStatusV2SoapIn" />
+      <wsdl:output message="tns:UpdateInitialUploadStatusV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerDataV2">
+      <wsdl:input message="tns:GetServerDataV2SoapIn" />
+      <wsdl:output message="tns:GetServerDataV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTimeV2">
+      <wsdl:input message="tns:GetLastUpdateTimeV2SoapIn" />
+      <wsdl:output message="tns:GetLastUpdateTimeV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTimeV2">
+      <wsdl:input message="tns:UpdateServerUploadTimeV2SoapIn" />
+      <wsdl:output message="tns:UpdateServerUploadTimeV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCard">
+      <wsdl:input message="tns:GetServerCardSoapIn" />
+      <wsdl:output message="tns:GetServerCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCardActivity">
+      <wsdl:input message="tns:GetServerCardActivitySoapIn" />
+      <wsdl:output message="tns:GetServerCardActivitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRoamingSitesV2">
+      <wsdl:input message="tns:GetRoamingSitesV2SoapIn" />
+      <wsdl:output message="tns:GetRoamingSitesV2SoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UploadSiteData">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/UploadSiteData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTime">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetLastUpdateTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerData">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetServerData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTime">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/UpdateServerUploadTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSiteDataV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/UploadSiteDataV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInitialUploadStatusV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/UpdateInitialUploadStatusV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerDataV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetServerDataV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTimeV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetLastUpdateTimeV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTimeV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/UpdateServerUploadTimeV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCard">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetServerCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCardActivity">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetServerCardActivity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoamingSitesV2">
+      <soap:operation soapAction="http://semnox.com/ParafaitWS/GetRoamingSitesV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UploadSiteData">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/UploadSiteData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTime">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetLastUpdateTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerData">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetServerData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTime">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/UpdateServerUploadTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSiteDataV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/UploadSiteDataV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInitialUploadStatusV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/UpdateInitialUploadStatusV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerDataV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetServerDataV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdateTimeV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetLastUpdateTimeV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerUploadTimeV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/UpdateServerUploadTimeV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCard">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetServerCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerCardActivity">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetServerCardActivity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoamingSitesV2">
+      <soap12:operation soapAction="http://semnox.com/ParafaitWS/GetRoamingSitesV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://user/parafaitcentral/parafaitws/service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://user/parafaitcentral/parafaitws/service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

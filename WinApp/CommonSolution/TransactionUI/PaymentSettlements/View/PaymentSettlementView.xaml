@@ -1,0 +1,243 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.PaymentSettlementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource ChildWindowStyle}"
+        Title="PaymentSettlementView">
+    <Window.Resources>
+       
+            <Thickness Left="0" Right="8" Top="0" Bottom="8"
+                   x:Key="SearchControlsMargin"/>
+            <Thickness Left="0" Right="8" Top="0" Bottom="0"
+                   x:Key="ButtonMargins"/>
+
+            <Style TargetType="{x:Type Button}"
+               x:Key="SearchVisibleButtonStyle">
+                <Setter Property="VerticalAlignment"
+                    Value="Top"/>
+                <Setter Property="HorizontalAlignment"
+                    Value="Right"/>
+                <Setter Property="Margin"
+                    Value="0,-32,16,0"/>
+                <Setter Property="Width"
+                    Value="48"/>
+                <Setter Property="Height"
+                    Value="48"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{StaticResource Action.Active.Background}"
+                                Padding="10"
+                                CornerRadius="{StaticResource CornerRadius}">
+                                <Path x:Name="IconPath"
+                                  Data="M9.132 0c-.181 0-.354.027-.516.081-.166.056-.318.14-.456.25a1.163 1.163 0 0 0-.458.926c0 .263.083.504.257.722l.094.106.107.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.164.676.459.914.275.222.61.332.986.332.26 0 .5-.053.73-.168l.136-.077.12-.087 13.263-10.693.108-.1a1.125 1.125 0 0 0 .072-1.508l-.094-.106-.107-.096L10.079.313 9.955.227A1.656 1.656 0 0 0 9.132 0zM1.43 0c-.181 0-.354.027-.516.081-.166.056-.319.14-.456.25A1.163 1.163 0 0 0 0 1.258c0 .263.083.504.256.722l.094.106.108.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.163.676.459.914.274.222.61.332.985.332.26 0 .501-.053.73-.168l.137-.077.12-.087L15.86 12.975l.107-.1a1.125 1.125 0 0 0 .073-1.508l-.094-.106-.107-.096L2.377.313 2.253.227A1.656 1.656 0 0 0 1.43 0z"
+                                  Fill="{StaticResource Action.Active.Foreground}"
+                                  Stretch="Uniform"
+                                  RenderTransformOrigin=".5,.5">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="-90"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding ShowSearchArea}"
+                                         Value="False">
+                                    <Setter Property="RenderTransform"
+                                        TargetName="IconPath">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Margin="0,-8,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="btnSeachVisible"
+                Grid.Row="0"
+                Panel.ZIndex="1"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                Command="{Binding ActionsCommand}"
+                Style="{StaticResource SearchVisibleButtonStyle}"/>
+        <Border x:Name="SearchAreaBorder"
+                CornerRadius="{StaticResource CornerRadius}"
+                BorderThickness="2"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                Margin="0,0,16,0"
+                Padding="16,8,8,0">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowSearchArea}"
+                                     Value="False">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <UniformGrid Columns="4"
+                             Grid.Column="0"
+                             Grid.Row="0">
+                    
+                    <common:CustomTextBox x:Name="tbxTransactionId"
+                                          Margin="{StaticResource SearchControlsMargin}"
+                                          Heading="Transaction Id"
+                                          ValidationType="NumberOnly"
+                                          Size="Small"
+                                          ErrorTextVisible="False"
+                                          Text="{Binding TransactionId}"/>
+                    <common:CustomComboBox x:Name="cmbPaymentMode"
+                                           Heading="Payment Modes"
+                                           DisplayMemberPath="PaymentMode"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           IsEditable="True"
+                                           ErrorTextVisible="False"
+                                           SelectedItem="{Binding SelectedPaymentMode}"
+                                           ItemsSource="{Binding PaymentModes}"/>
+                    <common:CustomComboBox x:Name="cmbChannel"
+                                           Heading="Channel"
+                                           DisplayMemberPath="ChannelName"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           IsEditable="True"
+                                           ErrorTextVisible="False"
+                                           SelectedItem="{Binding SelectedChannel}"
+                                           ItemsSource="{Binding Channels}" />
+                    <common:CustomCheckBox x:Name="cbxSettled"
+                                           Size="Small"
+                                           VerticalAlignment="Bottom"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           ErrorTextVisible="False"
+                                           Heading="Settled?"
+                                           IsChecked="{Binding Settled}"/>
+
+                </UniformGrid>
+                <UniformGrid Columns="2"
+                             Grid.Column="0"
+                             Grid.Row="1">
+                   
+                    <common:CustomTextBoxDatePicker x:Name="tbxdpFrom"
+                                                    ShowTimePicker="True"
+                                                    Heading="From"
+                                                    Margin="{StaticResource SearchControlsMargin}"
+                                                    ErrorTextVisible="False"
+                                                    Text="{Binding FromDate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DatePickerLoaded">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=common:CustomTextBoxDatePicker}}"
+                                                       Command="{Binding DatePickerLoadedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </common:CustomTextBoxDatePicker>
+                    <common:CustomTextBoxDatePicker x:Name="tbxdpTo"
+                                                    ShowTimePicker="True"
+                                                    Heading="To"
+                                                    Margin="{StaticResource SearchControlsMargin}"
+                                                    ErrorTextVisible="False"
+                                                    Text="{Binding ToDate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DatePickerLoaded">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=common:CustomTextBoxDatePicker}}"
+                                                       Command="{Binding DatePickerLoadedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </common:CustomTextBoxDatePicker>
+                </UniformGrid>
+                <common:CustomActionButton x:Name="btnSearch"
+                                           Grid.Column="1"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           VerticalAlignment="Bottom"
+                                           Grid.Row="0"
+                                           Content="SEARCH"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"/>
+                <common:CustomActionButton x:Name="btnClear"
+                                           Content="CLEAR"
+                                           ActionStyle="Passive"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           VerticalAlignment="Bottom"
+                                           Grid.Column="1"
+                                           Grid.Row="1"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"/>
+            </Grid>
+        </Border>
+        <common:CustomDataGridUserControl x:Name="CustomDataGridUserControl"
+                                                  Grid.Row="1"
+                                                  DataContext="{Binding TransactionPaymentsCustomDataGridVM}"
+                                                  Margin="10">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.IsSelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </common:CustomDataGridUserControl>
+        <Border Grid.Row="2"
+                        BorderThickness="0,1,0,0"
+                        BorderBrush="{StaticResource Control.BorderBrush}"
+                        Padding="0,8">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CustomDataGridVM.UICollectionToBeRendered.Count}"
+                                             Value="0">
+                            <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <UniformGrid Columns="3" HorizontalAlignment="Center">
+                <common:CustomActionButton x:Name="btnSettlements"
+                                                   Content="SETTLE"
+                                                   Margin="{StaticResource ButtonMargins}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+                <common:CustomActionButton x:Name="btnEdit"
+                                                   Margin="{StaticResource ButtonMargins}"
+                                                   Content="EDIT"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+                <common:CustomActionButton x:Name="btnShowPrevious"
+                                                   Margin="{StaticResource ButtonMargins}"
+                                                   Content="PREVIOUS VIEW"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+
+            </UniformGrid>
+        </Border>
+
+    </Grid>
+</Window>

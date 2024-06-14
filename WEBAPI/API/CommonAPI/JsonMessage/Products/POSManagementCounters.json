@@ -1,0 +1,57 @@
+[
+  {
+    "POSTypeId": 1,
+    "POSTypeName": "Default",
+    "Description": "Default POS Group",
+    "IsActive": true,
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "eba85f75-6572-4e1f-99e1-8bbb93a486a7",
+    "IsChanged": false
+  },
+  {
+    "POSTypeId": 2,
+    "POSTypeName": "test",
+    "Description": "test",
+    "IsActive": true,
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "309b05b9-4785-4589-ae32-4ebea938a3ea",
+    "IsChanged": false
+  },
+  {
+    "POSTypeId": 3,
+    "POSTypeName": "test2",
+    "Description": "test2",
+    "IsActive": true,
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "050b08dd-0d3e-4755-9351-eb5e9009795d",
+    "IsChanged": false
+  },
+  {
+    "POSTypeId": 4,
+    "POSTypeName": "test3",
+    "Description": "test3",
+    "IsActive": true,
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "1744abf6-974b-40a6-8eb6-afae4dd77438",
+    "IsChanged": false
+  },
+  {
+    "POSTypeId": 5,
+    "POSTypeName": "test4",
+    "Description": "test5",
+    "IsActive": true,
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "c0ab13d5-2406-4e79-9835-33e1cca22bdc",
+    "IsChanged": false
+  }
+]

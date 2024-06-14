@@ -1,0 +1,125 @@
+﻿<Window x:Class="Semnox.Parafait.GamesUI.GMMainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.GamesUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource BaseWindowStyle}"
+        Title="Game Management">
+    <Grid x:Name="GMMainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFirstColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentSecondColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentThirdColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFourthColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFifthColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionFirstColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionSecondColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionThirdColumn" />
+        </Grid.ColumnDefinitions>
+        <common:CustomDataGridUserControl x:Name="GMCustomDataGridUserControl"
+                                          DataContext="{Binding CustomDataGridVM}"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="5"
+                                          Margin="0,0,20,0"
+                                          Visibility="{Binding Path = DataContext.ContentAreaVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.IsSelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="SearchClicked">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                           Command="{Binding DataContext.SearchCommand, RelativeSource={RelativeSource Mode = FindAncestor, AncestorType=Window}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </common:CustomDataGridUserControl>
+        <Grid x:Name="GMContentActionAreaGrid"
+              Grid.Column="5"
+              Grid.ColumnSpan="3"
+              UseLayoutRounding="True"
+              SnapsToDevicePixels="True">
+            <Border x:Name="GMActionAreaBorder"
+                    CornerRadius="{StaticResource RightSection.CornerRadius}"
+                    Background="{StaticResource ActionBar.Background}"
+                    Grid.Column="5"
+                    Grid.ColumnSpan="3"
+                    Style="{StaticResource ActionBarShadowStyle}" />
+            <Grid x:Name="GMActionAreaGrid">
+                <common:CustomTextBlock x:Name="tbActionAreaNonSelectedTextBlock"
+                                        Text="0 Items selected"
+                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Grid.Row="0"
+                                        Visibility="{Binding TextBlockVisibility}"
+                                        FontWeight="{StaticResource FontWeight.Bold}" />
+                <Grid x:Name="GMRightSectionContentAndActionAreaGrid">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Visibility, ElementName = tbActionAreaNonSelectedTextBlock}"
+                                             Value="Visible">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="7*"
+                                       x:Name="GMRightSectionContentRow" />
+                        <RowDefinition Height="Auto"
+                                       x:Name="GMRightSectionActionRow" />
+                    </Grid.RowDefinitions>
+                    <common:GenericRightSectionContentUserControl x:Name="GMGenericRightSectionContentUserControl"
+                                                                  DataContext="{Binding GenericRightSectionContentVM,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                  Grid.Row="0"
+                                                                  Visibility="{Binding DataContext.RightSectionContentVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviousNavigationClicked">
+                                <i:InvokeCommandAction Command="{Binding DataContext.PreviousNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="NextNavigationClicked">
+                                <i:InvokeCommandAction Command="{Binding DataContext.NextNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </common:GenericRightSectionContentUserControl>
+
+                    <local:GenericRightSectionActionUserControl x:Name="GMGenericRightSectionActionUserControl"
+                                                                Grid.Row="1"
+                                                                DataContext="{Binding GenericRightSectionActionVM,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="EditButtonClicked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                       Command="{Binding DataContext.RightSectionEditCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="LastButtonClicked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                       Command="{Binding DataContext.RightSectionLastButtonCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="ButtonGroupClicked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                       Command="{Binding DataContext.ButtonGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </local:GenericRightSectionActionUserControl>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>

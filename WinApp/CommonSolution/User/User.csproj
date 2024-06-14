@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E30D3295-E230-44D2-880D-22BF5A349119}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.User</RootNamespace>
+    <AssemblyName>User</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxSB100PCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxSB100PCLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddAgentsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddAgentsUI.designer.cs">
+      <DependentUpon>AddAgentsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgentGroupAgents.cs" />
+    <Compile Include="AgentGroupAgentsDatahandler.cs" />
+    <Compile Include="AgentGroupAgentsDTO.cs" />
+    <Compile Include="AgentGroups.cs" />
+    <Compile Include="AgentGroupsDatahandler.cs" />
+    <Compile Include="AgentGroupsDTO.cs" />
+    <Compile Include="Agents.cs" />
+    <Compile Include="AgentsDatahandler.cs" />
+    <Compile Include="AgentsDTO.cs" />
+    <Compile Include="AgentsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgentsUI.designer.cs">
+      <DependentUpon>AgentsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgentUserDatahandler.cs" />
+    <Compile Include="AgentUserDTO.cs" />
+    <Compile Include="Attendance\AttendanceBL.cs" />
+    <Compile Include="Attendance\AttendanceDataHandler.cs" />
+    <Compile Include="Attendance\AttendanceDTO.cs" />
+    <Compile Include="Attendance\AttendanceLogBL.cs" />
+    <Compile Include="Attendance\AttendanceLogDataHandler.cs" />
+    <Compile Include="Attendance\AttendanceLogDTO.cs" />
+    <Compile Include="Attendance\AttendanceModificationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attendance\AttendanceModificationUI.designer.cs">
+      <DependentUpon>AttendanceModificationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attendance\AttendanceReaderBL.cs" />
+    <Compile Include="Attendance\AttendanceReaderDataHandler.cs" />
+    <Compile Include="Attendance\AttendanceReaderDTO.cs" />
+    <Compile Include="Attendance\AttendanceReaderSynch.cs" />
+    <Compile Include="Attendance\AttendanceRoleBL.cs" />
+    <Compile Include="Attendance\AttendanceRoleDataHandler.cs" />
+    <Compile Include="Attendance\AttendanceRoleDTO.cs" />
+    <Compile Include="Attendance\AttendanceUtils.cs" />
+    <Compile Include="Attendance\IAttendanceReaderUseCases.cs" />
+    <Compile Include="Attendance\IAttendanceRoleUseCases.cs" />
+    <Compile Include="Attendance\IAttendanceUseCases.cs" />
+    <Compile Include="Attendance\IPayConfigurationMapUseCases.cs" />
+    <Compile Include="Attendance\IPayConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\IShiftConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\IUserToAttendanceRoleMapUseCases.cs" />
+    <Compile Include="Attendance\IWorkShiftUseCases.cs" />
+    <Compile Include="Attendance\LocalAttendanceReaderUseCases.cs" />
+    <Compile Include="Attendance\LocalAttendanceRoleUseCases.cs" />
+    <Compile Include="Attendance\LocalAttendanceUseCases.cs" />
+    <Compile Include="Attendance\LocalPayConfigurationMapUseCases.cs" />
+    <Compile Include="Attendance\LocalPayConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\LocalShiftConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\LocalUserToAttendanceRoleMapUseCases.cs" />
+    <Compile Include="Attendance\LocalWorkShiftUseCases.cs" />
+    <Compile Include="Attendance\ManageAttendanceUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attendance\ManageAttendanceUI.designer.cs">
+      <DependentUpon>ManageAttendanceUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attendance\PayConfigurationDetailsBL.cs" />
+    <Compile Include="Attendance\PayConfigurationDetailsDataHandler.cs" />
+    <Compile Include="Attendance\PayConfigurationDetailsDTO.cs" />
+    <Compile Include="Attendance\PayConfigurationMapBL.cs" />
+    <Compile Include="Attendance\PayConfigurationMapDataHandler.cs" />
+    <Compile Include="Attendance\PayConfigurationMapDTO.cs" />
+    <Compile Include="Attendance\PayConfigurationsBL.cs" />
+    <Compile Include="Attendance\PayConfigurationsDataHandler.cs" />
+    <Compile Include="Attendance\PayConfigurationsDTO.cs" />
+    <Compile Include="Attendance\RemoteAttendanceReaderUseCases.cs" />
+    <Compile Include="Attendance\RemoteAttendanceRoleUseCases.cs" />
+    <Compile Include="Attendance\RemoteAttendanceUseCases.cs" />
+    <Compile Include="Attendance\RemotePayConfigurationMapUseCases.cs" />
+    <Compile Include="Attendance\RemotePayConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\RemoteShiftConfigurationsUseCases.cs" />
+    <Compile Include="Attendance\RemoteUserToAttendanceRolesMap.cs" />
+    <Compile Include="Attendance\RemoteWorkShiftUseCases.cs" />
+    <Compile Include="Attendance\ShiftConfigurationsBL.cs" />
+    <Compile Include="Attendance\ShiftConfigurationsDataHandler.cs" />
+    <Compile Include="Attendance\ShiftConfigurationsDTO.cs" />
+    <Compile Include="Attendance\UserPayRateBL.cs" />
+    <Compile Include="Attendance\UserPayRateDataHandler.cs" />
+    <Compile Include="Attendance\UserPayRateDTO.cs" />
+    <Compile Include="Attendance\UserToAttendanceRolesMapBL.cs" />
+    <Compile Include="Attendance\UserToAttendanceRolesMapDataHandler.cs" />
+    <Compile Include="Attendance\UserToAttendanceRolesMapDTO.cs" />
+    <Compile Include="Attendance\WorkShiftBL.cs" />
+    <Compile Include="Attendance\WorkShiftDataHandler.cs" />
+    <Compile Include="Attendance\WorkShiftDTO.cs" />
+    <Compile Include="Attendance\WorkShiftScheduleBL.cs" />
+    <Compile Include="Attendance\WorkShiftScheduleDataHandler.cs" />
+    <Compile Include="Attendance\WorkShiftScheduleDTO.cs" />
+    <Compile Include="Attendance\WorkShiftUserBL.cs" />
+    <Compile Include="Attendance\WorkShiftUserDataHandler.cs" />
+    <Compile Include="Attendance\WorkShiftUserDTO.cs" />
+    <Compile Include="AuthenticateManagerDelegate.cs" />
+    <Compile Include="AuthenticationException.cs" />
+    <Compile Include="CashdrawerActivityDTO.cs" />
+    <Compile Include="ChangeStaffUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeStaffUI.Designer.cs">
+      <DependentUpon>ChangeStaffUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CueTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DashboardDefinitionBL.cs" />
+    <Compile Include="DashboardDefinitionDataHandler.cs" />
+    <Compile Include="DashboardDefinitionDTO.cs" />
+    <Compile Include="DataAccessControlUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataAccessControlUI.designer.cs">
+      <DependentUpon>DataAccessControlUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessDetail.cs" />
+    <Compile Include="DataAccessDetailDataHandler.cs" />
+    <Compile Include="DataAccessDetailDTO.cs" />
+    <Compile Include="DataAccessRule.cs" />
+    <Compile Include="DataAccessRuleDataHandler.cs" />
+    <Compile Include="DataAccessRuleDTO.cs" />
+    <Compile Include="DepartmentBL.cs" />
+    <Compile Include="DepartmentDataHandler.cs" />
+    <Compile Include="DepartmentDTO.cs" />
+    <Compile Include="EntityExclusionDetail.cs" />
+    <Compile Include="EntityExclusionDetailDataHandler.cs" />
+    <Compile Include="EntityExclusionDetailDTO.cs" />
+    <Compile Include="HolidayBL.cs" />
+    <Compile Include="HolidayDataHandler.cs" />
+    <Compile Include="HolidayDTO.cs" />
+    <Compile Include="HRApprovalLogsBL.cs" />
+    <Compile Include="HRApprovalLogsDataHandler.cs" />
+    <Compile Include="HRApprovalLogsDTO.cs" />
+    <Compile Include="IAgentGroupsUseCases.cs" />
+    <Compile Include="IAgentsUseCases.cs" />
+    <Compile Include="IDataAccessRuleUseCases.cs" />
+    <Compile Include="IDepartmentUseCases.cs" />
+    <Compile Include="IHolidayUseCases.cs" />
+    <Compile Include="ILeaveActivityUseCases.cs" />
+    <Compile Include="ILeaveCycleUseCases.cs" />
+    <Compile Include="ILeaveTemplateUseCases.cs" />
+    <Compile Include="ILeaveUseCases.cs" />
+    <Compile Include="IManagementFormAccessUseCases.cs" />
+    <Compile Include="IUserRoleUseCases.cs" />
+    <Compile Include="IUserUseCases.cs" />
+    <Compile Include="LeaveActivityBL.cs" />
+    <Compile Include="LeaveActivityDTO.cs" />
+    <Compile Include="LeaveBL.cs" />
+    <Compile Include="LeaveCycleBL.cs" />
+    <Compile Include="LeaveCycleDataHandler.cs" />
+    <Compile Include="LeaveCycleDTO.cs" />
+    <Compile Include="LeaveDataHandler.cs" />
+    <Compile Include="LeaveDTO.cs" />
+    <Compile Include="LeaveTemplateBL.cs" />
+    <Compile Include="LeaveTemplateDataHandler.cs" />
+    <Compile Include="LeaveTemplateDTO.cs" />
+    <Compile Include="LocalAgentGroupsUseCases.cs" />
+    <Compile Include="LocalAgentsUseCases.cs" />
+    <Compile Include="LocalDataAccessRuleUseCases.cs" />
+    <Compile Include="LocalDepartmentUsecases.cs" />
+    <Compile Include="LocalHolidayUseCases.cs" />
+    <Compile Include="LocalLeaveActivityUseCases.cs" />
+    <Compile Include="LocalLeaveCycleUseCases.cs" />
+    <Compile Include="LocalLeaveTemplateUseCases.cs" />
+    <Compile Include="LocalLeaveUseCases.cs" />
+    <Compile Include="LocalManagementFormAccessUseCases.cs" />
+    <Compile Include="LocalUserRoleUseCases.cs" />
+    <Compile Include="LocalUserUseCases.cs" />
+    <Compile Include="ManagementFormAccessBL.cs" />
+    <Compile Include="ManagementFormAccessContainerDTO.cs" />
+    <Compile Include="ManagementFormAccessDatahandler.cs" />
+    <Compile Include="ManagementFormAccessDTO.cs" />
+    <Compile Include="ManagementFormsBL.cs" />
+    <Compile Include="ManagementFormsDataHandler.cs" />
+    <Compile Include="ManagementFormsDTO.cs" />
+    <Compile Include="ManagerApprovalValidator.cs" />
+    <Compile Include="MessageBoxDelegate.cs" />
+    <Compile Include="PartnerDatahandler.cs" />
+    <Compile Include="PartnerRevenueDTODefination.cs" />
+    <Compile Include="PartnerRevenueShare.cs" />
+    <Compile Include="PartnerRevenueShareDataHandler.cs" />
+    <Compile Include="PartnerRevenueShareDTO.cs" />
+    <Compile Include="Partners.cs" />
+    <Compile Include="PartnersDTO.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="RemoteAgentGroupsUseCases.cs" />
+    <Compile Include="RemoteAgentsUseCases.cs" />
+    <Compile Include="RemoteDataAccessRuleUseCases.cs" />
+    <Compile Include="RemoteDepartmentUseCases.cs" />
+    <Compile Include="RemoteHolidayUseCases.cs" />
+    <Compile Include="RemoteLeaveActivityUseCases.cs" />
+    <Compile Include="RemoteLeaveCycleUseCases.cs" />
+    <Compile Include="RemoteLeaveTemplateUseCases.cs" />
+    <Compile Include="RemoteLeaveUseCases.cs" />
+    <Compile Include="RemoteManagementFormAccessUseCases.cs" />
+    <Compile Include="RemoteUserRoleUseCases.cs" />
+    <Compile Include="RemoteUserUseCases.cs" />
+    <Compile Include="SecurityPolicyContainer.cs" />
+    <Compile Include="Shift\IShiftUseCases.cs" />
+    <Compile Include="Shift\LocalShiftUseCases.cs" />
+    <Compile Include="Shift\RemoteShiftUseCases.cs" />
+    <Compile Include="Shift\ShiftBL.cs" />
+    <Compile Include="Shift\ShiftDataHandler.cs" />
+    <Compile Include="Shift\ShiftDTO.cs" />
+    <Compile Include="Shift\ShiftLogBL.cs" />
+    <Compile Include="Shift\ShiftLogDataHandler.cs" />
+    <Compile Include="Shift\ShiftLogDTO.cs" />
+    <Compile Include="StaffCardDTO.cs" />
+    <Compile Include="StatusMessageDelegate.cs" />
+    <Compile Include="SecurityPolicyMasterList.cs" />
+    <Compile Include="UserAuthenticationErrorType.cs" />
+    <Compile Include="SystemUserEncryptionKey.cs" />
+    <Compile Include="UserIdentificationTagContainerDTO.cs" />
+    <Compile Include="SystemUserEncryptedPassword.cs" />
+    <Compile Include="UserPasswordHash.cs" />
+    <Compile Include="UserContainerDTO.cs" />
+    <Compile Include="UserContainerDTOCollection.cs" />
+    <Compile Include="UserPeriodBL.cs" />
+    <Compile Include="UserRoleContainerDTOCollection.cs" />
+    <Compile Include="UserAccount.cs" />
+    <Compile Include="UserAccountDatahandler.cs" />
+    <Compile Include="UserAuthenticate.cs" />
+    <Compile Include="UserAuthParams.cs" />
+    <Compile Include="UserAuthStructDTO.cs" />
+    <Compile Include="UserEncryptionKey.cs" />
+    <Compile Include="UserFingerPrintDetailBL.cs" />
+    <Compile Include="UserContainer.cs" />
+    <Compile Include="UserIdentificationTags.cs" />
+    <Compile Include="UserIdentificationTagsDTO.cs" />
+    <Compile Include="UserIdTagsDatahandler.cs" />
+    <Compile Include="UserContainerList.cs" />
+    <Compile Include="UserPasswordHistoryBL.cs" />
+    <Compile Include="UserPasswordHistoryDataHandler.cs" />
+    <Compile Include="UserPasswordHistoryDTO.cs" />
+    <Compile Include="UserPeriodDataHandler.cs" />
+    <Compile Include="UserPeriodDTO.cs" />
+    <Compile Include="UserRoleContainer.cs" />
+    <Compile Include="UserRoleContainerDTO.cs" />
+    <Compile Include="UserRoleDisplayGroupExclusions.cs" />
+    <Compile Include="UserRoleDisplayGroupExclusionsDataHandler.cs" />
+    <Compile Include="UserRoleDisplayGroupExclusionsDTO.cs" />
+    <Compile Include="UserRoleContainerList.cs" />
+    <Compile Include="UserRoles.cs" />
+    <Compile Include="UserRolesDataHandler.cs" />
+    <Compile Include="UserRolesDTO.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="UsersDataHandler.cs" />
+    <Compile Include="UsersDTO.cs" />
+    <Compile Include="UserStatus.cs" />
+    <Compile Include="UserTargetBL.cs" />
+    <Compile Include="UserTargetDataHandler.cs" />
+    <Compile Include="UserTargetDTO.cs" />
+    <Compile Include="UserUseCaseFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddAgentsUI.resx">
+      <DependentUpon>AddAgentsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgentsUI.resx">
+      <DependentUpon>AgentsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attendance\AttendanceModificationUI.resx">
+      <DependentUpon>AttendanceModificationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attendance\ManageAttendanceUI.resx">
+      <DependentUpon>ManageAttendanceUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeStaffUI.resx">
+      <DependentUpon>ChangeStaffUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataAccessControlUI.resx">
+      <DependentUpon>DataAccessControlUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24D8C63F-8F14-42CE-BC91-CFE34A088B38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PriceList\PriceList.csproj">
+      <Project>{0b195894-eac2-4e9a-a5e3-aa8ae1a47e6b}</Project>
+      <Name>PriceList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\button_pressed.png" />
+    <Content Include="Resources\Checked.png" />
+    <None Include="Properties\DataSources\AttendanceDTO.datasource" />
+    <None Include="Properties\DataSources\AttendanceLogDTO.datasource" />
+    <None Include="Properties\DataSources\AttendanceRolesDTO.datasource" />
+    <None Include="Properties\DataSources\UserIdentificationTagsDTO.datasource" />
+    <None Include="Properties\DataSources\UserRolesDTO.datasource" />
+    <None Include="Properties\DataSources\UsersDTO.datasource" />
+    <None Include="Resources\normal2.png" />
+    <None Include="Resources\keyboard.png" />
+    <Content Include="Resources\Unchecked.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

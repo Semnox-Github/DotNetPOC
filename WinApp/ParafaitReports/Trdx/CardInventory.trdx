@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="8.82084019978842in" Name="CardInventory" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitReportsNew" SelectCommand="select  From_Serial_Number, To_Serial_Number, Number as 'Number of Cards', &#xD;&#xA;&#x9;Action, dbo.ConvertToLocalTime(Date, -1 * @offSet) as 'Action Date', LastModUser as 'Action By' &#xD;&#xA;from card_inventory &#xD;&#xA;WHERE ActivityType IS NULL and TagType IS NULL and MachineType IS NULL &#xD;&#xA;union all &#xD;&#xA;select null, null, null, null, null, null &#xD;&#xA;union all &#xD;&#xA;select '', 'Total Cards:', sum(number), null, null, null &#xD;&#xA;from card_inventory WHERE ActivityType IS NULL and TagType IS NULL and MachineType IS NULL &#xD;&#xA;union all &#xD;&#xA;select '', 'Total Issued Cards:', &#xD;&#xA;&#x9;count(card_id) + (select count(card_id) from cards where ExpiryDate &lt; getdate() and (isnull(site_id, -1) in (@site) or -1 in (@site))), &#xD;&#xA;&#x9;null, null, null  &#xD;&#xA;from cards where valid_flag = 'Y' and (isnull(site_id, -1) in (@site) or -1 in (@site))&#xD;&#xA;union all&#xD;&#xA;select   '', 'Balance in Stock:', &#xD;&#xA;&#x9;(select sum(number)&#xD;&#xA;&#x9;from card_inventory &#xD;&#xA;&#x9;WHERE ActivityType IS NULL and TagType IS NULL and MachineType IS NULL and ((isnull(site_id, -1) in (@site)) or (-1 in (@site))) &#xD;&#xA;&#x9;) - (select count(card_id)  + (select count(card_id) from cards where ExpiryDate &lt; getdate() and ((isnull(site_id, -1) in (@site)) or (-1 in (@site))))&#xD;&#xA;&#x9;from cards &#xD;&#xA;&#x9;where valid_flag = 'Y' and ((isnull(site_id, -1) in (@site)) or (-1 in (@site))) &#xD;&#xA;&#x9;) ,'','',''&#xD;&#xA;order by 5 desc" CommandTimeout="600" Name="dsCardInventory">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="0.400000095367438in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsCardInventory" Width="8.81042328311232in" Height="0.399999944443005in" Left="0.0104166669771075in" Top="0in" Name="crosstab2" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.47708410017807in" Height="0.199999817332951in" Left="0in" Top="0in" Value="= Fields.From_Serial_Number" Name="textBox85" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.56041768317823in" Height="0.199999820313177in" Left="0in" Top="0in" Value="= Fields.To_Serial_Number" Format="{0:N2}" Name="textBox86" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.1541679239303in" Height="0.199999820313174in" Left="0in" Top="0in" Value="= Format(Parameters.NumericCellFormat.Value,Fields.[Number of Cards])" Format="{0:N0}" Name="textBox87" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.07083454784394in" Height="0.199999811372485in" Left="0in" Top="0in" Value="= Fields.Action" Format="{0:N2}" Name="textBox88" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.32083474902756in" Height="0.199999866293107in" Left="0in" Top="0in" Value="= Format(Parameters.DateTimeCellFormat.Value,Fields.[Action Date])" Format="{0:dd-MMM-yyyy hh:mm tt}" Name="textBox89" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.22708464362928in" Height="0.19999982993684in" Left="0in" Top="0in" Value="= Fields.[Action By]" Format="{0:N2}" Name="textBox90" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.4770834737376in" />
+              <Column Width="1.56041775639652in" />
+              <Column Width="1.15416792035639in" />
+              <Column Width="1.07083468798177in" />
+              <Column Width="2.32083501159864in" />
+              <Column Width="1.22708456432695in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.199999888775011in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <Font Name="Tahoma" Size="8pt" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.47708410017807in" Height="0.200000075868043in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('From Serial Number')" Name="textBox137" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.56041768317823in" Height="0.200000057303682in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('To Serial Number')" Name="textBox138" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.1541679239303in" Height="0.200000057303679in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('Number of Cards')" Name="textBox139" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.07083454784394in" Height="0.200000048362979in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('Action')" Name="textBox140" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="2.32083474902756in" Height="0.200000085898917in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('Action Date')" Name="textBox141" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.22708464362928in" Height="0.200000066927331in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('Action By')" Name="textBox142" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Center" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.099999745686849in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.299999872843425in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="5.10000038146973in" Top="0.099999745686849in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount&#xD;&#xA;" Name="textBox45">
+          <Style TextAlign="Right">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.400000015894572in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="8.8200003306071in" Height="0.19999997317791in" Left="0in" Top="0.199999968210856in" Value="=MessagesFunctions.getMessage(&quot;Site&quot;) + &quot;: &quot;  + Parameters.SiteName.Value" Name="textBox97">
+          <Style TextAlign="Left">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+            <Padding Top="2pt" Bottom="2pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.8200003306071in" Height="0.19999997317791in" Left="0in" Top="0in" Value="= MessagesFunctions.getMessage('Card Inventory Report')" Name="textBox46">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="12.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="Mode" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

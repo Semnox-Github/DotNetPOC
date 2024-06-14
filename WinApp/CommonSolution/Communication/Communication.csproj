@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Communication</RootNamespace>
+    <AssemblyName>Communication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="aliyun-net-sdk-core">
+      <HintPath>..\..\..\..\OTS\aliyun-net-sdk-core.dll</HintPath>
+    </Reference>
+    <Reference Include="aliyun-net-sdk-dysmsapi">
+      <HintPath>..\..\..\..\OTS\aliyun-net-sdk-dysmsapi.dll</HintPath>
+    </Reference>
+    <Reference Include="Languages, Version=2.150.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Languages\bin\x86\Debug\Languages.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twilio">
+      <HintPath>..\..\..\..\OTS\Twilio.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppNotificationContentBuilder.cs" />
+    <Compile Include="AppNotifications.cs" />
+    <Compile Include="CommunicationUseCaseFactory.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="IMessagingTriggerUseCases.cs" />
+    <Compile Include="IMessagingRequestsUseCases.cs" />
+    <Compile Include="IParafaitFunctionEventUseCases.cs" />
+    <Compile Include="IParafaitFunctionsUseCases.cs" />
+    <Compile Include="LocalMessagingRequestsUseCases.cs" />
+    <Compile Include="LocalMessagingTriggerUseCases.cs" />
+    <Compile Include="LocalParafaitFunctionEventUseCases.cs" />
+    <Compile Include="LocalParafaitFunctionsUseCases.cs" />
+    <Compile Include="MessagingClientBL.cs" />
+    <Compile Include="MessagingClientDataHandler.cs" />
+    <Compile Include="MessagingClientDTO.cs" />
+    <Compile Include="MessagingClientFunctionLookUpBL.cs" />
+    <Compile Include="MessagingClientFunctionLookUpDatahandler.cs" />
+    <Compile Include="MessagingClientFunctionLookUpDTO.cs" />
+    <Compile Include="MessagingRequestSummaryViewBL.cs" />
+    <Compile Include="MessagingRequestBL.cs" />
+    <Compile Include="MessagingRequestSummaryViewDataHandler.cs" />
+    <Compile Include="MessagingRequestDataHandler.cs" />
+    <Compile Include="MessagingRequestSummaryViewDTO.cs" />
+    <Compile Include="MessagingRequestDTO.cs" />
+    <Compile Include="MessagingTriggerBL.cs" />
+    <Compile Include="MessagingTriggerCriteriaBL.cs" />
+    <Compile Include="MessagingTriggerCriteriaDataHandler.cs" />
+    <Compile Include="MessagingTriggerCriteriaDTO.cs" />
+    <Compile Include="MessagingTriggerDataHandler.cs" />
+    <Compile Include="MessagingTriggerDTO.cs" />
+    <Compile Include="ParafaitFunctionEventBL.cs" />
+    <Compile Include="ParafaitFunctionEventDatahandler.cs" />
+    <Compile Include="ParafaitFunctionEventDTO.cs" />
+    <Compile Include="ParafaitFunctionsBL.cs" />
+    <Compile Include="ParafaitFunctionsDataHandler.cs" />
+    <Compile Include="ParafaitFunctionsDTO.cs" />
+    <Compile Include="PushNotificationDeviceBL.cs" />
+    <Compile Include="PushNotificationDeviceDataHandler.cs" />
+    <Compile Include="PushNotificationDeviceDTO.cs" />
+    <Compile Include="EmailTemplate.cs" />
+    <Compile Include="EmailTemplateDatahandler.cs" />
+    <Compile Include="EmailTemplateDTO.cs" />
+    <Compile Include="NetUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="RemoteMessagingRequestsUseCases.cs" />
+    <Compile Include="RemoteMessagingTriggerUseCases.cs" />
+    <Compile Include="RemoteParafaitFunctionEventUseCases.cs" />
+    <Compile Include="RemoteParafaitFunctionsUseCases.cs" />
+    <Compile Include="SendEmailUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendEmailUI.designer.cs">
+      <DependentUpon>SendEmailUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SMSGateways\MessagingClientFactory.cs" />
+    <Compile Include="UserAuthenticate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="SendEmailUI.resx">
+      <DependentUpon>SendEmailUI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

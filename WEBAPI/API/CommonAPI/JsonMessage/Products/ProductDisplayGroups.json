@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 87,
+    "ProductId": 117,
+    "DisplayGroupId": 8,
+    "CreatedBy": "Semnox",
+    "CreatedDate": "2019-01-18T16:34:16.523",
+    "LastUpdatedBy": "Semnox",
+    "LastUpdatedDate": "2019-01-18T16:34:16.523",
+    "Guid": "1206186b-90b0-4407-8931-75fd28fc8f54",
+    "SiteId": -1,
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "ProductsDTOList": null,
+    "IsChanged": false
+  },
+  {
+    "Id": 88,
+    "ProductId": 117,
+    "DisplayGroupId": 5,
+    "CreatedBy": "Semnox",
+    "CreatedDate": "2019-01-18T16:34:22.52",
+    "LastUpdatedBy": "Semnox",
+    "LastUpdatedDate": "2019-01-18T16:34:22.52",
+    "Guid": "51ef882e-62c4-41d1-9932-91382a24c1d0",
+    "SiteId": -1,
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "ProductsDTOList": null,
+    "IsChanged": false
+  }
+]

@@ -1,0 +1,917 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Core.GenericUtilities</RootNamespace>
+    <AssemblyName>GenericUtilities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\..\..\OTS\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\..\..\OTS\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.RCHGlobe">
+      <HintPath>..\..\..\..\OTS\AxInterop.RCHGlobe.dll</HintPath>
+    </Reference>
+    <Reference Include="AxSB100PCLib">
+      <HintPath>..\..\..\..\OTS\AxSB100PCLib.dll</HintPath>
+    </Reference>
+    <Reference Include="GenCode128, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\GenCode128.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\..\OTS\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.4.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\SourceCode\Software\OTS\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.664.37, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.664.37, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\..\OTS\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\..\..\OTS\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\..\..\OTS\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\..\..\OTS\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\..\OTS\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractCustomDataListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AccountingCalendarMasterBL.cs" />
+    <Compile Include="AccountingCalendarMasterDataHandler.cs" />
+    <Compile Include="AccountingCalendarMasterDTO.cs" />
+    <Compile Include="AdvancedSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvancedSearch.designer.cs">
+      <DependentUpon>AdvancedSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdvanceSearchUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvanceSearchUI.designer.cs">
+      <DependentUpon>AdvanceSearchUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AndCriteria.cs" />
+    <Compile Include="Applicability.cs" />
+    <Compile Include="BusinessDate.cs" />
+    <Compile Include="CustomAttributeContainerDTOCollection.cs" />
+    <Compile Include="CustomAttributesContainerList.cs" />
+    <Compile Include="CustomAttributesContainers.cs" />
+    <Compile Include="CustomDataViewDTO.cs" />
+    <Compile Include="CustomWebBrowser.cs" />
+    <Compile Include="DateTimeRange.cs" />
+    <Compile Include="EncryptedNumberColumn.cs" />
+    <Compile Include="EncryptedDateTimeColumn.cs" />
+    <Compile Include="EntityOverrideDateContainerDTO.cs" />
+    <Compile Include="FileResources\CachedFileResource.cs" />
+    <Compile Include="FileResources\DataBaseFileResource.cs" />
+    <Compile Include="FileResources\FileResourceFactory.cs" />
+    <Compile Include="FileResources\RemoteFileResource.cs" />
+    <Compile Include="FileResources\FileServiceDataHandler.cs" />
+    <Compile Include="FileResources\FileResource.cs" />
+    <Compile Include="FileResources\LocalFileResource.cs" />
+    <Compile Include="GenericEventsBL.cs" />
+    <Compile Include="GenericOTPBL.cs" />
+    <Compile Include="GenericOTPDataHandler.cs" />
+    <Compile Include="GenericOTPDTO.cs" />
+    <Compile Include="GenericOTPUseCaseFactory.cs" />
+    <Compile Include="GenericOTPVerificationBL.cs" />
+    <Compile Include="IGenericOTPUseCases.cs" />
+    <Compile Include="LocalGenericOTPUseCases.cs" />
+    <Compile Include="Properties\Resources1.Designer.cs" />
+    <Compile Include="RemoteGenericOTPUseCases.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentContainer.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentContainerDTO.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentContainerDTOCollection.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentContainerList.cs" />
+    <Compile Include="ApplicationRemarks.cs" />
+    <Compile Include="ApplicationRemarksDataHandler.cs" />
+    <Compile Include="ApplicationRemarksDTO.cs" />
+    <Compile Include="ApplicationRemarksUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationRemarksUI.Designer.cs">
+      <DependentUpon>ApplicationRemarksUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuditLog.cs" />
+    <Compile Include="AuditLogDataHandler.cs" />
+    <Compile Include="AuditLogParams.cs" />
+    <Compile Include="AutoCompleteComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BackgroundProcessRunner.cs" />
+    <Compile Include="BetweenOperator.cs" />
+    <Compile Include="ByteArray.cs" />
+    <Compile Include="CardGames.cs" />
+    <Compile Include="ColorCodes.cs" />
+    <Compile Include="Column.cs" />
+    <Compile Include="ColumnProvider.cs" />
+    <Compile Include="ColumnType.cs" />
+    <Compile Include="ContinuousDateTimeRanges.cs" />
+    <Compile Include="CountryContainer.cs" />
+    <Compile Include="CountryContainerDTO.cs" />
+    <Compile Include="CountryContainerDTOCollection.cs" />
+    <Compile Include="CountryContainerList.cs" />
+    <Compile Include="CriteriaParameter.cs" />
+    <Compile Include="CustomAttributeContainer.cs" />
+    <Compile Include="CustomAttributeContainerList.cs" />
+    <Compile Include="CustomAttributesContainerDTO.cs" />
+    <Compile Include="CustomAttributeValueContainerListDTO.cs" />
+    <Compile Include="CustomDataContainerDTO.cs" />
+    <Compile Include="DefaultDataTypeDTO.cs" />
+    <Compile Include="GenericUtilitiesCaseFactory.cs" />
+    <Compile Include="ICountryUseCases.cs" />
+    <Compile Include="ICustomAttributesUseCases.cs" />
+    <Compile Include="IDefaultDataTypeUseCases.cs" />
+    <Compile Include="IKioskSetupUseCases.cs" />
+    <Compile Include="IScheduleCalendarUseCases.cs" />
+    <Compile Include="LocalCountryUseCases.cs" />
+    <Compile Include="LocalCustomAttributesUseCases.cs" />
+    <Compile Include="LocalDefaultDataTypeUseCases.cs" />
+    <Compile Include="LocalKioskSetupUseCases.cs" />
+    <Compile Include="LocalScheduleCalendarUseCases.cs" />
+    <Compile Include="ObjectTranslationContainer.cs" />
+    <Compile Include="ObjectTranslationContainerDTO.cs" />
+    <Compile Include="ObjectTranslationContainerList.cs" />
+    <Compile Include="ObjectTranslationDTOContainerCollection.cs" />
+    <Compile Include="RemoteCountryUseCases.cs" />
+    <Compile Include="RemoteCustomAttributesUseCases.cs" />
+    <Compile Include="RemoteDefaultDataTypeUseCases.cs" />
+    <Compile Include="RemoteKioskSetupUseCases.cs" />
+    <Compile Include="RemoteScheduleCalendarUseCases.cs" />
+    <Compile Include="RichContentManagement\IApplicationContentUseCases.cs" />
+    <Compile Include="RichContentManagement\LocalApplicationContentUseCases.cs" />
+    <Compile Include="RichContentManagement\RemoteApplicationContentUseCases.cs" />
+    <Compile Include="ScheduleCalendarCalculator.cs" />
+    <Compile Include="Scroll\BigHorizontalScrollBarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Scroll\BigHorizontalScrollBarView.Designer.cs">
+      <DependentUpon>BigHorizontalScrollBarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scroll\BigVerticalScrollBarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Scroll\BigVerticalScrollBarView.Designer.cs">
+      <DependentUpon>BigVerticalScrollBarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchParameterList.cs" />
+    <Compile Include="StateContainerDTO.cs" />
+    <Compile Include="TemporaryFile.cs" />
+    <Compile Include="EncryptedTextColumn.cs" />
+    <Compile Include="UIActionStatusDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIActionStatusDialog.Designer.cs">
+      <DependentUpon>UIActionStatusDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIActionStatusLauncher.cs" />
+    <Compile Include="WaitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitDialog.Designer.cs">
+      <DependentUpon>WaitDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IEntityOverrideDatesUseCases.cs" />
+    <Compile Include="LocalEntityOverrideDatesUseCases.cs" />
+    <Compile Include="OrderStatusUseCaseFactory.cs" />
+    <Compile Include="DirectSQLBL.cs" />
+    <Compile Include="DirectSQLDataHandler.cs" />
+    <Compile Include="DirectSQLDTO.cs" />
+    <Compile Include="EmailBL.cs" />
+    <Compile Include="EmailDTO.cs" />
+    <Compile Include="Excel\AttributeDefinition.cs" />
+    <Compile Include="Excel\BooleanValueConverter.cs" />
+    <Compile Include="Excel\Cell.cs" />
+    <Compile Include="Excel\ComplexAttributeDefinition.cs" />
+    <Compile Include="Excel\ExcelFile.cs" />
+    <Compile Include="Excel\CsvFile.cs" />
+    <Compile Include="Excel\DateTimeValueConverter.cs" />
+    <Compile Include="Excel\DecimalValueConverter.cs" />
+    <Compile Include="Excel\DoubleValueConverter.cs" />
+    <Compile Include="Excel\EnumValueConverter.cs" />
+    <Compile Include="Excel\ForeignKeyValueConverter.cs" />
+    <Compile Include="Excel\ImportToExcelUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Excel\ImportToExcelUI.designer.cs">
+      <DependentUpon>ImportToExcelUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Excel\IntValueConverter.cs" />
+    <Compile Include="Excel\ListAttributeDefinition.cs" />
+    <Compile Include="Excel\NullableBooleanValueConverter.cs" />
+    <Compile Include="Excel\NullableDateTimeValueConverter.cs" />
+    <Compile Include="Excel\NullableDecimalValueConverter.cs" />
+    <Compile Include="Excel\NullableDoubleValueConverter.cs" />
+    <Compile Include="Excel\NullableIntValueConverter.cs" />
+    <Compile Include="Excel\Row.cs" />
+    <Compile Include="Excel\Sheet.cs" />
+    <Compile Include="Excel\SimpleAttributeDefinition.cs" />
+    <Compile Include="Excel\StringValueConverter.cs" />
+    <Compile Include="Excel\ValueConverter.cs" />
+    <Compile Include="FileInfoDTO.cs" />
+    <Compile Include="CustomFontConverter.cs" />
+    <Compile Include="GenericExceptionMessage.cs" />
+    <Compile Include="CommonFuncs.cs" />
+    <Compile Include="ComplexCriteria.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="CountryBL.cs" />
+    <Compile Include="CountryDataHandler.cs" />
+    <Compile Include="CountryDTO.cs" />
+    <Compile Include="CountryParams.cs" />
+    <Compile Include="Criteria.cs" />
+    <Compile Include="CustomAttributes.cs" />
+    <Compile Include="CustomAttributesBL.cs" />
+    <Compile Include="CustomAttributesDataHandler.cs" />
+    <Compile Include="CustomAttributesDTO.cs" />
+    <Compile Include="CustomAttributesWrapperDTO.cs" />
+    <Compile Include="CustomAttributeValueListBL.cs" />
+    <Compile Include="CustomAttributeValueListDataHandler.cs" />
+    <Compile Include="CustomAttributeValueListDTO.cs" />
+    <Compile Include="CustomCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataBL.cs" />
+    <Compile Include="CustomDataControlFactory.cs" />
+    <Compile Include="CustomDataDataHandler.cs" />
+    <Compile Include="CustomDataDateTimeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataDTO.cs" />
+    <Compile Include="CustomDataListCheckBoxControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataListComboBoxControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataListRadioButtonControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomDataListUI.designer.cs">
+      <DependentUpon>CustomDataListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomDataNumberControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataSetBL.cs" />
+    <Compile Include="CustomDataSetDataHandler.cs" />
+    <Compile Include="CustomDataSetDTO.cs" />
+    <Compile Include="CustomDataTableLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataTextControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomerPhoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerPhoto.designer.cs">
+      <DependentUpon>CustomerPhoto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimeColumn.cs" />
+    <Compile Include="DayLookupBL.cs" />
+    <Compile Include="DayLookupDataHandler.cs" />
+    <Compile Include="DayLookupDTO.cs" />
+    <Compile Include="DBSynch.cs" />
+    <Compile Include="DBUtils.cs" />
+    <Compile Include="DefaultDataTypeBL.cs" />
+    <Compile Include="DefaultDataTypeDataHandler.cs" />
+    <Compile Include="EditHtmlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditHtmlForm.Designer.cs">
+      <DependentUpon>EditHtmlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnterHrefForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterHrefForm.designer.cs">
+      <DependentUpon>EnterHrefForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnterImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterImageForm.designer.cs">
+      <DependentUpon>EnterImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntityOverrideDate.cs" />
+    <Compile Include="EntityOverrideDatesDH.cs" />
+    <Compile Include="EntityOverrideDatesDTO.cs" />
+    <Compile Include="frmScreenSaver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScreenSaver.Designer.cs">
+      <DependentUpon>frmScreenSaver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericEntitySelection\EntityPropertyDefintion.cs" />
+    <Compile Include="EventLog.cs" />
+    <Compile Include="FindReplaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindReplaceForm.Designer.cs">
+      <DependentUpon>FindReplaceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontAttributeForm.designer.cs">
+      <DependentUpon>FontAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEntityOverride.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEntityOverride.designer.cs">
+      <DependentUpon>frmEntityOverride.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericEntitySelection\GenericEntitySelectionUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenericEntitySelection\GenericEntitySelectionUI.Designer.cs">
+      <DependentUpon>GenericEntitySelectionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericUtils.cs" />
+    <Compile Include="HtmlEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HtmlEditorControl.designer.cs">
+      <DependentUpon>HtmlEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HtmlEditorEvents.cs" />
+    <Compile Include="HtmlEditorUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HtmlEditorUI.designer.cs">
+      <DependentUpon>HtmlEditorUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HtmlEnumerations.cs" />
+    <Compile Include="HtmlFontProperty.cs" />
+    <Compile Include="HtmlTableProperty.cs" />
+    <Compile Include="HTTPServiceUtil.cs" />
+    <Compile Include="ICustomDataControl.cs" />
+    <Compile Include="IMifareKeyUseCases.cs" />
+    <Compile Include="InOperator.cs" />
+    <Compile Include="IOleCommandTarget.cs" />
+    <Compile Include="IOperator.cs" />
+    <Compile Include="IOrderStatusUseCases.cs" />
+    <Compile Include="IParafaitMessageQueueUseCases.cs" />
+    <Compile Include="JobScheduleBL.cs" />
+    <Compile Include="JobScheduleDataHandler.cs" />
+    <Compile Include="JobScheduleDTO.cs" />
+    <Compile Include="JobScheduleTasksBL.cs" />
+    <Compile Include="JobScheduleTasksDataHandler.cs" />
+    <Compile Include="JobScheduleTasksDTO.cs" />
+    <Compile Include="Json.cs" />
+    <Compile Include="KioskSetupBL.cs" />
+    <Compile Include="KioskSetupDataHandler.cs" />
+    <Compile Include="KioskSetupDTO.cs" />
+    <Compile Include="LikeOperator.cs" />
+    <Compile Include="LocalMifareKeyUseCases.cs" />
+    <Compile Include="LocalOrderStatusUseCases.cs" />
+    <Compile Include="LocalParafaitMessageQueueUseCases.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MachineSocket.cs" />
+    <Compile Include="MaintenanceWindow.cs" />
+    <Compile Include="ManagementStudioSwitch.cs" />
+    <Compile Include="MasterEntityDataHandler.cs" />
+    <Compile Include="MifareKeyContainerDataHandler.cs" />
+    <Compile Include="MifareKeyContainerDTOCollection.cs" />
+    <Compile Include="MifareKeyContainerList.cs" />
+    <Compile Include="MifareKeyUseCaseFactory.cs" />
+    <Compile Include="NetScan.cs" />
+    <Compile Include="NoParameterOperator.cs" />
+    <Compile Include="NotCriteria.cs" />
+    <Compile Include="NumberColumn.cs" />
+    <Compile Include="ObjectTranslations.cs" />
+    <Compile Include="ObjectTranslationsDataHandler.cs" />
+    <Compile Include="ObjectTranslationsDTO.cs" />
+    <Compile Include="ObjectTranslationsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectTranslationsUI.designer.cs">
+      <DependentUpon>ObjectTranslationsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operator.cs" />
+    <Compile Include="OperatorFactory.cs" />
+    <Compile Include="OrCriteria.cs" />
+    <Compile Include="OrderBy.cs" />
+    <Compile Include="OrderByType.cs" />
+    <Compile Include="MessageQueueStatus.cs" />
+    <Compile Include="OrderStatusBL.cs" />
+    <Compile Include="OrderStatusDataHandler.cs" />
+    <Compile Include="OrderStatusDTO.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="MifareKeyContainer.cs" />
+    <Compile Include="ParafaitMessageQueueBL.cs" />
+    <Compile Include="ParafaitMessageQueueDataHandler.cs" />
+    <Compile Include="ParafaitMessageQueueDTO.cs" />
+    <Compile Include="ParafaitMessageQueueUseCaseFactory.cs" />
+    <Compile Include="ParafaitOptionValuesCustomBL.cs" />
+    <Compile Include="ParafaitOptionValuesCustomPropertiesDTO.cs" />
+    <Compile Include="ParametersHelper.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="Properties\Settings1.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RandomByteArray.cs" />
+    <Compile Include="RandomString.cs" />
+    <Compile Include="RandomTagNumber.cs" />
+    <Compile Include="RemoteEntityOverrideDatesUseCases.cs" />
+    <Compile Include="RemoteMifareKeyUseCases.cs" />
+    <Compile Include="RemoteOrderStatusUseCases.cs" />
+    <Compile Include="RemoteParafaitMessageQueueUseCases.cs" />
+    <Compile Include="RemotingClient.cs" />
+    <Compile Include="RemotingProxy.cs" />
+    <Compile Include="RemotingProxyWS.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentBL.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentDataHandler.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentDTO.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentTranslatedBL.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentTranslatedDataHandler.cs" />
+    <Compile Include="RichContentManagement\ApplicationContentTranslatedDTO.cs" />
+    <Compile Include="RichContentManagement\RichContentBL.cs" />
+    <Compile Include="RichContentManagement\RichContentDataHandler.cs" />
+    <Compile Include="RichContentManagement\RichContentDTO.cs" />
+    <Compile Include="RoundingPrecision.cs" />
+    <Compile Include="ScheduleCalendarBL.cs" />
+    <Compile Include="ScheduleCalendarDataHandler.cs" />
+    <Compile Include="ScheduleCalendarDTO.cs" />
+    <Compile Include="ScheduleCalendarExclusionBL.cs" />
+    <Compile Include="ScheduleCalendarExclusionDataHandler.cs" />
+    <Compile Include="ScheduleCalendarExclusionDTO.cs" />
+    <Compile Include="ScheduleExclusionUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduleExclusionUI.designer.cs">
+      <DependentUpon>ScheduleExclusionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scroll\DataGridViewHorizontalScrollHandler.cs" />
+    <Compile Include="Scroll\DataGridViewVerticalScrollHandler.cs" />
+    <Compile Include="Scroll\HorizontalScrollBarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Scroll\HorizontalScrollBarView.designer.cs">
+      <DependentUpon>HorizontalScrollBarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scroll\ScrollableControlHorizontalScrollHandler.cs" />
+    <Compile Include="Scroll\ScrollableControlVerticalScrollHandler.cs" />
+    <Compile Include="Scroll\ScrollViewerHorizontalScrollHandler.cs" />
+    <Compile Include="Scroll\ScrollViewerVerticalScrollHandler.cs" />
+    <Compile Include="Scroll\VerticalScrollBarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Scroll\VerticalScrollBarView.designer.cs">
+      <DependentUpon>VerticalScrollBarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchCriteria.cs" />
+    <Compile Include="SemnoxTCPSocket.cs" />
+    <Compile Include="SendEmailUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendEmailUI.designer.cs">
+      <DependentUpon>SendEmailUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SingleValueOperator.cs" />
+    <Compile Include="SmsBL.cs" />
+    <Compile Include="SmsDTO.cs" />
+    <Compile Include="SortableBindingList.cs" />
+    <Compile Include="SqlParameterNameProvider.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="StateBL.cs" />
+    <Compile Include="StateDataHandler.cs" />
+    <Compile Include="StateDTO.cs" />
+    <Compile Include="StateParams.cs" />
+    <Compile Include="TablePropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TablePropertyForm.designer.cs">
+      <DependentUpon>TablePropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TagNumber.cs" />
+    <Compile Include="TagNumberLengthList.cs" />
+    <Compile Include="TagNumberParser.cs" />
+    <Compile Include="ScannedTagNumberTrimmer.cs" />
+    <Compile Include="TemplateKeywordFormatter.cs" />
+    <Compile Include="TemplateText.cs" />
+    <Compile Include="TextColumn.cs" />
+    <Compile Include="ThemeUtils.cs" />
+    <Compile Include="TimeZoneDatahandler.cs" />
+    <Compile Include="TimeZoneUtil.cs" />
+    <Compile Include="TripleDesEncryption.cs" />
+    <Compile Include="UlcKey.cs" />
+    <Compile Include="UlcKeyCollection.cs" />
+    <Compile Include="UlcKeyDTO.cs" />
+    <Compile Include="UlcKeyStore.cs" />
+    <Compile Include="ValueCriteria.cs" />
+    <Compile Include="ValueObject.cs" />
+    <Compile Include="VersionSynch.cs" />
+    <Compile Include="WebApiException.cs" />
+    <Compile Include="WebApiResponse.cs" />
+    <Compile Include="WebDataAccessHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AdvancedSearch.resx">
+      <DependentUpon>AdvancedSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationRemarksUI.resx">
+      <DependentUpon>ApplicationRemarksUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomDataListUI.resx">
+      <DependentUpon>CustomDataListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerPhoto.resx">
+      <DependentUpon>CustomerPhoto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditHtmlForm.resx">
+      <DependentUpon>EditHtmlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterHrefForm.resx">
+      <DependentUpon>EnterHrefForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterImageForm.resx">
+      <DependentUpon>EnterImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Excel\ImportToExcelUI.resx">
+      <DependentUpon>ImportToExcelUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindReplaceForm.resx">
+      <DependentUpon>FindReplaceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontAttributeForm.resx">
+      <DependentUpon>FontAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scroll\BigHorizontalScrollBarView.resx">
+      <DependentUpon>BigHorizontalScrollBarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scroll\BigVerticalScrollBarView.resx">
+      <DependentUpon>BigVerticalScrollBarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIActionStatusDialog.resx">
+      <DependentUpon>UIActionStatusDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitDialog.resx">
+      <DependentUpon>WaitDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEntityOverride.resx">
+      <DependentUpon>frmEntityOverride.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScreenSaver.resx">
+      <DependentUpon>frmScreenSaver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenericEntitySelection\GenericEntitySelectionUI.resx">
+      <DependentUpon>GenericEntitySelectionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HtmlEditorControl.resx">
+      <DependentUpon>HtmlEditorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HtmlEditorUI.resx">
+      <DependentUpon>HtmlEditorUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectTranslationsUI.resx">
+      <DependentUpon>ObjectTranslationsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScheduleExclusionUI.resx">
+      <DependentUpon>ScheduleExclusionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scroll\HorizontalScrollBarView.resx">
+      <DependentUpon>HorizontalScrollBarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scroll\VerticalScrollBarView.resx">
+      <DependentUpon>VerticalScrollBarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SendEmailUI.resx">
+      <DependentUpon>SendEmailUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TablePropertyForm.resx">
+      <DependentUpon>TablePropertyForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\App.ico" />
+    <Content Include="Properties\default.css" />
+    <Content Include="Properties\default.js" />
+    <Content Include="Properties\HtmlEditor.bmp" />
+    <Content Include="Properties\HtmlEditor.ico" />
+    <Content Include="Properties\ToolbarBold.bmp" />
+    <Content Include="Properties\ToolbarCopy.bmp" />
+    <Content Include="Properties\ToolBarCut.bmp" />
+    <Content Include="Properties\ToolbarDelete.bmp" />
+    <Content Include="Properties\ToolbarFileOpen.bmp" />
+    <Content Include="Properties\ToolbarFileSave.bmp" />
+    <Content Include="Properties\ToolbarFind.bmp" />
+    <Content Include="Properties\ToolbarFontColor.bmp" />
+    <Content Include="Properties\ToolbarFontDown.bmp" />
+    <Content Include="Properties\ToolbarFontNormal.bmp" />
+    <Content Include="Properties\ToolbarFontStyle.bmp" />
+    <Content Include="Properties\ToolbarFontUp.bmp" />
+    <Content Include="Properties\ToolbarImage.bmp" />
+    <Content Include="Properties\ToolbarItalic.bmp" />
+    <Content Include="Properties\ToolbarJustifyCenter.bmp" />
+    <Content Include="Properties\ToolbarJustifyLeft.bmp" />
+    <Content Include="Properties\ToolbarJustifyRight.bmp" />
+    <Content Include="Properties\ToolbarLine.bmp" />
+    <Content Include="Properties\ToolbarListOrdered.bmp" />
+    <Content Include="Properties\ToolbarListUnordered.bmp" />
+    <Content Include="Properties\ToolbarPaste.bmp" />
+    <Content Include="Properties\ToolbarPrint.bmp" />
+    <Content Include="Properties\ToolbarProperties.bmp" />
+    <Content Include="Properties\ToolbarRedo.bmp" />
+    <Content Include="Properties\ToolbarTabInsert.bmp" />
+    <Content Include="Properties\ToolbarTable.bmp" />
+    <Content Include="Properties\ToolbarTabRemove.bmp" />
+    <Content Include="Properties\ToolbarUnderline.bmp" />
+    <Content Include="Properties\ToolbarUndo.bmp" />
+    <Content Include="Properties\ToolbarWebLink.bmp" />
+    <Content Include="Resources\alphabetic-button-normal.png" />
+    <None Include="Resources\Up_Button_Disabled.png" />
+    <None Include="Resources\Up_Button.png" />
+    <None Include="Resources\App.ico" />
+    <Content Include="Resources\Attach.jpg" />
+    <Content Include="Resources\back-normal.png" />
+    <Content Include="Resources\back-space-pressed.png" />
+    <Content Include="Resources\back-space.png" />
+    <Content Include="Resources\backspace-button-normal.png" />
+    <Content Include="Resources\BtnBackground.png" />
+    <Content Include="Resources\button1-normal.png" />
+    <Content Include="Resources\button2-normal.png" />
+    <Content Include="Resources\button3-normal.png" />
+    <Content Include="Resources\button4-normal.png" />
+    <Content Include="Resources\button5-normal.png" />
+    <None Include="Resources\ButtonNav2Normal.png" />
+    <None Include="Resources\ButtonNav2Pressed.png" />
+    <Content Include="Resources\Camera.png" />
+    <Content Include="Resources\camera_click.wav" />
+    <Content Include="Resources\cancel.gif" />
+    <None Include="Resources\CancelLinePressed.png" />
+    <None Include="Resources\CancelLine.png" />
+    <Content Include="Resources\caps-button-normal.png" />
+    <Content Include="Resources\caps-button-pressed.png" />
+    <Content Include="Resources\caps-normal.png" />
+    <Content Include="Resources\caps-on.png" />
+    <None Include="Resources\Checked.png" />
+    <Content Include="Resources\checked_checkbox4.png" />
+    <Content Include="Resources\CheckMark.png" />
+    <Content Include="Resources\CircularClose.png" />
+    <Content Include="Resources\close-button-pressed.png" />
+    <Content Include="Resources\close-button.png" />
+    <Content Include="Resources\close-button2-pressed.png" />
+    <Content Include="Resources\close-button2.png" />
+    <None Include="Resources\CompleteTrxPressed.png" />
+    <None Include="Resources\default.css" />
+    <None Include="Resources\default.js" />
+    <None Include="Resources\customer_button_normal1.png" />
+    <Content Include="Resources\customer_button_normal.png" />
+    <Content Include="Resources\Delete.png" />
+    <None Include="Resources\Down_Button.png" />
+    <None Include="Resources\Down_Button_Disabled.png" />
+    <Content Include="Resources\Entry-box.png" />
+    <None Include="Resources\HtmlEditor.bmp" />
+    <None Include="Resources\HtmlEditor.ico" />
+    <Content Include="Resources\keyboard-bg.png" />
+    <None Include="Resources\keyboard.png" />
+    <Content Include="Resources\keypad-button1-pressed.png" />
+    <Content Include="Resources\keypad-button1.png" />
+    <Content Include="Resources\keypad-button2-pressed.png" />
+    <Content Include="Resources\keypad-button2.png" />
+    <Content Include="Resources\keypad-button3-pressed.png" />
+    <Content Include="Resources\keypad-button3.png" />
+    <Content Include="Resources\keypad-close-button-normal.png" />
+    <None Include="Resources\Left_Button.png" />
+    <None Include="Resources\Left_Button_Disabled.png" />
+    <Content Include="Resources\Move.png" />
+    <None Include="Resources\normal3.png" />
+    <Content Include="Resources\numeric-button-normal.png" />
+    <Content Include="Resources\Player Green.png" />
+    <Content Include="Resources\PreLoader.GIF" />
+    <Content Include="Resources\pressed1.png" />
+    <None Include="Resources\pressed3.png" />
+    <Content Include="Resources\profile_picture_placeholder.png" />
+    <None Include="Resources\Right_Button.png" />
+    <None Include="Resources\Right_Button_Disabled.png" />
+    <None Include="Resources\SemnoxParafaitLogos.png" />
+    <Content Include="Resources\Scroll_Down_Button.png" />
+    <Content Include="Resources\Scroll_Down_Button_Disabled.png" />
+    <Content Include="Resources\Scroll_Left_Button.png" />
+    <Content Include="Resources\Scroll_Left_Button_Disabled.png" />
+    <Content Include="Resources\Scroll_Right_Button.png" />
+    <Content Include="Resources\Scroll_Right_Button_Disabled.png" />
+    <Content Include="Resources\Scroll_Up_Button.png" />
+    <Content Include="Resources\Scroll_Up_Button_Disabled.png" />
+    <Content Include="Resources\shift-button-normal.png" />
+    <Content Include="Resources\spacebar-button-normal.png" />
+    <Content Include="Resources\Stop Red.png" />
+    <None Include="Resources\Thumbs.db" />
+    <None Include="Resources\Unchecked.png" />
+    <None Include="Resources\ToolbarBold.bmp" />
+    <None Include="Resources\ToolbarCopy.bmp" />
+    <None Include="Resources\ToolBarCut.bmp" />
+    <None Include="Resources\ToolbarDelete.bmp" />
+    <None Include="Resources\ToolbarFileOpen.bmp" />
+    <None Include="Resources\ToolbarFileSave.bmp" />
+    <None Include="Resources\ToolbarFind.bmp" />
+    <None Include="Resources\ToolbarFontColor.bmp" />
+    <None Include="Resources\ToolbarFontDown.bmp" />
+    <None Include="Resources\ToolbarFontNormal.bmp" />
+    <None Include="Resources\ToolbarFontStyle.bmp" />
+    <None Include="Resources\ToolbarFontUp.bmp" />
+    <None Include="Resources\ToolbarImage.bmp" />
+    <None Include="Resources\ToolbarItalic.bmp" />
+    <None Include="Resources\ToolbarJustifyCenter.bmp" />
+    <None Include="Resources\ToolbarJustifyLeft.bmp" />
+    <None Include="Resources\ToolbarJustifyRight.bmp" />
+    <None Include="Resources\ToolbarLine.bmp" />
+    <None Include="Resources\ToolbarListOrdered.bmp" />
+    <None Include="Resources\ToolbarListUnordered.bmp" />
+    <None Include="Resources\ToolbarPaste.bmp" />
+    <None Include="Resources\ToolbarPrint.bmp" />
+    <None Include="Resources\ToolbarProperties.bmp" />
+    <None Include="Resources\ToolbarRedo.bmp" />
+    <None Include="Resources\ToolbarTabInsert.bmp" />
+    <None Include="Resources\ToolbarTable.bmp" />
+    <None Include="Resources\ToolbarTabRemove.bmp" />
+    <None Include="Resources\ToolbarUnderline.bmp" />
+    <None Include="Resources\ToolbarUndo.bmp" />
+    <None Include="Resources\ToolbarWebLink.bmp" />
+    <Content Include="Resources\undo-icon.gif" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

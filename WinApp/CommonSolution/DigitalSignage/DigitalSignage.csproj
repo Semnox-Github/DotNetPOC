@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA9E1908-ED0E-4F91-ACE2-7ED7FC3C8D6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.DigitalSignage</RootNamespace>
+    <AssemblyName>DigitalSignage</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DigitalSignageUseCaseFactory.cs" />
+    <Compile Include="DisplayPanelBL.cs" />
+    <Compile Include="DisplayPanelContainer.cs" />
+    <Compile Include="DisplayPanelContainerDTO.cs" />
+    <Compile Include="DisplayPanelContainerDTOCollection.cs" />
+    <Compile Include="DisplayPanelContainerList.cs" />
+    <Compile Include="DisplayPanelDataHandler.cs" />
+    <Compile Include="DisplayPanelDTO.cs" />
+    <Compile Include="DisplayPanelListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayPanelListUI.designer.cs">
+      <DependentUpon>DisplayPanelListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayPanelScheduleListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayPanelScheduleListUI.designer.cs">
+      <DependentUpon>DisplayPanelScheduleListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayPanelThemeMapBL.cs" />
+    <Compile Include="DisplayPanelThemeMapDataHandler.cs" />
+    <Compile Include="DisplayPanelThemeMapDTO.cs" />
+    <Compile Include="DisplayPanelThemeMapListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayPanelThemeMapListUI.designer.cs">
+      <DependentUpon>DisplayPanelThemeMapListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DSignageLookupValuesBL.cs" />
+    <Compile Include="DSignageLookupValuesDataHandler.cs" />
+    <Compile Include="DSignageLookupValuesDTO.cs" />
+    <Compile Include="DSLookupBL.cs" />
+    <Compile Include="DSLookupDataHandler.cs" />
+    <Compile Include="DSLookupDTO.cs" />
+    <Compile Include="DSLookUpListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DSLookUpListUI.designer.cs">
+      <DependentUpon>DSLookUpListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventBL.cs" />
+    <Compile Include="EventDataHandler.cs" />
+    <Compile Include="EventDTO.cs" />
+    <Compile Include="EventListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EventListUI.designer.cs">
+      <DependentUpon>EventListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMediaListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMediaListUI.designer.cs">
+      <DependentUpon>frmMediaListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IDisplayPanelThemeMapUseCases.cs" />
+    <Compile Include="IDisplayPanelUseCases.cs" />
+    <Compile Include="IDSLookupUseCases.cs" />
+    <Compile Include="IEventUseCases.cs" />
+    <Compile Include="IScreenSetUpUseCases.cs" />
+    <Compile Include="ISignagePatternUseCases.cs" />
+    <Compile Include="IThemeContainerDataService.cs" />
+    <Compile Include="IThemeUseCases.cs" />
+    <Compile Include="ITickerUseCases.cs" />
+    <Compile Include="LocalDisplayPanelThemeMapUseCases.cs" />
+    <Compile Include="LocalDisplayPanelUseCases.cs" />
+    <Compile Include="LocalDSLookupUseCases.cs" />
+    <Compile Include="LocalEventUseCases.cs" />
+    <Compile Include="LocalScreenSetUpUseCases.cs" />
+    <Compile Include="LocalSignagePatternUseCases.cs" />
+    <Compile Include="LocalThemeContainerDataService.cs" />
+    <Compile Include="LocalThemeUseCases.cs" />
+    <Compile Include="LocalTickerUseCases.cs" />
+    <Compile Include="Media.cs" />
+    <Compile Include="MediaDataHandler.cs" />
+    <Compile Include="MediaDTO.cs" />
+    <Compile Include="MediaListDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MediaListDetails.designer.cs">
+      <DependentUpon>MediaListDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreviewUI.designer.cs">
+      <DependentUpon>PreviewUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryPopupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryPopupUI.designer.cs">
+      <DependentUpon>QueryPopupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoteDisplayPanelThemeMapUseCases.cs" />
+    <Compile Include="RemoteDisplayPanelUseCases.cs" />
+    <Compile Include="RemoteDSLookupUseCases.cs" />
+    <Compile Include="RemoteEventUseCases.cs" />
+    <Compile Include="RemoteScreenSetUpUseCases.cs" />
+    <Compile Include="RemoteSignagePatternUseCases.cs" />
+    <Compile Include="RemoteThemeContainerDataService.cs" />
+    <Compile Include="RemoteThemeUseCases.cs" />
+    <Compile Include="RemoteTickerUseCases.cs" />
+    <Compile Include="ScreenSetup.cs" />
+    <Compile Include="ScreenSetupDataHandler.cs" />
+    <Compile Include="ScreenSetupDTO.cs" />
+    <Compile Include="ScreenSetupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenSetupUI.designer.cs">
+      <DependentUpon>ScreenSetupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenTransitionsBL.cs" />
+    <Compile Include="ScreenTransitionsDataHandler.cs" />
+    <Compile Include="ScreenTransitionsDTO.cs" />
+    <Compile Include="ScreenZoneContentMap.cs" />
+    <Compile Include="ScreenZoneContentMapDataHandler.cs" />
+    <Compile Include="ScreenZoneContentMapDTO.cs" />
+    <Compile Include="ScreenZoneContentMapUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenZoneContentMapUI.designer.cs">
+      <DependentUpon>ScreenZoneContentMapUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenZoneDefSetup.cs" />
+    <Compile Include="ScreenZoneDefSetupDataHandler.cs" />
+    <Compile Include="ScreenZoneDefSetupDTO.cs" />
+    <Compile Include="ScreenZoneDefSetupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenZoneDefSetupUI.designer.cs">
+      <DependentUpon>ScreenZoneDefSetupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignagePatternBL.cs" />
+    <Compile Include="SignagePatternDataHandler.cs" />
+    <Compile Include="SignagePatternDTO.cs" />
+    <Compile Include="SignagePatternListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignagePatternListUI.Designer.cs">
+      <DependentUpon>SignagePatternListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeBL.cs" />
+    <Compile Include="ThemeContainer.cs" />
+    <Compile Include="ThemeContainerDTO.cs" />
+    <Compile Include="ThemeContainerDTOCollection.cs" />
+    <Compile Include="ThemeContainerFactory.cs" />
+    <Compile Include="ThemeContainerList.cs" />
+    <Compile Include="ThemeDataHandler.cs" />
+    <Compile Include="ThemeDTO.cs" />
+    <Compile Include="ThemeGetBL.cs" />
+    <Compile Include="ThemeListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThemeListUI.designer.cs">
+      <DependentUpon>ThemeListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeUseCaseFactory.cs" />
+    <Compile Include="TickerBL.cs" />
+    <Compile Include="TickerDataHandler.cs" />
+    <Compile Include="TickerDTO.cs" />
+    <Compile Include="TickerListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TickerListUI.designer.cs">
+      <DependentUpon>TickerListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="URLVideo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="URLVideo.designer.cs">
+      <DependentUpon>URLVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewZone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewZone.designer.cs">
+      <DependentUpon>ViewZone.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DisplayPanelListUI.resx">
+      <DependentUpon>DisplayPanelListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayPanelScheduleListUI.resx">
+      <DependentUpon>DisplayPanelScheduleListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayPanelThemeMapListUI.resx">
+      <DependentUpon>DisplayPanelThemeMapListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DSLookUpListUI.resx">
+      <DependentUpon>DSLookUpListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EventListUI.resx">
+      <DependentUpon>EventListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMediaListUI.resx">
+      <DependentUpon>frmMediaListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MediaListDetails.resx">
+      <DependentUpon>MediaListDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewUI.resx">
+      <DependentUpon>PreviewUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="QueryPopupUI.resx">
+      <DependentUpon>QueryPopupUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenSetupUI.resx">
+      <DependentUpon>ScreenSetupUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenZoneContentMapUI.resx">
+      <DependentUpon>ScreenZoneContentMapUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenZoneDefSetupUI.resx">
+      <DependentUpon>ScreenZoneDefSetupUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignagePatternListUI.resx">
+      <DependentUpon>SignagePatternListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThemeListUI.resx">
+      <DependentUpon>ThemeListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TickerListUI.resx">
+      <DependentUpon>TickerListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="URLVideo.resx">
+      <DependentUpon>URLVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewZone.resx">
+      <DependentUpon>ViewZone.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\MachineThemeMapDTO.datasource" />
+    <None Include="Properties\DataSources\SignagePatternDTO.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SignageClient\SignageClient\SignageClient.csproj">
+      <Project>{2db4f475-6204-45ab-90c9-46b8c3f58405}</Project>
+      <Name>SignageClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Publish\Publish.csproj">
+      <Project>{A707F773-C706-429B-B031-70C69C9ADFD1}</Project>
+      <Name>Publish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

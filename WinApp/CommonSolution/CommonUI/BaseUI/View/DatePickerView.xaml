@@ -1,0 +1,292 @@
+﻿<Window x:Class="Semnox.Parafait.CommonUI.DatePickerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWindowStyle}"
+        Title="DatePickerView">
+    <Window.Resources>
+        <Style x:Key="KeyboardButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"                               
+                                BorderThickness="0,0,0,3"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource CornerRadius}"
+                                BorderBrush="{StaticResource Control.BorderBrush}">
+                            <Path x:Name="keyboardPath"
+                                  Margin="12"
+                                  Stretch="Uniform"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}" 
+                                  Data="M50.4 32c1.997 0 3.6-1.583 3.6-3.556V3.556C54 1.583 52.397 0 50.4 0H3.6C1.603 0 0 1.583 0 3.556v24.888C0 30.417 1.603 32 3.6 32h46.8zm0-3.556H3.6V3.556h46.8v24.888zM10.35 10.667c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 7.11c.253 0 .45-.194.45-.444V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v6.666h-3.15c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h6.3zm-32.4 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-6.3c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h6.3zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm-25.2 7.112c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm28.8 0c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-24.3c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h24.3zm7.2 0c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7z"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Visibility"
+                    Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding EditableMonthYear}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ShowTimePicker}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <ItemsPanelTemplate x:Key="UniformGridItemsPanelTemplate">
+            <UniformGrid Columns="7" />
+        </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="ToggleButtonTemplate">
+            <ToggleButton Style="{StaticResource DateButtonStyle}"
+                          Content="{Binding Date}"
+                          IsEnabled="{Binding Enabled}"
+                          IsChecked="{Binding Checked}"
+                          CommandParameter="{Binding}"
+                          Command="{Binding SelectDateCommand}" />
+        </DataTemplate>
+
+        <Style x:Key="CommonItemsControlStyle"
+               TargetType="{x:Type ItemsControl}">
+            <Setter Property="Grid.ColumnSpan"
+                    Value="7"/>
+            <Setter Property="Grid.Column"
+                    Value="1"/>
+            <Setter Property="ItemsPanel"
+                    Value="{StaticResource UniformGridItemsPanelTemplate}"/>
+            <Setter Property="ItemTemplate"
+                    Value="{StaticResource ToggleButtonTemplate}"/>
+        </Style>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding ActionsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid"
+          Background="{StaticResource DatePickerView.Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="MonthYearGrid"
+              HorizontalAlignment="Stretch"
+              Grid.ColumnSpan="7"
+              Grid.Column="1"
+              Grid.Row="0"
+              Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <local:CustomComboBox x:Name="cmbMonth"
+                                  Grid.Column="0"
+                                  Heading="Month"
+                                  IsEditable="{Binding EditableMonthYear}"
+                                  ErrorTextVisible="False"
+                                  VerticalAlignment="Top"
+                                  ItemsSource="{Binding Months}"
+                                  IsEnabled="{Binding EnableMonthSelection}"
+                                  SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"
+                                  FontWeight="{StaticResource FontWeight.Bold}"/>
+            <local:CustomComboBox x:Name="cmbYear"
+                                  Grid.Column="1"
+                                  Heading="Year"
+                                  VerticalAlignment="Top"
+                                  ErrorTextVisible="False"
+                                  IsEditable="{Binding EditableMonthYear}"
+                                  ItemsSource="{Binding Years}"
+                                  SelectedItem="{Binding SelectedYear}"
+                                  IsEnabled="{Binding EnableYearSelection}"
+                                  Margin="{StaticResource OkAndYearMargin}" 
+                                  FontWeight="{StaticResource FontWeight.Bold}"/>
+        </Grid>
+        <Grid x:Name="HourMonthGrid"
+              Grid.Column="1"
+              Grid.ColumnSpan="7"
+              Grid.Row="1">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowTimePicker}"
+                                     Value="False">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <local:CustomComboBox x:Name="cmbHour"
+                                  Grid.Column="0"
+                                  Heading="Hours"
+                                  Margin="0,8,8,8"
+                                  IsEditable="True"
+                                  ErrorTextVisible="False"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  SelectedItem="{Binding SelectedHour}"
+                                  ItemsSource="{Binding Hours}" />
+            <local:CustomComboBox x:Name="cmbMins"
+                                  Grid.Column="1"
+                                  IsEditable="True"
+                                  Heading="Mins"
+                                  ErrorTextVisible="False"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  SelectedItem="{Binding SelectedMinute}"
+                                  ItemsSource="{Binding Minutes}"
+                                  Margin="0,8,8,8" />
+            <Grid x:Name="AMPMGrid"
+                  Margin="0,8"
+                  Grid.Column="2"
+                  HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <local:CustomRadioButton x:Name="rdioAM"
+                                         GroupName="AMOrPM"
+                                         Content="AM"
+                                         VerticalAlignment="Center" />
+                <local:CustomRadioButton x:Name="rdioPM"
+                                         GroupName="AMOrPM"
+                                         VerticalAlignment="Center"
+                                         Content="PM"
+                                         Grid.Row="1"
+                                         Margin="0,1,0,9" />
+            </Grid>
+        </Grid>
+
+        <ItemsControl x:Name="DaysItemsControl"
+                      Grid.Row="2"
+                      Grid.Column="1"
+                      Grid.ColumnSpan="7"
+                      ItemsSource="{Binding DaysCollection}"
+                      ItemsPanel="{StaticResource UniformGridItemsPanelTemplate}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:CustomTextBlock x:Name="tbDay"                                           
+                                           Text="{Binding}"
+                                           HorizontalAlignment="Center"
+                                           FontWeight="{StaticResource FontWeight.Bold}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl x:Name="FirstWeeksItemsControl"
+                      Grid.Row="3"
+                      ItemsSource="{Binding FirstWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+        <ItemsControl x:Name="SecondWeeksItemsControl"
+                      Grid.Row="4"
+                      ItemsSource="{Binding SecondWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+        <ItemsControl x:Name="ThirdWeeksItemsControl" 
+                      Grid.Row="5"
+                      ItemsSource="{Binding ThirdWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+        <ItemsControl x:Name="FourthWeeksItemsControl" 
+                      Grid.Row="6"
+                      ItemsSource="{Binding FourthWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+        <ItemsControl x:Name="FifthWeeksItemsControl" 
+                      Grid.Row="7"
+                      ItemsSource="{Binding FifthWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+        <ItemsControl x:Name="SixthWeeksItemsControl" 
+                      Grid.Row="8"
+                      ItemsSource="{Binding SixthWeekDates}"
+                      Style="{StaticResource CommonItemsControlStyle}"/>
+
+        <Button x:Name="btnPrev"
+                Style="{StaticResource LeftNavigationButtonStyle}"
+                CommandParameter="Prev"
+                IsEnabled="{Binding PreviousNavigationEnable}"
+                Command="{Binding ActionsCommand}"
+                Grid.Row="5"
+                Margin="16,0,8,0"
+                Grid.Column="0" />
+        <Button x:Name="btnNext"
+                Style="{StaticResource RightNavigationButtonStyle}"
+                IsEnabled="{Binding NextNavigationEnable}"
+                CommandParameter="Next"
+                Command="{Binding ActionsCommand}"
+                Margin="12,0,16,0"
+                Grid.Row="5"
+                Grid.Column="8" />
+
+        <Border x:Name="BottomActionBorder"
+                Grid.Row="9"
+                Margin="0,8"
+                Padding="0,8,0,0"
+                Grid.ColumnSpan="9"
+                BorderThickness="0,2,0,0"
+                BorderBrush="{StaticResource Control.ComboBackground}">
+            <Grid x:Name="ActionButtonGrid"
+                  Margin="16,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="ActionsStackPanel"
+                            Orientation="Horizontal"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Center">
+                    <local:CustomActionButton x:Name="btnCancel"
+                                              Width="{StaticResource ActionButton.Width}"
+                                              CommandParameter="Cancel"
+                                              Command="{Binding ActionsCommand}"
+                                              ActionStyle="Passive"
+                                              Content="CANCEL" />
+                    <local:CustomActionButton x:Name="btnOk"
+                                              Width="{StaticResource ActionButton.Width}"
+                                              Margin="{StaticResource OkAndYearMargin}"
+                                              CommandParameter="Ok"
+                                              Command="{Binding ActionsCommand}"
+                                              Content="OK"
+                                              IsEnabled="{Binding EnableOkButton}"/>
+                </StackPanel>
+                <Button x:Name="btnkeyBoard"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Style="{StaticResource KeyboardButtonStyle}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

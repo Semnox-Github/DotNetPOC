@@ -1,0 +1,132 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskRedeemLoyaltyView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"    
+        xmlns:accountUI="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        mc:Ignorable="d"
+        Title="TaskRedeemLoyaltyView"
+        Style="{StaticResource TaskWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource LeftPane.Background}"
+                    CornerRadius="8,0,8,0"
+                    Padding="5"
+                    Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding BackButtonCommand}"
+                            Style="{StaticResource BackButtonStyle}"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <common:CustomTextBlock x:Name="tbRedeemTextBlock"                                                        
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                                        HorizontalAlignment="Stretch"                                                       
+                                                        Text="Redeem" />
+                        <common:CustomTextBlock x:Name="tbPointsTextBlock"                                                        
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                                        HorizontalAlignment="Stretch"                                                       
+                                                        Text="Points" />
+                    </StackPanel>
+                    
+
+                </Grid>
+            </Border>
+            <accountUI:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                            DataContext="{Binding CardDetailsVM}"
+                                            Grid.Column="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountUI:CardDetailsUserControl}}"
+                                               Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accountUI:CardDetailsUserControl>
+
+        </Grid>
+        <Grid Grid.Row="1" Margin="16,8,16,0">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowRedeemLoyaltyScreen}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <common:CustomTextBox IsReadOnly="True"
+                                      Heading="Points Available"
+                                      Text="{Binding AvailablePoints}"
+                                      VerticalAlignment="Center"
+                                      Margin="0,0,4,0"/>
+
+                <common:CustomTextBox x:Name="txtRedeemPoints"
+                                      Heading="Points to Redeem"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Text="{Binding RedeemPoints, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"
+                                      ValidationType="DecimalOnly"
+                                      VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding RedeemLoyaltyChanged}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </common:CustomTextBox>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <common:CustomDataGridUserControl DataContext="{Binding CustomDataGridVM}"
+                                                  HorizontalAlignment="Stretch"
+                                                  x:Name="loyaltyRedemptionRulesCustomDataGridUserControl">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.IsSelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </common:CustomDataGridUserControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

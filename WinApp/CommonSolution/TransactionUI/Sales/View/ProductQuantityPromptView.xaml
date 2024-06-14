@@ -1,0 +1,101 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.Sales.View.ProductQuantityPromptView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI.Sales.View"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWithFooterWindowStyle}"
+        Title="ProductQuantityPrompt" >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <common:UpperCaseConverter x:Key="UpperCaseConverter"/>
+    </Window.Resources>
+    <Grid x:Name="MainGrid" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" x:Name="LabelRow" />
+            <RowDefinition Height="4.5*" x:Name="ProductQuanityRow" />
+            <RowDefinition Height="*" x:Name="CloseButtonRow" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                BorderThickness="0,0,0,2" 
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                Padding="12">
+            <common:CustomTextBlock Text="{Binding LabelOptionContent, Converter= {StaticResource UpperCaseConverter}}"
+                                       TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+        </Border>
+        <common:CustomScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1"  Margin="10,10,10,8">
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ItemsControl   Name="ProductQuantityPromptControl"
+                              ItemsSource="{Binding Path=ProductList}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <UniformGrid Name="ProductRow" Columns="2" >
+                                <common:CustomTextBlock      Margin="10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                                                             Text ="{Binding ProductName}" HorizontalAlignment="Right">
+                                </common:CustomTextBlock>
+                                <common:CustomNumericUpDown  x:Name="numericUpDown"
+                                                         Margin="10,6" Grid.Row="1" Grid.Column="1" MinWidth="250"  
+                                                         HorizontalAlignment="Left" IsEnabled="{Binding QuantityPrompt}"
+                                                         Value ="{Binding ProductQuantity}">
+                                </common:CustomNumericUpDown>
+                            </UniformGrid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </common:CustomScrollViewer>
+
+        <Border Grid.Row="2"  VerticalAlignment="Center"  
+                BorderThickness="0,2,0,0" 
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                Padding="4">
+            <Grid  VerticalAlignment="Center">
+                <StackPanel x:Name="FooterActionAreaStackPanel"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Bottom"  
+                            HorizontalAlignment="Center">
+
+                    <common:CustomActionButton x:Name="btnClose"
+                                                       Grid.Column="0"
+                                                       ActionStyle="Passive"
+                                                       IsEnabled="True" 
+                                                       Margin="16,8"    HorizontalAlignment="Left"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:ProductQuantityPromptView}}"
+                                                       Command="{Binding CloseCommand}"  
+                                                       Content="CANCEL" />
+                    <common:CustomActionButton x:Name="btnOK"
+                                                       Grid.Column="0"
+                                                       ActionStyle="Active" HorizontalAlignment="Left"
+                                                       IsEnabled="True"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:ProductQuantityPromptView}}"
+                                                       Command="{Binding OptionButtonClicked}" 
+                                                       Margin="16,8"  
+                                                       Content="OK" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

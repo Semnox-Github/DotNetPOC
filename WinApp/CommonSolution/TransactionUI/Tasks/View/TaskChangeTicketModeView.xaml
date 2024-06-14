@@ -1,0 +1,147 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskChangeTicketModeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        mc:Ignorable="d"
+        xmlns:accountsUI="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        Style="{StaticResource TaskWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0"
+                    Padding="16"
+                    Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding BackButton}"
+                            Style="{StaticResource TaskPopupBackButtonStyle}" />
+
+                    <common:CustomTextBlock x:Name="tbHeader"
+                                            Grid.Column="1"
+                                            TextSize="Medium"
+                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                            Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ModuleName}" />
+
+                </Grid>
+            </Border>
+            <accountsUI:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                               Margin="16,0,0,0"                                               
+                                               DataContext="{Binding CardDetailsVM}"
+                                               Grid.Column="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsUI:CardDetailsUserControl}}"
+                                               Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accountsUI:CardDetailsUserControl>
+        </Grid>
+        <Grid x:Name="ChangeTicketModeGrid"
+              Grid.Row="1">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowTicketModeScreen}"
+                                     Value="false">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Border BorderBrush="{StaticResource Control.BorderBrush}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}"
+                    HorizontalAlignment="Center"
+                    Width="500"
+                    Height="250">
+                <StackPanel>
+                    <Grid>
+                        <common:CustomTextBlock x:Name="txtHeading"
+                                                Text="CHANGE TICKET MODE"
+                                                FontWeight="Bold"
+                                                HorizontalAlignment="Center"
+                                                Padding="20" />
+                    </Grid>
+                    <Separator />
+                    <Grid>
+                        <Grid Margin="0,40,0,40"
+                              HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10*" />
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Width="32"
+                                     Height="32"
+                                     Grid.Row="0"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Center">
+                                <RadioButton x:Name="rboRealTicket"
+                                             IsChecked="{Binding DataContext.RealTicketMode,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             Command="{Binding DataContext.RealTicketClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </Viewbox>
+                            <common:CustomTextBlock x:Name="txtRealTicket"
+                                                    Text="Real Ticket"
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    FontWeight="Bold"
+                                                    Margin="5,9,0,0" />
+                            <Viewbox Width="32"
+                                     Height="32"
+                                     Grid.Row="1"
+                                     Grid.Column="0"
+                                     Margin="0,20,0,0"
+                                     HorizontalAlignment="Center">
+                                <RadioButton x:Name="rboETicket"
+                                             IsChecked="{Binding DataContext.ETicketMode,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             Command="{Binding DataContext.ETicketClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </Viewbox>
+
+                            <common:CustomTextBlock x:Name="txtETicket"
+                                                    Text="E-Ticket"
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Margin="5,28,0,0"
+                                                    FontWeight="Bold" />
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

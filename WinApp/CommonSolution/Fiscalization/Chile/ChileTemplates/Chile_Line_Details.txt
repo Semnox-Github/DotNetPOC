@@ -1,0 +1,8 @@
+     {
+      "VLRCODIGO1": @ProdCode,
+      "NMBITEM": @ProdName,
+      "QTYITEM": @Quantity,
+      "UNMDITEM": @Unit,
+      "PRCITEM": @Price,
+      "MONTOITEM": @Amt
+    }

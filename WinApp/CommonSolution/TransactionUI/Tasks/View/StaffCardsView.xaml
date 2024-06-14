@@ -1,0 +1,633 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.StaffCardsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:commonusercontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accountsUIusercontrols="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        mc:Ignorable="d"
+        Title="StaffCardsView"
+        Style="{StaticResource BaseWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <Style TargetType="{x:Type ListViewItem}"
+               x:Key="ListViewItemContainerStyle">
+            <Setter Property="HorizontalContentAlignment" 
+                    Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="backgroundBorder"
+                                CornerRadius="{StaticResource CornerRadius}"
+                                Background="{StaticResource ActionBar.Background}"
+                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                BorderThickness="0,0,0,3"                                
+                                Padding="8"
+                                Margin="0,0,8,8"
+                                Height="82">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseUp">
+                                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem}}"
+                                                           Command="{Binding DataContext.ProductClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <commonusercontrols:CustomTextBlock x:Name="tbProductName"
+                                                                Text="{Binding ProductName}"
+                                                                TextTrimming="CharacterEllipsis"
+                                                                TextWrapping="Wrap"
+                                                                HorizontalAlignment="Center"
+                                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                                VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        TargetName="backgroundBorder"
+                                        Value="{StaticResource Action.Active.Background}"/>
+                                <Setter Property="Foreground"
+                                        TargetName="tbProductName"
+                                        Value="{StaticResource Action.Active.Foreground}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="Background"
+                                        TargetName="backgroundBorder"
+                                        Value="{StaticResource Action.Disabled.Background}" />
+                                <Setter Property="Foreground"
+                                        TargetName="tbProductName"
+                                        Value="{StaticResource Action.Disabled.Foreground}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Button}"
+           x:Key="ResetButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent">
+                            <Grid HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                                <Path Data="M0 0H32V32H0z" />
+                                <Path Data="M16.333 0c2.396 0 4.631.588 6.707 1.765 2.023 1.125 3.62 2.66 4.79 4.604 1.225 1.996 1.837 4.144 1.837 6.446 0 2.303-.612 4.451-1.837 6.446-1.17 1.919-2.767 3.44-4.79 4.566-2.05 1.151-4.285 1.727-6.707 1.727V32L7.99 23.98l8.343-8.018v6.446c1.81 0 3.48-.429 5.01-1.286 1.53-.857 2.741-2.02 3.633-3.491.892-1.471 1.337-3.076 1.337-4.816 0-1.74-.445-3.344-1.337-4.815-.892-1.47-2.102-2.635-3.633-3.492-1.53-.857-3.2-1.285-5.01-1.285-1.81 0-3.48.428-5.01 1.285C9.793 5.365 8.583 6.53 7.691 8c-.892 1.47-1.338 3.076-1.338 4.815H3c0-2.302.612-4.45 1.836-6.446 1.171-1.944 2.768-3.479 4.79-4.604C11.704.588 13.939 0 16.334 0z"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  Stretch="Uniform" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SearchButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="8,0,0,10" />
+            <Setter Property="Height" Value="{StaticResource CustomActionButton.Height}"/>
+            <Setter Property="Width" Value="{Binding ActualHeight,RelativeSource={RelativeSource Mode=Self}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="border"
+                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                BorderThickness="{StaticResource BorderThickness}"
+                                CornerRadius="{StaticResource CornerRadius}"
+                                Background="{StaticResource Control.ComboBackground}"
+                                SnapsToDevicePixels="true"
+                                Style="{StaticResource ContentAreaBorderShadowStyle}">
+                            <Path Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M11.787 0c3.284 0 6.09 1.173 8.4 3.51 2.31 2.338 3.468 5.156 3.468 8.44 0 2.793-.851 5.269-2.55 7.415l-.067.08.2.144 1.36.001.23.095L32 28.857 28.857 32l-9.09-9.174-.095-.228v-1.232l-.25-.215-.157.13c-1.89 1.491-4.035 2.325-6.427 2.5l-.482.027-.488.009c-3.283 0-6.09-1.159-8.4-3.469C1.159 18.038 0 15.232 0 11.95c0-3.283 1.158-6.101 3.467-8.438C5.777 1.173 8.557 0 11.787 0zm.081 4.227c-2.135 0-3.934.75-5.417 2.26-1.485 1.51-2.224 3.325-2.224 5.462 0 2.138.726 3.954 2.177 5.456 1.51 1.459 3.326 2.185 5.464 2.185 2.137 0 3.952-.739 5.463-2.223 1.509-1.484 2.26-3.283 2.26-5.418 0-2.135-.752-3.95-2.262-5.46-1.511-1.51-3.325-2.262-5.46-2.262z" 
+                                  Stretch="None"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFirstColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentSecondColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentThirdColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFourthColumn" />
+            <ColumnDefinition Width="1*"
+                              x:Name="GMMainGridContentFifthColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionFirstColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionSecondColumn" />
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"
+                              x:Name="GMMainGridActionThirdColumn" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
+              Grid.ColumnSpan="5"
+              Margin="0,0,16,8">
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedType}"
+                                         Value="All">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <commonusercontrols:CustomTextBlock x:Name="txtStaffDetails"
+                                                        Text="Staff Details"
+                                                        Grid.Row="0"
+                                                        TextSize="Small"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"/>
+                    <Grid Grid.Row="1"
+                          Margin="0,8,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <commonusercontrols:CustomTextBox x:Name="tbFirstName"
+                                                          Text="{Binding NewSectionSelectedUser.UserName, Mode=OneWay}"
+                                                          Heading="First Name"
+                                                          FontWeight="{StaticResource FontWeight.Bold}"
+                                                          ErrorTextVisible="False"
+                                                          Size="Small"
+                                                          IsReadOnly="True"
+                                                          Margin="0,0,16,8"
+                                                          Grid.Column="0"
+                                                          Grid.Row="0"
+                                                          />
+                        <commonusercontrols:CustomTextBox x:Name="tbLastName"
+                                                          Text="{Binding NewSectionSelectedUser.EmpLastName, Mode = OneWay}"
+                                                          FontWeight="{StaticResource FontWeight.Bold}"
+                                                          Margin="0,0,0,8"
+                                                          Grid.Column="1"
+                                                          Grid.Row="0"
+                                                          Size="Small"
+                                                          IsReadOnly="True"
+                                                          Heading="Last Name"
+                                                          ErrorTextVisible="False"
+                                                          />
+                        <commonusercontrols:CustomComboBox x:Name="cmbRoles"
+                                                           Margin="0,0,16,8"
+                                                           Heading="Role"
+                                                           Grid.Row="1"
+                                                           Grid.Column="0"
+                                                           IsEditable="True"
+                                                           EditableItemsSource="{Binding NewSectionRoleLovCollection}"
+                                                           DisplayMemberPath="Role"
+                                                           SelectedItem="{Binding NewSectionSelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                           VerticalAlignment="Top"/>
+                        <commonusercontrols:CustomComboBox x:Name="cmbUsers"
+                                                           Margin="0,0,0,8"
+                                                           Heading="Users"
+                                                           Grid.Row="1"
+                                                           Grid.Column="1"
+                                                           IsEditable="True"
+                                                           EditableItemsSource="{Binding NewSectionUserLovCollection}"
+                                                           DisplayMemberPathCollection="{Binding DisplayMemberPathCollection}"
+                                                           DisplayMemberPath="LoginId"
+                                                           SelectedItem="{Binding NewSectionSelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                           VerticalAlignment="Top"/>
+
+
+
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1"
+                      Margin="0,8,0,0"
+                      IsEnabled="{Binding IsProductsGridEnabled}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <commonusercontrols:CustomTextBlock x:Name="txtProducts"
+                                                        Text="Products"
+                                                        Grid.Row="0"
+                                                        TextSize="Small"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"/>
+                    <Border Background="{StaticResource Control.BackGround}"
+                            Style="{StaticResource ActionBarShadowStyle}"
+                            CornerRadius="{StaticResource CornerRadius}"
+                            Grid.Row="1"
+                            Padding="8"
+                            Margin="0,4">
+                        <commonusercontrols:CustomScrollViewer x:Name="scvProducts"
+                                                              VerticalScrollBarVisibility="Visible">
+
+                            <ListView BorderThickness="0"
+                                      x:Name="lstViewProduct"
+                                      Background="Transparent"
+                                      ItemsSource="{Binding ProductCollection}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                      ItemContainerStyle="{StaticResource ListViewItemContainerStyle}">
+                                <ListView.Style>
+                                    <Style TargetType="{x:Type ListView}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsLoadingVisible}"
+                                                         Value="True">
+                                                <Setter Property="IsEnabled"
+                                                        Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.Style>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="3"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
+                        </commonusercontrols:CustomScrollViewer>
+                    </Border>
+                </Grid>
+                <commonusercontrols:CustomTextBox x:Name="tbNotes"
+                                                  Heading="Notes"
+                                                  Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                                  Size="Small"
+                                                  Grid.Row="2"
+                                                  Margin="0,5,0,3"
+                                                  ErrorTextVisible="False"
+                                                  IsEnabled="{Binding IsNotesEnabled}"/>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <commonusercontrols:CustomComboBox x:Name="cmbAllSectionRoles"
+                                                       Margin="0,0,16,8"
+                                                       Heading="Role"
+                                                       Grid.Column="0"
+                                                       IsEditable="True"
+                                                       EditableItemsSource="{Binding AllSectionRoleLovCollection}"
+                                                       DisplayMemberPath="Role"
+                                                       SelectedItem="{Binding AllSectionSelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       VerticalAlignment="Top"/>
+                    <commonusercontrols:CustomComboBox x:Name="cmbAllSectionUsers"
+                                                           Margin="0,0,0,8"
+                                                           Heading="Users"
+                                                           Grid.Column="1"
+                                                           IsEditable="True"
+                                                           EditableItemsSource="{Binding AllSectionUserLovCollection}"
+                                                           DisplayMemberPathCollection="{Binding DisplayMemberPathCollection}"
+                                                           DisplayMemberPath="LoginId"
+                                                           SelectedItem="{Binding AllSectionSelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       VerticalAlignment="Top"/>
+                    <Button x:Name="btnSearch"
+                    Grid.Column="2"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                    Command="{Binding SearchCommand}"
+                    Style="{StaticResource SearchButtonStyle}" />
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.SelectedType, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             Value="New">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                </Grid>
+
+                <commonusercontrols:CustomDataGridUserControl x:Name="CustomDataGrid"
+                                                              DataContext="{Binding CustomDataGridVM}"
+                                                              Grid.Row="1">
+                    <commonusercontrols:CustomDataGridUserControl.Style>
+                        <Style TargetType="{x:Type commonusercontrols:CustomDataGridUserControl}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.SelectedType, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                             Value="New">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </commonusercontrols:CustomDataGridUserControl.Style>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                           Command="{Binding DataContext.IsSelectedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SearchClicked">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                           Command="{Binding DataContext.SearchCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </commonusercontrols:CustomDataGridUserControl>
+            </Grid>
+        </Grid>
+        <Border x:Name="GMActionAreaBorder"
+                CornerRadius="{StaticResource RightSection.CornerRadius}"
+                Background="{StaticResource ActionBar.Background}"
+                Grid.Column="5"
+                Grid.ColumnSpan="3"
+                Style="{StaticResource ActionBarShadowStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0,0,0,1"
+                        Padding="16"
+                        BorderBrush="{StaticResource Control.BorderBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Path x:Name="CardPath"
+                              Data="M30 29c.571 0 1.048-.217 1.429-.65.38-.433.571-.975.571-1.625V5.275c0-.65-.19-1.192-.571-1.625C31.048 3.217 30.57 3 30 3H2c-.571 0-1.048.217-1.429.65C.191 4.083 0 4.625 0 5.275v21.45c0 .65.19 1.192.571 1.625.381.433.858.65 1.429.65h28zm-.286-20.8H2.286V6.575c.095-.65.404-.975.928-.975h25.572c.524 0 .833.325.928.975V8.2zm-.928 18.2H3.214c-.524 0-.833-.325-.928-.975V16h27.428v9.425c-.095.65-.404.975-.928.975zm-10.5-5.2v-1.3H4.57v1.3h13.715zm9.143 2.6v-3.9h-4.572v3.9h4.572zm-16 0v-1.3H4.57v1.3h6.858z"
+                              Fill="{StaticResource Control.BorderBrush.Focused}"
+                              Stretch="Uniform"
+                              Grid.Column="0"/>
+                        <commonusercontrols:CustomTextBlock x:Name="txtStaffCard"
+                                                            Margin="8,0,0,0"
+                                                            Text="Staff Card"
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            TextSize="Small"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                        <Grid Grid.Column="2">
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedType}" Value="All">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <commonusercontrols:CustomActionButton x:Name="btnReset" Command="{Binding ResetCommand}" Style="{StaticResource ResetButtonStyle}"/>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="1">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TransactionCardDetailsVM.AccountDTO}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <accountsUIusercontrols:TransactionCardDetailsUserControl Grid.Row="0"
+                                                             Margin="16"
+                                                             DataContext="{Binding TransactionCardDetailsVM}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DeleteClicked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                       Command="{Binding DataContext.DeleteClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </accountsUIusercontrols:TransactionCardDetailsUserControl>
+                    <Border BorderThickness="0,1,0,0"
+                            Padding="16"
+                            Grid.Row="1"
+                            BorderBrush="{StaticResource Control.BorderBrush}">
+                        <Grid>
+                            <UniformGrid Columns="1">
+                                <UniformGrid.Style>
+                                    <Style TargetType="{x:Type UniformGrid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedType}"
+                                                         Value="All">
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </UniformGrid.Style>
+
+                                <commonusercontrols:CustomActionButton x:Name="btnConfirm"
+                                                                       Margin="8,0,0,0"
+                                                                       Content="CONFIRM"
+                                                                       Command="{Binding ConfirmCommand}"
+                                                                       IsEnabled="{Binding IsConfirmButtonEnabled}"/>
+                            </UniformGrid>
+                            <UniformGrid Columns="2">
+                                <UniformGrid.Style>
+                                    <Style TargetType="{x:Type UniformGrid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedType}"
+                                                         Value="New">
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </UniformGrid.Style>
+                                <commonusercontrols:CustomActionButton x:Name="btnAdd"
+                                                                       Content="LOAD PRODUCT"
+                                                                       Command="{Binding AddCommand}"
+                                                                       Margin="0,0,16,0"/>
+                                <commonusercontrols:CustomActionButton x:Name="btnDeactive"
+                                                                       Content="DEACTIVATE"
+                                                                       Command="{Binding DeactiveCommand}"
+                                                                       />
+                            </UniformGrid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Visibility" 
+                                    Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TransactionCardDetailsVM.AccountDTO}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" 
+                                        Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedType}"
+                                                 Value="New">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" 
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                            <commonusercontrols:CustomTextBlock x:Name="tbTapNewCard"
+                                                            Text="Tap New Card"
+                                                            TextSize="Small"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                            <commonusercontrols:CustomTextBlock x:Name="tbOR"
+                                                            Margin="8,0,0,0"
+                                                            Text="OR"
+                                                            TextSize="Small"
+                                                            FontWeight="{StaticResource FontWeight.Bold}">
+                                <commonusercontrols:CustomTextBlock.Style>
+                                    <Style TargetType="{x:Type commonusercontrols:CustomTextBlock}"
+                                       BasedOn="{StaticResource {x:Type commonusercontrols:CustomTextBlock}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding EnableManualEntry}"
+                                                     Value="False">
+                                                <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </commonusercontrols:CustomTextBlock.Style>
+                            </commonusercontrols:CustomTextBlock>
+                        </StackPanel>
+                        <commonusercontrols:CustomActionButton x:Name="btnEnterNo"
+                                                               Grid.Row="1"
+                                                               Content="ENTER NUMBER"
+                                                               Margin="0,16,0,0"
+                                                               Padding="32,0"
+                                                               Command="{Binding EnterCardCommand}">
+                            <commonusercontrols:CustomActionButton.Style>
+                                <Style TargetType="{x:Type commonusercontrols:CustomActionButton}"
+                                   BasedOn="{StaticResource {x:Type commonusercontrols:CustomActionButton}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding EnableManualEntry}"
+                                                 Value="False">
+                                            <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </commonusercontrols:CustomActionButton.Style>
+                        </commonusercontrols:CustomActionButton>
+                    </Grid>
+                    <commonusercontrols:CustomTextBlock x:Name="tbZeroItemSelected"
+                                                        Text="0 Items Selected"
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}">
+                        <commonusercontrols:CustomTextBlock.Style>
+                            <Style TargetType="{x:Type commonusercontrols:CustomTextBlock}"
+                                   BasedOn="{StaticResource {x:Type commonusercontrols:CustomTextBlock}}">
+                                <Setter Property="Visibility" 
+                                        Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding CustomDataGridVM.SelectedItem}"
+                                                       Value="{x:Null}"/>
+                                            <Condition Binding="{Binding ShowNoCardAddedContent}"
+                                                       Value="False"/>
+                                            <Condition Binding="{Binding SelectedType}"
+                                                       Value="All"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </commonusercontrols:CustomTextBlock.Style>
+                    </commonusercontrols:CustomTextBlock>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" 
+                                        Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ShowNoCardAddedContent}"
+                                                 Value="True"/>
+                                            <Condition Binding="{Binding SelectedType}"
+                                                       Value="All"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <commonusercontrols:CustomTextBlock x:Name="tbNoCardAdded"
+                                                            Grid.Row="0"
+                                                        Text="No card added to the selected user"
+                                                        TextWrapping="Wrap"
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"/>
+                        <commonusercontrols:CustomActionButton x:Name="btnAddForNoCardAdded"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Grid.Row="1"
+                                                               Content="ADD"
+                                                               Command="{Binding AddCommandForNoCardAdded}"
+                                                               Margin="0,0,16,0"
+                                                               Width="{StaticResource ActionButton.Width}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

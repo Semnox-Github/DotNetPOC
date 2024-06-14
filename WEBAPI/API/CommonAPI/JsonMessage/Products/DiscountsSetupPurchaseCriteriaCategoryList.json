@@ -1,0 +1,38 @@
+﻿[
+  {
+    "CategoryId": 0,
+    "ParentCategoryId": -1,
+    "Name": "test",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "775326e5-915d-414a-b6cc-1ab731a30708",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 1,
+    "ParentCategoryId": 0,
+    "Name": "Faizan Category Test",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "667fb101-ed43-4da9-bf60-1aa9c212567b",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 2,
+    "ParentCategoryId": 1,
+    "Name": "Test@",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "4f8e70cb-2159-48f0-8909-e6f9f7646393",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

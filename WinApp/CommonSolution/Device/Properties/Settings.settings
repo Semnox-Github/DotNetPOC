@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Device.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Device_FirstDataTrxn_rcService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://stg.dw.us.fdcnet.biz/rc</Value>
+    </Setting>
+    <Setting Name="Device_FirstdataReg_srsService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://stagingsupport.datawire.net/rc/srssoap/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

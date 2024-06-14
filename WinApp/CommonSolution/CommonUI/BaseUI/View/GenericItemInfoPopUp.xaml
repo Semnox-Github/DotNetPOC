@@ -1,0 +1,373 @@
+﻿<Window x:Class="Semnox.Parafait.CommonUI.GenericItemInfoPopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWindowStyle}"
+        Title="GenericItemInfoPopUp">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}"
+               x:Key="CloseButtonStyle">
+            <Setter Property="HorizontalAlignment"
+                    Value="Right" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Width"
+                    Value="48" />
+            <Setter Property="Height"
+                    Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}" />
+            <Setter Property="Margin"
+                    Value="0,-20,-24,0" />
+            <Setter Property="Padding"
+                    Value="12" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Padding="{TemplateBinding Padding}"
+                                CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}"
+                                Background="{StaticResource Action.Active.Background}">
+                            <Path Stroke="{StaticResource Action.Active.Foreground}"
+                                  Data="M0,0 L1,1 M0,1 L1,0"
+                                  Stretch="Uniform"
+                                  StrokeThickness="2" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                        <Condition Binding="{Binding IsMultiScreenRowTwo}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Width"
+                            Value="36" />
+                    <Setter Property="Margin"
+                            Value="0,-8,-18,0" />
+                    <Setter Property="Padding"
+                            Value="8" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type RowDefinition}"
+               x:Key="MultiScreenRowDefinitionStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="True">
+                    <Setter Property="Height"
+                            Value="4" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="False">
+                    <Setter Property="Height"
+                            Value="16" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type ColumnDefinition}"
+               x:Key="MultiScreenColumnDefinitionStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="True">
+                    <Setter Property="Width"
+                            Value="8" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="False">
+                    <Setter Property="Width"
+                            Value="16" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type local:CustomTextBlock}"
+               BasedOn="{StaticResource {x:Type local:CustomTextBlock}}"
+               x:Key="MultiScreenTextBlockStyle">
+            <Setter Property="TextTrimming"
+                    Value="CharacterEllipsis" />
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}" />
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding DataContext.MultiScreenMode, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Value="True" />
+                        <Condition Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="TextSize"
+                            Value="XSmall" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ListBoxItem"
+               x:Key="ListBoxContainerStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="ListBoxItemBorder"
+                                Padding="16,0"
+                                Margin="0,0,0,8"
+                                Background="{StaticResource Control.ComboBackground}"
+                                CornerRadius="{StaticResource CornerRadius}">
+                            <local:CustomTextBlock x:Name="tbDisplayData"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding}"
+                                                   Style="{StaticResource MultiScreenTextBlockStyle}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                         Value="True">
+                                <Setter Property="MinHeight"
+                                        TargetName="ListBoxItemBorder"
+                                        Value="30" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                         Value="False">
+                                <Setter Property="MinHeight"
+                                        TargetName="ListBoxItemBorder"
+                                        Value="80" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="MainContainerGrid">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Style="{StaticResource MultiScreenRowDefinitionStyle}" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Style="{StaticResource MultiScreenRowDefinitionStyle}" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource MultiScreenColumnDefinitionStyle}" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Style="{StaticResource MultiScreenColumnDefinitionStyle}" />
+            </Grid.ColumnDefinitions>
+
+            <local:CustomScrollViewer Grid.Row="1"
+                                      Grid.Column="1"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto">
+                <local:CustomScrollViewer.Style>
+                    <Style TargetType="{x:Type local:CustomScrollViewer}"
+                           BasedOn="{StaticResource {x:Type local:CustomScrollViewer}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="True">
+                                <Setter Property="MaxHeight"
+                                        Value="100" />
+                                <Setter Property="Size"
+                                        Value="XSmall" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="False">
+                                <Setter Property="MaxHeight"
+                                        Value="180" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomScrollViewer.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0"
+                            CornerRadius="8,0,0,8"
+                            x:Name="Mask">
+                        <Image x:Name="ImgContaier"
+                               Stretch="Fill"
+                               Source="{Binding ImageSourcePath}"
+                               Visibility="{Binding ImageVisibility}">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                     Value="True">
+                                            <Setter Property="MaxWidth"
+                                                    Value="100" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                     Value="False">
+                                            <Setter Property="MaxWidth"
+                                                    Value="180" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Border>
+                    <Border Background="{StaticResource Control.ComboBackground}"
+                            Grid.ColumnSpan="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ImageVisibility}"
+                                                 Value="Collapsed">
+                                        <Setter Property="Grid.Column"
+                                                Value="0" />
+                                        <Setter Property="CornerRadius"
+                                                Value="{StaticResource CornerRadius}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ImageSourcePath}"
+                                                 Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Grid.Column"
+                                                Value="0" />
+                                        <Setter Property="CornerRadius"
+                                                Value="{StaticResource CornerRadius}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ImageVisibility}"
+                                                 Value="Visible">
+                                        <Setter Property="Grid.Column"
+                                                Value="1" />
+                                        <Setter Property="CornerRadius"
+                                                Value="0,0,8,0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <ItemsControl x:Name="ItemDetailsContainer"
+                                      ItemsSource="{Binding ItemDetailsHeadersContent}">
+                            <ItemsControl.Style>
+                                <Style TargetType="{x:Type ItemsControl}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                     Value="True">
+                                            <Setter Property="Padding"
+                                                    Value="6,2" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                     Value="False">
+                                            <Setter Property="Padding"
+                                                    Value="16" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:CustomTextBlock x:Name="tbItemContentDetails"
+                                                           TextWrapping="Wrap"
+                                                           Style="{StaticResource MultiScreenTextBlockStyle}"
+                                                           Text="{Binding Text}"
+                                                           FontWeight="{Binding FontWeight}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </Grid>
+            </local:CustomScrollViewer>
+            <local:CustomTextBlock x:Name="tbInfoContentHeader"
+                                   Text="{Binding ListBoxItemHeader}"
+                                   Grid.Row="2"
+                                   Grid.Column="1">
+                <local:CustomTextBlock.Style>
+                    <Style TargetType="{x:Type local:CustomTextBlock}"
+                           BasedOn="{StaticResource MultiScreenTextBlockStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DisplayInventoryDetails.Count}"
+                                         Value="0">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomTextBlock.Style>
+            </local:CustomTextBlock>
+            <local:CustomScrollViewer Grid.Row="3"
+                                      Grid.Column="1"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto">
+                <local:CustomScrollViewer.Style>
+                    <Style TargetType="{x:Type local:CustomScrollViewer}"
+                           BasedOn="{StaticResource {x:Type local:CustomScrollViewer}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="True">
+                                <Setter Property="Margin"
+                                        Value="0,6" />
+                                <Setter Property="Size"
+                                        Value="XSmall" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="False">
+                                <Setter Property="Margin"
+                                        Value="0,16,0,20" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomScrollViewer.Style>
+                <ListBox x:Name="lbInfoItems"
+                         BorderThickness="0"
+                         ItemContainerStyle="{StaticResource ListBoxContainerStyle}"
+                         ItemsSource="{Binding DisplayInventoryDetails}"
+                         VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling"
+                         HorizontalContentAlignment="Stretch"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+
+            </local:CustomScrollViewer>
+
+            <local:CustomTextBlock x:Name="tbNumericCounterHeader"
+                                   Style="{StaticResource MultiScreenTextBlockStyle}"
+                                   Text="{Binding NumericCounterHeader}"
+                                   Grid.Row="4"
+                                   Grid.Column="1" />
+            <local:CustomNumericUpDown x:Name="numericUpDownContainer"
+                                       Grid.Row="5"
+                                       Grid.Column="1"
+                                       Value="{Binding SelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                       ButtonText="ADD"
+                                       NumericButtonType="Text">
+                <local:CustomNumericUpDown.Style>
+                    <Style TargetType="{x:Type local:CustomNumericUpDown}"
+                           BasedOn="{StaticResource {x:Type local:CustomNumericUpDown}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="True">
+                                <Setter Property="Size"
+                                        Value="XSmall" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomNumericUpDown.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="AddButtonClicked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                               Command="{Binding AddCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </local:CustomNumericUpDown>
+        </Grid>
+        <Button x:Name="btnClose"
+                Style="{StaticResource CloseButtonStyle}"
+                Grid.Column="1"
+                Grid.Row="1"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                Command="{Binding CloseCommand}" />
+    </Grid>
+</Window>

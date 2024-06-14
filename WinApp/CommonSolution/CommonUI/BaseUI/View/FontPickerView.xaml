@@ -1,0 +1,112 @@
+﻿<Window x:Class="Semnox.Parafait.CommonUI.FontPickerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWindowStyle}"
+        Title="FontPickerView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid"
+          Width="800">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <local:CustomTextBlock x:Name="tbFontPicker"
+                                Grid.Row="0"
+                                Text="Font Picker"
+                                TextSize="Large"
+                                Padding="32,16"
+                                FontWeight="{StaticResource FontWeight.Bold}"/>
+
+        <Border BorderBrush="{StaticResource Control.BorderBrush}"
+                Grid.Row="1"
+                BorderThickness="0,1"
+                Padding="32,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <UniformGrid Rows="3"
+                             Grid.Column="0"
+                             VerticalAlignment="Top">
+                    <local:CustomComboBox x:Name="cmbFontFamily"
+                                          Heading="Font Family"
+                                          VerticalAlignment="Top"                                          
+                                          IsEditable="True"
+                                          DisplayMemberPath="Source"
+                                          ItemsSource="{Binding FontCollection}"
+                                          SelectedItem="{Binding FontFamily}"/>
+                    <local:CustomComboBox x:Name="cmbFontStyle"
+                                          ExecutionContext="{Binding ExecutionContext}"                                          
+                                          DisplayMemberPathCollection="{Binding StyleDisplayProperties}"
+                                          DisplayMemberPath="CombinedValue"
+                                          Heading="Style"
+                                          IsEditable="True"
+                                          EditableItemsSource="{Binding FontStyleCollection}"
+                                          SelectedItem="{Binding SelectedStyle}"
+                                          VerticalAlignment="Top"/>
+                    <local:CustomComboBox x:Name="cmbSize"
+                                          Heading="Size"
+                                          VerticalAlignment="Top"
+                                          IsEditable="True"
+                                          ItemsSource="{Binding SizeCollection}"
+                                          SelectedItem="{Binding SelectedSize}"/>
+                </UniformGrid>
+                <local:CustomTextBlock x:Name="tbSample"
+                                       Grid.Column="1"
+                                       Margin="32,0"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Text="AaBbYyZz"
+                                       FontFamily="{Binding FontFamily}"
+                                       FontStyle="{Binding FontStyle.Style}"
+                                       FontStretch="{Binding FontStyle.Stertch}"
+                                       FontWeight="{Binding FontStyle.Weight}"
+                                       FontSize="{Binding FontSize}"/>
+            </Grid>
+        </Border>
+
+        <Grid Margin="32,16"
+              Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+                <local:CustomActionButton x:Name="btnCancel"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           ActionStyle="Passive"
+                                           Content="CANCEL" />
+                <local:CustomActionButton x:Name="btnConfirm"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           Margin="{StaticResource OkAndYearMargin}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           Content="CONFIRM" />
+            </StackPanel>
+            <Button x:Name="btnKeyBoard"
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"                    
+                    Style="{StaticResource KeyboardButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Window>

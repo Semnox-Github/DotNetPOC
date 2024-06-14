@@ -1,0 +1,452 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.CustomDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <Style x:Key="SearchButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="8,0"/>
+            <Setter Property="MinWidth"
+                    Value="{StaticResource CustomDataGrid.SearchButton.WidthAndHeight}"/>
+            <Setter Property="MinHeight"
+                    Value="{StaticResource CustomDataGrid.SearchButton.WidthAndHeight}"/>
+            <Setter Property="Width"
+                    Value="{Binding ActualHeight,RelativeSource={RelativeSource Mode=Self}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="border"
+                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                BorderThickness="{StaticResource BorderThickness}"
+                                CornerRadius="{StaticResource CornerRadius}"
+                                Background="{StaticResource Control.ComboBackground}"
+                                SnapsToDevicePixels="true"
+                                Style="{StaticResource ContentAreaBorderShadowStyle}">
+                            <Grid HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                                <Path Data="M0 0H32V32H0z" />
+                                <Path Fill="{StaticResource Control.BorderBrush.Focused}"
+                                      Data="M11.787 0c3.284 0 6.09 1.173 8.4 3.51 2.31 2.338 3.468 5.156 3.468 8.44 0 2.793-.851 5.269-2.55 7.415l-.067.08.2.144 1.36.001.23.095L32 28.857 28.857 32l-9.09-9.174-.095-.228v-1.232l-.25-.215-.157.13c-1.89 1.491-4.035 2.325-6.427 2.5l-.482.027-.488.009c-3.283 0-6.09-1.159-8.4-3.469C1.159 18.038 0 15.232 0 11.95c0-3.283 1.158-6.101 3.467-8.438C5.777 1.173 8.557 0 11.787 0zm.081 4.227c-2.135 0-3.934.75-5.417 2.26-1.485 1.51-2.224 3.325-2.224 5.462 0 2.138.726 3.954 2.177 5.456 1.51 1.459 3.326 2.185 5.464 2.185 2.137 0 3.952-.739 5.463-2.223 1.509-1.484 2.26-3.283 2.26-5.418 0-2.135-.752-3.95-2.262-5.46-1.511-1.51-3.325-2.262-5.46-2.262z" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomDataGridRowHeader"
+               TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                        <local:CustomCheckBox VerticalAlignment="Center"
+                                              ErrorTextVisible="False"
+                                              Margin="8,0,0,0"
+                                              Size="XSmall"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                              Command="{Binding DataContext.CheckBoxClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}">
+                            <local:CustomCheckBox.Style>
+                                <Style TargetType="{x:Type local:CustomCheckBox}"
+                                       BasedOn="{StaticResource {x:Type local:CustomCheckBox}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.SelectAll,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                                     Value="True">
+                                            <Setter Property="IsChecked"
+                                                    Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </local:CustomCheckBox.Style>
+                        </local:CustomCheckBox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.ShowSelectOption,
+                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.ShowSelectOption,
+                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="{Binding HeadersVisibility,
+                        ConverterParameter={x:Static DataGridHeadersVisibility.Row},
+                        Converter={x:Static DataGrid.HeadersVisibilityConverter},
+                        RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate x:Name="CustomDataGridRow"
+                                     TargetType="{x:Type DataGridRow}">
+                        <!--MinHeight="80"-->
+                        <Border x:Name="DGR_Border"
+                                
+                                Margin="8"
+                                Padding="0,8"
+                                SnapsToDevicePixels="True"
+                                CornerRadius="{StaticResource CornerRadius}"
+                                Background="{StaticResource ContentAreaSelectedItem.Background}">
+                            <SelectiveScrollingGrid>
+                                <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </SelectiveScrollingGrid.ColumnDefinitions>
+                                <SelectiveScrollingGrid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </SelectiveScrollingGrid.RowDefinitions>
+                                <DataGridCellsPresenter Grid.Column="1"
+                                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <DataGridDetailsPresenter Grid.Row="1"
+                                                          Grid.Column="1"
+                                                          SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen,
+                                            ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical},
+                                    Converter={x:Static DataGrid.RowDetailsScrollingConverter},
+                                    RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                          Visibility="{TemplateBinding DetailsVisibility}" />
+                                <DataGridRowHeader Grid.RowSpan="2"
+                                                   SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                                   Style="{StaticResource CustomDataGridRowHeader}"/>
+                            </SelectiveScrollingGrid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected"
+                                             Value="True">
+                                <Setter Property="BorderBrush"
+                                                TargetName="DGR_Border"
+                                                Value="{StaticResource Control.BorderBrush.Focused}"/>
+                                <Setter Property="BorderThickness"
+                                                TargetName="DGR_Border"
+                                                Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalAlignment"
+                            Value="Center"/>
+            <Setter Property="FontFamily"
+                            Value="{StaticResource FontFamily}" />
+            <Setter Property="FontStretch"
+                            Value="{StaticResource FontStretch}" />
+            <Setter Property="Foreground"
+                            Value="{StaticResource Control.Heading.ForeGround}" />
+            <Setter Property="FontWeight"
+                            Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize.Small}" />
+        </Style>
+
+        <Style x:Key="CustomDataGridColumnHeader"
+               TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Margin"
+                            Value="8,0"/>
+            <Setter Property="FontFamily"
+                            Value="{StaticResource FontFamily}" />
+            <Setter Property="FontStretch"
+                            Value="{StaticResource FontStretch}" />
+            <Setter Property="Foreground"
+                            Value="{StaticResource Control.Heading.ForeGround}" />
+            <Setter Property="FontWeight"
+                            Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="FontSize"
+                            Value="{StaticResource FontSize.Small}" />
+            <Setter Property="Background"
+                            Value="Transparent"/>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridCell}"
+               x:Key="CustomDataGridCell">
+            <Setter Property="Margin"
+                            Value="8,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="Transparent">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        </Style>
+
+        <Style x:Key="CustomDataGridScrollViewer"
+               TargetType="{x:Type local:CustomScrollViewer}"
+               BasedOn="{StaticResource {x:Type local:CustomScrollViewer}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:CustomScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="Transparent">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DataContext.ShowSelectOption,
+                                                RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                                         Value="False">
+                                                <Setter Property="Margin"
+                                                        Value="8,0,0,0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.ShowSelectOption,
+                                                RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                                         Value="True">
+                                                <Setter Property="Margin"
+                                                        Value="16,0,0,0"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <local:CustomCheckBox x:Name="cbxSelectAll"
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                      Command="{Binding DataContext.SelectAllCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                                      Size="XSmall">
+                                    <local:CustomCheckBox.Style>
+                                        <Style TargetType="{x:Type local:CustomCheckBox}"
+                                               BasedOn="{StaticResource {x:Type local:CustomCheckBox}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DataContext.ShowSelectOption,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                                             Value="False">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:CustomCheckBox.Style>
+                                </local:CustomCheckBox>
+                            </Border>
+                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" 
+                                                            Grid.Column="1" 
+                                                            Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
+                                                    CanContentScroll="{TemplateBinding CanContentScroll}" 
+                                                    Grid.ColumnSpan="2" 
+                                                    Grid.Row="1"/>
+                            <local:CustomScrollBar x:Name="PART_VerticalScrollBar" 
+                                                   Grid.Column="2" 
+                                                   Maximum="{TemplateBinding ScrollableHeight}" 
+                                                   Orientation="Vertical" 
+                                                   Grid.Row="1" 
+                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
+                            <Grid Grid.Column="0" 
+                                  Grid.Row="2"
+                                  Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <local:CustomScrollBar x:Name="PART_HorizontalScrollBar"
+                                                       Grid.Column="1"
+                                                       Maximum="{TemplateBinding ScrollableWidth}" 
+                                                       Orientation="Horizontal" 
+                                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                       Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomDataGridStyle" 
+               TargetType="{x:Type DataGrid}">
+            <Setter Property="SelectionUnit"
+                    Value="FullRow"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch"/>
+            <Setter Property="CanUserAddRows"
+                    Value="False"/>
+            <Setter Property="CanUserReorderColumns"
+                    Value="False"/>
+            <Setter Property="CanUserResizeRows"
+                    Value="False"/>
+            <Setter Property="CanUserResizeColumns"
+                    Value="False"/>
+            <Setter Property="HorizontalGridLinesBrush"
+                    Value="Transparent"/>
+            <Setter Property="VerticalGridLinesBrush"
+                    Value="Transparent"/>
+            <Setter Property="AutoGenerateColumns"
+                    Value="False"/>
+            <Setter Property="CellStyle" 
+                    Value="{StaticResource CustomDataGridCell}"/>
+            <Setter Property="ColumnHeaderStyle" 
+                    Value="{StaticResource CustomDataGridColumnHeader}"/>
+            <Setter Property="Background" 
+                    Value="Transparent"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderBrush"
+                    Value="#FF688CAF"/>
+            <Setter Property="BorderThickness" 
+                    Value="0"/>
+            <Setter Property="RowDetailsVisibilityMode"
+                    Value="VisibleWhenSelected"/>
+            <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" 
+                    Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" 
+                    Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="True">
+                            <local:CustomScrollViewer x:Name="DG_ScrollViewer" 
+                                                      Focusable="false"
+                                                      Style="{StaticResource CustomDataGridScrollViewer}">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </local:CustomScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                                 Color="Transparent"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" 
+                                 Color="{StaticResource CustomDataGrid.Foreground.Color}"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" 
+                                 Color="Transparent"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" 
+                                 Color="{StaticResource CustomDataGrid.Foreground.Color}"/>
+            </Style.Resources>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" 
+                                   Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" 
+                                   Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" 
+                            Value="false"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Margin="0,0,0,8"
+              x:Name="ComboAndSearchGrid">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsComboAndSearchVisible}"
+                                     Value="False">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <local:ComboGroupUserControl x:Name="ComboBoxGroupUserControl"
+                                         Grid.Column="0"
+                                         HorizontalContentAlignment="Stretch"
+                                         DataContext="{Binding ComboGroupVM}">
+                <local:ComboGroupUserControl.Style>
+                    <Style TargetType="{x:Type local:ComboGroupUserControl}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.ShowSearchTextBox, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:ComboGroupUserControl.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="IsSelectionChanged">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                               Command="{Binding Path = DataContext.ComboSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </local:ComboGroupUserControl>
+
+            <local:CustomSearchTextBox Grid.Column="0"
+                                       DefaultValue="{Binding SearchTextBoxDefaultValue}"
+                                       Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <local:CustomSearchTextBox.Style>
+                    <Style TargetType="{x:Type local:CustomSearchTextBox}"
+                           BasedOn="{StaticResource {x:Type local:CustomSearchTextBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.ShowSearchTextBox, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CustomDataGrid}}"
+                                         Value="False">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomSearchTextBox.Style>
+            </local:CustomSearchTextBox>
+            
+            <Button x:Name="btnSearch"
+                    Grid.Column="1"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericDataGridUserControl}}"
+                    Command="{Binding SearchCommnad}"
+                    Style="{StaticResource SearchButtonStyle}"/>
+        </Grid>
+
+        <DataGrid x:Name="dataGrid"
+                  Style="{StaticResource CustomDataGridStyle}"
+                  Grid.Row="1"
+                  ItemsSource="{Binding UICollectionToBeRendered}"
+                  VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Auto">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"
+                                           Command="{Binding DataContext.LoadedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"
+                                           Command="{Binding DataContext.SelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </Grid>
+</UserControl>

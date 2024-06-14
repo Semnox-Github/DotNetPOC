@@ -1,0 +1,126 @@
+ {
+	"ID" :
+		[ { 
+			"IdentifierContent" : "@CLID" } ],
+	"Note" :
+		[ { 
+			"TextContent" : "@CLNote" } ], 
+	"CreditedQuantity" :
+		[ { 
+			"QuantityContent" : "@CLInvoicedQuantityQuantityContent",
+			"QuantityUnitCode" : "@ILInvoicedQuantityQuantityUnitCode", 
+			"QuantityUnitCodeListIdentifier" : "@ILInvoicedQuantityQuantityUnitCodeListID", 
+			"QuantityUnitCodeListAgencyNameText" : "@ILInvoicedQuantityQuantityUnitCodeListAgencyNameText" 
+			}
+		],
+	"LineExtensionAmount" :
+		[ { 
+			"AmountContent" : "@CLLineExtensionAmountAmountContent", 
+			"AmountCurrencyIdentifier" : "@CLLineExtensionAmountAmountCurrencyID"
+	   	  }
+  	    ],
+	"PricingReference" :
+		[ { 
+			"AlternativeConditionPrice" :
+			[ { "PriceAmount" :
+					[ { 
+						"AmountContent" : "@CLPricingReferenceAlternativeConditionPricePriceAmountAmountContent", 
+						"AmountCurrencyIdentifier" : "@CLPricingReferenceAlternativeConditionPricePriceAmountAmountCurrencyID" 
+						}
+					], 
+				"PriceTypeCode" :
+					[ {
+						"CodeContent" : "@CLPricingReferenceAlternativeConditionPricePriceTypeCodeCodeContent", 
+						"CodeListNameText" : "@ILPricingReferenceAlternativeConditionPricePriceTypeCodeCodeListNameText", 
+						"CodeListAgencyNameText" : "@ILPricingReferenceAlternativeConditionPricePriceTypeCodeCodeListAgencyNameText",
+						"CodeListUniformResourceIdentifier" : "@ILPricingReferenceAlternativeConditionPricePriceTypeCodeCodeListURI" 
+						}
+					]
+				} 
+			]
+		  }
+		],
+	"TaxTotal" :
+		[ { 
+			"TaxAmount" :
+			[ { 
+				"AmountContent" : "@CLTaxTotalTaxAmountAmountContent", 
+				"AmountCurrencyIdentifier" : "@CLTaxTotalTaxAmountAmountCurrencyID" 
+				}
+			],
+			"TaxSubtotal" :
+			[ {
+				"TaxableAmount" :
+				[ { 
+					"AmountContent" : "@CLTaxTotalTaxSubtotalTaxableAmountAmountContent",
+					"AmountCurrencyIdentifier" : "@CLTaxTotalTaxSubtotalTaxableAmountAmountCurrencyID" 
+					}
+				],
+				"TaxAmount" :
+				[ { 
+					"AmountContent" : "@CLTaxTotalTaxSubtotalTaxAmountAmountContent", 
+					"AmountCurrencyIdentifier" : "@CLTaxTotalTaxSubtotalTaxAmountAmountCurrencyID" 
+					}
+				], 
+				"TaxCategory" :
+				 [ { 
+					"Percent" :
+					[ { 
+						"NumericContent" : "@CLTaxTotalTaxSubtotalTaxCategoryPercentNumericContent" 
+						}
+					], 
+					"TaxExemptionReasonCode" :
+					[ { 
+						"CodeContent" : "@ILTaxTotalTaxSubtotalTaxCategoryTERCCodeContent", 
+						"CodeListAgencyNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTERCCodeListAgencyNameText", 
+						"CodeListNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTERCCodeListNameText",
+						"CodeListUniformResourceIdentifier" : "@ILTaxTotalTaxSubtotalTaxCategoryTERCCodeListURI"
+						} ], 
+					"TaxScheme" :
+					[ { 
+						"ID" :
+							[ {
+								"IdentifierContent" : "@TaxTotalTaxSubtotalTaxCategoryID", 
+								"IdentificationSchemeNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeNameText", 
+								"IdentificationSchemeUniformResourceIdentifier" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeURI", 
+								"IdentificationSchemeAgencyNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeAgencyNameText"
+								} 
+							],
+						"Name" :
+							[ { 
+								"TextContent" : "@TaxTotalTaxSubtotalTaxCategoryName" 
+								}
+							], 
+						"TaxTypeCode" :
+							[ { 
+								"CodeContent" : "@TaxTotalTaxSubtotalTaxCategoryTaxTypeCode" 
+								}
+							]
+						}
+					] 
+				 }
+				]
+			  }
+			]
+ 		  }
+		], 
+	"Item" :
+		[ { 
+			"Description" :
+				[ {
+					"TextContent" : "@ItemDescription" 
+					}
+				]
+			}
+		], 
+	"Price" :
+		[ { 
+			"PriceAmount" :
+				[ { 
+					"AmountContent" : "@pricePriceAmount", 
+					"AmountCurrencyIdentifier" : "@PricePriceAmountAmountCurrencyID" 
+					}
+				]
+			}
+		]
+	}

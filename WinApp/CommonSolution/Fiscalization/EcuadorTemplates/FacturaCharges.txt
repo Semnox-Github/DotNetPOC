@@ -1,0 +1,4 @@
+"cobros":[{
+      "forma_cobro" : @Formcollection,
+      "monto" : @Amount
+    }]

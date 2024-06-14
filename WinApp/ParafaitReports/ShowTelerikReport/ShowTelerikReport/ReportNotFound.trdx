@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="6.5in" Name="ReportNotFound" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <Items>
+    <DetailSection Height="2in" Name="detailSection1">
+      <Items>
+        <TextBox Width="5.40000025431315in" Height="0.400000095367432in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Report Not Found' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox1">
+          <Style TextAlign="Left">
+            <Font Name="Arial" Size="20pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </DetailSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="connectionstring" Mergeable="False" Text="connectionstring" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Mergeable="False" Text="LangID" AllowBlank="False" />
+  </ReportParameters>
+</Report>

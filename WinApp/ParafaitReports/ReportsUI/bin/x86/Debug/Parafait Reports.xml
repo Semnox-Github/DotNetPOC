@@ -1,0 +1,1187 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Parafait Reports</name>
+    </assembly>
+    <members>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.txtPassword_Enter(System.Object,System.EventArgs)">
+            <summary>
+            txtPassword_Enter
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.txtLogin_Enter(System.Object,System.EventArgs)">
+            <summary>
+            txtLogin_Enter
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.txtPassword_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            txtPassword_KeyDown
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.txtLogin_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            txtLogin_KeyDown
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.formLogin_Load(System.Object,System.EventArgs)">
+            <summary>
+            formLogin_Load
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.formLogin_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            formLogin_FormClosing
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.CancelButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            CancelButton_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.OKButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKButton_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.CardScanCompleteEventHandle(System.Object,System.EventArgs)">
+            <summary>
+            CardScanCompleteEventHandle
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.cardSwiped(System.String)">
+            <summary>
+            cardSwiped
+            </summary>
+            <param name="CardNumber">CardNumber</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.checkLogin(System.String)">
+            <summary>
+            checkLogin
+            </summary>
+            <param name="CardNumber">CardNumber</param>
+            <returns></returns>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Authenticate.User">
+            <summary>
+            User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.CustomReports">
+            <summary>
+             CustomReports class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.#ctor(System.Int32)">
+            <summary>
+            CustomReports with params
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.CustomReports_Load(System.Object,System.EventArgs)">
+            <summary>
+            CustomReports_Load
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnSave_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnCancel_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.btnDelete_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnDelete_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.btnPreview_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnPreview_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.btnParameters_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnParameters_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.CustomReports.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReports.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.EmailReport">
+            <summary>
+            EmailReport Class
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.EmailReport.SendOnDemandEmailDelegate">
+            <summary>
+             SendOnDemandEmailDelegate delegate
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.setEmailParamsCallback">
+            <summary>
+            SendOnDemandEmailDelegate
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.format">
+            <summary>
+            format
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.emailList">
+            <summary>
+            emailList
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.backgroundMode">
+            <summary>
+            backgroundMode
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.rptSrc">
+            <summary>
+            rptSrc
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.reportKey">
+            <summary>
+            reportKey
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.reportName">
+            <summary>
+            reportKey
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.fromDate">
+            <summary>
+            fromDate
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.toDate">
+            <summary>
+            fromDate
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.#ctor">
+            <summary>
+            EmailReport()
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.btnEmailReport_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnEmailReport_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.EmailReport_Load(System.Object,System.EventArgs)">
+            <summary>
+            EmailReport_Load
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.bgWorker_DoWork(System.Object,System.ComponentModel.DoWorkEventArgs)">
+            <summary>
+            bgWorker_DoWork
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.EmailReport.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.EmailReport.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.frmParameterView">
+            <summary>
+            frmParameterView Class
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.frmParameterView._parameters">
+            <summary>
+            _parameters property
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmParameterView.#ctor(System.Int32,System.Int32)">
+            <summary>
+             parameter reportScheduleReportId is passed when called for saving parameters for scheduled reports 
+             </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.frmParameterView.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmParameterView.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmParameterView.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.frmReportParameters">
+            <summary>
+            frmReportParameters Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.#ctor(System.Int32)">
+            <summary>
+            frmReportParameters Constructor
+            </summary>
+            <param name="ReportId">ReportId</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.frmReportParameters_Load(System.Object,System.EventArgs)">
+            <summary>
+            frmReportParameters_Load
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.PopulateReportParameters">
+            <summary>
+            PopulateReportParameters
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.dgvReportParameters_BindingSourceAddNew(System.Object,System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            dgvReportParameters_BindingSourceAddNew
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.dgvReportParameters_DefaultValuesNeeded(System.Object,System.Windows.Forms.DataGridViewRowEventArgs)">
+            <summary>
+            dgvReportParameters_DefaultValuesNeeded
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnSave_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.btnPreview_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnPreview_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.btnDelete_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnDelete_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnCancel_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.btnRefresh_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnRefresh_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.dgvReportParameters_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            dgvReportParameters_DataError
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.frmReportParameters_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.frmReportParameters.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.frmReportParameters.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.MainMDI">
+            <summary>
+            MainMDI method
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.MainMDI.machineUserContext">
+            <summary>
+            machineUserContext initialization
+            </summary>
+            
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.MainMDI.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            MainMDI method
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.MainMDI.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.MainMDI.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.MainMDI.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Program.Main(System.String[])">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.Program.updateTelerikConfig">
+            <summary>
+            updateTelerikConfig
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.ReportServerLaunch">
+            <summary>
+            ReportServerLaunch class
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.ReportServerLaunch.callRunTimeBasedSchedules">
+            <summary>
+            System.Threading.TimerCallback callRunTimeBasedSchedules
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.ReportServerLaunch.callDataBasedSchedules">
+            <summary>
+            System.Threading.TimerCallback callDataBasedSchedules
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.ReportServerLaunch.#ctor(Semnox.Core.Utilities.Utilities)">
+            <summary>
+            ReportServerLaunch with params
+            </summary>
+            <param name="_Utilities">_Utilities</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.ReportServerLaunch.DeleteOldReportFiles">
+            <summary>
+            DeleteOldReportFiles method
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.ReportServerLaunch.RunTimeBasedSchedules(System.Object)">
+            <summary>
+            RunTimeBasedSchedules method
+            </summary>
+            <param name="stateInfo">stateInfo</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.ReportServerLaunch.RunDataBasedSchedules(System.Object)">
+            <summary>
+            RunDataBasedSchedules method
+            </summary>
+            <param name="stateInfo">stateInfo</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.ReportServerLaunch.UpdateScheduleRunTime(System.Int32)">
+            <summary>
+            UpdateScheduleRunTime method
+            </summary>
+            <param name="scheduleId">scheduleId</param>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.CustomReportviewer">
+            <summary>
+            CustomReportviewer Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReportviewer.#ctor(System.Boolean,System.String,System.String,System.String,System.Int32,System.DateTime,System.DateTime,System.Int32,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            CustomReportviewer with params
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReportviewer.IsReportDateRangeValid">
+            <summary>
+            IsReportDateRangeValid() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.CustomReportviewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReportviewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.CustomReportviewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.GamePlayReportviewer">
+            <summary>
+            GamePlayReportviewer Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GamePlayReportviewer.#ctor(System.Boolean,System.Int32,System.String,System.String,System.String,System.DateTime,System.DateTime,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            GamePlayReportviewer with params
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GamePlayReportviewer.IsReportDateRangeValid">
+            <summary>
+            IsReportDateRangeValid() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.GamePlayReportviewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GamePlayReportviewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GamePlayReportviewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.GenericReportViewer">
+            <summary>
+            GenericReportViewer class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GenericReportViewer.#ctor(System.Boolean,System.Int32,System.String,System.String,System.String,System.DateTime,System.DateTime,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            GenericReportViewer method
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GenericReportViewer.IsReportDateRangeValid">
+            <summary>
+            IsReportDateRangeValid() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.GenericReportViewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GenericReportViewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.GenericReportViewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.RetailReportviewer">
+            <summary>
+            RetailReportviewer Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RetailReportviewer.#ctor(System.Boolean,System.Int32,System.String,System.String,System.String,System.DateTime,System.DateTime,System.String)">
+            <summary>
+            RetailReportviewer Constructor
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.RetailReportviewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RetailReportviewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RetailReportviewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.SKUSearchReportviewer">
+            <summary>
+            SKUSearchReportviewer Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SKUSearchReportviewer.#ctor(System.Boolean,System.Int32,System.String,System.String,System.String,System.DateTime,System.DateTime,System.String)">
+            <summary>
+            SKUSearchReportviewer with params
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SKUSearchReportviewer.IsReportDateRangeValid">
+            <summary>
+            IsReportDateRangeValid() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.SKUSearchReportviewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SKUSearchReportviewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SKUSearchReportviewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.TransactionReportviewer">
+            <summary>
+             TransactionReportviewer Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TransactionReportviewer.#ctor(System.Boolean,System.Int32,System.String,System.String,System.String,System.DateTime,System.DateTime,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            TransactionReportviewer
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TransactionReportviewer.IsReportDateRangeValid">
+            <summary>
+            IsReportDateRangeValid() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.TransactionReportviewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TransactionReportviewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TransactionReportviewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.RunBackground">
+            <summary>
+            RunBackground class
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.RunBackground.log">
+            <summary>
+             Semnox.Core.Logger
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.RunBackground.machineUserContext">
+            <summary>
+            ExecutionContext
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunBackground.runSchedule(System.Int32,System.String,System.Decimal,System.Double,System.String@)">
+            <summary>
+            runSchedule method
+            </summary>
+            <returns>returns bool</returns>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunBackground.CreateBackgroundReport(System.String,System.String,System.DateTime,System.DateTime,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            CreateBackgroundReport method
+            </summary>
+            <param name="reportKey"></param>
+            <param name="timeStamp"></param>
+            <param name="fromDate"></param>
+            <param name="toDate"></param>
+            <param name="lstBackgroundParams"></param>
+            <param name="outputFormat"></param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunBackground.GetReportDTO(System.String)">
+            <summary>
+            GetReportDTO
+            </summary>
+            <param name="reportKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.RunPOSReports">
+            <summary>
+            RunPOSReports class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunPOSReports.#ctor(Semnox.Core.Utilities.Utilities)">
+            <summary>
+            RunPOSReports constructor
+            </summary>
+            <param name="_utilities"></param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunPOSReports.GenerateBackgroundReport(System.String,System.String,System.DateTime,System.DateTime,System.Collections.Generic.List{Semnox.Parafait.Reports.clsReportParameters.SelectedParameterValue},System.String)">
+            <summary>
+            GenerateBackgroundReport method
+            </summary>
+            <param name="reportKey"></param>
+            <param name="timeStamp"></param>
+            <param name="fromDate"></param>
+            <param name="toDate"></param>
+            <param name="lstBackgroundParams"></param>
+            <param name="outputFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.RunReports">
+            <summary>
+             RunReports Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.#ctor">
+            <summary>
+            RunReports
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.RunReports_Load(System.Object,System.EventArgs)">
+            <summary>
+            RunReports_Load
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.loadTimer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            loadTimer_Tick
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.PopulateReportSchedules">
+            <summary>
+            PopulateReportSchedules
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvSchedule_BindingSourceAddNew(System.Object,System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            dgvSchedule_BindingSourceAddNew
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.PopulateReportScheduleReports(System.Int32)">
+            <summary>
+            PopulateReportScheduleReports
+            </summary>
+            <param name="ScheduleID">ScheduleID</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvScheduleReports_BindingSourceAddNew(System.Object,System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            dgvScheduleReports_BindingSourceAddNew
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.PopulateReportScheduleEmails(System.Int32)">
+            <summary>
+            PopulateReportScheduleEmails
+            </summary>
+            <param name="ScheduleID">ScheduleID</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvReportEmails_BindingSourceAddNew(System.Object,System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            dgvReportEmails_BindingSourceAddNew
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.PopulateBuiltInReports">
+            <summary>
+            PopulateBuiltInReports
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvReports_BindingSourceAddNew(System.Object,System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            dgvReports_BindingSourceAddNew
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.refreshPanels(System.String)">
+            <summary>
+            refreshPanels
+            </summary>
+            <param name="group">group</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.setupGroupMenu">
+            <summary>
+            setupGroupMenu
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnGroup_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnGroup_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.refreshAllReports(System.Collections.Generic.List{Semnox.Parafait.Reports.ReportsDTO})">
+            <summary>
+            refreshAllReports
+            </summary>
+            <param name="reportsDTOList"></param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnSave_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.SaveScheduleDetails(System.Int32)">
+            <summary>
+            SaveScheduleDetails
+            </summary>
+            <param name="ScheduleID">ScheduleID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnScheduleReportRemove_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnScheduleReportRemove_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnRefresh_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnRefresh_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.refresh">
+            <summary>
+            refresh
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnReportSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnReportSave_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnReportRemove_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnReportRemove_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnReportRefresh_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnReportRefresh_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Semnox.Parafait.Report.Reports.RunReports.btnExit_Click(System.Object,System.EventArgs)" -->
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnScheduleRemove_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnScheduleRemove_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnRemoveEmail_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnRemoveEmail_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvSchedule_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            dgvSchedule_DataError
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvReports_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            dgvReports_DataError
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvReportEmails_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            dgvReportEmails_DataError
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvScheduleReports_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            dgvScheduleReports_DataError
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.RunReports_FormClosed(System.Object,System.Windows.Forms.FormClosedEventArgs)">
+            <summary>
+            RunReports_FormClosed
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.refreshCustomGrid">
+            <summary>
+            refreshCustomGrid
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnNewCustomReport_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnNewCustomReport_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnEditCustomReport_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnEditCustomReport_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvCustomReports_CellDoubleClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            dgvCustomReports_CellDoubleClick
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.lblReport_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)">
+            <summary>
+            lblReport_LinkClicked
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.lblCustomReport_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)">
+            <summary>
+            lblCustomReport_LinkClicked
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvScheduleReports_DefaultValuesNeeded(System.Object,System.Windows.Forms.DataGridViewRowEventArgs)">
+            <summary>
+            dgvScheduleReports_DefaultValuesNeeded
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvReports_DefaultValuesNeeded(System.Object,System.Windows.Forms.DataGridViewRowEventArgs)">
+            <summary>
+            dgvReports_DefaultValuesNeeded
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnTestSchedule_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnTestSchedule_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.lnkChangePassword_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)">
+            <summary>
+            lnkChangePassword_LinkClicked
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvScheduleReports_CellContentClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            dgvScheduleReports_CellContentClick
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.launchParameterForm(System.Int32,System.Int32)">
+            <summary>
+            launchParameterForm
+            </summary>
+            <param name="reportId">reportId</param>
+            <param name="scheduleReportId">scheduleReportId</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvSchedule_CellContentClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            dgvSchedule_CellContentClick
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.btnParameters_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnParameters_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.dgvSchedule_RowEnter(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            dgvSchedule_RowEnter
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.tcReports_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            tcReports_SelectedIndexChanged
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.BindReportsDropdownList">
+            <summary>
+            BindReportsDropdownList
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.RunReports.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.RunReports.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.normal2">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.parafait_reports">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.PreLoader">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.pressed1">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Semnox.Parafait.Report.Reports.Properties.Resources.pressed3">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.SplashScreen">
+            <summary>
+            SplashScreen Class
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SplashScreen.#ctor">
+            <summary>
+            SplashScreen
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SplashScreen.CloseSplash">
+            <summary>
+            CloseSplash() method
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.SplashScreen.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SplashScreen.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.SplashScreen.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Semnox.Parafait.Report.Reports.TriggerQuery">
+            <summary>
+            TriggerQuery class
+            </summary>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.TriggerQuery.triggerQueryStr">
+            <summary>
+            triggerQueryStr Property
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TriggerQuery.#ctor(System.String)">
+            <summary>
+            TriggerQuery method
+            </summary>
+            <param name="query">query</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TriggerQuery.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnCancel_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TriggerQuery.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            btnSave_Click
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">e</param>
+        </member>
+        <member name="F:Semnox.Parafait.Report.Reports.TriggerQuery.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TriggerQuery.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Semnox.Parafait.Report.Reports.TriggerQuery.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7D7C7F27-9E62-4A3B-962F-CE3280EEA3A0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Redemption_Kiosk</RootNamespace>
+    <AssemblyName>Redemption Kiosk</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Customer\FrmRedemptionKioskAgeGate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\FrmRedemptionKioskAgeGate.Designer.cs">
+      <DependentUpon>FrmRedemptionKioskAgeGate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\FrmRedemptionKioskCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\FrmRedemptionKioskCustomer.Designer.cs">
+      <DependentUpon>FrmRedemptionKioskCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\FrmRedemptionKioskAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\FrmRedemptionKioskAdmin.Designer.cs">
+      <DependentUpon>FrmRedemptionKioskAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmRedemptionKioskDisplayMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmRedemptionKioskDisplayMessage.Designer.cs">
+      <DependentUpon>frmRedemptionKioskDisplayMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmRedemptionKioskHomeScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmRedemptionKioskHomeScreen.Designer.cs">
+      <DependentUpon>frmRedemptionKioskHomeScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRedemptionKioskBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRedemptionKioskBaseForm.designer.cs">
+      <DependentUpon>frmRedemptionKioskBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common.cs" />
+    <Compile Include="frmRedemptionKioskSplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRedemptionKioskSplashScreen.designer.cs">
+      <DependentUpon>frmRedemptionKioskSplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRedemptionKioskTapCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRedemptionKioskTapCard.designer.cs">
+      <DependentUpon>frmRedemptionKioskTapCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gift\frmRedemptionKioskChooseGiftScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gift\frmRedemptionKioskChooseGiftScreen.Designer.cs">
+      <DependentUpon>frmRedemptionKioskChooseGiftScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gift\frmRedemptionKioskGiftInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gift\frmRedemptionKioskGiftInfo.designer.cs">
+      <DependentUpon>frmRedemptionKioskGiftInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gift\productUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gift\productUserControl.Designer.cs">
+      <DependentUpon>productUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\FrmRedemptionKioskRedemptionDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\FrmRedemptionKioskRedemptionDetails.Designer.cs">
+      <DependentUpon>FrmRedemptionKioskRedemptionDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmRemoteDebugInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmRemoteDebugInput.Designer.cs">
+      <DependentUpon>frmRemoteDebugInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\SetUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\SetUp.Designer.cs">
+      <DependentUpon>SetUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\frmRedemptionKioskConfirmOrderScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Order\frmRedemptionKioskConfirmOrderScreen.Designer.cs">
+      <DependentUpon>frmRedemptionKioskConfirmOrderScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\frmRedemptionKioskViewOrderScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Order\frmRedemptionKioskViewOrderScreen.Designer.cs">
+      <DependentUpon>frmRedemptionKioskViewOrderScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\productViewUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Order\productViewUserControl.Designer.cs">
+      <DependentUpon>productViewUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="RedemptionKioskHelper.cs" />
+    <Compile Include="ScreenModel.cs" />
+    <Compile Include="TimeOut\frmRedemptionKioskTimeOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmRedemptionKioskTimeOut.designer.cs">
+      <DependentUpon>frmRedemptionKioskTimeOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\frmRedemptionKioskTimeOutCounter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmRedemptionKioskTimeOutCounter.designer.cs">
+      <DependentUpon>frmRedemptionKioskTimeOutCounter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\TimeOut.cs" />
+    <EmbeddedResource Include="Customer\FrmRedemptionKioskAgeGate.resx">
+      <DependentUpon>FrmRedemptionKioskAgeGate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\FrmRedemptionKioskCustomer.resx">
+      <DependentUpon>FrmRedemptionKioskCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\FrmRedemptionKioskAdmin.resx">
+      <DependentUpon>FrmRedemptionKioskAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmRedemptionKioskDisplayMessage.resx">
+      <DependentUpon>frmRedemptionKioskDisplayMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmRedemptionKioskHomeScreen.resx">
+      <DependentUpon>frmRedemptionKioskHomeScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRedemptionKioskBaseForm.resx">
+      <DependentUpon>frmRedemptionKioskBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRedemptionKioskSplashScreen.resx">
+      <DependentUpon>frmRedemptionKioskSplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRedemptionKioskTapCard.resx">
+      <DependentUpon>frmRedemptionKioskTapCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gift\frmRedemptionKioskChooseGiftScreen.resx">
+      <DependentUpon>frmRedemptionKioskChooseGiftScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gift\frmRedemptionKioskGiftInfo.resx">
+      <DependentUpon>frmRedemptionKioskGiftInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gift\productUserControl.resx">
+      <DependentUpon>productUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\FrmRedemptionKioskRedemptionDetails.resx">
+      <DependentUpon>FrmRedemptionKioskRedemptionDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmRemoteDebugInput.resx">
+      <DependentUpon>frmRemoteDebugInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\frmRedemptionKioskConfirmOrderScreen.resx">
+      <DependentUpon>frmRedemptionKioskConfirmOrderScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\frmRedemptionKioskViewOrderScreen.resx">
+      <DependentUpon>frmRedemptionKioskViewOrderScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\productViewUserControl.resx">
+      <DependentUpon>productViewUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources3.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmRedemptionKioskTimeOut.resx">
+      <DependentUpon>frmRedemptionKioskTimeOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmRedemptionKioskTimeOutCounter.resx">
+      <DependentUpon>frmRedemptionKioskTimeOutCounter.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Add_Btn.png" />
+    <Content Include="Resources\Arrow scroll down.gif" />
+    <None Include="Resources\Available.png" />
+    <Content Include="Resources\Blank_Box.png" />
+    <None Include="Resources\Blank_Btn.png" />
+    <None Include="Resources\Blue_Btn.png" />
+    <Content Include="Resources\Category_Disabled.png" />
+    <Content Include="Resources\Category_Enabled.png" />
+    <Content Include="Resources\Close_Btn.png" />
+    <Content Include="Resources\Close_Btn1.png" />
+    <None Include="Resources\Close_Btn2.png" />
+    <Content Include="Resources\default_product_image.png" />
+    <Content Include="Resources\Green_Btn.png" />
+    <None Include="Resources\Header_Image.png" />
+    <Content Include="Resources\Header_Your Order.png" />
+    <Content Include="Resources\Home_TapCard.png" />
+    <Content Include="Resources\Info_Icon.png" />
+    <Content Include="Resources\Info_Icon1.png" />
+    <Content Include="Resources\Item_Box.png" />
+    <Content Include="Resources\Item_Display.png" />
+    <None Include="Resources\keyboard.png" />
+    <None Include="Resources\Loaded.png" />
+    <Content Include="Resources\Minus_Btn.png" />
+    <Content Include="Resources\Panel_AddProduct.png" />
+    <Content Include="Resources\Plus_Btn.png" />
+    <Content Include="Resources\Pop up.png" />
+    <None Include="Resources\Print_Btn.png" />
+    <None Include="Resources\Popup_Close Btn.png" />
+    <Content Include="Resources\ProductSalePopUp1.png" />
+    <None Include="Resources\Product_Add_Btn.png" />
+    <Content Include="Resources\Product_box_normal.png" />
+    <Content Include="Resources\Product_box_selected.png" />
+    <Content Include="Resources\product_display.png" />
+    <Content Include="Resources\Product_Popup_Close Btn.png" />
+    <Content Include="Resources\Product_Popup_Image 2.png" />
+    <Content Include="Resources\Product_Popup_Image.png" />
+    <None Include="Resources\Redemption Kiosk_Redemption Details_Bg.png" />
+    <None Include="Resources\Redemption Kiosk_Admin Screen_Bg.png" />
+    <None Include="Resources\Seach_Btn.png" />
+    <None Include="Resources\Reboot_Btn.png" />
+    <None Include="Resources\Redemption Kiosk_AgeGate_Bg.png" />
+    <None Include="Resources\Search1.png" />
+    <None Include="Resources\Redeemed.png" />
+    <Content Include="Resources\Search_Box.png" />
+    <Content Include="Resources\Search_Box1.png" />
+    <Content Include="Resources\Selected_Minus_Btn.png" />
+    <Content Include="Resources\Selected_Panel_Add.png" />
+    <Content Include="Resources\Selected_Plus_Btn.png" />
+    <Content Include="Resources\selected_product_display.png" />
+    <None Include="Resources\Tickets.png" />
+    <Content Include="Resources\Tickets_Disabled.png" />
+    <Content Include="Resources\Tickets_Enabled.png" />
+    <None Include="Resources\Timeout-box-blue.png" />
+    <Content Include="Resources\timeout-box-violet.png" />
+    <Content Include="Resources\Update_Btn.png" />
+    <None Include="Resources\Your _Order_Header.png" />
+    <None Include="Resources\View_Item_Box.png" />
+    <Content Include="Resources\_0000_Tickets.png" />
+    <Content Include="Resources\_0001_Loaded.png" />
+    <Content Include="Resources\_0002_Redeemed.png" />
+    <Content Include="Resources\_0003_Available.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonSolution\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\POS\POS.csproj">
+      <Project>{edd835a5-1862-4aed-b3f0-1c134b40fdb4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Product\Product.csproj">
+      <Project>{F1BA74AA-2DC7-48C1-8CBD-254F8C2B63F8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Redemption\RedemptionUtils.csproj">
+      <Project>{1a20e3de-4198-46c4-8c5b-0ac1fcb727a1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Transaction\Transaction.csproj">
+      <Project>{266543A2-B12C-46FE-BCF1-A67319B9CFB8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ParafaitPOS\ParafaitPOS\ParafaitPOS\ParafaitPOS.csproj">
+      <Project>{33350e7d-37a3-44aa-8e08-063a5f05f28a}</Project>
+      <Name>ParafaitPOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KioskCore\KioskCore\KioskCore.csproj">
+      <Project>{c43d25ad-fa0f-4e26-8948-c05ca296b367}</Project>
+      <Name>KioskCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

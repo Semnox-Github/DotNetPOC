@@ -1,0 +1,129 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{4394CC68-3850-4829-B0D8-E5A1B53AC0A1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>ShowTelerikReport</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Data\PublishProfiles\ShowTelerikReport.pubxml" />
+    <None Include="CoinDrop.trdx" />
+    <None Include="Dashboard.trdx" />
+    <None Include="MachineDown.trdx" />
+    <None Include="MissionGameStats.trdx" />
+    <None Include="ReportNotFound.trdx" />
+    <None Include="Skins\Orange\Thumbs.db" />
+    <None Include="Web.config" />
+    <None Include="website.publishproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="detailedReport.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\calendar-hover.png" />
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\clock-hover.png" />
+    <Content Include="Images\clock.png" />
+    <Content Include="Images\refresh-button.png" />
+    <Content Include="reportviewer.aspx" />
+    <Content Include="Skins\Custom\Background.gif" />
+    <Content Include="Skins\Custom\DocumentMap.gif" />
+    <Content Include="Skins\Custom\FirstPage.gif" />
+    <Content Include="Skins\Custom\FirstPageDisabled.gif" />
+    <Content Include="Skins\Custom\LastPage.gif" />
+    <Content Include="Skins\Custom\LastPageDisabled.gif" />
+    <Content Include="Skins\Custom\Loading.gif" />
+    <Content Include="Skins\Custom\Loading_Old.gif" />
+    <Content Include="Skins\Custom\NavBack.png" />
+    <Content Include="Skins\Custom\NavBackDisabled.png" />
+    <Content Include="Skins\Custom\NavForward.png" />
+    <Content Include="Skins\Custom\NavForwardDisabled.png" />
+    <Content Include="Skins\Custom\NextPage.gif" />
+    <Content Include="Skins\Custom\NextPageDisabled.gif" />
+    <Content Include="Skins\Custom\ParametersArea.gif" />
+    <Content Include="Skins\Custom\PrevPage.gif" />
+    <Content Include="Skins\Custom\PrevPageDisabled.gif" />
+    <Content Include="Skins\Custom\Print.gif" />
+    <Content Include="Skins\Custom\PrintDisabled.gif" />
+    <Content Include="Skins\Custom\PrintPreview.png" />
+    <Content Include="Skins\Custom\Refresh.gif" />
+    <Content Include="Skins\Custom\RefreshDisabled.gif" />
+    <Content Include="Skins\Custom\ReportViewer.css" />
+    <Content Include="Skins\Orange\Background.gif" />
+    <Content Include="Skins\Orange\button_bg.gif" />
+    <Content Include="Skins\Orange\DocumentMap.gif" />
+    <Content Include="Skins\Orange\FirstPage.gif" />
+    <Content Include="Skins\Orange\FirstPageDisabled.gif" />
+    <Content Include="Skins\Orange\LastPage.gif" />
+    <Content Include="Skins\Orange\LastPageDisabled.gif" />
+    <Content Include="Skins\Orange\Loading.gif" />
+    <Content Include="Skins\Orange\NavBack.png" />
+    <Content Include="Skins\Orange\NavBackDisabled.png" />
+    <Content Include="Skins\Orange\NavForward.png" />
+    <Content Include="Skins\Orange\NavForwardDisabled.png" />
+    <Content Include="Skins\Orange\NextPage.gif" />
+    <Content Include="Skins\Orange\NextPageDisabled.gif" />
+    <Content Include="Skins\Orange\ParametersArea.gif" />
+    <Content Include="Skins\Orange\PrevPage.gif" />
+    <Content Include="Skins\Orange\PrevPageDisabled.gif" />
+    <Content Include="Skins\Orange\Print.gif" />
+    <Content Include="Skins\Orange\PrintDisabled.gif" />
+    <Content Include="Skins\Orange\PrintPreview.png" />
+    <Content Include="Skins\Orange\Refresh.gif" />
+    <Content Include="Skins\Orange\RefreshDisabled.gif" />
+    <Content Include="Skins\Orange\ReportViewer.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\ReportConnectionStringManager.cs" />
+    <Compile Include="detailedReport.aspx.cs">
+      <DependentUpon>detailedReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reportviewer.aspx.cs">
+      <DependentUpon>reportviewer.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\ShowTelerikReport\v15\" />
+    <Folder Include="aspnet_client\system_web\2_0_50727\" />
+    <Folder Include="aspnet_client\system_web\4_0_30319\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

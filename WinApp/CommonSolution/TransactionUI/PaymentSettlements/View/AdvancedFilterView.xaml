@@ -1,0 +1,291 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.AdvancedFilterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWithFooterWindowStyle}"
+        Title="AdvancedFilterView">
+    <Window.Resources>
+        <Thickness Left="0" Right="8" Top="0" Bottom="8"
+                   x:Key="SearchControlsMargin"/>
+        
+        <ItemsPanelTemplate x:Key="StackPanelTemplate">
+            <StackPanel Width="Auto">
+                
+            </StackPanel>
+        </ItemsPanelTemplate>
+
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderSectionGrid"
+              Grid.Row="0">
+            <common:CustomTextBlock x:Name="HeaderSectionCustomTextBlock"
+                                    Text="{Binding Heading}" 
+                                    HorizontalAlignment="Center" 
+                                    Margin="0,10"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontSize="{StaticResource FontSize.Large}"
+                                    VerticalAlignment="Top"/>
+        </Grid>
+        <Grid x:Name="SearchPanelGrid" 
+            Grid.Row="1">
+            <Border x:Name="MainContentTopBorder"
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                BorderThickness="0,1"
+                Padding="16,8">
+                <UniformGrid Columns="4">
+                    <common:CustomComboBox x:Name="cmbAttributes"
+                                           Heading="Attribute"
+                                           DisplayMemberPath="AttributeDisplayName"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           IsEditable="True"
+                                           ErrorTextVisible="False"
+                                           SelectedItem="{Binding SelectedTableAttributeDetail}"
+                                           EditableItemsSource="{Binding TableAttributeDetailsDTOCollection}">
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DataContext.AttributesSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                    </common:CustomComboBox>
+                    <common:CustomComboBox x:Name="cmbConditions"
+                                           Heading="Condition"
+                                           Margin="{StaticResource SearchControlsMargin}"
+                                           IsEditable="True"
+                                           ErrorTextVisible="False"
+                                           SelectedItem="{Binding SelectedCondition}"
+                                           EditableItemsSource="{Binding Conditions}"/>
+                    <common:CustomTextBox x:Name="tbTextAttributeValue"
+                                          Margin="{StaticResource SearchControlsMargin}"
+                                          Heading="Value"
+                                          ValidationType="Alphanumeric"
+                                          Size="Small"
+                                          ErrorTextVisible="False"
+                                          Text="{Binding AttributeValue}">
+                        <common:CustomTextBox.Style>
+                            <Style TargetType="{x:Type common:CustomTextBox}"
+                               BasedOn="{StaticResource {x:Type common:CustomTextBox}}">
+                                <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedAttributeValueType}"
+                                             Value="Text">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </common:CustomTextBox.Style>
+                    </common:CustomTextBox>
+                    <common:CustomTextBox x:Name="tbNumberAttributeValue"
+                                          Margin="{StaticResource SearchControlsMargin}"
+                                          Heading="Value"
+                                          ValidationType="DecimalOnly"
+                                          Size="Small"
+                                          ErrorTextVisible="False"
+                                          Text="{Binding AttributeValue}">
+                        <common:CustomTextBox.Style>
+                            <Style TargetType="{x:Type common:CustomTextBox}"
+                               BasedOn="{StaticResource {x:Type common:CustomTextBox}}">
+                                <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedAttributeValueType}"
+                                             Value="Number">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </common:CustomTextBox.Style>
+                    </common:CustomTextBox>
+                    <common:CustomTextBoxDatePicker x:Name="txtDate"
+                                                    Margin="{StaticResource SearchControlsMargin}"
+                                                    ShowTimePicker="True"
+                                                    Heading="Value"
+                                                    Size="Small"
+                                                    ErrorTextVisible="False"
+                                                    Text="{Binding AttributeValue}" >
+                        <common:CustomTextBoxDatePicker.Style>
+                            <Style TargetType="{x:Type common:CustomTextBoxDatePicker}"
+                               BasedOn="{StaticResource {x:Type common:CustomTextBoxDatePicker}}">
+                                <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedAttributeValueType}"
+                                             Value="Date">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </common:CustomTextBoxDatePicker.Style>
+                    </common:CustomTextBoxDatePicker>
+
+                    <common:CustomComboBox x:Name="cmbField"
+                                   VerticalAlignment="Top"
+                                   Heading="Value"
+                                   ItemsSource="{Binding AttributeValueCBCollection}"
+                                   DisplayMemberPath="{Binding DisplayMemberPath}"
+                                   SelectedItem="{Binding AttributeValue}"
+                                   IsEditable="true"
+                                   Size="Small"                                   
+                                   ErrorTextVisible="False" >
+                        <common:CustomComboBox.Style>
+                            <Style TargetType="{x:Type common:CustomComboBox}"
+                               BasedOn="{StaticResource {x:Type common:CustomComboBox}}">
+                                <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedAttributeValueType}"
+                                             Value="Combo">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </common:CustomComboBox.Style>
+                    </common:CustomComboBox>
+                    <common:CustomActionButton x:Name="btnAdd"
+                                           VerticalAlignment="Bottom"
+                                           Content="ADD"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           Margin="{StaticResource SearchControlsMargin}">
+                    </common:CustomActionButton>
+
+                </UniformGrid>
+            </Border>
+           
+        </Grid>
+        <Grid x:Name="MainContentGrid"  
+              Grid.Row="2"
+              Width="Auto">
+            <Border 
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                BorderThickness="0,1"
+                Padding="16,8">
+                <common:CustomScrollViewer x:Name="MainContentCustomScrollViewer">
+                    <ItemsControl x:Name="MainContentItemControl"
+                              ItemsSource="{Binding AdvancedFiltersSummaryDTOCollection}"
+                              ItemsPanel="{StaticResource StackPanelTemplate}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <common:CustomTextBlock x:Name="tbAnd"
+                                                            Text="AND"
+                                                            Margin="0,0,12,8"
+                                                            HorizontalAlignment="Center" 
+                                                            FontSize="{StaticResource FontSize.Large}"
+                                                            VerticalAlignment="Top"
+                                                            Visibility="{Binding AddLabelVisibility, Mode=TwoWay}"/>
+                                    <common:CustomActionButton x:Name="btnRemove"
+                                                               Margin="{StaticResource SearchControlsMargin}"
+                                                               ActionStyle="Active"
+                                                               CommandParameter="{Binding}"
+                                                               Command="{Binding Path=DataContext.RemoveCommand,
+                                                               RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:AdvancedFilterView}}">
+                                        <common:CustomActionButton.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Width"
+                                                    Value="48" />
+                                                <Setter Property="Height"
+                                                    Value="{Binding Path=Width,RelativeSource={RelativeSource Self}}" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Border Background="{StaticResource Action.Active.Background}"
+                                                                CornerRadius="{StaticResource CornerRadius}"
+                                                                Padding="8">
+                                                                <Path Stretch="Uniform"
+                                                                    Fill="{StaticResource Action.Active.Foreground}"
+                                                                     Data="M12 0c2.17 0 4.181.54 6.022 1.617 1.843 1.061 3.302 2.517 4.372 4.36C23.464 7.82 24 9.83 24 12c0 2.169-.536 4.18-1.606 6.023-1.07 1.842-2.529 3.302-4.37 4.37C16.18 23.464 14.168 24 12 24s-4.18-.536-6.023-1.606c-1.842-1.07-3.302-2.529-4.37-4.37C.536 16.18 0 14.168 0 12s.536-4.18 1.606-6.023c1.07-1.842 2.529-3.302 4.37-4.37C7.82.536 9.832 0 12 0zm0 2.75c-1.262 0-2.457.245-3.597.737-1.106.462-2.086 1.12-2.94 1.975C4.605 6.32 3.94 7.3 3.463 8.404 2.988 9.54 2.75 10.736 2.75 12c0 1.262.245 2.457.737 3.597.462 1.106 1.12 2.086 1.975 2.94.857.857 1.838 1.523 2.942 1.999 1.135.476 2.332.714 3.596.714 1.262 0 2.457-.245 3.597-.737 1.106-.462 2.086-1.12 2.94-1.975.857-.857 1.523-1.838 1.999-2.942.476-1.135.714-2.332.714-3.596 0-1.262-.245-2.457-.737-3.597-.462-1.106-1.12-2.086-1.975-2.94-.857-.857-1.838-1.523-2.942-1.999C14.46 2.988 13.264 2.75 12 2.75zm4.018 3.857c.374 0 .71.138.973.402.264.264.402.599.402.973 0 .33-.11.626-.306.853l-.106.108L13.943 12l3.037 3.056c.192.192.32.417.378.665l.026.152.009.156c0 .368-.14.7-.402.962-.264.264-.599.402-.973.402-.313 0-.6-.094-.86-.287l-.126-.105L12 13.949 8.947 17.02c-.185.168-.398.28-.632.334l-.179.03-.154.008c-.374 0-.71-.138-.973-.402-.264-.264-.402-.599-.402-.973 0-.33.11-.626.306-.853l.106-.108L10.056 12 7.04 8.963c-.203-.184-.337-.41-.397-.664l-.027-.155-.009-.162c0-.374.138-.71.402-.973.264-.264.599-.402.973-.402.313 0 .6.094.86.287l.126.105L12 10.05l3.053-3.071c.185-.168.398-.28.632-.334l.179-.03.154-.008z" />
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </common:CustomActionButton.Style>
+                                    </common:CustomActionButton>
+                                    <common:CustomTextBlock x:Name="txtAttribute"
+                                                            Text="{Binding AttributeDisplayName}"
+                                                            Margin="{StaticResource SearchControlsMargin}"
+                                                            HorizontalAlignment="Center" 
+                                                            FontSize="{StaticResource FontSize.Large}"
+                                                            VerticalAlignment="Top"/>
+                                    <common:CustomTextBlock x:Name="txtCondition"
+                                                            Text="{Binding Condition}"
+                                                            HorizontalAlignment="Center" 
+                                                            Margin="{StaticResource SearchControlsMargin}"
+                                                            FontSize="{StaticResource FontSize.Large}"
+                                                            VerticalAlignment="Top"/>
+                                    <common:CustomTextBlock x:Name="txtAttributeValue"
+                                                            Text="{Binding AttributeValue}" 
+                                                            HorizontalAlignment="Center" 
+                                                            Margin="{StaticResource SearchControlsMargin}"
+                                                            FontSize="{StaticResource FontSize.Large}"
+                                                            VerticalAlignment="Top"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                       
+                    </ItemsControl>
+                    
+                </common:CustomScrollViewer>
+            </Border>
+        </Grid>
+        <Border Grid.Row="3"
+                        BorderThickness="0,1,0,0"
+                        BorderBrush="{StaticResource Control.BorderBrush}"
+                        Padding="0,8">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CustomDataGridVM.UICollectionToBeRendered.Count}"
+                                             Value="0">
+                            <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <UniformGrid Columns="2" 
+                         HorizontalAlignment="Center">
+                <common:CustomActionButton x:Name="btnOK"
+                                                   Content="OK"
+                                                   ActionStyle="Active"
+                                                   MinWidth="{StaticResource ActionButton.Width}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+                <common:CustomActionButton x:Name="btnCancel"
+                                                   Margin="{StaticResource OkAndYearMargin}"
+                                                   Content="CANCEL"
+                                                   ActionStyle="Passive"
+                                                   MinWidth="{StaticResource ActionButton.Width}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}" />
+
+            </UniformGrid>
+        </Border>
+    </Grid>
+</Window>

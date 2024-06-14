@@ -1,0 +1,50 @@
+[
+  {
+    "SegmentDefinitionSourceId": 1,
+    "SegmentDefinitionId": 1,
+    "DataSourceType": "STATIC LIST",
+    "DataSourceEntity": "",
+    "DataSourceColumn": "",
+    "IsActive": "Y",
+    "CreatedBy": "semnox",
+    "CreationDate": "2018-08-24T18:31:55.273",
+    "LastUpdatedBy": "semnox",
+    "LastupdatedDate": "2018-09-06T10:43:26.713",
+    "Guid": "8936ff56-2cad-4620-83ae-190b1a7ae35b",
+    "Siteid": -1,
+    "SynchStatus": false,
+    "IsChanged": false
+  },
+  {
+    "SegmentDefinitionSourceId": 3,
+    "SegmentDefinitionId": 2,
+    "DataSourceType": "STATIC LIST",
+    "DataSourceEntity": "",
+    "DataSourceColumn": "",
+    "IsActive": "Y",
+    "CreatedBy": "semnox",
+    "CreationDate": "2018-08-30T18:03:39.517",
+    "LastUpdatedBy": "semnox",
+    "LastupdatedDate": "2018-09-06T10:45:41.89",
+    "Guid": "a2927ad1-168c-4169-be89-8d6379ef23c9",
+    "Siteid": -1,
+    "SynchStatus": false,
+    "IsChanged": false
+  },
+  {
+    "SegmentDefinitionSourceId": 4,
+    "SegmentDefinitionId": 2,
+    "DataSourceType": "DYNAMIC LIST",
+    "DataSourceEntity": "VENDOR",
+    "DataSourceColumn": "ContactName",
+    "IsActive": "N",
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-21T11:52:08.237",
+    "LastUpdatedBy": "semnox",
+    "LastupdatedDate": "2019-01-21T12:43:22.143",
+    "Guid": "cb18937c-dce8-4d09-8a31-7f970c52292a",
+    "Siteid": -1,
+    "SynchStatus": false,
+    "IsChanged": false
+  }
+]

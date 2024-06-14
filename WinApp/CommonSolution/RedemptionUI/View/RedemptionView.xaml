@@ -1,0 +1,184 @@
+﻿<Window x:Class="Semnox.Parafait.RedemptionUI.RedemptionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:local="clr-namespace:Semnox.Parafait.RedemptionUI"
+        Style="{StaticResource RedemptionWindowStyle}"
+        mc:Ignorable="d"
+        Title="RedemptionView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="8*" />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="HeaderUserControl"
+                Grid.Row="0"
+                VerticalAlignment="Top"
+                CornerRadius="{StaticResource Header.CornerRadius}"
+                Background="{StaticResource Control.ComboBackground}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Command="{Binding BackButtonClickedCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border CornerRadius="{StaticResource Redemption.Navigation.Button.CornerRadius}"
+                                                Background="{StaticResource Redemption.Navigation.Button.Background}"
+                                                Padding="{StaticResource Redemption.Navigation.Button.Padding}">
+                                            <Grid HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center">
+                                                <Path Data="M0 0h24v24H0z" />
+                                                <Path Data="M16.667 0L19 2.4 9.74 12 19 21.6 16.667 24 5 12z"
+                                                      Fill="{StaticResource Redemption.Navigation.Button.Foreground}"
+                                                      Stretch="Uniform" />
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Viewbox HorizontalAlignment="Left"
+                         Margin="4,4,0,4"
+                         Grid.Column="1">
+                    <local:RedemptionHeaderTagsUserControl DataContext="{Binding RedemptionHeaderTagsVM}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="HeaderTagClicked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionView}}"
+                                                       Command="{Binding DataContext.HeaderTagClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </local:RedemptionHeaderTagsUserControl>
+                </Viewbox>
+                <StackPanel x:Name="MultipleUserStackPanel"
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="0,8,16,8">
+                    <Button x:Name="btnAddUser"
+                            Style="{StaticResource AddUserButtonStyle}"
+                            Margin="0,0,8,0"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                            Command="{Binding AddUserClickedCommand}"
+                            IsEnabled="{Binding AddUserButtonEnabled}"
+                            Visibility="{Binding AddUserButtonVisible}" />
+                    <!--<ContentControl Content="{Binding IsAsync=True}">
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Button x:Name="btnSwitchMultipleSingleScreen"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                    Command="{Binding MultipleUserClickedCommand}"
+                                                    Style="{StaticResource SingleScreenButtonStyle}"
+                                                    Visibility="{Binding MultiScreenSwitchVisibility}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ShowAllRedemptions}"
+                                                 Value="False">
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <Button x:Name="btnSwitchMultipleSingleScreen"
+                                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                            Command="{Binding MultipleUserClickedCommand}"
+                                                            Style="{StaticResource MultipleScreenButtonStyle}"
+                                                            Visibility="{Binding MultiScreenSwitchVisibility}" />
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>-->
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ItemsControl x:Name="RedemptionsItemsControlSingleScreen"
+                      ItemsSource="{Binding RedemptionUserControlVMs}"
+                      Grid.Row="1"
+                      Margin="0,2,0,0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding DataContext.ColumnCount, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:RedemptionView}}"
+                                 Rows="{Binding DataContext.RowCount, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:RedemptionView}}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="{StaticResource RedemptionUserControl.BorderBrush}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding DataContext.ShowAllRedemptions,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:RedemptionView}}"
+                                                       Value="False" />
+                                            <Condition Binding="{Binding IsActive}"
+                                                       Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Opacity"
+                                                Value="0" />
+                                    </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding MultiScreenMode}"
+                                                 Value="False">
+                                        <Setter Property="BorderThickness"
+                                                Value="0" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MultiScreenMode}"
+                                                 Value="True">
+                                        <Setter Property="BorderThickness"
+                                                Value="1" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <local:RedemptionMainUserControl DataContext="{Binding}"
+                                                         HorizontalAlignment="Stretch"
+                                                         DataContextChanged="RedemptionMainUserControl_DataContextChanged">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.RedemptionUserControlClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionView}}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="AddButtonClicked">
+                                    <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.AddScreenClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionView}}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="RemoveButtonClicked">
+                                    <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.RemoveButtonClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionView}}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:RedemptionMainUserControl>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
+

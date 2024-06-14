@@ -1,0 +1,36 @@
+﻿[
+  {
+    "OfferId": 0,
+    "ProductId": 117,
+    "OfferProductId": -1,
+    "SaleGroupId": 2,
+    "OfferMessage": "Diwali Dhamakha",
+    "EffectiveDate": "0001-01-01T00:00:00",
+    "IsActive": true,
+    "SiteId": -1,
+    "SynchStatus": false,
+    "Guid": "f9191dc9-8590-4ee2-8a53-50edf09fcf88",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-22T16:30:05.23",
+    "MasterEntityId": -1,
+    "SalesGroupDTOList": null,
+    "IsChanged": false
+  },
+  {
+    "OfferId": 1,
+    "ProductId": 117,
+    "OfferProductId": -1,
+    "SaleGroupId": 1,
+    "OfferMessage": "Sankranti Offer",
+    "EffectiveDate": "0001-01-01T00:00:00",
+    "IsActive": true,
+    "SiteId": -1,
+    "SynchStatus": false,
+    "Guid": "7888d59a-ed43-4d68-a573-23031b886400",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-22T16:30:36.043",
+    "MasterEntityId": -1,
+    "SalesGroupDTOList": null,
+    "IsChanged": false
+  }
+]

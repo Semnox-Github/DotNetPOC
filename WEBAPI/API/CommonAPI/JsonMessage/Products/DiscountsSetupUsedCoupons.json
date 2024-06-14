@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": 59,
+    "CouponSetId": 64,
+    "DiscountCouponHeaderId": 34,
+    "CouponNumber": "BDOCQA8AFX",
+    "TransactionId": 133698,
+    "LineId": 1,
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "b87d1ea7-bc06-4370-9e88-867853687f9b",
+    "IsChanged": false
+  }
+]

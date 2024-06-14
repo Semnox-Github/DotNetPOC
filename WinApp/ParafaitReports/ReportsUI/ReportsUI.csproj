@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6584616A-8358-42F2-9A40-3D6F78529A13}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Report.Reports</RootNamespace>
+    <AssemblyName>Parafait Reports</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Parafait Reports.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>parafait reports.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\Parafait Reports.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.Reporting, Version=14.1.20.513, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.OpenXmlRendering, Version=14.1.20.513, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.Reporting.OpenXmlRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.WinForms, Version=14.1.20.513, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI, Version=2020.2.617.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls, Version=2020.2.616.50, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.WinControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI, Version=2020.2.616.50, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.WinControls.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2020.2.616.50, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\TelerikCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikReportLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\TelerikReportLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authenticate.cs" />
+    <Compile Include="ReportsCommon.cs" />
+    <Compile Include="CustomReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomReports.designer.cs">
+      <DependentUpon>CustomReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmailReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmailReport.designer.cs">
+      <DependentUpon>EmailReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmParameterView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmParameterView.designer.cs">
+      <DependentUpon>frmParameterView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportParameters.designer.cs">
+      <DependentUpon>frmReportParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainMDI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMDI.designer.cs">
+      <DependentUpon>MainMDI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportServerLaunch.cs" />
+    <Compile Include="Reports\CustomReportviewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CustomReportviewer.Designer.cs">
+      <DependentUpon>CustomReportviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GamePlayReportviewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\GamePlayReportviewer.Designer.cs">
+      <DependentUpon>GamePlayReportviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GenericReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\GenericReportViewer.Designer.cs">
+      <DependentUpon>GenericReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RetailReportviewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\RetailReportviewer.Designer.cs">
+      <DependentUpon>RetailReportviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\SKUSearchReportviewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\SKUSearchReportviewer.Designer.cs">
+      <DependentUpon>SKUSearchReportviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TransactionReportviewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\TransactionReportviewer.Designer.cs">
+      <DependentUpon>TransactionReportviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunBackground.cs" />
+    <Compile Include="RunPOSReports.cs" />
+    <Compile Include="RunReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RunReports.designer.cs">
+      <DependentUpon>RunReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TriggerQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TriggerQuery.designer.cs">
+      <DependentUpon>TriggerQuery.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CustomReports.resx">
+      <DependentUpon>CustomReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailReport.resx">
+      <DependentUpon>EmailReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmParameterView.resx">
+      <DependentUpon>frmParameterView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportParameters.resx">
+      <DependentUpon>frmReportParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMDI.resx">
+      <DependentUpon>MainMDI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Reports\CustomReportviewer.resx">
+      <DependentUpon>CustomReportviewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\GamePlayReportviewer.resx">
+      <DependentUpon>GamePlayReportviewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\GenericReportViewer.resx">
+      <DependentUpon>GenericReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RetailReportviewer.resx">
+      <DependentUpon>RetailReportviewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SKUSearchReportviewer.resx">
+      <DependentUpon>SKUSearchReportviewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TransactionReportviewer.resx">
+      <DependentUpon>TransactionReportviewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunReports.resx">
+      <DependentUpon>RunReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TriggerQuery.resx">
+      <DependentUpon>TriggerQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\ReportParametersDTO.datasource">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\ReportScheduleDTO.datasource">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\ReportScheduleReportsDTO.datasource">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\ReportsDTO.datasource">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\ReportsScheduleEmailDTO.datasource">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Parafait icon.ico" />
+    <Content Include="parafait reports.ico" />
+    <Content Include="report server.ico" />
+    <Content Include="Resources\LoginLogo.png" />
+    <Content Include="Resources\normal2.png" />
+    <Content Include="Resources\Parafait logo.png" />
+    <Content Include="Resources\parafait reports.ico" />
+    <None Include="Resources\PreLoader.GIF" />
+    <None Include="Resources\pressed1.png" />
+    <Content Include="Resources\pressed3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonSolution\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Reports\Reports.csproj">
+      <Project>{41a713da-1ca8-4c0b-86ed-fa33580248d9}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

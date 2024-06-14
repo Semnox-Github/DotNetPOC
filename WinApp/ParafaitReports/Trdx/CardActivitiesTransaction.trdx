@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="8.77085367838542in" Name="Transaction" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="set @dfromDate = dbo.Converttoservertime(@fromDate, @offSet) &#xD;&#xA;set @dtoDate = dbo.Converttoservertime(@toDate, @offSet) &#xD;&#xA;&#xD;&#xA;SELECT u1.username                                   AS UserName, &#xD;&#xA;       task_type_name, &#xD;&#xA;       Count(*)                                      ops, &#xD;&#xA;       CONVERT(VARCHAR, Sum(value_loaded)) + ( CASE task_type &#xD;&#xA;       WHEN 'LOADTICKETS' THEN ' Tickets' &#xD;&#xA;       ELSE &#xD;&#xA;         CASE attribute1 &#xD;&#xA;           WHEN 71 THEN ' CP Credits' &#xD;&#xA;           WHEN 65 THEN ' CP Card Balance' &#xD;&#xA;           WHEN 66 THEN ' CP Bonus' &#xD;&#xA;           ELSE ' Bonus' &#xD;&#xA;         END &#xD;&#xA;                                               END ) task_value1, &#xD;&#xA;       NULL                                          task_value2, &#xD;&#xA;       u2.username                                   approved_by &#xD;&#xA;FROM   tasks v, &#xD;&#xA;       task_type ty, &#xD;&#xA;       users u1, &#xD;&#xA;       users u2 &#xD;&#xA;WHERE  ( task_type = 'LOADTICKETS' &#xD;&#xA;          OR task_type = 'LOADBONUS' ) &#xD;&#xA;       AND ty.task_type_id = v.task_type_id &#xD;&#xA;       AND u1.user_id = v.user_id &#xD;&#xA;       AND u2.user_id = v.approvedby &#xD;&#xA;       AND task_date &gt;= @dfromDate &#xD;&#xA;       AND task_date &lt; @dtoDate&#xD;&#xA;       AND ( v.user_id IN ( @userId ) &#xD;&#xA;              OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( v.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( v.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;GROUP  BY u1.username, &#xD;&#xA;          task_type, &#xD;&#xA;          task_type_name, &#xD;&#xA;          u2.username, &#xD;&#xA;          attribute1 &#xD;&#xA;UNION ALL &#xD;&#xA;SELECT u1.username, &#xD;&#xA;       task_type_name, &#xD;&#xA;       Count(*), &#xD;&#xA;       CONVERT(VARCHAR, Sum(credits_exchanged)) &#xD;&#xA;       + ' Credits', &#xD;&#xA;       CONVERT(VARCHAR, Sum(tokens_exchanged)) &#xD;&#xA;       + ' Tokens', &#xD;&#xA;       u2.username &#xD;&#xA;FROM   tasks v, &#xD;&#xA;       task_type ty, &#xD;&#xA;       users u1, &#xD;&#xA;       users u2 &#xD;&#xA;WHERE  task_type LIKE 'EXCHANGECREDIT%' &#xD;&#xA;       AND task_date &gt;= @dfromDate&#xD;&#xA;       AND task_date &lt; @dtoDate&#xD;&#xA;       AND ty.task_type_id = v.task_type_id &#xD;&#xA;       AND u1.user_id = v.user_id &#xD;&#xA;       AND u2.user_id = v.approvedby &#xD;&#xA;       AND ( v.user_id IN ( @userId ) &#xD;&#xA;              OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( v.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( v.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;GROUP  BY u1.username, &#xD;&#xA;          task_type_name, &#xD;&#xA;          u2.username &#xD;&#xA;UNION ALL &#xD;&#xA;SELECT u1.username, &#xD;&#xA;       task_type_name, &#xD;&#xA;       Count(*), &#xD;&#xA;       CONVERT(VARCHAR, Sum(tokens_exchanged)) &#xD;&#xA;       + ' Tokens', &#xD;&#xA;       CONVERT(VARCHAR, Sum(credits_exchanged)) &#xD;&#xA;       + ' Credits', &#xD;&#xA;       u2.username &#xD;&#xA;FROM   tasks v, &#xD;&#xA;       task_type ty, &#xD;&#xA;       users u1, &#xD;&#xA;       users u2 &#xD;&#xA;WHERE  task_type LIKE 'EXCHANGETOKEN%' &#xD;&#xA;       AND task_date &gt;= @dfromDate&#xD;&#xA;       AND task_date &lt; @dtoDate &#xD;&#xA;       AND ty.task_type_id = v.task_type_id &#xD;&#xA;       AND u1.user_id = v.user_id &#xD;&#xA;       AND u2.user_id = v.approvedby &#xD;&#xA;       AND ( v.user_id IN ( @userId ) &#xD;&#xA;              OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( v.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( v.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;GROUP  BY u1.username, &#xD;&#xA;          task_type_name, &#xD;&#xA;          u2.username &#xD;&#xA;UNION ALL &#xD;&#xA;SELECT u1.username, &#xD;&#xA;       task_type_name, &#xD;&#xA;       Count(*), &#xD;&#xA;       Substring(d.discount_name, 1, 15), &#xD;&#xA;       c.card_number, &#xD;&#xA;       u2.username &#xD;&#xA;FROM   tasks v, &#xD;&#xA;       task_type ty, &#xD;&#xA;       users u1, &#xD;&#xA;       users u2, &#xD;&#xA;       discounts d, &#xD;&#xA;       cards c &#xD;&#xA;WHERE  task_type = 'DISCOUNT' &#xD;&#xA;       AND task_date &gt;= @dfromDate&#xD;&#xA;       AND task_date &lt; @dtoDate&#xD;&#xA;       AND ty.task_type_id = v.task_type_id &#xD;&#xA;       AND u1.user_id = v.user_id &#xD;&#xA;       AND u2.user_id = v.approvedby &#xD;&#xA;       AND d.discount_id = v.value_loaded &#xD;&#xA;       AND c.card_id = v.card_id &#xD;&#xA;       AND ( v.user_id IN ( @userId ) &#xD;&#xA;              OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( v.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( v.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;GROUP  BY u1.username, &#xD;&#xA;          task_type_name, &#xD;&#xA;          discount_name, &#xD;&#xA;          c.card_number, &#xD;&#xA;          u2.username &#xD;&#xA;ORDER  BY 1, &#xD;&#xA;          2, &#xD;&#xA;          3 DESC " CommandTimeout="0" Name="dsCardActivities">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dfromDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dtoDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@userId">
+          <Value>
+            <String>=Parameters.userId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.3000005086263in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsCardActivities" Width="7.17083630650189in" Height="0.39999984626972in" Left="0in" Top="0.200157483418783in" Name="crosstab9" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.695834240385205in" Height="0.199999917546919in" Left="0in" Top="0in" Value="= Fields.ops" Format="{0:N2}" Name="textBox175" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.26875084904565in" Height="0.19999983968839in" Left="0in" Top="0in" Value="= Fields.task_value1" Format="{0:N2}" Name="textBox176" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.14375054836273in" Height="0.199999913573265in" Left="0in" Top="0in" Value="= Fields.approved_by" Format="{0:N2}" Name="textBox178" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.05208349227905in" Height="0.199999913573265in" Left="0in" Top="0in" Value="= Fields.UserName" Name="textBox179" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.72916530056543in" Height="0.199999839688391in" Left="0in" Top="0in" Value="= Fields.task_type_name" Name="textBox180" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.28125021619594in" Height="0.199999839688389in" Left="0in" Top="0in" Value="= Fields.task_value2" Name="textBox192" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.05208538557938in" />
+              <Column Width="1.72916483874215in" />
+              <Column Width="0.695834269698817in" />
+              <Column Width="1.26875088752619in" />
+              <Column Width="1.28125032304973in" />
+              <Column Width="1.14375033477116in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.199999863530238in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.05208349227905in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('User Name')" Name="textBox174" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group4">
+              <ReportItem>
+                <TextBox Width="1.72916530056543in" Height="0.199999994660407in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Task Type Name')" Name="textBox181" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.695834240385205in" Height="0.200000048677123in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Ops')" Format="{0:N2}" Name="textBox187" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.26875084904565in" Height="0.199999994660407in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Task Value 1')" Name="textBox188" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group6">
+              <ReportItem>
+                <TextBox Width="1.28125021619594in" Height="0.199999994660406in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Task Value 2')" Name="textBox191" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.14375054836273in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Approved By')" Name="textBox189" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.0582427978515625in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.258242925008138in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="5.10000038146973in" Top="0.0582427978515625in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount&#xD;&#xA;" Name="textBox45">
+          <Style TextAlign="Right">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="1in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="8.7624610265096in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Card Activities')" Name="textBox46">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.7624610265096in" Height="0.19999997317791in" Left="0in" Top="0.19999997317791in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox96">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.75204435984294in" Height="0.19999997317791in" Left="0.0104166666666667in" Top="0.400000015894572in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox97">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.76246070861816in" Height="0.19999997317791in" Left="0in" Top="0.599999984105428in" Value="=MessagesFunctions.getMessage('POS') + &quot;: &quot; + Parameters.SelectedPOSMachines.Value" Format="{0:f}" Name="textBox98">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.76246070861816in" Height="0.19999997317791in" Left="0in" Top="0.800000031789144in" Value="=MessagesFunctions.getMessage('User') + &quot;: &quot; + Parameters.SelectedUsers.Label" Format="{0:f}" Name="textBox110">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="pos" Mergeable="False" Text="Select POS" MultiValue="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="userId" Type="Integer" Mergeable="False" Text="userId" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False">
+      <Value>
+        <String>= Parameters.DateTimeCellFormat.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False">
+      <Value>
+        <String>= Parameters.AmountCellFormat.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Mergeable="False" Text="AmountWithCurSymbolCellFormat" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ENABLE_POS_FILTER_IN_TRX_REPORT" Mergeable="False" Text="ENABLE_POS_FILTER_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT" Mergeable="False" Text="EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_SPECIAL_PRICING_IN_TRX_REPORT" Mergeable="False" Text="EXCLUDE_SPECIAL_PRICING_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT" Text="EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SelectedPOSMachines" Mergeable="False" Text="SelectedPOSMachines" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SelectedUsers" Mergeable="False" Text="SelectedUsers" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SiteName" Mergeable="False" Text="SiteName" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="user">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="role" Text="role">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="status" Text="status" />
+    <ReportParameter Name="trxid" Type="Integer" Text="trxid">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="loginUserId" Type="Integer" Text="loginUserId" />
+  </ReportParameters>
+</Report>

@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="19.8000005086263in" Name="ViewTransactionNew" ShowSnapGrid="True" SnapToSnapLines="False" ShowDimensions="False" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitReportsNew" SelectCommand="select '' value&#xD;&#xA;union&#xD;&#xA;select 'CLOSED' value&#xD;&#xA;union&#xD;&#xA;select 'OPEN'&#xD;&#xA;union&#xD;&#xA;select 'CANCELLED'" Name="dsStatus" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="parafait" SelectCommand="set @dfromDate = dbo.Converttoservertime(@fromDate, @offSet) &#xD;&#xA;set @dtoDate = dbo.Converttoservertime(@toDate, @offSet) &#xD;&#xA;&#xD;&#xA;SELECT [trxid]                 AS ID,&#xD;&#xA;       [trx_no],&#xD;&#xA;       oh.tablenumber          AS Table#,&#xD;&#xA;       dbo.Converttolocaltime(trxdate, -1 * @offSet) AS Date,&#xD;&#xA;       [trxamount]             AS Amount,&#xD;&#xA;       [taxamount]             AS Tax,&#xD;&#xA;       [trxnetamount]          AS Net_amount,&#xD;&#xA;       [trxdiscountpercentage] AS &quot;avg_disc_%&quot;,&#xD;&#xA;       CASE payment_mode&#xD;&#xA;         WHEN 1 THEN 'Cash'&#xD;&#xA;         WHEN 2 THEN 'Credit Card'&#xD;&#xA;         WHEN 3 THEN 'Debit Card'&#xD;&#xA;         WHEN 4 THEN 'Other'&#xD;&#xA;         WHEN 5 THEN 'Multiple'&#xD;&#xA;         ELSE ''&#xD;&#xA;       END                     AS pay_mode,&#xD;&#xA;       [pos_machine]           AS POS,&#xD;&#xA;       usr.username            AS Cashier,&#xD;&#xA;       cashamount              Cash,&#xD;&#xA;       creditcardamount        C_C_Amount,&#xD;&#xA;       gamecardamount          Game_card_amt,&#xD;&#xA;       otherpaymentmodeamount  Other_Mode_Amt,&#xD;&#xA;       paymentreference        Ref,&#xD;&#xA;       status&#xD;&#xA;FROM   trx_header h&#xD;&#xA;       LEFT OUTER JOIN users usr&#xD;&#xA;                    ON usr.user_id = h.user_id&#xD;&#xA;       LEFT OUTER JOIN orderheader oh&#xD;&#xA;                    ON oh.orderid = h.orderid&#xD;&#xA;WHERE  trxdate &gt;= @dfromDate&#xD;&#xA;       AND trxdate &lt; @dtoDate&#xD;&#xA;       AND ( h.user_id = @userId&#xD;&#xA;              OR @userId = -1 )&#xD;&#xA;       AND ( h.pos_machine IN ( @pos )&#xD;&#xA;              OR ' - All - ' IN ( @pos ) )&#xD;&#xA;       AND ( Isnull(h.status, 'CLOSED') = ( CASE @status&#xD;&#xA;                                              WHEN '' THEN NULL&#xD;&#xA;                                              ELSE @status&#xD;&#xA;                                            END )&#xD;&#xA;              OR ( CASE @status&#xD;&#xA;                     WHEN '' THEN NULL&#xD;&#xA;                     ELSE @status&#xD;&#xA;                   END ) IS NULL )&#xD;&#xA;       AND ( Isnull(h.trxid, -1) = @trxid&#xD;&#xA;              OR @trxid = -1&#xD;&#xA;              OR @trxid = '' )&#xD;&#xA;       AND ( ( h.site_id IN ( @site ) )&#xD;&#xA;              OR ( -1 IN ( @site ) ) ) " Name="dsDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dfromDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dtoDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@userId">
+          <Value>
+            <String>=Parameters.userId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@status">
+          <Value>
+            <String>=Parameters.status.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@trxid">
+          <Value>
+            <String>=Parameters.trxid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Split(",",Parameters.site.Value)</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="2in" Name="detailSection1">
+      <Items>
+        <Table DataSourceName="dsDetails" Width="13.7062482833862in" Height="0.400000005960464in" Left="0.00003941853841146in" Top="0.5in" Name="table3" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.ID" Name="textBox28" StyleName="Normal.TableBody">
+                    <Style Color="Blue" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Underline="True" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                    <Action>
+                      <NavigateToReportAction>
+                        <ReportSource>
+                          <UriReportSource Uri="ViewTransactionDetails.trdx">
+                            <Parameters>
+                              <Parameter Name="trxid">
+                                <Value>
+                                  <String>=Fields.ID</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="DateTimeCellFormat">
+                                <Value>
+                                  <String>=Parameters.DateTimeCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="NumericCellFormat">
+                                <Value>
+                                  <String>=Parameters.NumericCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="offSet">
+                                <Value>
+                                  <String>= Parameters.offset.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="user">
+                                <Value>
+                                  <String>= Parameters.user.Value</String>
+                                </Value>
+                              </Parameter>
+                            </Parameters>
+                          </UriReportSource>
+                        </ReportSource>
+                      </NavigateToReportAction>
+                    </Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Trx_no" Name="textBox29" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Format(Parameters.DateTimeCellFormat.Value,Fields.Date)" Format="{0:F}" Name="textBox30" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Amount" Format="{0:N2}" Name="textBox31" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Tax" Format="{0:N2}" Name="textBox32" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Net_amount" Format="{0:N2}" Name="textBox33" StyleName="Normal.TableBody">
+                    <Style Color="Blue" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Underline="True" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                    <Action>
+                      <NavigateToReportAction>
+                        <ReportSource>
+                          <UriReportSource Uri="Trx Payments.trdx">
+                            <Parameters>
+                              <Parameter Name="trxid">
+                                <Value>
+                                  <String>=Fields.ID</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="DateTimeCellFormat">
+                                <Value>
+                                  <String>=Parameters.DateTimeCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="NumericCellFormat">
+                                <Value>
+                                  <String>=Parameters.NumericCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="offset">
+                                <Value>
+                                  <String>= Parameters.offset.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="user">
+                                <Value>
+                                  <String>= Parameters.user.Value</String>
+                                </Value>
+                              </Parameter>
+                            </Parameters>
+                          </UriReportSource>
+                        </ReportSource>
+                      </NavigateToReportAction>
+                    </Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.[avg_disc_%]" Format="{0:N2}" Name="textBox34" StyleName="Normal.TableBody">
+                    <Style Color="Blue" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Underline="True" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                    <Action>
+                      <NavigateToReportAction>
+                        <ReportSource>
+                          <UriReportSource Uri="Trx Discounts.trdx">
+                            <Parameters>
+                              <Parameter Name="trxid">
+                                <Value>
+                                  <String>=Fields.ID</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="DateTimeCellFormat">
+                                <Value>
+                                  <String>=Parameters.DateTimeCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="NumericCellFormat">
+                                <Value>
+                                  <String>=Parameters.NumericCellFormat.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="offset">
+                                <Value>
+                                  <String>= Parameters.offset.Value</String>
+                                </Value>
+                              </Parameter>
+                              <Parameter Name="user">
+                                <Value>
+                                  <String>= Parameters.user.Value</String>
+                                </Value>
+                              </Parameter>
+                            </Parameters>
+                          </UriReportSource>
+                        </ReportSource>
+                      </NavigateToReportAction>
+                    </Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=Fields.pay_mode" Name="textBox35" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=Fields.POS" Name="textBox36" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=Fields.Cashier" Name="textBox37" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="11" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Cash" Format="{0:N2}" Name="textBox38" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="12" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.C_C_Amount" Format="{0:N2}" Name="textBox39" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="13" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Game_card_amt" Format="{0:N2}" Name="textBox40" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="14" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Other_Mode_Amt" Format="{0:N2}" Name="textBox41" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="15" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=Fields.Ref" Name="textBox42" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="16" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Status" Name="textBox49" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.90625in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.[Table#]" Name="textBox62" StyleName="Normal.TableBody">
+                    <Style TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.906249970224293in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+              <Column Width="0.799999881807681in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <Font Size="8pt" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ID')" Name="textBox1" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Trx No')" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group">
+              <ReportItem>
+                <TextBox Width="0.90625in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Table#')" Name="textBox61" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Date')" Name="textBox3" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Amount')" Name="textBox4" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tax')" Name="textBox5" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Net Amount')" Name="textBox6" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Avg Disc%')" Name="textBox7" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Pay Mode')" Name="textBox8" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('POS')" Name="textBox9" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cashier')" Name="textBox10" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash')" Name="textBox11" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('CC Amount')" Name="textBox12" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Game Card Amt')" Name="textBox13" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Other Mode Amt')" Name="textBox14" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Ref')" Name="textBox15" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Status')" Name="textBox16" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Table>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="1in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.67085337638855in" Height="0.300000190734863in" Left="11.1000010172526in" Top="0.399999936421712in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount&#xD;&#xA;" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+  </Items>
+  <PageSettings PaperKind="Legal" Landscape="True" ColumnCount="1" ColumnSpacing="0in" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Text="fromdate">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Text="todate">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Text="offset">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="userId" Text="userId">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Mergeable="False" Text="site" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="pos" Text="POS" MultiValue="True">
+      <Value>
+        <String>=AllValues(Fields.POSname)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Text="DateTimeCellFormat">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="NumericCellFormat" Text="NumericCellFormat">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="status" Mergeable="False" Text="status">
+      <AvailableValues DataSourceName="dsStatus" DisplayMember="= Fields.value" ValueMember="= Fields.value" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="trxid" Type="Integer" Mergeable="False" Text="trxid" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Text="user">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="role" Text="role">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ENABLE_POS_FILTER_IN_TRX_REPORT" Text="ENABLE_POS_FILTER_IN_TRX_REPORT">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

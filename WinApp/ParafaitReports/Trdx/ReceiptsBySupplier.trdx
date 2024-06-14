@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="7.30000114440918in" Name="ReceiptsBySupplier" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitHQ" SelectCommand="SELECT ''&#xD;&#xA;       dummy,&#xD;&#xA;       CONVERT(VARCHAR, dbo.Converttolocaltime(receivedate, -1 * @offSet), 106)&#xD;&#xA;       date,&#xD;&#xA;       r.vendorbillnumber&#xD;&#xA;       &quot;Bill No&quot;,&#xD;&#xA;       Sum(prl.amount)&#xD;&#xA;       &quot;Purchase Value&quot;,&#xD;&#xA;       v.NAME&#xD;&#xA;       vendor&#xD;&#xA;FROM   purchaseorderreceive_line prl,&#xD;&#xA;       receipt r,&#xD;&#xA;       purchaseorder po,&#xD;&#xA;       vendor v&#xD;&#xA;WHERE  receivedate BETWEEN dbo.Converttoservertime(@fromDate, @offSet) AND&#xD;&#xA;                                  dbo.Converttoservertime(@toDate, @offSet)&#xD;&#xA;       AND v.vendorid = po.vendorid&#xD;&#xA;       AND r.receiptid = prl.receiptid&#xD;&#xA;       AND po.purchaseorderid = prl.purchaseorderid&#xD;&#xA;       AND EXISTS(SELECT 1&#xD;&#xA;                  FROM   purchaseorder po&#xD;&#xA;                  WHERE  ( vendorid IN ( @vendor )&#xD;&#xA;                            OR @vendor = -1 )&#xD;&#xA;                         AND po.purchaseorderid = prl.purchaseorderid)&#xD;&#xA;       AND ( ( r.site_id IN ( @site ) )&#xD;&#xA;              OR ( -1 IN ( @site ) ) )&#xD;&#xA;GROUP  BY CONVERT(VARCHAR, dbo.Converttolocaltime(receivedate, -1 * @offSet),&#xD;&#xA;106),&#xD;&#xA;          v.NAME,&#xD;&#xA;          CONVERT(VARCHAR, dbo.Converttolocaltime(receivedate, -1 * @offSet),&#xD;&#xA;102),&#xD;&#xA;          r.vendorbillnumber&#xD;&#xA;ORDER  BY CONVERT(VARCHAR, dbo.Converttolocaltime(receivedate, -1 * @offSet),&#xD;&#xA;          102) " CommandTimeout="600" Name="dsReceiptsBySupplier">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@vendor">
+          <Value>
+            <String>=Parameters.vendor.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="2.99992148081461in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsReceiptsBySupplier" Width="6.02916826074268in" Height="2.69583290713487in" Left="0in" Top="0in" ColumnHeadersPrintOnEveryPage="False" Name="crosstab1" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.199999861620355in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,Fields.[Purchase Value])" Format="{0:N2}" Name="textBox21" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.199999861620355in" Left="0in" Top="0in" Value="= Fields.[Bill No]" Name="textBox17" StyleName="Civic.TableBody">
+                    <Style VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Action>null</Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.199999861620355in" Left="0in" Top="0in" Value="= Format(Parameters.DateTimeCellFormat.Value,Fields.Date)" Name="textBox18" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.208333183329592in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total')" Name="textBox9" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderStyle Default="None" Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.208333183329592in" Left="0in" Top="0in" Name="textBox10" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" Bold="True" />
+                      <BorderStyle Default="None" Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.208333183329592in" Left="0in" Top="0in" Value="= Format(Parameters.AmountCellFormat.Value,sum(Fields.[Purchase Value]))" Format="{0:N2}" Name="textBox11" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderStyle Default="None" Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.187499879056498in" Left="0in" Top="0in" Name="textBox2" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.187499879056498in" Left="0in" Top="0in" Name="textBox3" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.187499879056498in" Left="0in" Top="0in" Name="textBox4" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox5" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox6" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox7" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox8" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox12" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox13" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.189999984031079in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Stores Incharge.')" Name="textBox14" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.189999984031079in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Manager')" Name="textBox19" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox20" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="6" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox22" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="6" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox23" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="6" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox24" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="7" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox25" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="7" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox26" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="7" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox27" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="8" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.189999984031079in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Remarks, if any')" Name="textBox28" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="8" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox29" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="8" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox30" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="9" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox31" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="9" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox32" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="9" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox33" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="10" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox34" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="10" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox35" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="10" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox36" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="11" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox38" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="11" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.190000004116599in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('General Manager')" Name="textBox39" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="11" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox40" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="12" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.35416693842994in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox42" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="12" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67708441025641in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox48" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="12" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916684840044in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox49" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.199999861620355in" Left="0in" Top="0in" Value="= Fields.vendor" Name="textBox41" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.208333183329592in" Left="0in" Top="0in" Name="textBox47" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.187499879056498in" Left="0in" Top="0in" Name="textBox51" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox52" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox53" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox54" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="6" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox55" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="7" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox56" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="8" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.189999984031079in" Left="0in" Top="0in" Name="textBox57" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="9" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox58" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="10" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.19000002420212in" Left="0in" Top="0in" Name="textBox59" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="11" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox60" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="12" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.71875046138121in" Height="0.190000004116599in" Left="0in" Top="0in" Name="textBox61" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" LineColor="LightGray">
+                      <Font Name="Tahoma" Size="8pt" />
+                      <BorderStyle Left="Solid" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.35416647751712in" />
+              <Column Width="1.67708461878425in" />
+              <Column Width="1.27916661321848in" />
+              <Column Width="1.71875046138121in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.199999861620355in" />
+              <Row Height="0.208333183329592in" />
+              <Row Height="0.187499879056498in" />
+              <Row Height="0.19000002420212in" />
+              <Row Height="0.189999984031079in" />
+              <Row Height="0.189999984031079in" />
+              <Row Height="0.189999984031079in" />
+              <Row Height="0.189999984031079in" />
+              <Row Height="0.189999984031079in" />
+              <Row Height="0.190000004116599in" />
+              <Row Height="0.19000002420212in" />
+              <Row Height="0.190000004116599in" />
+              <Row Height="0.190000004116599in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+            <TableGroup Name="group" />
+            <TableGroup Name="group1" />
+            <TableGroup Name="group4" />
+            <TableGroup Name="group5" />
+            <TableGroup Name="group6" />
+            <TableGroup Name="group7" />
+            <TableGroup Name="group8" />
+            <TableGroup Name="group9" />
+            <TableGroup Name="group10" />
+            <TableGroup Name="group11" />
+            <TableGroup Name="group12" />
+            <TableGroup Name="group13" />
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.35416693842994in" Height="0.200000002218997in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Date')" Name="textBox15" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="1.67708441025641in" Height="0.200000002218997in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Bill No')" Name="textBox16" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.27916684840044in" Height="0.200000002218997in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Purchase Value')" Name="textBox1" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group14">
+              <ReportItem>
+                <TextBox Width="1.71875046138121in" Height="0.200000002218997in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Vendor')" Name="textBox62" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000063578288in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000190734863in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="3.60000006357829in" Top="0.100000063578288in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.899921178817749in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="7.30000114440918in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Receipt By Supplier')" Name="textBox233">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="7.29996236165365in" Height="0.19999997317791in" Left="0in" Top="0.200000047683716in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox232">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="7.29996236165365in" Height="0.19999997317791in" Left="0in" Top="0.400000095367432in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)&#xD;&#xA;" Name="textBox46">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="7.29996252059937in" Height="0.19999997317791in" Left="0in" Top="0.600000063578288in" Value="=MessagesFunctions.getMessage('Vendor') + &quot;: &quot; + Parameters.SelectedVendor.Value" Format="{0:f}" Name="textBox50">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="role" Mergeable="False" Text="Role" AllowBlank="False" />
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String>= IIf(Parameters.mode.Label = "W", Fields.Id, AllValues(Fields.Id))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="fromdate" Type="DateTime" AllowBlank="False" />
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="vendor" Mergeable="False" Text="Select supplier" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SelectedVendor" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="2.65in" Name="POSXReceipt" Zoom="1.5" SnapToGrid="False" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <Style>
+    <BorderColor Default="LightGray" />
+    <BorderWidth Default="1pt" />
+  </Style>
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="select distinct pos_machine from trx_header where TrxDate &gt;=@fromdate and TrxDate &lt; @todate&#xD;&#xA;AND ((site_id IN (@site)) OR ( -1 IN (@site))) " Name="dsPosList">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="select convert(int,reverse(left(reverse(@Users), charindex(' ', reverse(@Users)) - 1))) userid&#xD;&#xA;" Name="dsUserId">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@Users">
+          <Value>
+            <String>= Parameters.Users.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select dbo.get_parafait_defaults('TAX_IDENTIFICATION_NUMBER') TIN" Name="dsTIN" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select username from users where user_id = @userid" Name="dsCashier">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@userid">
+          <Value>
+            <String>= Parameters.userid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="select concat( username,' ',convert(varchar,user_id)) username  from users where user_id in (select user_id from trx_header where  pos_machine in (@posname) and trxdate&gt;=@fromdate and trxdate&lt;@todate)   order by 1 asc&#xD;&#xA;" Name="dsUsersList">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@posname">
+          <Value>
+            <String>= Parameters.posname.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="SELECT '' AS [column1],&#xD;&#xA;       '' AS [column2]&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'BEGINNING',&#xD;&#xA;       (SELECT usercolumnheading&#xD;&#xA;        FROM   sequences&#xD;&#xA;        WHERE  seqname = 'Transaction'&#xD;&#xA;               AND posmachineid IN (SELECT posmachineid&#xD;&#xA;                                    FROM   posmachines&#xD;&#xA;                                    WHERE  posname IN ( @posmachine )))&#xD;&#xA;       + ' NO: ' + ( CASE&#xD;&#xA;                       WHEN pa IS NULL THEN '000000'&#xD;&#xA;                       ELSE pa&#xD;&#xA;                     END )&#xD;&#xA;FROM   (SELECT RIGHT(CONVERT(VARCHAR, Isnull(Min(trx_no), (SELECT Max(trx_no)&#xD;&#xA;                                                           FROM   trx_header t&#xD;&#xA;                                                           WHERE&#xD;&#xA;                                      originaltrxid IS NULL&#xD;&#xA;                                      AND NOT&#xD;&#xA;                                                     EXISTS(SELECT *&#xD;&#xA;                                                            FROM   trx_lines l,&#xD;&#xA;                                                                   products p&#xD;&#xA;                                                            WHERE&#xD;&#xA;                                                     t.trxid = l.trxid&#xD;&#xA;                                                     AND l.product_id =&#xD;&#xA;                                                         p.product_id&#xD;&#xA;                                                     AND p.product_type_id =&#xD;&#xA;                                                         (SELECT TOP(1)&#xD;&#xA;                                                         product_type_id&#xD;&#xA;                                                          FROM   product_type&#xD;&#xA;                                                          WHERE  product_type =&#xD;&#xA;                                                                 'REFUND'))&#xD;&#xA;                                                                  AND&#xD;&#xA;                                      pos_machine IN (&#xD;&#xA;                                      @posmachine ))&#xD;&#xA;                                                           )), 8)pa&#xD;&#xA;        FROM   trx_header t&#xD;&#xA;        WHERE  lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND originaltrxid IS NULL&#xD;&#xA;               AND NOT EXISTS(SELECT *&#xD;&#xA;                              FROM   trx_lines l,&#xD;&#xA;                                     products p&#xD;&#xA;                              WHERE  t.trxid = l.trxid&#xD;&#xA;                                     AND l.product_id = p.product_id&#xD;&#xA;                                     AND p.product_type_id =&#xD;&#xA;                                         (SELECT TOP(1) product_type_id&#xD;&#xA;                                          FROM   product_type&#xD;&#xA;                                          WHERE  product_type = 'REFUND'))&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')main&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'ENDING',&#xD;&#xA;       (SELECT usercolumnheading&#xD;&#xA;        FROM   sequences&#xD;&#xA;        WHERE  seqname = 'Transaction'&#xD;&#xA;               AND posmachineid IN (SELECT posmachineid&#xD;&#xA;                                    FROM   posmachines&#xD;&#xA;                                    WHERE  posname IN ( @posmachine )))&#xD;&#xA;       + ' NO: ' + ( CASE&#xD;&#xA;                       WHEN pa IS NULL THEN '000000'&#xD;&#xA;                       ELSE pa&#xD;&#xA;                     END )&#xD;&#xA;FROM   (SELECT RIGHT(CONVERT(VARCHAR, Isnull(Max(trx_no), (SELECT Max(trx_no)&#xD;&#xA;                                                           FROM   trx_header t&#xD;&#xA;                                                           WHERE&#xD;&#xA;                                      originaltrxid IS NULL&#xD;&#xA;                                      AND NOT&#xD;&#xA;                                                     EXISTS(SELECT *&#xD;&#xA;                                                            FROM   trx_lines l,&#xD;&#xA;                                                                   products p&#xD;&#xA;                                                            WHERE&#xD;&#xA;                                                     t.trxid = l.trxid&#xD;&#xA;                                                     AND l.product_id =&#xD;&#xA;                                                         p.product_id&#xD;&#xA;                                                     AND p.product_type_id =&#xD;&#xA;                                                         (SELECT TOP(1)&#xD;&#xA;                                                         product_type_id&#xD;&#xA;                                                          FROM   product_type&#xD;&#xA;                                                          WHERE  product_type =&#xD;&#xA;                                                                 'REFUND'))&#xD;&#xA;                                                                  AND&#xD;&#xA;                                      pos_machine IN (&#xD;&#xA;                                      @posmachine ))&#xD;&#xA;                                                           )), 8)pa&#xD;&#xA;        FROM   trx_header t&#xD;&#xA;        WHERE  lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND originaltrxid IS NULL&#xD;&#xA;               AND NOT EXISTS(SELECT *&#xD;&#xA;                              FROM   trx_lines l,&#xD;&#xA;                                     products p&#xD;&#xA;                              WHERE  t.trxid = l.trxid&#xD;&#xA;                                     AND l.product_id = p.product_id&#xD;&#xA;                                     AND p.product_type_id =&#xD;&#xA;                                         (SELECT TOP(1) product_type_id&#xD;&#xA;                                          FROM   product_type&#xD;&#xA;                                          WHERE  product_type = 'REFUND'))&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')main&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'BEGINNING VOID NO: ',&#xD;&#xA;       ( CASE&#xD;&#xA;           WHEN pa IS NULL THEN '000000'&#xD;&#xA;           ELSE pa&#xD;&#xA;         END )&#xD;&#xA;FROM   (SELECT RIGHT(CONVERT(VARCHAR, Isnull(Min(trx_no), (SELECT Max(trx_no)&#xD;&#xA;                                                           FROM   trx_header h&#xD;&#xA;                                                           WHERE&#xD;&#xA;                                      pos_machine IN&#xD;&#xA;                                      ( @posmachine )&#xD;&#xA;                                      AND&#xD;&#xA;                                             status &lt;&gt; 'CANCELLED'&#xD;&#xA;                                                                  AND status =&#xD;&#xA;                                      'Closed'&#xD;&#xA;                                                                  AND&#xD;&#xA;                                             originaltrxid IS NOT NULL&#xD;&#xA;                                                                  AND&#xD;&#xA;                                             (SELECT Count(lineid)&#xD;&#xA;                                              FROM   trx_lines l1&#xD;&#xA;                                              WHERE&#xD;&#xA;l1.trxid = h.trxid) =&#xD;&#xA;(SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines&#xD;&#xA;WHERE&#xD;&#xA;trxid = h.originaltrxid&#xD;&#xA;AND originallineid IS&#xD;&#xA;NULL)))), 8)pa&#xD;&#xA;FROM   trx_header t&#xD;&#xA;WHERE  lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;AND originaltrxid IS NOT NULL&#xD;&#xA;AND (SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines l&#xD;&#xA;WHERE  l.trxid = t.trxid) = (SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines&#xD;&#xA;WHERE  trxid = t.originaltrxid&#xD;&#xA;AND originallineid IS NULL)&#xD;&#xA;AND pos_machine IN ( @posmachine )&#xD;&#xA;AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;FROM   users&#xD;&#xA;WHERE  user_id IN ( @userid )) ))main&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'ENDING VOID NO: ',&#xD;&#xA;       ( CASE&#xD;&#xA;           WHEN pa IS NULL THEN '000000'&#xD;&#xA;           ELSE pa&#xD;&#xA;         END )&#xD;&#xA;FROM   (SELECT RIGHT(CONVERT(VARCHAR, Isnull(Max(trx_no), (SELECT Max(trx_no)&#xD;&#xA;                                                           FROM   trx_header h&#xD;&#xA;                                                           WHERE&#xD;&#xA;                                      pos_machine IN&#xD;&#xA;                                      ( @posmachine )&#xD;&#xA;                                      AND&#xD;&#xA;                                             status &lt;&gt; 'CANCELLED'&#xD;&#xA;                                                                  AND status =&#xD;&#xA;                                      'Closed'&#xD;&#xA;                                                                  AND&#xD;&#xA;                                             originaltrxid IS NOT NULL&#xD;&#xA;                                                                  AND&#xD;&#xA;                                             (SELECT Count(lineid)&#xD;&#xA;                                              FROM   trx_lines l1&#xD;&#xA;                                              WHERE&#xD;&#xA;l1.trxid = h.trxid) =&#xD;&#xA;(SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines&#xD;&#xA;WHERE&#xD;&#xA;trxid = h.originaltrxid&#xD;&#xA;AND originallineid IS&#xD;&#xA;NULL)))), 8)pa&#xD;&#xA;FROM   trx_header t&#xD;&#xA;WHERE  lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;AND originaltrxid IS NOT NULL&#xD;&#xA;AND (SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines l&#xD;&#xA;WHERE  l.trxid = t.trxid) = (SELECT Count(lineid)&#xD;&#xA;FROM   trx_lines&#xD;&#xA;WHERE  trxid = t.originaltrxid&#xD;&#xA;AND originallineid IS NULL)&#xD;&#xA;AND pos_machine IN ( @posmachine )&#xD;&#xA;AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;FROM   users&#xD;&#xA;WHERE  user_id IN ( @userid )) ))main&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'BEGINNING BALANCE :',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(CASE&#xD;&#xA;                                          WHEN sf.shift_action = 'Paid Out' THEN&#xD;&#xA;                                          sf.shift_amount *- 1&#xD;&#xA;                                          ELSE sf.shift_amount&#xD;&#xA;                                        END) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   shift sh,&#xD;&#xA;       shiftlog sf&#xD;&#xA;WHERE  sh.shift_time BETWEEN @fromdate AND @todate&#xD;&#xA;       AND sh.shift_key = sf.shift_key&#xD;&#xA;       AND pos_machine IN ( @posmachine )&#xD;&#xA;       AND sf.shift_action NOT IN( 'close', 'Pclose' )&#xD;&#xA;       AND shift_username IN (SELECT username&#xD;&#xA;                              FROM   users&#xD;&#xA;                              WHERE  user_id IN ( @userid ))&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'ENDING BALANCE :',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(a + b) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT Sum(CASE&#xD;&#xA;                     WHEN sf.shift_action = 'Paid Out' THEN sf.shift_amount *- 1&#xD;&#xA;                     ELSE sf.shift_amount&#xD;&#xA;                   END)AS 'a',&#xD;&#xA;               0       AS 'b'&#xD;&#xA;        FROM   shift sh,&#xD;&#xA;               shiftlog sf&#xD;&#xA;        WHERE  sh.shift_time BETWEEN @fromdate AND @todate&#xD;&#xA;               AND sh.shift_key = sf.shift_key&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND sf.shift_action NOT IN( 'close', 'Pclose' )&#xD;&#xA;               AND shift_username IN (SELECT username&#xD;&#xA;                                      FROM   users&#xD;&#xA;                                      WHERE  user_id IN ( @userid ))&#xD;&#xA;        UNION ALL&#xD;&#xA;        SELECT 0                                   AS 'a',&#xD;&#xA;               Sum(trxnetamount * ( 1 - ( Isnull(gamecardamount, 0) /&#xD;&#xA;                                          CASE&#xD;&#xA;                                            WHEN trxnetamount = 0 THEN&#xD;&#xA;                                            1&#xD;&#xA;                                            ELSE trxnetamount&#xD;&#xA;                                          END ) )) b&#xD;&#xA;        FROM   trx_header&#xD;&#xA;        WHERE  lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR lastupdatedby IN (SELECT loginid&#xD;&#xA;                                           FROM   users&#xD;&#xA;                                           WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')m&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'CHANGE FUND :',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(CASE&#xD;&#xA;                                          WHEN sf.shift_action = 'Paid Out' THEN&#xD;&#xA;                                          sf.shift_amount *- 1&#xD;&#xA;                                          ELSE sf.shift_amount&#xD;&#xA;                                        END) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   shift sh,&#xD;&#xA;       shiftlog sf&#xD;&#xA;WHERE  sh.shift_time BETWEEN @fromdate AND @todate&#xD;&#xA;       AND sh.shift_key = sf.shift_key&#xD;&#xA;       AND pos_machine IN ( @posmachine )&#xD;&#xA;       AND sf.shift_action NOT IN( 'close', 'Pclose' )&#xD;&#xA;       AND shift_username IN (SELECT username&#xD;&#xA;                              FROM   users&#xD;&#xA;                              WHERE  user_id IN ( @userid ))&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'SUMMARY',&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'CASH: ',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(a + b) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT Sum(CASE&#xD;&#xA;                     WHEN sf.shift_action = 'Paid Out' THEN sf.shift_amount *- 1&#xD;&#xA;                     ELSE sf.shift_amount&#xD;&#xA;                   END)AS 'a',&#xD;&#xA;               0       AS 'b'&#xD;&#xA;        FROM   shift sh,&#xD;&#xA;               shiftlog sf&#xD;&#xA;        WHERE  sh.shift_time BETWEEN @fromdate AND @todate&#xD;&#xA;               AND sh.shift_key = sf.shift_key&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND sf.shift_action NOT IN( 'close', 'Pclose' )&#xD;&#xA;               AND shift_username IN (SELECT username&#xD;&#xA;                                      FROM   users&#xD;&#xA;                                      WHERE  user_id IN ( @userid ))&#xD;&#xA;        UNION ALL&#xD;&#xA;        SELECT 0           AS 'a',&#xD;&#xA;               Sum(amount) b&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  tp.paymentmodeid IN (SELECT paymentmodeid&#xD;&#xA;                                    FROM   paymentmodes&#xD;&#xA;                                    WHERE  iscash = 'Y')&#xD;&#xA;               AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')m&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'CREDIT CARD ',&#xD;&#xA;       (SELECT Isnull(CONVERT(VARCHAR, Cast(Sum(amount) AS MONEY), 1), '0.00')&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  tp.paymentmodeid IN (SELECT paymentmodeid&#xD;&#xA;                                    FROM   paymentmodes&#xD;&#xA;                                    WHERE  iscreditcard = 'Y')&#xD;&#xA;               AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'OTHER PAYMENT: ',&#xD;&#xA;       (SELECT Isnull(CONVERT(VARCHAR, Cast(Sum(amount) AS MONEY), 1), '0.00')&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  tp.paymentmodeid IN (SELECT paymentmodeid&#xD;&#xA;                                    FROM   paymentmodes&#xD;&#xA;                                    WHERE  iscreditcard = 'N'&#xD;&#xA;                                           AND isdebitcard = 'N'&#xD;&#xA;                                           AND iscash = 'N')&#xD;&#xA;               AND tp.couponvalue = 0&#xD;&#xA;               AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'CASHLESS CARD ',&#xD;&#xA;       (SELECT Isnull(CONVERT(VARCHAR, Cast(Sum(amount) AS MONEY), 1), '0.00')&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  tp.paymentmodeid IN (SELECT paymentmodeid&#xD;&#xA;                                    FROM   paymentmodes&#xD;&#xA;                                    WHERE  isdebitcard = 'Y')&#xD;&#xA;               AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'GC/VOUCHER PAYMENT: ',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(couponvalue) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT ( CASE&#xD;&#xA;                   WHEN couponvalue IS NOT NULL THEN couponvalue&#xD;&#xA;                   ELSE 0&#xD;&#xA;                 END )couponvalue&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND tp.amount &gt; 0&#xD;&#xA;               AND couponvalue != 0&#xD;&#xA;               AND h.status != 'CANCELLED'&#xD;&#xA;               AND status = 'CLOSED'&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) ))a&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'EXCESS GC/VOUCHER: ',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(excessgc) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT ( couponvalue - amount )AS excessgc&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND tp.amount &gt; 0&#xD;&#xA;               AND h.status != 'CANCELLED'&#xD;&#xA;               AND couponvalue != 0&#xD;&#xA;               AND status = 'CLOSED'&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) ))a&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'TOTAL RECEIPTS: ',&#xD;&#xA;       (SELECT Isnull(CONVERT(VARCHAR, Cast(Round(Sum(amount), 2, 1) AS MONEY),&#xD;&#xA;                      1),&#xD;&#xA;               '0.00')&#xD;&#xA;        FROM   trxpayments tp,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND h.trxid = tp.trxid&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND status = 'CLOSED')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'GROSS AMOUNT: ',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(amount1) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT ( CASE&#xD;&#xA;                   WHEN l1.trxprofileid IS NULL THEN h.amount&#xD;&#xA;                   ELSE (SELECT Sum(amt + amounttax)&#xD;&#xA;                         FROM  (SELECT l.amount&#xD;&#xA;amt,&#xD;&#xA;Sum(( l.amount * ( t.tax_percentage / 100 ) ))&#xD;&#xA;amounttax&#xD;&#xA;FROM   tax t,&#xD;&#xA;trx_lines l&#xD;&#xA;WHERE  l.trxprofileid IS NOT NULL&#xD;&#xA;AND l.tax_id = t.tax_id&#xD;&#xA;AND L.trxid = h.trxid&#xD;&#xA;AND l.lineid = l1.lineid&#xD;&#xA;GROUP  BY l.amount)a)&#xD;&#xA;END ) amount1,&#xD;&#xA;cashratio,&#xD;&#xA;creditcardratio,&#xD;&#xA;h.trxid,&#xD;&#xA;gamecardratio,&#xD;&#xA;othermoderatio&#xD;&#xA;FROM   transactionview h,&#xD;&#xA;trx_header t,&#xD;&#xA;trx_lines l1&#xD;&#xA;WHERE  t.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;AND h.trxid = t.trxid&#xD;&#xA;AND l1.trxid = t.trxid&#xD;&#xA;AND h.lineid = l1.lineid&#xD;&#xA;AND h.pos_machine IN ( @posmachine )&#xD;&#xA;AND h.amount &gt; 0&#xD;&#xA;AND h.product_type != 'DISCOUNT'&#xD;&#xA;AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;      FROM   users&#xD;&#xA;      WHERE  user_id IN ( @userid )) )&#xD;&#xA;AND h.status = 'CLOSED'&#xD;&#xA;AND h.status != 'CANCELLED')a&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'TOTAL DISCOUNT: ',&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(reviseddiscamount) AS MONEY), 1), '0.00'&#xD;&#xA;       )&#xD;&#xA;FROM   (SELECT gamecardamount,&#xD;&#xA;               h.trxnetamount,&#xD;&#xA;               d.discount_name                      DiscountName,&#xD;&#xA;               Sum(td.discountamount)               discAmount,&#xD;&#xA;               td.discountid                        discountId,&#xD;&#xA;Sum(( ( td.discountamount / ( td.discountpercentage / 100 ) ) / ( 1 +&#xD;&#xA;          Isnull(tl.tax_percentage, 0) / 100 ) ) *&#xD;&#xA;    ( td.discountpercentage / 100 )) RevisedDiscAmount&#xD;&#xA;FROM   trxdiscounts td,&#xD;&#xA;trx_lines tl,&#xD;&#xA;discounts d,&#xD;&#xA;trx_header h&#xD;&#xA;WHERE  tl.trxid = td.trxid&#xD;&#xA;AND td.discountid = d.discount_id&#xD;&#xA;AND tl.lineid = td.lineid&#xD;&#xA;AND h.trxid = td.trxid&#xD;&#xA;AND tl.trxid = h.trxid&#xD;&#xA;AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;AND pos_machine IN ( @posmachine )&#xD;&#xA;AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;       OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                              FROM   users&#xD;&#xA;                              WHERE  user_id IN ( @userid )) )&#xD;&#xA;AND status = 'CLOSED'&#xD;&#xA;AND status != 'CANCELLED'&#xD;&#xA;GROUP  BY td.discountid,&#xD;&#xA;   d.discount_name,&#xD;&#xA;   gamecardamount,&#xD;&#xA;   h.trxnetamount)a&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Rounding: '),&#xD;&#xA;       CONVERT(VARCHAR, Cast(Isnull((SELECT Sum(amount)&#xD;&#xA;                                     FROM   trxpayments tp&#xD;&#xA;                                     WHERE  EXISTS(SELECT *&#xD;&#xA;                                                   FROM   paymentmodes pm&#xD;&#xA;                                                   WHERE  isroundoff = 'Y'&#xD;&#xA;                                                          AND&#xD;&#xA;tp.paymentmodeid = pm.paymentmodeid&#xD;&#xA;        AND tp.posmachine IN (&#xD;&#xA;            @posmachine ))&#xD;&#xA;AND EXISTS(SELECT trxid&#xD;&#xA;     FROM   trx_header h&#xD;&#xA;     WHERE  h.lastupdatetime BETWEEN&#xD;&#xA;            @fromdate AND @todate&#xD;&#xA;            AND pos_machine IN (&#xD;&#xA;                @posmachine )&#xD;&#xA;            AND h.trxid = tp.trxid&#xD;&#xA;            AND ( h.lastupdatedby IN&#xD;&#xA;                  (&#xD;&#xA;                  CONVERT(NVARCHAR(50&#xD;&#xA;                  ),&#xD;&#xA;                  @userid) )&#xD;&#xA;                   OR h.lastupdatedby&#xD;&#xA;                      IN (SELECT&#xD;&#xA;                      loginid&#xD;&#xA;                         FROM   users&#xD;&#xA;                         WHERE&#xD;&#xA;                      user_id IN (&#xD;&#xA;                      @userid )) )&#xD;&#xA;            AND status = 'CLOSED')&#xD;&#xA;AND tp.posmachine IN ( @posmachine )), 0)&#xD;&#xA;AS MONEY), 1)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Total Net of Discount: '),&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(netofdiscount) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   (SELECT Round(( ( net_amount - reviseddiscamount ) * (&#xD;&#xA;                              cashratio + creditcardratio ) ),&#xD;&#xA;                              2, 1)netofdiscount&#xD;&#xA;        FROM   (SELECT gamecardamount,&#xD;&#xA;                       h.trxnetamount,&#xD;&#xA;                       th.net_amount,&#xD;&#xA;                       d.discount_name                      DiscountName,&#xD;&#xA;                       Sum(td.discountamount)               discAmount,&#xD;&#xA;                       td.discountid                        discountId,&#xD;&#xA;                       cashratio,&#xD;&#xA;                       creditcardratio,&#xD;&#xA;       Sum(( ( td.discountamount / ( td.discountpercentage / 100 ) ) / ( 1 +&#xD;&#xA;                 Isnull(tl.tax_percentage, 0) / 100 ) ) *&#xD;&#xA;           ( td.discountpercentage / 100 )) RevisedDiscAmount&#xD;&#xA;       FROM   trxdiscounts td,&#xD;&#xA;       trx_lines tl,&#xD;&#xA;       discounts d,&#xD;&#xA;       trx_header h,&#xD;&#xA;       transactionview th&#xD;&#xA;       WHERE  tl.trxid = td.trxid&#xD;&#xA;       AND td.discountid = d.discount_id&#xD;&#xA;       AND th.trxid = h.trxid&#xD;&#xA;       AND td.trxid = th.trxid&#xD;&#xA;       AND th.lineid = tl.lineid&#xD;&#xA;       AND tl.lineid = td.lineid&#xD;&#xA;       AND h.trxid = td.trxid&#xD;&#xA;       AND tl.trxid = h.trxid&#xD;&#xA;       AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;       AND h.pos_machine IN ( @posmachine )&#xD;&#xA;       AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;              OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                     FROM   users&#xD;&#xA;                                     WHERE  user_id IN ( @userid )) )&#xD;&#xA;       AND h.status = 'CLOSED'&#xD;&#xA;       AND h.status != 'CANCELLED'&#xD;&#xA;       AND th.product_type != 'discount'&#xD;&#xA;       GROUP  BY td.discountid,&#xD;&#xA;          d.discount_name,&#xD;&#xA;          gamecardamount,&#xD;&#xA;          h.trxnetamount,&#xD;&#xA;          th.net_amount,&#xD;&#xA;          cashratio,&#xD;&#xA;          creditcardratio)a)main&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Net Sales: '),&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Round(Sum(amount), 2) AS MONEY), 1), '0.00')&#xD;&#xA;FROM   transactionview h,&#xD;&#xA;       trx_header t&#xD;&#xA;WHERE  t.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;       AND h.trxid = t.trxid&#xD;&#xA;       AND h.pos_machine IN ( @posmachine )&#xD;&#xA;       AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;              OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                     FROM   users&#xD;&#xA;                                     WHERE  user_id IN ( @userid )) )&#xD;&#xA;       AND h.status = 'CLOSED'&#xD;&#xA;       AND h.status != 'CANCELLED'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('VATable Sales:'),&#xD;&#xA;       Isnull((SELECT ( CONVERT(VARCHAR, Cast(Sum(taxableamount) AS MONEY), 1) )&#xD;&#xA;               FROM   (SELECT CASE WHEN tax_id IS NOT NULL AND tax_percentage &gt;&#xD;&#xA;                              0 AND&#xD;&#xA;                              l.trxprofileid&#xD;&#xA;                                      IS NULL&#xD;&#xA;                              THEN (l.price * l.quantity * (1.0 -&#xD;&#xA;                              Isnull(d.discountpercentage,&#xD;&#xA;                              0)) )&#xD;&#xA;                                      ELSE 0&#xD;&#xA;                              END + Isnull(Voucher.excessvoucheramount, 0)&#xD;&#xA;                              TaxableAmount&#xD;&#xA;                       FROM   trx_lines l&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                                                      Sum(discountpercentage) /&#xD;&#xA;                                                      100.0&#xD;&#xA;                                                      discountPercentage&#xD;&#xA;                                               FROM   trxdiscounts&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) d&#xD;&#xA;                                           ON d.lineid = l.lineid&#xD;&#xA;                                              AND l.trxid = d.trxid&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                                                      Sum(productsplitamount)&#xD;&#xA;                                                      SplitAmount&#xD;&#xA;                                               FROM   trxtaxlines&#xD;&#xA;                                               WHERE  productsplitamount IS NOT&#xD;&#xA;                                                      NULL&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) t&#xD;&#xA;                                           ON t.lineid = l.lineid&#xD;&#xA;                                              AND t.trxid = l.trxid&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                              Sum(Isnull(allocatedproductprice,&#xD;&#xA;                                  0))&#xD;&#xA;                              ExcessVoucherAmount&#xD;&#xA;                                               FROM   trx_lines&#xD;&#xA;                                               WHERE  allocatedproductprice IS&#xD;&#xA;                                                      NOT NULL&#xD;&#xA;                                                      AND product_id IN (SELECT&#xD;&#xA;                                                          TOP 1&#xD;&#xA;                                                          product_id&#xD;&#xA;                                                           FROM&#xD;&#xA;                                                          products p,&#xD;&#xA;                                                          product_type pt&#xD;&#xA;                                                                         WHERE&#xD;&#xA;                                                          product_type =&#xD;&#xA;                                                          'EXCESSVOUCHERVALUE'&#xD;&#xA;                                                          AND p.product_type_id&#xD;&#xA;                                                              =&#xD;&#xA;                                                              pt.product_type_id&#xD;&#xA;                                                          )&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) voucher&#xD;&#xA;                                           ON voucher.lineid = l.lineid&#xD;&#xA;                                              AND voucher.trxid = l.trxid,&#xD;&#xA;                              trx_header h&#xD;&#xA;                       WHERE  h.trxid = l.trxid&#xD;&#xA;                              AND l.cancelledby IS NULL&#xD;&#xA;                              AND pos_machine IN ( @posmachine )&#xD;&#xA;                              AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50),&#xD;&#xA;                                                         @userid)&#xD;&#xA;                                                       )&#xD;&#xA;                                     OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                                            FROM   users&#xD;&#xA;                                                            WHERE  user_id IN&#xD;&#xA;                                                                   ( @userid ))&#xD;&#xA;                                  )&#xD;&#xA;                              AND status = 'CLOSED'&#xD;&#xA;                              AND h.status != 'CANCELLED'&#xD;&#xA;                              AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;                      ) a),&#xD;&#xA;       '0.00')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('VAT Amount :'),&#xD;&#xA;       Isnull((SELECT ( CONVERT(VARCHAR, Cast(Sum(discountedtaxamount) AS MONEY)&#xD;&#xA;                        , 1) )&#xD;&#xA;               FROM   (SELECT ( l.price * l.quantity * Isnull(l.tax_percentage,&#xD;&#xA;                                                       0) /&#xD;&#xA;                                100.0 * (&#xD;&#xA;                                        1.0 - Isnull(d.discountpercentage, 0)&#xD;&#xA;                                        ) +&#xD;&#xA;                                CASE&#xD;&#xA;                                  WHEN&#xD;&#xA;                                                  l.product_id IN&#xD;&#xA;                                                  (SELECT TOP 1 product_id&#xD;&#xA;                                                   FROM   products p,&#xD;&#xA;                                                          product_type pt&#xD;&#xA;                                                   WHERE&#xD;&#xA;                                  product_type = 'EXCESSVOUCHERVALUE'&#xD;&#xA;                                  AND p.product_type_id =&#xD;&#xA;                                      pt.product_type_id)&#xD;&#xA;                                  AND l.allocatedproductprice &gt; 0&#xD;&#xA;                                  AND l.amount = 0 THEN&#xD;&#xA;                                        l.allocatedproductprice *&#xD;&#xA;                                        Isnull(l.tax_percentage, 0) / 100.0&#xD;&#xA;                                                              ELSE 0&#xD;&#xA;                                                            END )&#xD;&#xA;                              DiscountedTaxAmount&#xD;&#xA;                       FROM   trx_lines l&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                                                      Sum(discountpercentage) /&#xD;&#xA;                                                      100.0&#xD;&#xA;                                                      discountPercentage&#xD;&#xA;                                               FROM   trxdiscounts&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) d&#xD;&#xA;                                           ON d.lineid = l.lineid&#xD;&#xA;                                              AND l.trxid = d.trxid&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                                                      Sum(productsplitamount)&#xD;&#xA;                                                      SplitAmount&#xD;&#xA;                                               FROM   trxtaxlines&#xD;&#xA;                                               WHERE  productsplitamount IS NOT&#xD;&#xA;                                                      NULL&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) t&#xD;&#xA;                                           ON t.lineid = l.lineid&#xD;&#xA;                                              AND t.trxid = l.trxid&#xD;&#xA;                              LEFT OUTER JOIN (SELECT lineid,&#xD;&#xA;                                                      trxid,&#xD;&#xA;                              Sum(Isnull(allocatedproductprice,&#xD;&#xA;                                  0))&#xD;&#xA;                              ExcessVoucherAmount&#xD;&#xA;                                               FROM   trx_lines&#xD;&#xA;                                               WHERE  allocatedproductprice IS&#xD;&#xA;                                                      NOT NULL&#xD;&#xA;                                                      AND product_id IN (SELECT&#xD;&#xA;                                                          TOP 1&#xD;&#xA;                                                          product_id&#xD;&#xA;                                                           FROM&#xD;&#xA;                                                          products p,&#xD;&#xA;                                                          product_type pt&#xD;&#xA;                                                                         WHERE&#xD;&#xA;                                                          product_type =&#xD;&#xA;                                                          'EXCESSVOUCHERVALUE'&#xD;&#xA;                                                          AND p.product_type_id&#xD;&#xA;                                                              =&#xD;&#xA;                                                              pt.product_type_id&#xD;&#xA;                                                          )&#xD;&#xA;                                               GROUP  BY lineid,&#xD;&#xA;                                                         trxid) voucher&#xD;&#xA;                                           ON voucher.lineid = l.lineid&#xD;&#xA;                                              AND voucher.trxid = l.trxid,&#xD;&#xA;                              trx_header h&#xD;&#xA;                       WHERE  h.trxid = l.trxid&#xD;&#xA;                              AND l.cancelledby IS NULL&#xD;&#xA;                              AND pos_machine IN ( @posmachine )&#xD;&#xA;                              AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50),&#xD;&#xA;                                                         @userid)&#xD;&#xA;                                                       )&#xD;&#xA;                                     OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                                            FROM   users&#xD;&#xA;                                                            WHERE  user_id IN&#xD;&#xA;                                                                   ( @userid ))&#xD;&#xA;                                  )&#xD;&#xA;                              AND status = 'CLOSED'&#xD;&#xA;                              AND h.status != 'CANCELLED'&#xD;&#xA;                              AND h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;                      ) a),&#xD;&#xA;       '0.00')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('VAT-exempt Sales: '),&#xD;&#xA;       Isnull((SELECT ( CONVERT(VARCHAR, Cast(Sum(reporttext) AS MONEY), 1) ) AS&#xD;&#xA;                      ReportText&#xD;&#xA;               FROM   (SELECT ((SELECT Round(Sum(amount), 2, 1)&#xD;&#xA;                                FROM   trx_lines tl&#xD;&#xA;                                       LEFT JOIN trxdiscounts td&#xD;&#xA;                                              ON tl.trxid = td.trxid&#xD;&#xA;                                                 AND tl.lineid = td.lineid&#xD;&#xA;                                WHERE  tax_percentage = 0&#xD;&#xA;                                       AND tl.cancelledby IS NULL&#xD;&#xA;                                       AND tax_id IS NOT NULL&#xD;&#xA;                                       AND tl.trxprofileid IS NOT NULL&#xD;&#xA;                                       AND tl.trxid = h.trxid&#xD;&#xA;                                       AND (SELECT Isnull(verificationrequired,&#xD;&#xA;                                                   'N')&#xD;&#xA;                                            FROM   trxprofiles tp&#xD;&#xA;                                            WHERE  tp.trxprofileid&#xD;&#xA;                                                   = tl.trxprofileid) =&#xD;&#xA;                                           'Y'))&#xD;&#xA;                              * ( 1&#xD;&#xA;                                      - (&#xD;&#xA;                                              Isnull(gamecardamount, 0) / CASE&#xD;&#xA;                                              WHEN trxnetamount = 0 THEN 1&#xD;&#xA;                                              ELSE trxnetamount&#xD;&#xA;                                                                          END )&#xD;&#xA;                                ) AS&#xD;&#xA;                              ReportText&#xD;&#xA;                       FROM   trx_header h&#xD;&#xA;                       WHERE  lastupdatetime &lt;= @todate&#xD;&#xA;                              AND lastupdatetime &gt;= @fromdate&#xD;&#xA;                              AND pos_machine IN ( @posmachine )&#xD;&#xA;                              AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50),&#xD;&#xA;                                                         @userid)&#xD;&#xA;                                                       )&#xD;&#xA;                                     OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                                            FROM   users&#xD;&#xA;                                                            WHERE  user_id IN&#xD;&#xA;                                                                   ( @userid ))&#xD;&#xA;                                  )&#xD;&#xA;                              AND Isnull(status, 'CLOSED') != 'CANCELLED') AS a&#xD;&#xA;               WHERE  reporttext IS NOT NULL), '0.00')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Zero Rated Sales: '),&#xD;&#xA;       Isnull((SELECT ( CONVERT(VARCHAR, Cast(Sum(reporttext) AS MONEY), 1) ) AS&#xD;&#xA;                      ReportText&#xD;&#xA;               FROM   (SELECT ((SELECT&#xD;&#xA;                      Sum(amount - Isnull(td.discountamount, 0))&#xD;&#xA;                                FROM   trx_lines tl&#xD;&#xA;                                       LEFT JOIN trxdiscounts td&#xD;&#xA;                                              ON tl.trxid = td.trxid&#xD;&#xA;                                                 AND tl.lineid = td.lineid&#xD;&#xA;                                WHERE  tax_percentage = 0&#xD;&#xA;                                       AND tl.cancelledby IS NULL&#xD;&#xA;                                       AND tax_id IS NOT NULL&#xD;&#xA;                                       AND ( tl.trxprofileid IS NULL&#xD;&#xA;                                              OR ( tl.trxprofileid IS NOT NULL&#xD;&#xA;                                                   AND (SELECT Isnull(&#xD;&#xA;                                                       verificationrequired,&#xD;&#xA;                                                               'N')&#xD;&#xA;                                                        FROM   trxprofiles tp&#xD;&#xA;                                                        WHERE  tp.trxprofileid =&#xD;&#xA;                                                               tl.trxprofileid)&#xD;&#xA;                                                       =&#xD;&#xA;                                                       'N' ) )&#xD;&#xA;                                       AND tl.trxid = trx_header.trxid&#xD;&#xA;                                       AND EXISTS(SELECT *&#xD;&#xA;                                                  FROM   products p,&#xD;&#xA;                                                         product_type pt&#xD;&#xA;                                                  WHERE  tl.product_id =&#xD;&#xA;                                                         p.product_id&#xD;&#xA;                                                         AND p.product_type_id =&#xD;&#xA;                                                             pt.product_type_id&#xD;&#xA;                                                         AND pt.cardsale != 'Y')&#xD;&#xA;                              )) * (&#xD;&#xA;                              1 - (&#xD;&#xA;                                              Isnull(gamecardamount, 0) / CASE&#xD;&#xA;                                              WHEN trxnetamount = 0 THEN 1&#xD;&#xA;                                              ELSE trxnetamount&#xD;&#xA;                                                                          END )&#xD;&#xA;                                   ) AS&#xD;&#xA;                              ReportText&#xD;&#xA;                       FROM   trx_header&#xD;&#xA;                       WHERE  lastupdatetime &lt;= @todate&#xD;&#xA;                              AND lastupdatetime &gt;= @fromdate&#xD;&#xA;                              AND pos_machine IN ( @posmachine )&#xD;&#xA;                              AND ( lastupdatedby IN ( CONVERT(NVARCHAR(50),&#xD;&#xA;                                                       @userid) )&#xD;&#xA;                                     OR lastupdatedby IN (SELECT loginid&#xD;&#xA;                                                          FROM   users&#xD;&#xA;                                                          WHERE&#xD;&#xA;                                        user_id IN ( @userid )&#xD;&#xA;                                                         ) )&#xD;&#xA;                              AND Isnull(status, 'CLOSED') != 'CANCELLED') AS a&#xD;&#xA;               WHERE  reporttext IS NOT NULL), '0.00')&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Total Void Amount: '),&#xD;&#xA;       Isnull(CONVERT(VARCHAR, Cast(Sum(trxnetamount * ( -1 )) AS MONEY), 1),&#xD;&#xA;       '0.00')&#xD;&#xA;FROM   trx_header h&#xD;&#xA;WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;       AND h.pos_machine IN ( @posmachine )&#xD;&#xA;       AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;              OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                     FROM   users&#xD;&#xA;                                     WHERE  user_id IN ( @userid )) )&#xD;&#xA;       AND originaltrxid IS NOT NULL&#xD;&#xA;       AND (SELECT Count(lineid)&#xD;&#xA;            FROM   trx_lines l&#xD;&#xA;            WHERE  l.trxid = h.trxid) = (SELECT Count(lineid)&#xD;&#xA;                                         FROM   trx_lines&#xD;&#xA;                                         WHERE  trxid = h.originaltrxid&#xD;&#xA;                                                AND originallineid IS NULL)&#xD;&#xA;       AND h.status = 'CLOSED'&#xD;&#xA;       AND h.status != 'CANCELLED'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       ''&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('No. of transactions: '),&#xD;&#xA;       CONVERT(VARCHAR, Count(DISTINCT trxid))&#xD;&#xA;FROM   trx_header h&#xD;&#xA;WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;       AND pos_machine IN ( @posmachine )&#xD;&#xA;       AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;              OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                     FROM   users&#xD;&#xA;                                     WHERE  user_id IN ( @userid )) )&#xD;&#xA;       AND h.status != 'CANCELLED'&#xD;&#xA;       AND status = 'CLOSED'&#xD;&#xA;       AND h.trxnetamount &gt; 0&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('Items  Sold: '),&#xD;&#xA;       (SELECT Isnull(CONVERT(VARCHAR, Cast(Sum(l.quantity) AS INT)), '0')&#xD;&#xA;        FROM   trx_lines l,&#xD;&#xA;               trx_header h&#xD;&#xA;        WHERE  h.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;               AND pos_machine IN ( @posmachine )&#xD;&#xA;               AND ( h.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;                      OR h.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                             FROM   users&#xD;&#xA;                                             WHERE  user_id IN ( @userid )) )&#xD;&#xA;               AND h.status != 'CANCELLED'&#xD;&#xA;               AND status = 'CLOSED'&#xD;&#xA;               AND l.cancelledby IS NULL&#xD;&#xA;               AND h.trxid = l.trxid)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Upper('No. of Voided: '),&#xD;&#xA;       CONVERT(VARCHAR, Count(trxid))&#xD;&#xA;FROM   trx_header t&#xD;&#xA;WHERE  originaltrxid IS NOT NULL&#xD;&#xA;       AND t.lastupdatetime BETWEEN @fromdate AND @todate&#xD;&#xA;       AND (SELECT Count(lineid)&#xD;&#xA;            FROM   trx_lines l&#xD;&#xA;            WHERE  l.trxid = t.trxid) = (SELECT Count(lineid)&#xD;&#xA;                                         FROM   trx_lines&#xD;&#xA;                                         WHERE  trxid = t.originaltrxid&#xD;&#xA;                                                AND originallineid IS NULL)&#xD;&#xA;       AND pos_machine IN ( @posmachine )&#xD;&#xA;       AND ( t.lastupdatedby IN ( CONVERT(NVARCHAR(50), @userid) )&#xD;&#xA;              OR t.lastupdatedby IN (SELECT loginid&#xD;&#xA;                                     FROM   users&#xD;&#xA;                                     WHERE  user_id IN ( @userid )) )&#xD;&#xA;       AND status = 'CLOSED'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 35),&#xD;&#xA;       '' " Name="dsPOSX">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@posmachine">
+          <Value>
+            <String>= Parameters.posname.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@userid">
+          <Value>
+            <String>= Parameters.userid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="0.362563848495484in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+        <BorderWidth Default="0pt" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsPOSX" Width="2.64340317316839in" Height="0.104166666666667in" Left="0.00003941853841146in" Top="0.176673094431559in" Name="crosstab1" StyleName="Solstice.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.56562463994468in" Height="0.104166666666667in" Left="0in" Top="0in" Value="= Fields.column1" Name="textBox4" StyleName="Solstice.TableBody">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Left="2px" Right="2px" Top="1px" Bottom="1px" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.07777834558268in" Height="0.104166666666667in" Left="0in" Top="0in" Value="= Fields.column2" Name="textBox5" StyleName="Solstice.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Left="2px" Right="2px" Top="1px" Bottom="1px" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.56562482758572in" />
+              <Column Width="1.07777834558267in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.104166666666667in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="column1" />
+            <TableGroup Name="column2" />
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="2.64996059735616in" Height="0.106210581958294in" Left="0in" Top="0.01388888930281in" Value="=MessagesFunctions.getMessage('TIN') + ': ' + Parameters.TIN.Value" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox2">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.312807813286781in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="2.64340326189994in" Height="0.106210579474767in" Left="0.00003941853841146in" Top="0.105902781089147in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.745293073356152in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="2.64992099255323in" Height="0.15in" Left="0.00003941853841146in" Top="0.0104166666666667in" Value="=MessagesFunctions.getMessage('POSX')" Name="textBox233">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.63958358764648in" Height="0.12in" Left="0.0103769302368164in" Top="0.295990626017253in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox232">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.63958337903023in" Height="0.127083346048991in" Left="0.0103769302368164in" Top="0.16882864634196in" Value="= Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox46">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.63958358764648in" Height="0.13in" Left="0.0103769302368164in" Top="0.417944272359212in" Value="=MessagesFunctions.getMessage('POS') + &quot;: &quot; + Parameters.posname.Value" Format="{0:f}" Name="textBox1">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.64996040860812in" Height="0.129999995231628in" Left="0in" Top="0.548611124356588in" Value="=MessagesFunctions.getMessage('Collector/Cashier Name') + &quot;: &quot; + Parameters.Username.Value" Format="{0:f}" Name="textBox3">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Custom" PaperSize="3.15000009536743in, 11.6928997039795in" Landscape="False" ContinuousPaper="True">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="238, 244, 251" Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="188, 211, 241" Color="20, 34, 77">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="35, 92, 169" Color="238, 244, 251">
+        <Font Name="Calibri" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Solstice.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="79, 39, 28" Color="231, 222, 201" VerticalAlign="Middle">
+        <Font Name="Gill Sans MT" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" Visible="True" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String><![CDATA[
+]]></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" Visible="True" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="posname" Text="POS" Visible="True">
+      <AvailableValues DataSourceName="dsPosList" DisplayMember="= Fields.pos_machine" ValueMember="= Fields.pos_machine" />
+      <Value>
+        <String>= Fields.pos_machine</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="userid" Type="Integer" Text="userid">
+      <AvailableValues DataSourceName="dsUserId" DisplayMember="= Fields.userid" ValueMember="= Fields.userid" />
+      <Value>
+        <String>= Fields.userid</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="TIN" Text="TIN" AllowNull="True">
+      <AvailableValues DataSourceName="dsTIN" DisplayMember="= Fields.TIN" ValueMember="= Fields.TIN" />
+      <Value>
+        <String>= Fields.TIN</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="Username" Text="Username" AllowNull="True">
+      <AvailableValues DataSourceName="dsCashier" DisplayMember="= Fields.username" ValueMember="= Fields.username" />
+      <Value>
+        <String>= Fields.username</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="Users" Text="Users" Visible="True">
+      <AvailableValues DataSourceName="dsUsersList" DisplayMember="= Fields.username" ValueMember="= Fields.username" />
+      <Value>
+        <String>= Fields.username</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

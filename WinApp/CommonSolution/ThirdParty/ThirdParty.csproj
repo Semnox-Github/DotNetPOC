@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45C69515-B9A7-44F3-882B-0B53548226F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.ThirdParty</RootNamespace>
+    <AssemblyName>ThirdParty</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CSharpSDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\OTS\CSharpSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.AlohaFOHLib, Version=5.3.26.131, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.AlohaFOHLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlohaBSP\AlohaBSPCallbackResponseDTO.cs" />
+    <Compile Include="AlohaBSP\AlohaBSPResponse.cs" />
+    <Compile Include="CenterEdge\Adjustments.cs" />
+    <Compile Include="CenterEdge\CardCombineDTO.cs" />
+    <Compile Include="CenterEdge\ErrorCodes.cs" />
+    <Compile Include="CenterEdge\CapabilityAdjustments.cs" />
+    <Compile Include="AlohaItemDTO.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaPOSTenderIdMapping.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaPOSTenderIdMappingDataHandler.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaPOSTenderIdMappingDTO.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdCardMapping.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdCardMappingDataHandler.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdCardMappingDTO.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdMaps.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdMapsDataHandler.cs" />
+    <Compile Include="AlohaTenderIdMaps\AlohaTenderIdMapsDTO.cs" />
+    <Compile Include="CenterEdge\AdjustmentTransaction.cs" />
+    <Compile Include="CenterEdge\AdjustmentBase.cs" />
+    <Compile Include="CenterEdge\CardBL.cs" />
+    <Compile Include="CenterEdge\Operators.cs" />
+    <Compile Include="CenterEdge\PostTransaction.cs" />
+    <Compile Include="CenterEdge\CardTransaction.cs" />
+    <Compile Include="CenterEdge\GamePlayTransaction.cs" />
+    <Compile Include="CenterEdge\CapabilitiesPoints.cs" />
+    <Compile Include="CenterEdge\TimePlayBase.cs" />
+    <Compile Include="CenterEdge\AdjustmentTypes.cs" />
+    <Compile Include="CenterEdge\TimePlayTypes.cs" />
+    <Compile Include="CenterEdge\AdjustmentTypeConverter.cs" />
+    <Compile Include="CenterEdge\BulkIssues.cs" />
+    <Compile Include="CenterEdge\CapabilitiesBL.cs" />
+    <Compile Include="CenterEdge\Capabilities.cs" />
+    <Compile Include="CenterEdge\CardNumberFormatListBL.cs" />
+    <Compile Include="CenterEdge\CardNumberFormats.cs" />
+    <Compile Include="CenterEdge\CardNumberFormatDTO.cs" />
+    <Compile Include="CenterEdge\Card.cs" />
+    <Compile Include="CenterEdge\Games.cs" />
+    <Compile Include="CenterEdge\GamesDTO.cs" />
+    <Compile Include="CenterEdge\GamesListBL.cs" />
+    <Compile Include="CenterEdge\LoginBL.cs" />
+    <Compile Include="CenterEdge\LoginDTO.cs" />
+    <Compile Include="CenterEdge\Minute.cs" />
+    <Compile Include="CenterEdge\OperatorDTO.cs" />
+    <Compile Include="CenterEdge\Points.cs" />
+    <Compile Include="CenterEdge\Privileges.cs" />
+    <Compile Include="CenterEdge\PrivilegeGroupBL.cs" />
+    <Compile Include="CenterEdge\PrivilegeGroupDTO.cs" />
+    <Compile Include="CenterEdge\PrivilegeGroups.cs" />
+    <Compile Include="CenterEdge\Privilege.cs" />
+    <Compile Include="CenterEdge\PrivilegesDTO.cs" />
+    <Compile Include="CenterEdge\TimePlay.cs" />
+    <Compile Include="CenterEdge\TimePlayGroupBL.cs" />
+    <Compile Include="CenterEdge\TimePlayGroupDTO.cs" />
+    <Compile Include="CenterEdge\TimePlayGroups.cs" />
+    <Compile Include="CenterEdge\TimePlays.cs" />
+    <Compile Include="CenterEdge\TransactionBL.cs" />
+    <Compile Include="CenterEdge\TransactionDTO.cs" />
+    <Compile Include="CenterEdge\Transactions.cs" />
+    <Compile Include="CenterEdge\TransactionService\CardCombineBL.cs" />
+    <Compile Include="CenterEdge\TransactionService\CETransactionServiceDTO.cs" />
+    <Compile Include="CenterEdge\TransactionTypes.cs" />
+    <Compile Include="CenterEdge\ValueAdjustment.cs" />
+    <Compile Include="CreditCard.cs" />
+    <Compile Include="External\ExternalAddCreditsDTO.cs" />
+    <Compile Include="External\ExternalAddDiscountDTO.cs" />
+    <Compile Include="External\ExternalAddPaymentDTO.cs" />
+    <Compile Include="External\ExternalAddProductDTO.cs" />
+    <Compile Include="External\ExternalAdjustmentTypes.cs" />
+    <Compile Include="External\ExternalCardsBL.cs" />
+    <Compile Include="External\ExternalCardsDTO.cs" />
+    <Compile Include="External\ExternalCardTasksBL.cs" />
+    <Compile Include="External\ExternalCardTasksDTO.cs" />
+    <Compile Include="External\ExternalConfigurationDTO.cs" />
+    <Compile Include="External\ExternalCustomerGamePlayLevelResultsDTO.cs" />
+    <Compile Include="External\ExternalCustomersDTO.cs" />
+    <Compile Include="External\ExternalGameMachineLevelDTO.cs" />
+    <Compile Include="External\ExternalGamePlaysDTO.cs" />
+    <Compile Include="External\ExternalGamePlayWinningsDTO.cs" />
+    <Compile Include="External\ExternalLeaderBoardDTO.cs" />
+    <Compile Include="External\ExternalLocationDTO.cs" />
+    <Compile Include="External\ExternalLoginDTO.cs" />
+    <Compile Include="External\ExternalMachineLevelDTO.cs" />
+    <Compile Include="External\ExternalMachinesDTO.cs" />
+    <Compile Include="External\ExternalProductDTO.cs" />
+    <Compile Include="External\ExternalProductGroupDTO.cs" />
+    <Compile Include="External\ExternalRemoveCreditsDTO.cs" />
+    <Compile Include="External\ExternalRemoveDiscountDTO.cs" />
+    <Compile Include="External\ExternalRemovePaymentDTO.cs" />
+    <Compile Include="External\ExternalRemoveProductDTO.cs" />
+    <Compile Include="External\ExternalTransactionBL.cs" />
+    <Compile Include="External\ExternalTransactionDTO.cs" />
+    <Compile Include="External\ExternalTransactionTypes.cs" />
+    <Compile Include="ParafaitExactTargetIntegration\Customer.cs" />
+    <Compile Include="HttpUtilsDataHandler.cs" />
+    <Compile Include="LoyaltyRedemptionBL.cs" />
+    <Compile Include="LoyaltyRedemptionDataHandler.cs" />
+    <Compile Include="LoyaltyRedemptionDTO.cs" />
+    <Compile Include="ParafaitAlohaIntegrator.cs" />
+    <Compile Include="ParafaitAlohaInterfaceItem.cs" />
+    <Compile Include="ParafaitAlohaItem.cs" />
+    <Compile Include="ParafaitExactTargetIntegration\ParafaitLogger.cs" />
+    <Compile Include="ParseDBF.cs" />
+    <Compile Include="CenterEdge\PointTypes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TET\Constants\TETConstants.cs" />
+    <Compile Include="TET\DTO\GetVisitor.cs" />
+    <Compile Include="TET\DTO\VisitorRequest.cs" />
+    <Compile Include="TET\DTO\VisitorRfid.cs" />
+    <Compile Include="TET\Mapper\GetVisitor.cs" />
+    <Compile Include="ThirdPartyLoyalty\Aloha.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaDataHandler.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaLoyaltyCompleteAssignmentRequestDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaLoyaltyCreateAssignmentRequestDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaLoyaltyCreateAssignmentResponseDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaLoyaltyErrorCodes.cs" />
+    <Compile Include="ThirdPartyLoyalty\AlohaLoyaltyMemberDetailsDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\Capillary.cs" />
+    <Compile Include="ThirdPartyLoyalty\LoyaltyMember.cs" />
+    <Compile Include="ThirdPartyLoyalty\LoyaltyMemberDetails.cs" />
+    <Compile Include="ThirdPartyLoyalty\LoyaltyProgramBL.cs" />
+    <Compile Include="ThirdPartyLoyalty\LoyaltyPrograms.cs" />
+    <Compile Include="ThirdPartyLoyalty\PunchhBL.cs" />
+    <Compile Include="ThirdPartyLoyalty\PunchhDataHandler.cs" />
+    <Compile Include="ThirdPartyLoyalty\PunchhMemberDetailDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\PunchhTransactionDTO.cs" />
+    <Compile Include="ThirdPartyLoyalty\ThirdPartyLoyaltyFactory.cs" />
+    <Compile Include="UpdateDetails.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24D8C63F-8F14-42CE-BC91-CFE34A088B38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Discounts\Discounts.csproj">
+      <Project>{F0FDE99A-725F-45C2-9CD8-B7961088EA2C}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970A8E60-83BE-4559-A67C-3EF7135A3E8D}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{F1BA74AA-2DC7-48C1-8CBD-254F8C2B63F8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerCore\ServerCore.csproj">
+      <Project>{7bb265ba-7fee-47c3-8e7e-11021f49a085}</Project>
+      <Name>ServerCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

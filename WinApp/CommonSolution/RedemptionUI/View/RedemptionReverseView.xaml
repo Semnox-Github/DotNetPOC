@@ -1,0 +1,251 @@
+﻿<Window x:Class="Semnox.Parafait.RedemptionUI.RedemptionReverseView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:local="clr-namespace:Semnox.Parafait.RedemptionUI"
+        Style="{StaticResource PopupWindowStyle}"
+        mc:Ignorable="d"
+        Title="RedemptionReverseView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+
+        <Style BasedOn="{StaticResource {x:Type common:CustomScrollViewer}}"
+               TargetType="{x:Type common:CustomScrollViewer}"
+               x:Key="MultiScreenScrollViewer">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="True">
+                    <Setter Property="Size"
+                            Value="XSmall" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type common:CustomActionButton}}"
+               TargetType="{x:Type common:CustomActionButton}"
+               x:Key="MultiScreenButtonStyle">
+            <Setter Property="Padding"
+                    Value="16,0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="True">
+                    <Setter Property="Height"
+                            Value="40" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type common:CustomTextBlock}}"
+               TargetType="{x:Type common:CustomTextBlock}"
+               x:Key="MultiScreenTextBlockStyle">
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="Margin"
+                    Value="0,0,16,0" />
+            <Setter Property="TextTrimming"
+                    Value="CharacterEllipsis" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                             Value="True">
+                    <Setter Property="TextSize"
+                            Value="XSmall" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type common:CustomCheckBox}}"
+               TargetType="{x:Type common:CustomCheckBox}"
+               x:Key="MultiScreenCheckBox">
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="ErrorTextVisible"
+                    Value="False" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                             Value="True">
+                    <Setter Property="Size"
+                            Value="XSmall" />
+                    <Setter Property="Margin"
+                            Value="8,-4,4,4" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ContainerStyle"
+               TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="ListBoxItemsBackgroundBorder"
+                                Margin="0,0,0,16"
+                                Background="{StaticResource Control.ComboBackground}"
+                                CornerRadius="{StaticResource CornerRadius}">
+
+                            <Grid x:Name="TicketsDataContainerGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="9*" />
+                                </Grid.ColumnDefinitions>
+
+                                <common:CustomCheckBox x:Name="cbxSelect"
+                                                       Grid.Column="0"
+                                                       Style="{StaticResource MultiScreenCheckBox}"
+                                                       IsChecked="{Binding Path=SelectedCheckbox,
+                                                                Mode=TwoWay,
+                                                                UpdateSourceTrigger=PropertyChanged}" />
+
+                                <ItemsControl x:Name="IcItemsDisplay"
+                                              Grid.Column="1"
+                                              ItemsSource="{Binding DisplayRedemptionItems}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="{Binding DisplayRedemptionItems.Count}"
+                                                         Rows="1">
+                                            </UniformGrid>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <common:CustomTextBlock x:Name="tbDisplayContent"
+                                                                    Style="{StaticResource MultiScreenTextBlockStyle}"
+                                                                    Text="{Binding IsAsync=True}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="HeaderStackPanel"
+                    Grid.Row="0"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="False">
+                            <Setter Property="Margin"
+                                    Value="16,24" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="8" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <common:CustomTextBlock x:Name="lblTitle"
+                                    Text="{Binding Title}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                <common:CustomTextBlock.Style>
+                    <Style BasedOn="{StaticResource {x:Type common:CustomTextBlock}}"
+                           TargetType="{x:Type common:CustomTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </common:CustomTextBlock.Style>
+            </common:CustomTextBlock>
+
+            <common:CustomTextBlock x:Name="lblHeader"
+                                    Text="{Binding Heading}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" />
+        </StackPanel>
+
+        <Border x:Name="HeaderContainerBorder"
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Padding"
+                            Value="16" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}">
+                            <Setter Property="Padding"
+                                    Value="8" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <common:CustomDataGridUserControl x:Name="CustomDataGridUserControl"
+                                              DataContext="{Binding CustomDataGridVM}">
+            </common:CustomDataGridUserControl>
+        </Border>
+
+        <Border x:Name="BottomContainerBorder"
+                Grid.Row="3"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="3"
+                        HorizontalAlignment="Center">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="False">
+                                <Setter Property="Margin"
+                                        Value="0,8" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="True">
+                                <Setter Property="Margin"
+                                        Value="0,4" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <common:CustomActionButton Content="{Binding CancelButtonText}"
+                                           x:Name="btnCancel"
+                                           Style="{StaticResource MultiScreenButtonStyle}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                           Command="{Binding CancelCommand}"
+                                           ActionStyle="Passive"
+                                           Margin="0,0,20,0" />
+                <common:CustomActionButton Content="{Binding ReverseButtonText}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                           Command="{Binding ReverseCommand}"
+                                           Style="{StaticResource MultiScreenButtonStyle}"
+                                           x:Name="btnReverse"
+                                           IsEnabled="{Binding IsReverseEnabled}" />
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>

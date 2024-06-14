@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B73AF819-C0B5-4AA6-8C09-E8643F1437D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.ViewContainer</RootNamespace>
+    <AssemblyName>ViewContainer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ViewContainer.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\ViewContainer.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Waiver, Version=2.140.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Waiver\bin\x86\Debug\Waiver.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddressTypeViewContainer.cs" />
+    <Compile Include="AddressTypeViewContainerList.cs" />
+    <Compile Include="ApplicationContentViewContainer.cs" />
+    <Compile Include="ApplicationContentViewContainerList.cs" />
+    <Compile Include="CashdrawerViewContainer.cs" />
+    <Compile Include="CashdrawerViewContainerList.cs" />
+    <Compile Include="AttributeEnabledTablesViewContainer.cs" />
+    <Compile Include="AttributeEnabledTablesViewContainerList.cs" />
+    <Compile Include="CategoryViewContainer.cs" />
+    <Compile Include="CategoryViewContainerList.cs" />
+    <Compile Include="CountryViewContainer.cs" />
+    <Compile Include="CountryViewContainerList.cs" />
+    <Compile Include="CustomAttributeViewContainerList.cs" />
+    <Compile Include="CustomAttrubuteViewContainer.cs" />
+    <Compile Include="CustomerRelationshipTypeViewContainer.cs" />
+    <Compile Include="CustomerRelationshipTypeViewContainerList.cs" />
+    <Compile Include="CustomerUIMetadataViewContainer.cs" />
+    <Compile Include="CustomerUIMetadataViewContainerList.cs" />
+    <Compile Include="DisplayPanelViewContainer.cs" />
+    <Compile Include="DisplayPanelViewContainerList.cs" />
+    <Compile Include="EnabledAttributesViewContainer.cs" />
+    <Compile Include="EnabledAttributesViewContainerList.cs" />
+    <Compile Include="FileResourceHttpModule.cs" />
+    <Compile Include="GameProfileViewContainer.cs" />
+    <Compile Include="GameProfileViewContainerList.cs" />
+    <Compile Include="GameViewContainer.cs" />
+    <Compile Include="GameViewContainerList.cs" />
+    <Compile Include="HubViewContainer.cs" />
+    <Compile Include="HubViewContainerList.cs" />
+    <Compile Include="InventoryDocumentTypeViewContainer.cs" />
+    <Compile Include="InventoryDocumentTypeViewContainerList.cs" />
+    <Compile Include="InventoryStockViewContainer.cs" />
+    <Compile Include="InventoryStockViewContainerList.cs" />
+    <Compile Include="LocationTypeViewContainer.cs" />
+    <Compile Include="LocationTypeViewContainerList.cs" />
+    <Compile Include="LocationViewContainer.cs" />
+    <Compile Include="LocationViewContainerList.cs" />
+    <Compile Include="LookupsViewContainerList.cs" />
+    <Compile Include="LookupsViewContainer.cs" />
+    <Compile Include="LoyaltyAttributeViewContainer.cs" />
+    <Compile Include="LoyaltyAttributeViewContainerList.cs" />
+    <Compile Include="LoyaltyRedemptionRuleViewContainer.cs" />
+    <Compile Include="LoyaltyRedemptionRuleViewContainerList.cs" />
+    <Compile Include="MachineViewContainer.cs" />
+    <Compile Include="MachineViewContainerList.cs" />
+    <Compile Include="MembershipViewContainer.cs" />
+    <Compile Include="MembershipViewContainerList.cs" />
+    <Compile Include="MifareKeyViewContainer.cs" />
+    <Compile Include="MifareKeyViewContainerList.cs" />
+    <Compile Include="MessageViewContainer.cs" />
+    <Compile Include="MessageViewContainerList.cs" />
+    <Compile Include="OnlineOrderDeliveryIntegrationViewContainer.cs" />
+    <Compile Include="OnlineOrderDeliveryIntegrationViewContainerList.cs" />
+    <Compile Include="PriceViewContainer.cs" />
+    <Compile Include="ProductPriceViewContainerList.cs" />
+    <Compile Include="ProductPriceViewContainer.cs" />
+    <Compile Include="ProductMenuViewContainer.cs" />
+    <Compile Include="OrderTypeViewContainer.cs" />
+    <Compile Include="OrderTypeViewContainerList.cs" />
+    <Compile Include="PaymentModesViewContainer.cs" />
+    <Compile Include="PaymentModesViewContainerList.cs" />
+    <Compile Include="POSMachineViewContainer.cs" />
+    <Compile Include="POSMachineViewContainerList.cs" />
+    <Compile Include="LanguageViewContainer.cs" />
+    <Compile Include="LanguageViewContainerList.cs" />
+    <Compile Include="ProductCalendarViewContainer.cs" />
+    <Compile Include="PriceViewContainerList.cs" />
+    <Compile Include="ProductTypeViewContainer.cs" />
+    <Compile Include="ProductMenuViewContainerList.cs" />
+    <Compile Include="ProductTypeViewContainerList.cs" />
+    <Compile Include="ProductViewContainer.cs" />
+    <Compile Include="ProductViewContainerList.cs" />
+    <Compile Include="ReaderConfigurationViewContainer.cs" />
+    <Compile Include="ReaderConfigurationViewContainerList.cs" />
+    <Compile Include="RedemptionCurrencyRuleViewContainer.cs" />
+    <Compile Include="RedemptionCurrencyRuleViewContainerList.cs" />
+    <Compile Include="RedemptionCurrencyViewContainer.cs" />
+    <Compile Include="RedemptionCurrencyViewContainerList.cs" />
+    <Compile Include="RedemptionPriceViewContainer.cs" />
+    <Compile Include="RedemptionPriceViewContainerList.cs" />
+    <Compile Include="ScannedTagNumberViewTrimmer.cs" />
+    <Compile Include="SiteDateTime.cs" />
+    <Compile Include="TagNumberView.cs" />
+    <Compile Include="TagNumberViewLengthList.cs" />
+    <Compile Include="TagNumberViewParser.cs" />
+    <Compile Include="TaskTypesViewContainer.cs" />
+    <Compile Include="TaskTypesViewContainerList.cs" />
+    <Compile Include="ThemeViewContainer.cs" />
+    <Compile Include="ThemeViewContainerList.cs" />
+    <Compile Include="TicketStationViewContainer.cs" />
+    <Compile Include="TicketStationViewContainerList.cs" />
+    <Compile Include="UserRoleViewContainer.cs" />
+    <Compile Include="UserRoleViewContainerList.cs" />
+    <Compile Include="SystemOptionViewContainerList.cs" />
+    <Compile Include="SystemOptionViewContainer.cs" />
+    <Compile Include="ParafaitDefaultViewContainer.cs" />
+    <Compile Include="ParafaitDefaultViewContainerList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AbstractViewContainer.cs" />
+    <Compile Include="SiteViewContainer.cs" />
+    <Compile Include="SiteViewContainerList.cs" />
+    <Compile Include="UserViewContainer.cs" />
+    <Compile Include="UserViewContainerList.cs" />
+    <Compile Include="WaiverSetViewContainer.cs" />
+    <Compile Include="WaiverSetViewContainerList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{800edadc-f5a6-4a74-94ec-1267a91065d1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Category\Category.csproj">
+      <Project>{1b64ec1e-f381-485b-8c69-a07f80a27775}</Project>
+      <Name>Category</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeliveryIntegration\DeliveryIntegration.csproj">
+      <Project>{5ba13e6a-641c-4c51-9c15-256003f0e063}</Project>
+      <Name>DeliveryIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DigitalSignage\DigitalSignage.csproj">
+      <Project>{CA9E1908-ED0E-4F91-ACE2-7ED7FC3C8D6C}</Project>
+      <Name>DigitalSignage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970A8E60-83BE-4559-A67C-3EF7135A3E8D}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory\Inventory.csproj">
+      <Project>{af244e4d-b6f8-4fb7-979d-3e82236fe4ad}</Project>
+      <Name>Inventory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{edd835a5-1862-4aed-b3f0-1c134b40fdb4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PriceList\PriceList.csproj">
+      <Project>{0b195894-eac2-4e9a-a5e3-aa8ae1a47e6b}</Project>
+      <Name>PriceList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{B8974CD4-806B-4027-AFE3-D35DA8E949EE}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductPrice\ProductPrice.csproj">
+      <Project>{9CED5A08-F997-495A-8E2E-F1CC6B65E18B}</Project>
+      <Name>ProductPrice</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Promotions\Promotions.csproj">
+      <Project>{9F184AF5-E406-4FC8-AC22-DC29351D016C}</Project>
+      <Name>Promotions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Redemption\RedemptionUtils.csproj">
+      <Project>{1a20e3de-4198-46c4-8c5b-0ac1fcb727a1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TableAttributeSetup\TableAttributeSetup.csproj">
+      <Project>{662f83d7-b7dd-4690-9d21-62188991cb29}</Project>
+      <Name>TableAttributeSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{e30d3295-e230-44d2-880d-22bf5a349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Waiver\Waiver.csproj">
+      <Project>{b4419625-2d92-4e3b-99b3-2df03a45cd59}</Project>
+      <Name>Waiver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

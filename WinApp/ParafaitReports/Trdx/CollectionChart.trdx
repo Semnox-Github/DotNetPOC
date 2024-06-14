@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="9.10000038146973in" Name="CollectionChart" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitReportsNew" SelectCommand="SELECT sum(cashamount + creditcardamount + OtherPaymentModeAmount) collection&#xD;&#xA;FROM trx_header&#xD;&#xA;WHERE trxdate &gt;= dbo.ConvertToServerTime(@fromDate,@offSet)&#xD;&#xA;AND trxdate &lt;= dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;AND ((site_id in (@site)) or (-1 in (@site)))&#xD;&#xA;and pos_machine in (@pos)" CommandTimeout="600" Name="dsCollection" ParameterValues="{&quot;@fromDate&quot;:&quot;01-01-2017&quot;,&quot;@offSet&quot;:&quot;0&quot;,&quot;@toDate&quot;:&quot;10-10-2017&quot;,&quot;@site&quot;:&quot;-1&quot;,&quot;@pos&quot;:&quot;mlr-lt001&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitReportsNew" SelectCommand="SELECT &#xD;&#xA;Case datepart(hh, dbo.ConvertToLocalTime(trxdate, -1 * @offSet))&#xD;&#xA;When 0 then '12 AM'&#xD;&#xA;When 1 then '1 AM'&#xD;&#xA;When 2 then '2 AM'&#xD;&#xA;When 3 then '3 AM'&#xD;&#xA;When 4 then '4 AM'&#xD;&#xA;When 5 then '5 AM'&#xD;&#xA;When 6 then '6 AM'&#xD;&#xA;When 7 then '7 AM'&#xD;&#xA;When 8 then '8 AM'&#xD;&#xA;When 9 then '9 AM'&#xD;&#xA;When 10 then '10 AM'&#xD;&#xA;When 11 then '11 AM'&#xD;&#xA;When 12  then '12 PM'&#xD;&#xA;When 13 then '1 PM'&#xD;&#xA;When 14 then '2 PM'&#xD;&#xA;When 15 then '3 PM'&#xD;&#xA;When 16 then '4 PM'&#xD;&#xA;When 17 then '5 PM'&#xD;&#xA;When 18 then '6 PM'&#xD;&#xA;When 19 then '7 PM'&#xD;&#xA;When 20 then '8 PM'&#xD;&#xA;When 21 then '9 PM'&#xD;&#xA;When 22 then '10 PM'&#xD;&#xA;When 23 then '11 PM'&#xD;&#xA;End&#xD;&#xA;as  hour, datepart(hh, dbo.ConvertToLocalTime(trxdate, -1 * @offSet)) sort, sum(cashamount + creditcardamount + OtherPaymentModeAmount) collection&#xD;&#xA;FROM trx_header&#xD;&#xA;WHERE trxdate &gt;= dbo.ConvertToServerTime(@fromDate,@offSet)&#xD;&#xA;AND trxdate &lt; dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;and pos_machine in (@pos)&#xD;&#xA;AND ((site_id in (@site)) or (-1 in (@site)))&#xD;&#xA;GROUP BY datepart(hh, dbo.ConvertToLocalTime(trxdate, -1 * @offSet))&#xD;&#xA;ORDER BY 1" CommandTimeout="600" Name="dsCollectionByHour" ParameterValues="{&quot;@offSet&quot;:&quot;0&quot;,&quot;@fromDate&quot;:&quot;01-01-2017&quot;,&quot;@toDate&quot;:&quot;10-10-2017&quot;,&quot;@pos&quot;:&quot;mlr-lt001&quot;,&quot;@site&quot;:&quot;-1&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int16" Name="@offSet">
+          <Value>
+            <String>=Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="8.40000089009602in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+      </Style>
+      <Items>
+        <Graph DataSourceName="dsCollectionByHour" Width="9.10000038146978in" Height="4.20000044504802in" Left="0in" Top="0in" Name="graph1">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Hour">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N0}" Title="Collection">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style LineColor="LightGray">
+            <Font Name="Arial Unicode MS" />
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="=Fields.hour" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="=Fields.sort" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="=iif(Parameters.reportDays.Value &lt;= 1, sum(Fields.collection), sum(Fields.collection)/Parameters.reportDays.Value)" DataPointLabel="=iif(Parameters.reportDays.Value &lt;= 1, sum(Fields.collection), sum(Fields.collection)/Parameters.reportDays.Value)" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.type.Value = 1, true, false)" />
+          </Bindings>
+        </Graph>
+        <Graph DataSourceName="dsCollectionByHour" Width="9.10000069936112in" Height="4.20000028610229in" Left="0in" Top="4.20000012715658in" Name="graph2">
+          <PlotAreaStyle LineWidth="0in" LineColor="LightGray">
+            <Font Name="Tahoma" />
+            <BorderColor Default="LightGray" />
+          </PlotAreaStyle>
+          <Axes>
+            <GraphAxis Name="graphAxis2" MajorTickMarkDisplayType="None" MinorTickMarkDisplayType="None" LabelFormat="{0:Y}" LabelPlacement="AtMaximum" LabelAngle="-90" Title="Hour">
+              <TitleStyle TextAlign="Center" VerticalAlign="Bottom" />
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="True" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale PositionMode="OnTicks" />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis1" MajorTickMarkDisplayType="None" LabelFormat="{0:N2}" Title="Collection">
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis2" YAxis="graphAxis1" Name="cartesianCoordinateSystem1">
+              <Style>
+                <Font Name="Tahoma" />
+              </Style>
+            </CartesianCoordinateSystem>
+          </CoordinateSystems>
+          <Legend Position="TopLeft">
+            <TitleStyle>
+              <Font Name="Tahoma" Size="8pt" />
+            </TitleStyle>
+            <Style LineWidth="0in" LineColor="LightGray">
+              <Font Name="Tahoma" Size="8pt" />
+            </Style>
+          </Legend>
+          <Style LineColor="LightGray">
+            <Font Name="Arial Unicode MS" />
+            <BorderColor Default="LightGray" />
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="seriesGroup" />
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="monthForChartGroup">
+              <Groupings>
+                <Grouping Expression="=Fields.hour" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="=Fields.sort" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="monthForChartGroup" SeriesGroup="seriesGroup" Y="=(100 * sum(Fields.collection)) / Parameters.collection.Value" DataPointLabel="=(100 * sum(Fields.collection)) / Parameters.collection.Value" DataPointLabelFormat="{0:#,##0}" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0in">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointStyle>
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Tahoma" Size="8pt" />
+              </DataPointLabelStyle>
+              <LegendItem Format="{0:N2}">
+                <Style BackgroundColor="Transparent" LineWidth="0in" LineColor="Transparent">
+                  <Font Name="Tahoma" Size="8pt" />
+                </Style>
+              </LegendItem>
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="" Position="TopCenter">
+              <Style LineWidth="0in" LineColor="LightGray">
+                <Font Name="Tahoma" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+          <NoDataStyle>
+            <Font Name="Tahoma" />
+          </NoDataStyle>
+          <Bindings>
+            <Binding Path="Visible" Expression="=iif(Parameters.type.Value = 2, true, false)" />
+          </Bindings>
+        </Graph>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000381469727in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000508626302in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="5.40000025431315in" Top="0.100000381469727in" Value="=MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.599999984105428in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="9.10000038146968in" Height="0.19999997317791in" Left="0in" Top="0.202083349227905in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox96">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.10000038146968in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=iif(Parameters.type.Value = 1, MessagesFunctions.getMessage('Collection By Hour Chart'), MessagesFunctions.getMessage('Collection Percentage By Hour'))" Name="textBox46">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.10000006357831in" Height="0.19999997317791in" Left="0in" Top="0.400000015894572in" Value="= MessagesFunctions.getMessage('Period: From') + &quot; &quot; + Parameters.fromdate.Value.ToString(&quot;dddd, dd-MMM-yyyy hh:mm tt&quot;) + &quot; &quot; + MessagesFunctions.getMessage('To') + &quot; &quot; + Parameters.todate.Value.ToString(&quot;dddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox20">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String>-1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="reportDays" Type="Float" Mergeable="False" Text="reportDays" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="pos" Mergeable="False" Text="POS" MultiValue="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="type" Mergeable="False" Text="Report Type" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.type" ValueMember="= Fields.value" />
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="collection" Type="Float" Mergeable="False" Text="Collection" AllowNull="True" AllowBlank="False">
+      <AvailableValues DataSourceName="dsCollection" DisplayMember="= Fields.collection" ValueMember="= Fields.collection" />
+      <Value>
+        <String>= Fields.collection</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

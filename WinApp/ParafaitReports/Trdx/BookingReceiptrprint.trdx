@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report DataSourceName="dsSite" Width="2.56875006357829in" Name="BookingReceipt" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select site_name, site_address from site" CommandTimeout="600" Name="dsSite" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select p.description from bookings b, products p&#xD;&#xA;where b.BookingProductId = p.product_id&#xD;&#xA;and b.BookingId =@BookingId" Name="BookingProductDescription">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select isnull(sum(amount),0) as Amount_paid from TrxPayments trxp,PaymentModes pm,bookings b&#xD;&#xA;where&#xD;&#xA;trxp.PaymentModeId = pm.PaymentModeId&#xD;&#xA; and trxp.TrxId = b.TrxId&#xD;&#xA; and b.BookingId =@BookingId&#xD;&#xA;" Name="dsAdvancePaid">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select BookingId,BookingName,Remarks,ReservationCode, status [Booking_Status]&#x9;&#x9;&#x9;&#x9;&#x9;  &#xD;&#xA;from bookings &#xD;&#xA;where BookingId= @BookingId" CommandTimeout="600" Name="dsBookingDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="SELECT rr.ReservationCode,rr.BookingName,rr.Remarks, rr.FromDate,rr.ToDate, isnull(rr.Quantity,0) GuestCount, Stuff((SELECT ', ' + fac.facilityname&#xD;&#xA;              FROM   facilitymapdetails fmd,&#xD;&#xA;                     checkinfacility fac,&#xD;&#xA;                     trxreservationschedule trs&#xD;&#xA;              WHERE  trs.trxid = rr.trxid&#xD;&#xA;                     AND trs.cancelled = 0&#xD;&#xA;                     AND fmd.facilitymapid = trs.facilitymapid&#xD;&#xA;                     AND fmd.facilityid = fac.facilityid&#xD;&#xA;              FOR xml path('')), 1, 1, '') AS FacilityName&#xD;&#xA;FROM   bookings rr&#xD;&#xA;       LEFT OUTER JOIN trx_header th&#xD;&#xA;                    ON th.trxid = rr.trxid&#xD;&#xA;WHERE  rr.bookingid = @BookingId " Name="dsBookingInfo" ParameterValues="{&quot;@BookingId&quot;:&quot;165&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select trxh.TrxNetAmount from trx_header trxh,bookings b&#xD;&#xA;where&#xD;&#xA; trxh.TrxId = b.TrxId&#xD;&#xA; and b.BookingId =@BookingId" Name="dsEstmateAmount">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select top 1 isnull(externalsourcereference,'') externalsourcereference from TrxPayments tp,bookings b&#xD;&#xA;where &#xD;&#xA;tp.TrxId = b.TrxId&#xD;&#xA;and b.BookingId =@BookingId&#xD;&#xA;order by PaymentId desc" Name="dsFiscalReference">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select top 1 isnull(default_value,'') FiscalPrinterType from parafait_defaults&#xD;&#xA;where default_value_name='FISCAL_PRINTER'&#xD;&#xA;AND ( ( site_id IN ( @site ) ) OR ( -1 IN ( @site ) ) ) " Name="dsFiscalPrinterType" ParameterValues="{&quot;@site&quot;:&quot;-1&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitGK" SelectCommand="&#xD;&#xA;set @serv= (select count(*) from TransactionView tv,Bookings b &#xD;&#xA;where tv.product_type in ('SERVICECHARGE','GRATUITY') and tv.trxid=b.trxid and b.bookingid=@bookingid)&#xD;&#xA;&#xD;&#xA;if @serv=0&#xD;&#xA;begin&#xD;&#xA;&#xD;&#xA;select  ' ' product_name,0 Amount&#xD;&#xA;end&#xD;&#xA;else&#xD;&#xA;begin&#xD;&#xA;&#xD;&#xA;select isnull(tv.product_name,' ') product_name,(Case when(tv.product_type='SERVICECHARGE') then isnull((tv.ServiceChargesAmount+isnull(TaxOnServiceCharges,0)),0) else isnull(tv.GratuityAmount,0) end) Amount from TransactionView tv,Bookings b &#xD;&#xA;where tv.product_type in ('SERVICECHARGE','GRATUITY') and tv.trxid=b.trxid and b.bookingid=@bookingid&#xD;&#xA;end" Name="dsServiceAndGratuity">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@serv" />
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="select isnull(c.customer_name,'') + ' ' + isnull(c.last_name,'') customer_name,isnull(c.contact_phone1,'') contact_phone1,isnull(c.contact_phone2,'') contact_phone2 ,isnull(c.address1,'') address1,&#xD;&#xA; isnull(c.city,'') city ,isnull(c.state,'') state,isnull(c.pin,'') pin,isnull(c.email,'') email from CustomerView(@CustomerPassPhrase) c, bookings b,trx_header trxh&#xD;&#xA;where c.customer_id = trxh.CustomerId&#xD;&#xA;and b.TrxId =trxh.TrxId&#xD;&#xA;and b.BookingId =@BookingId" Name="dsCustomers">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@CustomerPassPhrase">
+          <Value>
+            <String>= Parameters.CustomerPassPhrase.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="&#xD;&#xA;&#xD;&#xA;SELECT b.BookingProductId,&#xD;&#xA;                                                                  tl.product_id,&#xD;&#xA;                                                                  p.product_name,&#xD;&#xA;                                                                  CAST(tl.Quantity AS INT) Quantity,&#xD;&#xA;                                                                  tl.Remarks &#xD;&#xA;  ,p.price&#xD;&#xA;                                                           FROM &#xD;&#xA;                                                                Bookings b&#xD;&#xA;                                                           INNER JOIN&#xD;&#xA;                                                             (SELECT TRXID,&#xD;&#xA;                                                                     PRODUCT_ID,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; ComboProductId,&#xD;&#xA;                                                                     remarks,&#xD;&#xA;                                                                     SUM(TL.QUANTITY) Quantity&#xD;&#xA;                                                              FROM trx_lines tl&#xD;&#xA;                                                              WHERE tl.ParentLineId IS NOT NULL &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   and tl.CancelledTime is null&#xD;&#xA;                                                              GROUP BY TRXID,&#xD;&#xA;                                                                       PRODUCT_ID,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   ComboProductId,&#xD;&#xA;                                                                       Remarks) tl ON b.TrxId = tl.TrxId&#xD;&#xA;                                                           INNER JOIN products p ON p.product_id = tl.product_id&#xD;&#xA;                                                           INNER JOIN (select distinct cb.id, cb.AdditionalProduct, cb.Product_Id, cb.ChildProductId, pp.product_Id as bookingChildProductId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                 FROM ComboProduct cb ,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;      Products pp&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    WHERE (cb.ChildProductId = pp.product_id ) ) as cbp&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   ON cbp.bookingChildProductId = tl.product_id and cbp.id = tl.ComboProductId&#xD;&#xA;                                                                    AND b.BookingId = @BookingId&#xD;&#xA;                                                           WHERE ISNULL(cbp.AdditionalProduct,'N') ='N'&#xD;&#xA;                                                             AND b.BookingId = @BookingId&#xD;&#xA;                                                             AND cbp.Product_Id = b.BookingProductId&#xD;&#xA;" Name="dsPackageproducts">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="SELECT b.BookingProductId,&#xD;&#xA;                                                                  tl.product_id,&#xD;&#xA;                                                                  p.product_name,&#xD;&#xA;                                                             CAST(tl.Quantity AS INT) Quantity,&#xD;&#xA;                                                                  &#xD;&#xA;                                                                  tl.Remarks &#xD;&#xA;  ,p.price&#xD;&#xA;                                                           FROM &#xD;&#xA;                                                                Bookings b&#xD;&#xA;                                                           INNER JOIN&#xD;&#xA;                                                             (SELECT TRXID,&#xD;&#xA;                                                                     PRODUCT_ID,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; ComboProductId,&#xD;&#xA;                                                                     remarks,&#xD;&#xA;                                                                     SUM(TL.QUANTITY) Quantity&#xD;&#xA;                                                              FROM trx_lines tl&#xD;&#xA;                                                              WHERE tl.ParentLineId IS NOT NULL&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   and tl.CancelledTime is null&#xD;&#xA;                                                              GROUP BY TRXID,&#xD;&#xA;                                                                       PRODUCT_ID,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   ComboProductId,&#xD;&#xA;                                                                       Remarks) tl ON b.TrxId = tl.TrxId&#xD;&#xA;                                                           INNER JOIN products p ON p.product_id = tl.product_id&#xD;&#xA;                                                            INNER JOIN (select distinct cb.id, cb.AdditionalProduct, cb.Product_Id, cb.ChildProductId, pp.product_Id as bookingChildProductId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                 FROM ComboProduct cb ,&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;      Products pp&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    WHERE (cb.ChildProductId = pp.product_id )) as cbp&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   ON cbp.bookingChildProductId = tl.product_id and cbp.id = tl.ComboProductId&#xD;&#xA;                                                           AND b.BookingId = @BookingId&#xD;&#xA;                                                           WHERE ISNULL(cbp.AdditionalProduct,'N') ='Y'&#xD;&#xA;                                                             AND b.BookingId = @BookingId&#xD;&#xA;                                                             AND cbp.Product_Id = b.BookingProductId" Name="dsAddictionalProducts">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@BookingId">
+          <Value>
+            <String>= Parameters.BookingId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection CanShrink="False" KeepTogether="True" Height="7.00000111262003in" Name="detailSection1">
+      <Style Visible="True">
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <HtmlTextBox Width="2.49996058146159in" Height="0.199999968210856in" Left="0.00003941853841146in" Top="0in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Booking&quot;))} ({= HtmlEncode(Parameters.ReservationCode.Value)}) {= HtmlEncode(MessagesFunctions.getMessage(&quot;at&quot;))} {= HtmlEncode(Parameters.SiteName.Value)} {= HtmlEncode(Parameters.BookingStatus.Value)}&lt;/span&gt;" Name="htmlTextBox1">
+          <Style>
+            <Font Name="Arial Unicode MS" Bold="True" />
+          </Style>
+        </HtmlTextBox>
+        <Crosstab DataSourceName="dsCustomers" Width="2.50208347236813in" Height="0.614166608241694in" Left="0in" Top="0.399999936421712in" Name="crosstab9" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.82909148714185in" Height="0.179583324470249in" Left="0in" Top="0in" Value="= Trim(Fields.customer_name)" Name="textBox31" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.672992096805874in" Height="0.179583327146251in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Name') + ': '" Name="textBox1" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.82909148714185in" Height="0.148333310257022in" Left="0in" Top="0in" Value="= Trim(Fields.email)" Name="textBox64" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.82909148714185in" Height="0.148333310257022in" Left="0in" Top="0in" Value="= Trim(Fields.contact_phone1) + iif(Fields.contact_phone2 =&quot;&quot;,&quot;&quot;,&quot;\&quot;) + Fields.contact_phone2" Name="textBox72" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.82909148714185in" Height="0.137916654105605in" Left="0in" Top="0in" Value="= Trim(Fields.address1) + &quot; &quot; + Trim(Fields.city) + &quot; &quot; + Trim(Fields.state) + &quot; &quot; + Trim(Fields.pin)" Name="textBox80" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.672992096805874in" Height="0.137916656160725in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Address') + ': '" Name="textBox3" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.672992096805874in" Height="0.148333312467361in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Phone') + ': '" Name="textBox4" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.672992096805874in" Height="0.148333312467361in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Email') + ': '" Name="textBox5" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="0.672991985226279in" />
+              <Column Width="1.82909148714185in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.179583324470249in" />
+              <Row Height="0.137916654105605in" />
+              <Row Height="0.148333310257022in" />
+              <Row Height="0.148333310257022in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <ChildGroups>
+                <TableGroup Name="group6" />
+                <TableGroup Name="group10" />
+                <TableGroup Name="group9" />
+                <TableGroup Name="group8" />
+              </ChildGroups>
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3" />
+            <TableGroup Name="customer_name2" />
+          </ColumnGroups>
+        </Crosstab>
+        <Crosstab DataSourceName="dsBookingInfo" Width="2.3770435395474in" Height="1.08666654864747in" Left="0.100000023841858in" Top="1.39999993642171in" Name="crosstab10" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.190000017818258in" Left="0in" Top="0in" Value="= Trim(Fields.ReservationCode)" Name="textBox6" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964652534796in" Height="0.190000012478678in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Booking Code') + ': '" Name="textBox16" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.179583212540015in" Left="0in" Top="0in" Value="= Fields.ToDate.ToString(&quot;hh:mm tt&quot;)" Name="textBox32" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.189999934818802in" Left="0in" Top="0in" Value="= Fields.FromDate.ToString(&quot;hh:mm tt&quot;) " Name="textBox43" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964652534796in" Height="0.189999987543689in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('From Time') + ': '" Name="textBox44" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="4" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964652534796in" Height="0.179583225277308in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('To Time') + ': '" Name="textBox45" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.179166693601215in" Left="0in" Top="0in" Value="= Fields.BookingName" Name="textBox8" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964652534796in" Height="0.179166652952194in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Booking Name') + ': '" Name="textBox7" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.189583360547031in" Left="0in" Top="0in" Value="= Fields.FromDate.ToString(&quot;dd-MMM-yyyy&quot;)" Name="textBox10" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964652534796in" Height="0.18958335677514in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('For Date') + ': '" Name="textBox9" StyleName="Normal.TableHeader">
+                    <Style TextAlign="Left" VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.24739708040654in" Height="0.158333348125107in" Left="0in" Top="0in" Value="= Fields.FacilityName" Name="textBox11" StyleName="Normal.TableBody">
+                    <Style VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="5" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.12964645914087in" Height="0.158333348125107in" Left="0in" Top="0in" KeepTogether="False" Value="= MessagesFunctions.getMessage('Facility') + ': '" Name="textBox12" StyleName="Normal.TableHeader">
+                    <Style VerticalAlign="Top">
+                      <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Right="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.12964645914087in" />
+              <Column Width="1.24739708040653in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.189999988603461in" />
+              <Row Height="0.179166706415254in" />
+              <Row Height="0.189583353175141in" />
+              <Row Height="0.189999988603461in" />
+              <Row Height="0.179583163725047in" />
+              <Row Height="0.158333348125107in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <ChildGroups>
+                <TableGroup Name="group6" />
+                <TableGroup Name="group" />
+                <TableGroup Name="group1" />
+                <TableGroup Name="group10" />
+                <TableGroup Name="group9" />
+                <TableGroup Name="group2" />
+              </ChildGroups>
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3" />
+            <TableGroup Name="customer_name2" />
+          </ColumnGroups>
+        </Crosstab>
+        <HtmlTextBox Width="2.50208353996277in" Height="0.200078725814819in" Left="0in" Top="1.19999996821086in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Booking Details&quot;))} &lt;/span&gt;" Name="htmlTextBox2">
+          <Style>
+            <Font Name="Arial Unicode MS" Bold="True" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.36450362205506in" Height="0.171666860580444in" Left="0.0916271209716797in" Top="2.59984238942464in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Package's&quot;))} :&lt;/span&gt;" KeepTogether="False" Name="htmlTextBox3">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Bold="True" />
+            <Padding Top="0pt" />
+          </Style>
+        </HtmlTextBox>
+        <Crosstab DataSourceName="dsPackageproducts" Width="2.26874997789657in" Height="0.2in" Left="0.200000047683716in" Top="2.77158800760905in" Name="crosstab2" StyleName="Office.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <HtmlTextBox Width="2.26874997789657in" Height="0.2in" Left="1.29162685076396in" Top="0.0999606450398763in" Value="{= HtmlEncode(Fields.product_name)} [{= HtmlEncode(MessagesFunctions.getMessage(&quot;QTY&quot;))}: {= Fields.Quantity} ]&lt;br /&gt;{= HtmlEncode(Fields.Remarks)}" Name="htmlTextBox4" StyleName="Office.TableBody">
+                    <Style Color="Black">
+                      <Font Name="Arial Unicode MS" Size="10pt" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </HtmlTextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.26874997789657in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="product_name" />
+          </ColumnGroups>
+        </Crosstab>
+        <HtmlTextBox Width="2.46875007947286in" Height="0.200078725814819in" Left="0in" Top="4.90000009536743in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Additional Items&quot;))} :&lt;/span&gt;" Name="htmlTextBox6">
+          <Style>
+            <Font Name="Arial Unicode MS" Bold="True" />
+          </Style>
+        </HtmlTextBox>
+        <Crosstab DataSourceName="dsAddictionalProducts" Width="2.36249987284342in" Height="0.200000002980232in" Left="0.0604565938313802in" Top="5.10015805562337in" Name="crosstab3" StyleName="Office.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <HtmlTextBox Width="2.36249995231628in" Height="0.200000002980232in" Left="0in" Top="0in" Value="{= HtmlEncode(Fields.product_name)} [{= HtmlEncode(MessagesFunctions.getMessage(&quot;QTY&quot;))}: {= Fields.Quantity} ] {= HtmlEncode(Fields.Remarks)}" Name="htmlTextBox7" StyleName="Office.TableBody">
+                    <Style Color="Black">
+                      <Font Name="Arial Unicode MS" Size="10pt" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </HtmlTextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.36249987284342in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="product_name" />
+          </ColumnGroups>
+        </Crosstab>
+        <HtmlTextBox Width="2.46250001589457in" Height="0.200039938092232in" Left="0in" Top="5.5in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Remarks&quot;))} :&lt;/span&gt;" Name="htmlTextBox8">
+          <Style>
+            <Font Name="Arial Unicode MS" Bold="True" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.29170648256938in" Height="0.199804306030273in" Left="0.0604565938313802in" Top="5.70015780131022in" Value="&amp;nbsp;{= HtmlEncode(Parameters.BookingRemarks.Value)}" Name="htmlTextBox9">
+          <Style>
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.45613082249959in" Height="0.204086944460869in" Left="0in" Top="3.59999974568685in" Value="{= HtmlEncode(MessagesFunctions.getMessage(&quot;Advance paid&quot;))} &lt;span style=&quot;font-family: arial&quot;&gt;{= HtmlEncode(Format(Parameters.AmountWithCurSymbolCellFormat.Value,(Parameters.AmountPaid.Value)))}&lt;/span&gt;" Name="htmlTextBox13">
+          <Style>
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.46in" Height="0.2in" Left="0in" Top="4.00424448649089in" Value="{= HtmlEncode(MessagesFunctions.getMessage(&quot;Booking is&quot;))} {= HtmlEncode(Parameters.BookingStatus.Value)}" Name="htmlTextBox11">
+          <Style>
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.45613082249959in" Height="0.200000137090683in" Left="0in" Top="3.39999993642171in" Value="{= HtmlEncode(MessagesFunctions.getMessage(&quot;Estimate Amount&quot;))} &lt;span style=&quot;font-family: arial&quot;&gt;{= HtmlEncode(Format(Parameters.AmountWithCurSymbolCellFormat.Value,(Parameters.EstimateAmount.Value)))}&lt;/span&gt;" Name="htmlTextBox10">
+          <Style>
+            <Font Name="Arial Unicode MS" />
+          </Style>
+        </HtmlTextBox>
+        <HtmlTextBox Width="2.36874985694886in" Height="0.199999809265137in" Left="0.100000023841858in" Top="2.97158813476563in" Value="{= HtmlEncode(MessagesFunctions.getMessage(&quot;Booking for&quot;))} {= Parameters.GuestCount.Value}" Name="htmlTextBox5" />
+        <Barcode Width="1.30000003178914in" Height="0.90000053246816in" Left="0.600000063578288in" Top="6.10000038146973in" Value="= Parameters.FiscalReference.Value" Stretch="True" Name="barcode1">
+          <Encoder>
+            <QRCodeEncoder />
+          </Encoder>
+          <Bindings>
+            <Binding Path="Visible" Expression="=IIF((((Parameters.FiscalPrinterType.Value =&quot;FiskalTrust&quot;) Or (Parameters.FiscalPrinterType.Value =&quot;CroatiaFiscalization&quot;)) AND (Parameters.FiscalReference.Value &lt;&gt; &quot;&quot;)), true,false)" />
+          </Bindings>
+        </Barcode>
+        <HtmlTextBox Width="2.46in" Height="0.2in" Left="0in" Top="3.80416552225749in" Value="{= HtmlEncode(MessagesFunctions.getMessage(&quot;Total Due&quot;))} &lt;span style=&quot;font-family: arial&quot;&gt;{= HtmlEncode(Format(Parameters.AmountWithCurSymbolCellFormat.Value,((Parameters.EstimateAmount.Value)-(Parameters.AmountPaid.Value))))}&lt;/span&gt;" Name="htmlTextBox12" />
+        <HtmlTextBox Width="2.46875in" Height="0.200157567858696in" Left="0in" Top="4.30000019073486in" Value="&lt;span style=&quot;font-family: arial unicode ms&quot;&gt;{= HtmlEncode(MessagesFunctions.getMessage(&quot;Service Charges and Gratuity&quot;))} :&lt;/span&gt;" Name="htmlTextBox15">
+          <Style>
+            <Font Name="Arial Unicode MS" Bold="True" />
+          </Style>
+        </HtmlTextBox>
+        <Crosstab DataSourceName="dsServiceAndGratuity" Width="2.32295621236165in" Height="0.2in" Left="0.100000063578288in" Top="4.50023651123047in" Name="crosstab1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.32295621236165in" Height="0.2in" Left="0in" Top="0in" Value="{= HtmlEncode(Fields.product_name)}{= HtmlEncode(Format(Parameters.AmountWithCurSymbolCellFormat.Value,((Fields.Amount))))}" Name="textBox14" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="10pt" />
+                      <BorderStyle Default="None" />
+                      <Padding Left="0.200000002980232pt" Top="0.100000001490116pt" Bottom="0.100000001490116pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.32295621236165in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="product_name1" />
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+  </Items>
+  <PageSettings PaperKind="Custom" PaperSize="3.15000009536743in, 5in" Landscape="False" ContinuousPaper="True">
+    <Margins>
+      <MarginsU Left="0.100000001490116in" Right="0.100000001490116in" Top="0.100000001490116in" Bottom="0.100000001490116in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="188, 211, 241" Color="20, 34, 77">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="35, 92, 169" Color="238, 244, 251">
+        <Font Name="Calibri" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="238, 244, 251" Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowNull="True" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String>=AllValues(Fields.Id)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BookingId" Type="Integer" Text="BookindId" Visible="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BOOKING_RECEIPT_TEMPLATE_QUOTE" Text="BOOKING_RECEIPT_TEMPLATE_QUOTE" AllowNull="True" />
+    <ReportParameter Name="BOOKING_RECEIPT_TEMPLATE_LIABILITY_TEXT" Text="BOOKING_RECEIPT_TEMPLATE_LIABILITY_TEXT" AllowNull="True" />
+    <ReportParameter Name="BOOKING_RECEIPT_TEMPLATE_CANCELLATION_POLICY" Text="BOOKING_RECEIPT_TEMPLATE_CANCELLATION_POLICY" AllowNull="True" />
+    <ReportParameter Name="BOOKING_RECEIPT_TEMPLATE_THANKYOU_MESSAGE" Text="BOOKING_RECEIPT_TEMPLATE_THANKYOU_MESSAGE" AllowNull="True" />
+    <ReportParameter Name="CustomerPassPhrase" Text="CustomerPassPhrase" />
+    <ReportParameter Name="BookingProductDescription" Text="BookingProductDescription" AllowNull="True">
+      <AvailableValues DataSourceName="BookingProductDescription" DisplayMember="= Fields.description" ValueMember="= Fields.description" />
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Text="AmountWithCurSymbolCellFormat" />
+    <ReportParameter Name="AmountPaid" Type="Float" Text="AmountPaid" AllowNull="True">
+      <AvailableValues DataSourceName="dsAdvancePaid" ValueMember="= Fields.Amount_paid" />
+      <Value>
+        <String>= Fields.Amount_paid</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ReservationCode" Text="ReservationCode" AllowBlank="False">
+      <AvailableValues DataSourceName="dsBookingDetails" DisplayMember="= Fields.ReservationCode" ValueMember="= Fields.ReservationCode" />
+      <Value>
+        <String>= Fields.ReservationCode</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BookingStatus" Text="BookingStatus">
+      <AvailableValues DataSourceName="dsBookingDetails" DisplayMember="= Fields.Booking_Status" ValueMember="= Fields.Booking_Status" />
+      <Value>
+        <String>= Fields.Booking_Status</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="GuestCount" Type="Integer" Text="GuestCount" AllowNull="True">
+      <AvailableValues DataSourceName="dsBookingInfo" DisplayMember="= Fields.GuestCount" ValueMember="= Fields.GuestCount" />
+      <Value>
+        <String>= Fields.GuestCount</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="BookingRemarks" Text="BookingRemarks" AllowNull="True">
+      <AvailableValues DataSourceName="dsBookingDetails" DisplayMember="= Fields.Remarks" ValueMember="= Fields.Remarks" />
+      <Value>
+        <String>= Fields.Remarks</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EstimateAmount" Type="Float" Text="EstimateAmount" AllowNull="True">
+      <AvailableValues DataSourceName="dsEstmateAmount" DisplayMember="= Fields.TrxNetAmount" ValueMember="= Fields.TrxNetAmount" />
+      <Value>
+        <String>= Fields.TrxNetAmount</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="FiscalReference" Text="FiscalReference" AllowNull="True">
+      <AvailableValues DataSourceName="dsFiscalReference" DisplayMember="= Fields.externalsourcereference" ValueMember="= Fields.externalsourcereference" />
+      <Value>
+        <String>= Fields.externalsourcereference</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="FiscalPrinterType" Text="FiscalPrinterType">
+      <AvailableValues DataSourceName="dsFiscalPrinterType" DisplayMember="= Fields.FiscalPrinterType" ValueMember="= Fields.FiscalPrinterType" />
+      <Value>
+        <String>= Fields.FiscalPrinterType</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ServiceCharge" Type="Float" Text="ServiceCharge">
+      <AvailableValues DataSourceName="dsServiceAndGratuity" ValueMember="= Fields.Amount" />
+      <Value>
+        <String>= Fields.Amount</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ProductNameSG" Text="ProductNameSG">
+      <AvailableValues DataSourceName="dsServiceAndGratuity" ValueMember="= Fields.product_name" />
+      <Value>
+        <String>= Fields.product_name</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

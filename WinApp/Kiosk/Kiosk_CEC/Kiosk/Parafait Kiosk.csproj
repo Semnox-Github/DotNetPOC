@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5F9AEC84-AF2D-49CD-9C79-3B7A19D5F27B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parafait_Kiosk</RootNamespace>
+    <AssemblyName>Parafait Kiosk</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>false</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>\\Semnox_Version_Control\Development\Parafait\Kiosk\Sources\Parafait Kiosk\Parafait Kiosk\publish\</InstallUrl>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E986890EF822C6133A873CE236C40A857E9B057F</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Parafait Kiosk_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdyenWrapper">
+      <HintPath>..\..\..\..\..\OTS\AdyenWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SDKPlusLib">
+      <HintPath>..\..\..\..\..\OTS\SDKPlusLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseFormKiosk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseFormKiosk.Designer.cs">
+      <DependentUpon>BaseFormKiosk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmCheckBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmCheckBalance.Designer.cs">
+      <DependentUpon>frmCheckBalance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmTicketType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmTicketType.Designer.cs">
+      <DependentUpon>frmTicketType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEntitlement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEntitlement.designer.cs">
+      <DependentUpon>frmEntitlement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScanCoupon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScanCoupon.Designer.cs">
+      <DependentUpon>frmScanCoupon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmKioskTransactionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmKioskTransactionView.designer.cs">
+      <DependentUpon>frmKioskTransactionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmPrintTransactionLines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmPrintTransactionLines.designer.cs">
+      <DependentUpon>frmPrintTransactionLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\FSKCoverPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\FSKCoverPage.designer.cs">
+      <DependentUpon>FSKCoverPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOut.Designer.cs">
+      <DependentUpon>frmTimeOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmCardCountBasic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmCardCountBasic.Designer.cs">
+      <DependentUpon>frmCardCountBasic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmKioskActivityDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmKioskActivityDetails.designer.cs">
+      <DependentUpon>frmKioskActivityDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSplashScreen.Designer.cs">
+      <DependentUpon>frmSplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmCashInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmCashInsert.Designer.cs">
+      <DependentUpon>frmCashInsert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="TimeOut\frmTimeOutCounter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOutCounter.Designer.cs">
+      <DependentUpon>frmTimeOutCounter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\TimeOut.cs" />
+    <Compile Include="Transaction\frmFundRaiserAndDonation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmFundRaiserAndDonation.Designer.cs">
+      <DependentUpon>frmFundRaiserAndDonation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmLoyalty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmLoyalty.Designer.cs">
+      <DependentUpon>frmLoyalty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmChooseDisplayGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmChooseDisplayGroup.Designer.cs">
+      <DependentUpon>frmChooseDisplayGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmCreditsToTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmCreditsToTime.designer.cs">
+      <DependentUpon>frmCreditsToTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmPauseTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmPauseTime.designer.cs">
+      <DependentUpon>frmPauseTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmPaymentGameCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmPaymentGameCard.Designer.cs">
+      <DependentUpon>frmPaymentGameCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmPaymentMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmPaymentMode.Designer.cs">
+      <DependentUpon>frmPaymentMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmLoadBonus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmLoadBonus.Designer.cs">
+      <DependentUpon>frmLoadBonus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardTransfer\frmTransferFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardTransfer\frmTransferFrom.Designer.cs">
+      <DependentUpon>frmTransferFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardTransfer\frmTransferTo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardTransfer\frmTransferTo.Designer.cs">
+      <DependentUpon>frmTransferTo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\CardGames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\CardGames.Designer.cs">
+      <DependentUpon>CardGames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\CustomerStatic.cs" />
+    <Compile Include="Home\frmAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmAdmin.Designer.cs">
+      <DependentUpon>frmAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmAgeGate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmAgeGate.Designer.cs">
+      <DependentUpon>frmAgeGate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmCardCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmCardCount.Designer.cs">
+      <DependentUpon>frmCardCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmFAQ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmFAQ.Designer.cs">
+      <DependentUpon>frmFAQ.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmLogMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmLogMessage.Designer.cs">
+      <DependentUpon>frmLogMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOKMsg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOKMsg.Designer.cs">
+      <DependentUpon>frmOKMsg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmUpsellProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmUpsellProduct.Designer.cs">
+      <DependentUpon>frmUpsellProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmRedeemTokens.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmRedeemTokens.Designer.cs">
+      <DependentUpon>frmRedeemTokens.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmThankYou.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmThankYou.Designer.cs">
+      <DependentUpon>frmThankYou.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTapCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTapCard.Designer.cs">
+      <DependentUpon>frmTapCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmCustomer.designer.cs">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmCustomerDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmCustomerDashboard.Designer.cs">
+      <DependentUpon>frmCustomerDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmChooseProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmChooseProduct.Designer.cs">
+      <DependentUpon>frmChooseProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmHome.Designer.cs">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmCardTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmCardTransaction.Designer.cs">
+      <DependentUpon>frmCardTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\frmRegisterTnC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\frmRegisterTnC.Designer.cs">
+      <DependentUpon>frmRegisterTnC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmYesNo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmYesNo.Designer.cs">
+      <DependentUpon>frmYesNo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Home\SetUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\SetUp.designer.cs">
+      <DependentUpon>SetUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\FSKExecuteOnlineTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\FSKExecuteOnlineTransaction.designer.cs">
+      <DependentUpon>FSKExecuteOnlineTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\usrControlFundsDonationsProduct.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Transaction\usrControlFundsDonationsProduct.designer.cs">
+      <DependentUpon>usrControlFundsDonationsProduct.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseFormKiosk.resx">
+      <DependentUpon>BaseFormKiosk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\CardGames.resx">
+      <DependentUpon>CardGames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmCheckBalance.resx">
+      <DependentUpon>frmCheckBalance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmTicketType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTicketType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEntitlement.resx">
+      <DependentUpon>frmEntitlement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScanCoupon.resx">
+      <DependentUpon>frmScanCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmKioskTransactionView.resx">
+      <DependentUpon>frmKioskTransactionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmPrintTransactionLines.resx">
+      <DependentUpon>frmPrintTransactionLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\FSKCoverPage.resx">
+      <DependentUpon>FSKCoverPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmTimeOut.resx">
+      <DependentUpon>frmTimeOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmCardCountBasic.resx">
+      <DependentUpon>frmCardCountBasic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmKioskActivityDetails.resx">
+      <DependentUpon>frmKioskActivityDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSplashScreen.resx">
+      <DependentUpon>frmSplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmCashInsert.resx">
+      <DependentUpon>frmCashInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmTimeOutCounter.resx">
+      <DependentUpon>frmTimeOutCounter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmFundRaiserAndDonation.resx">
+      <DependentUpon>frmFundRaiserAndDonation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmLoyalty.resx">
+      <DependentUpon>frmLoyalty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmChooseDisplayGroup.resx">
+      <DependentUpon>frmChooseDisplayGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmCreditsToTime.resx">
+      <DependentUpon>frmCreditsToTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmPauseTime.resx">
+      <DependentUpon>frmPauseTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmPaymentGameCard.resx">
+      <DependentUpon>frmPaymentGameCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmPaymentMode.resx">
+      <DependentUpon>frmPaymentMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmLoadBonus.resx">
+      <DependentUpon>frmLoadBonus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardTransfer\frmTransferFrom.resx">
+      <DependentUpon>frmTransferFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardTransfer\frmTransferTo.resx">
+      <DependentUpon>frmTransferTo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmAgeGate.resx">
+      <DependentUpon>frmAgeGate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmAdmin.resx">
+      <DependentUpon>frmAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmCardCount.resx">
+      <DependentUpon>frmCardCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmFAQ.resx">
+      <DependentUpon>frmFAQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmLogMessage.resx">
+      <DependentUpon>frmLogMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOKMsg.resx">
+      <DependentUpon>frmOKMsg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmCustomer.resx">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmCustomerDashboard.resx">
+      <DependentUpon>frmCustomerDashboard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmChooseProduct.resx">
+      <DependentUpon>frmChooseProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmHome.resx">
+      <DependentUpon>frmHome.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmCardTransaction.resx">
+      <DependentUpon>frmCardTransaction.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmUpsellProduct.resx">
+      <DependentUpon>frmUpsellProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmRedeemTokens.resx">
+      <DependentUpon>frmRedeemTokens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTapCard.resx">
+      <DependentUpon>frmTapCard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmThankYou.resx">
+      <DependentUpon>frmThankYou.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\frmRegisterTnC.resx">
+      <DependentUpon>frmRegisterTnC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmYesNo.resx">
+      <DependentUpon>frmYesNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\SetUp.resx">
+      <DependentUpon>SetUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\FSKExecuteOnlineTransaction.resx">
+      <DependentUpon>FSKExecuteOnlineTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\usrControlFundsDonationsProduct.resx">
+      <DependentUpon>usrControlFundsDonationsProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\Semnox.Parafait.Customer.Accounts.AccountActivityDTO.datasource" />
+    <None Include="Properties\DataSources\Semnox.Parafait.Game.GamePlayDTO.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Okbtn.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel copy.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Start copy.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_register_customer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dot2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Semnox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save Icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\recharge-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Backward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-1\Home Background.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-1\Sreen Button-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-1\Sreen Button-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-1\Sreen Button-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-1\Sreen Button-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\Button-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\OvalButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\RoundEdge.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\Back Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\Small Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Screen-2\RectangleButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\BIG Popup BOX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\TOP Button-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\TOP Button-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\Side SMALL Button-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Akshara\NEW Edited SCREENS\May 23 2012\BIG Popup BOX-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SmallKBDButton.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LongKBDButton.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera_click.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\profile_picture_placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\theme1-BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\theme2-BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\theme3-BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\Home Screen\check-balance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\Home Screen\new card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\Home Screen\top-up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\alert-close-btn pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\alert-close-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\amount-paid-btn pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\amount-paid-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\back-btn pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\back-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\black-BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\cancel-btn pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\cancel-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\card-payment pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\card-payment-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\language-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\language-btn-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\message-alert-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\table1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\table2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\table3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\table-selection-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\top-up pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\top-up_-activities-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\value-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\check-balance-btn-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\top-up-btn-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\new-card-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\regsiter-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\regsiter-btn-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\save-cancel-btn-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\save-cancel-btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\CheckMark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\ProductBtnPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KIOSK Screen extracted images\image extracting\ProductBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NameValueBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ValueBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow scroll down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Splash_Screen_0515.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Recharge_Play-Pass_Big.png" />
+    <None Include="Resources\selected_tick.png" />
+    <None Include="Resources\Table1.png" />
+    <None Include="Resources\right_arrow.png" />
+    <None Include="Resources\Unchecked.png" />
+    <None Include="Resources\Bg_Panel.png" />
+    <None Include="Resources\checked.png" />
+    <None Include="Resources\close-button.png" />
+    <None Include="Resources\game_price_Ticket_table.png" />
+    <None Include="Resources\timeout-box-violet.png" />
+    <None Include="Resources\timeout-box.png" />
+    <None Include="Resources\semnox-logo.png" />
+    <None Include="Resources\table3.png" />
+    <None Include="Resources\Theme1-BG.png" />
+    <None Include="Resources\tick-box-checked.png" />
+    <None Include="Resources\T&amp;C-tick-box.png" />
+    <None Include="Resources\text-entry-box2.png" />
+    <None Include="Resources\text-entry-box.png" />
+    <None Include="Resources\Value-add-box.png" />
+    <None Include="Resources\tap-card-box.png" />
+    <None Include="Resources\sure-button.png" />
+    <None Include="Resources\TablePurchaseSummary.png" />
+    <None Include="Resources\terms-button.png" />
+    <None Include="Resources\register-button.png" />
+    <None Include="Resources\RadioChecked.png" />
+    <None Include="Resources\RadioUnChecked.png" />
+    <None Include="Resources\timer-btn2.png" />
+    <None Include="Resources\timer-btn1.png" />
+    <None Include="Resources\rounded-rectangle-xl1.png" />
+    <None Include="Resources\rounded-rectangle-xl.png" />
+    <None Include="Resources\Register-New.png" />
+    <None Include="Resources\Redeem Tokens-New.png" />
+    <None Include="Resources\Transfer Points-New.png" />
+    <None Include="Resources\ProductHighlightButton.png" />
+    <None Include="Resources\rounded-rectangle-xxl.png" />
+    <None Include="Resources\unchecked_checkbox.png" />
+    <None Include="bin\Debug\Media\Images\CEC-Default-BG.png" />
+    <None Include="Resources\CardCountPressed.png" />
+    <None Include="Resources\CardCountNormal.png" />
+    <None Include="Resources\Cash-btn-normal.png" />
+    <None Include="Resources\CreditCard-btn-normal.png" />
+    <None Include="Resources\CreditCard-And-Cash-btn-normal.png" />
+    <None Include="Resources\Cash-btn-pressed.png" />
+    <None Include="Resources\CreditCard-And-Cash-btn-pressed.png" />
+    <None Include="Resources\CreditCard-btn-pressed.png" />
+    <None Include="Resources\discount-button.png" />
+    <None Include="Resources\normal1.png" />
+    <None Include="Resources\AlertRectangle.png" />
+    <None Include="Resources\product-button-normal.png" />
+    <None Include="Resources\product-button-pressed.png" />
+    <None Include="Resources\product-button-pressed.png" />
+    <None Include="Resources\checked_checkbox.png" />
+    <None Include="Resources\checkbox_unchecked.png" />
+    <None Include="Resources\checkbox_checked.png" />
+    <None Include="Resources\checked_checkbox1.png" />
+    <None Include="Resources\checked_checkbox2.png" />
+    <None Include="Resources\checked_checkbox3.png" />
+    <None Include="Resources\checkbox_checked1.png" />
+    <None Include="Resources\checked_checkbox4.png" />
+    <None Include="Resources\New Card-New.png" />
+    <None Include="Resources\Check Balance-New.png" />
+    <None Include="Resources\Add Points-New.png" />
+    <None Include="Resources\ProductButtonPressedNew.png" />
+    <None Include="Resources\ProductButtonNew.png" />
+    <None Include="Resources\ProductDescriptionPressed.png" />
+    <None Include="Resources\ProductButtonBestValue.png" />
+    <None Include="Resources\ProductButtonBestValuePressed.png" />
+    <None Include="Resources\btnUpsellProduct.png" />
+    <None Include="Resources\btnUpsellDesc.png" />
+    <None Include="Resources\DescButtonLandscape.png" />
+    <None Include="Resources\ProductButtonLandscape.png" />
+    <None Include="Resources\ProductButtonLandscapePressed.png" />
+    <None Include="Resources\DescButtonLandscapeBestValuePressed.png" />
+    <None Include="Resources\DescButtonLandscapeBestValue.png" />
+    <None Include="Resources\DescButtonLandscapePressed.png" />
+    <None Include="Resources\New-Play-Pass-Button.png" />
+    <None Include="Resources\Exchange-tokens-Button.png" />
+    <None Include="Resources\Back-button-box.png" />
+    <None Include="Resources\Button1.png" />
+    <None Include="Resources\Cash-Button.png" />
+    <None Include="Resources\credit-debit-button.png" />
+    <None Include="Resources\no-thanks-Button.png" />
+    <None Include="Resources\No-of-Card-Button.png" />
+    <None Include="Resources\game-price-table.png" />
+    <None Include="Resources\product-table.png" />
+    <None Include="Resources\birthdate-entry-box.png" />
+    <None Include="Resources\new-card-button.png" />
+    <None Include="Resources\Home screen PlayPass.png" />
+    <None Include="Resources\cards-Play-Pass.png" />
+    <None Include="Resources\CECMouse.png" />
+    <None Include="Resources\CECMouse1.png" />
+    <None Include="Resources\Generic Coin Note.jpg" />
+    <None Include="Resources\ProductDescription.png" />
+    <None Include="Resources\plain-product-button.png" />
+    <None Include="Resources\bottom-bar.png" />
+    <None Include="Resources\Btn.png" />
+    <None Include="Resources\BtnChange.png" />
+    <None Include="Resources\pause_time_box.png" />
+    <None Include="Resources\CEC_MoreCheese_Logo.png" />
+    <None Include="Resources\Check Box_Empty %281%29.png" />
+    <None Include="Resources\Check Box_Ticked.png" />
+    <None Include="Resources\left_arrow.png" />
+    <None Include="Resources\frmloyalty_background.png" />
+    <None Include="Resources\btnYes_image.png" />
+    <None Include="Resources\btnOk_image.png" />
+    <None Include="Resources\Grey_Check Box_Empty.png" />
+    <None Include="Resources\Check Box_Empty.png" />
+    <None Include="Resources\CouponNoPanel.png" />
+    <None Include="Resources\discountPanel.png" />
+    <None Include="Resources\MoneySummaryPanel.png" />
+    <None Include="Resources\check balance box.png" />
+    <None Include="Resources\Language_Btn.png" />
+    <None Include="Resources\Keyboard_1.png" />
+    <None Include="Resources\OK.gif" />
+    <None Include="Resources\NewTickedCheckBox.png" />
+    <None Include="Resources\fund_raiser.png" />
+    <None Include="Resources\Check_Box_Ticked.png" />
+    <None Include="Resources\Home-screen.png" />
+    <None Include="Resources\NewUnTickedCheckBox.png" />
+    <None Include="Resources\NewDisabledCheckBox.png" />
+    <None Include="Resources\home-button.png" />
+    <None Include="Resources\product-table_ExOn.png" />
+    <Content Include="Resources\ProductHighlightbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonSolution\Category\Category.csproj">
+      <Project>{1B64EC1E-F381-485B-8C69-A07F80A27775}</Project>
+      <Name>Category</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\DigitalSignage\DigitalSignage.csproj">
+      <Project>{ca9e1908-ed0e-4f91-ace2-7ed7fc3c8d6c}</Project>
+      <Name>DigitalSignage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Discounts\Discounts.csproj">
+      <Project>{f0fde99a-725f-45c2-9cd8-b7961088ea2c}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\ITransaction\ITransaction.csproj">
+      <Project>{f23f4b8c-4c62-49bd-b9cf-cdd278e14c5f}</Project>
+      <Name>ITransaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\ThirdParty\ThirdParty.csproj">
+      <Project>{45C69515-B9A7-44F3-882B-0B53548226F1}</Project>
+      <Name>ThirdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\User\User.csproj">
+      <Project>{e30d3295-e230-44d2-880d-22bf5a349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KioskCore\KioskCore\KioskCore.csproj">
+      <Project>{c43d25ad-fa0f-4e26-8948-c05ca296b367}</Project>
+      <Name>KioskCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,190 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ParafaitPOS"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:customcontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:customusercontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        x:Class="ParafaitPOS.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Style="{StaticResource BaseWindowStyle}">
+
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Margin="0,0,20,0" 
+              Grid.Column="0"
+              x:Name="ContentGrid"
+              Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <customusercontrols:ComboGroupUserControl Grid.Row="0" 
+                                                      x:Name="ComboBoxGroupControl"/>
+            <ScrollViewer Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <customcontrols:CustomActionButton Grid.Column="0" 
+                                                       ActionStyle="Light"
+                                                       Width="100" 
+                                                       Height="50" 
+                                                       IsEnabled="False"
+                                                       Content="Date"  
+                                                       Click="Button_Click"/>
+                    <customcontrols:CustomActionButton Grid.Column="1" 
+                                                       ActionStyle="Passive"
+                                                       IsEnabled="False"
+                                                       Width="100" 
+                                                       Height="50" 
+                                                       Content="Search"  
+                                                       Click="Button_Click_1"/>
+                    <customcontrols:CustomActionButton Grid.Column="2" 
+                                                       Width="100" 
+                                                       Height="50" 
+                                                       Content="DataEntry"
+                                                       Click="Button_Click_2"/>
+                    <customcontrols:CustomTextBox Grid.Column="3" 
+                                                  x:Name="OutputTextBox" />
+                </Grid>
+            </ScrollViewer>
+            <customcontrols:CustomScrollViewer Grid.Row="2" 
+                                               VerticalScrollBarVisibility="Visible"
+                                               HorizontalScrollBarVisibility="Visible">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions >
+                    <StackPanel Grid.Column="0" Background="{StaticResource Control.ComboBackground}">
+                        <customcontrols:CustomTextBoxDatePicker Size="Small"
+                                                                DefaultValue="Select Date"
+                                                                Heading="Label Small"
+                                                                IsMandatory="True"
+                                                                DisablePastDates ="True"
+                                                                ValidationType="DateWithoutYear"/>
+                        <customcontrols:CustomTextBoxDatePicker Size="Medium"
+                                                                Heading="Label Medium"
+                                                                ValidationType="DateWithYear"/>
+                        <customcontrols:CustomTextBoxDatePicker Size="Large"
+                                                                Heading="Label Large"
+                                                                IsMandatory="True"/>
+                        <customcontrols:CustomTextBoxDatePicker Text="09/Sep"
+                                                                IsReadOnly="True"/>
+                        <customcontrols:CustomTextBoxDatePicker Text="09/Sep"
+                                                                IsEnabled="False"/>
+                        <customcontrols:CustomCheckBox Content="Chicken BBQ"
+                                                       Size="Small" 
+                                                       Margin="10"/>
+                        <customcontrols:CustomCheckBox Content="Chicken BBQ" 
+                                                       Size="Medium"
+                                                       Margin="10,0,10,10"/>
+                        <customcontrols:CustomCheckBox Content="Chicken BBQ" 
+                                                       Size="Large" 
+                                                       Margin="10,0,10,10"/>
+                        <customcontrols:CustomTextBox Text="askdj" 
+                                                      IsMandatory="True" 
+                                                      Heading="UserName"
+                                                      DefaultValue="Enter UserName" 
+                                                      ValidationType="AlphabetsOnly"
+                                                      Size="Small"/>
+                        <customcontrols:CustomTextBox Text="123" 
+                                                      IsMandatory="True" 
+                                                      DefaultValue="Enter mobile no." 
+                                                      Heading="Mobile number" 
+                                                      ValidationType="NumberOnly" 
+                                                      Size="Medium" />
+                        <customcontrols:CustomTextBox IsMasked="True"
+                                                      IsMandatory="True" 
+                                                      Heading="Enter password" 
+                                                      DefaultValue="Enter your password" 
+                                                      Size="Large"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}" 
+                                                       DefaultValue="Select"
+                                                       IsEditable="True" 
+                                                       Size="Small" 
+                                                       Heading="Label Small" 
+                                                       IsMandatory="True"
+                                                       Margin="10"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}"
+                                                       DefaultValue="Select here"
+                                                       IsEditable="True" 
+                                                       Size="Medium" 
+                                                       Heading="Label Medium" 
+                                                       IsMandatory="True"
+                                                       Margin="10"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}" 
+                                                       IsEditable="True"
+                                                       Size="Large" 
+                                                       Heading="Label Large" 
+                                                       IsMandatory="True" 
+                                                       Margin="10"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <StackPanel Orientation="Horizontal">
+                            <customcontrols:CustomActionButton ActionStyle="Passive" 
+                                                               Content="Passive" 
+                                                               Width="100" 
+                                                               Height="50"/>
+                            <customusercontrols:ButtonGroupUserControl x:Name="ButtonGroupControl">
+                                
+                            </customusercontrols:ButtonGroupUserControl>
+                        </StackPanel>
+                        <customcontrols:CustomSearchTextBox DefaultValue="Search here..." 
+                                                            Heading="Search AccessPoint"
+                                                            Size="Small" 
+                                                            Margin="10"/>
+                        <customcontrols:CustomSearchTextBox DefaultValue="Search hub" 
+                                                            Heading="Search Hubs" 
+                                                            Size="Medium" Margin="10"/>
+                        <customcontrols:CustomTextBox IsReadOnly="True" 
+                                                      Text="ReadOnly" 
+                                                      Margin="10"/>
+                        <customcontrols:CustomTextBox IsEnabled="False" 
+                                                      Text="Disabled" 
+                                                      Margin="10"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}" 
+                                                       Size="Small"
+                                                       Heading="Label Small" 
+                                                       IsMandatory="True" 
+                                                       Margin="10"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}" 
+                                                       Size="Medium" 
+                                                       Heading="Label Medium" 
+                                                       IsMandatory="True" 
+                                                       Margin="10"/>
+                        <customcontrols:CustomComboBox ItemsSource="{Binding ComboOptions}" 
+                                                       Size="Large" 
+                                                       Heading="Label Large" 
+                                                       IsMandatory="True" 
+                                                       Margin="10"/>
+                    </StackPanel>
+                </Grid>
+            </customcontrols:CustomScrollViewer>
+             
+        </Grid>
+
+        <Grid Grid.Column="1" 
+              x:Name="ActionGrid" 
+              Background="{StaticResource Control.ComboBackground}">
+            <TextBlock Name="ZeroSelectedTextBlock" 
+                       Text="0 Items selected" 
+                       Foreground="White"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       Visibility="Visible"/>
+        </Grid>
+    </Grid>-->
+
+</Window>

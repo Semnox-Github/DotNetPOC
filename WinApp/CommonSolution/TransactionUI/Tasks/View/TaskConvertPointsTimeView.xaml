@@ -1,0 +1,151 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskConvertPointsTimeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accountsUI="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        Style="{StaticResource TaskWindowStyle}"
+        mc:Ignorable="d"
+        Title="TaskConvertPointsTimeView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TaskConvertPointsTimeView}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid  x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0"
+                    Padding="8"
+                    Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding BackButtonCommand}"
+                            Style="{StaticResource TaskPopupBackButtonStyle}" />
+                    <UniformGrid Grid.Column="1"
+                                 Margin="8,0,0,0"
+                                 Rows="2">
+                        <common:CustomTextBlock x:Name="tbExchange"
+                                                Text="{Binding ModuleName}"
+                                                Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                TextSize="Medium"
+                                                VerticalAlignment="Center" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <common:CustomTextBlock x:Name="tbFromEntitlement"
+                                                    Grid.Column="0"
+                                                    Text="{Binding FromEntitlement}"
+                                                    Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                                    TextSize="Medium" />
+                            <Path Data="M12 16L4 8 20 8z"
+                                  Margin="4,0,4,0"
+                                  Grid.Column="1"
+                                  x:Name="ArrowPath"
+                                  Stretch="Uniform"
+                                  Fill="{StaticResource LeftPane.TextBlock.Foreground}"
+                                  RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="-90" />
+                                </Path.RenderTransform>
+                            </Path>
+                            <common:CustomTextBlock x:Name="tbToEntitlement"
+                                                    Grid.Column="2"
+                                                    Text="{Binding ToEntitlement}"
+                                                    Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                                    TextSize="Medium" 
+                                                    TextTrimming="CharacterEllipsis"/>
+                        </Grid>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+            <accountsUI:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                               Margin="16,0,0,0"
+                                               Grid.Column="1"
+                                               DataContext="{Binding CardDetailsVM}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsUI:CardDetailsUserControl}}"
+                                               Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accountsUI:CardDetailsUserControl>
+        </Grid>
+        <Grid VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Width="450px"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+
+            </Grid.RowDefinitions>
+            <common:CustomTextBlock Text="{Binding ExchangeCreditTimeHeading1}"
+                                    FontSize="{StaticResource FontSize.Small}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStyle="Normal"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="0" />
+            <common:CustomTextBox x:Name="txtPointsOrTimeAvailable"
+                                  Text="{Binding PointsOrTimeAvailable}"
+                                  Grid.Row="1"
+                                  IsReadOnly="True"
+                                  Margin="0,10,0,0"
+                                  Size="Medium"
+                                  TextAlignment="Center"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  Foreground="{StaticResource Control.Heading.ForeGround}"
+                                  Padding="0,10,0,10" />
+            <common:CustomTextBlock Text="{Binding ExchangeCreditTimeHeading2}"
+                                    FontSize="{StaticResource FontSize.Small}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="2"
+                                    Margin="0,16,0,0" />
+            <common:CustomNumericUpDown Grid.Row="3"
+                                        Margin="0,10,0,0"
+                                        Value="{Binding PointsOrTimeToConvert, Mode=TwoWay}"
+                                        FontSize="{StaticResource FontSize.Medium}">
+
+            </common:CustomNumericUpDown>
+            <common:CustomTextBlock  Text="{Binding TotalPointsOrTime}"
+                                     Grid.Row="4"
+                                     Margin="0,10,0,0"
+                                     TextAlignment="Center"
+                                     FontWeight="{StaticResource FontWeight.Bold}"
+                                     Foreground="{StaticResource Control.Heading.ForeGround}"
+                                     FontSize="{StaticResource FontSize.Small}" />
+
+
+        </Grid>
+    </Grid>
+</Window>

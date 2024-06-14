@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D897BE62-811B-49E0-A7D4-C768C8AC95AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Semnox.Parafait.RedemptionUI</RootNamespace>
+    <AssemblyName>RedemptionUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\OTS\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\..\..\..\OTS\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\..\OTS\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Converters\AutoShowMenusConverter.cs" />
+    <Compile Include="Model\RedemptionCurrencyRuleViewProvider.cs" />
+    <Compile Include="Model\RedemptionDeviceCollection.cs" />
+    <Compile Include="Model\RedemptionHeaderGroup.cs" />
+    <Compile Include="Model\RedemptionHeaderTag.cs" />
+    <Compile Include="Model\RedemptionReverseDisplayItems.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\RedemptionHeaderTagsVM.cs" />
+    <Compile Include="ViewModel\RedemptionMainUserControlVM.cs" />
+    <Compile Include="ViewModel\RedemptionMainVM.cs" />
+    <Compile Include="ViewModel\RedemptionReverseVM.cs" />
+    <Compile Include="ViewModel\RedemptionScanVM.cs" />
+    <Compile Include="ViewModel\RedemptionTicketAllocationVM.cs" />
+    <Compile Include="ViewModel\RedemptionUpdateVM.cs" />
+    <Compile Include="ViewModel\RedemptionUserControlVM.cs" />
+    <Compile Include="View\RedemptionHeaderTagsUserControl.xaml.cs">
+      <DependentUpon>RedemptionHeaderTagsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionMainUserControl.xaml.cs">
+      <DependentUpon>RedemptionMainUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionReverseView.xaml.cs">
+      <DependentUpon>RedemptionReverseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionScanView.xaml.cs">
+      <DependentUpon>RedemptionScanView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionTicketAllocationView.xaml.cs">
+      <DependentUpon>RedemptionTicketAllocationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionUpdateView.xaml.cs">
+      <DependentUpon>RedemptionUpdateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionUserControl.xaml.cs">
+      <DependentUpon>RedemptionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RedemptionView.xaml.cs">
+      <DependentUpon>RedemptionView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{800EDADC-F5A6-4A74-94EC-1267A91065D1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonUI\CommonUI.csproj">
+      <Project>{48630ece-833d-4683-8cc6-24c4a7cb2941}</Project>
+      <Name>CommonUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09EC39CF-3DD3-4920-A155-CADE5B252B8A}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970A8E60-83BE-4559-A67C-3EF7135A3E8D}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory\Inventory.csproj">
+      <Project>{af244e4d-b6f8-4fb7-979d-3e82236fe4ad}</Project>
+      <Name>Inventory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{B8974CD4-806B-4027-AFE3-D35DA8E949EE}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Redemption\RedemptionUtils.csproj">
+      <Project>{1a20e3de-4198-46c4-8c5b-0ac1fcb727a1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewContainer\ViewContainer.csproj">
+      <Project>{b73af819-c0b5-4aa6-8c09-e8643f1437d1}</Project>
+      <Name>ViewContainer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\RedemptionHeaderTagsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionMainUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionReverseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionScanView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionTicketAllocationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionUpdateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RedemptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

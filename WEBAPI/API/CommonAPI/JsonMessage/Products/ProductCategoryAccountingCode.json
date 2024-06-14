@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Id": 3,
+    "ObjectType": "Cost",
+    "TransactionType": "Debit",
+    "AccountingCode": "",
+    "Description": " ",
+    "Tax": 9,
+    "ObjectId": 79,
+    "ObjectName": "",
+    "LastUpdatedDate": "2019-01-24T17:32:47.18",
+    "LastUpdatedUser": "semnox",
+    "Guid": "dd2b564e-4bd0-4245-b513-213691ae165e",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "SiteId": -1,
+    "IsActive": false,
+    "IsChanged": false
+  },
+  {
+    "Id": 4,
+    "ObjectType": "Inventory Adjustments",
+    "TransactionType": "Debit",
+    "AccountingCode": "",
+    "Description": " ",
+    "Tax": -1,
+    "ObjectId": 79,
+    "ObjectName": "",
+    "LastUpdatedDate": "2019-01-24T17:32:53.52",
+    "LastUpdatedUser": "semnox",
+    "Guid": "b3f9129a-7074-4a18-8682-bed6a28b2025",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "SiteId": -1,
+    "IsActive": false,
+    "IsChanged": false
+  }
+]

@@ -1,0 +1,18 @@
+﻿[
+  {
+    "SegmentDefinitionSourceValueId": 12,
+    "SegmentDefinitionSourceId": 9,
+    "ListValue": "",
+    "DBQuery": "V.Address1 like  '%22%' AND V.Address2 like '%2222%'",
+    "Description": "",
+    "IsActive": "Y",
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-22T17:01:45.31",
+    "LastUpdatedBy": "semnox",
+    "LastupdatedDate": "2019-01-22T18:36:26.233",
+    "Guid": "47253a3a-fc88-4e5e-be48-92b0e050d524",
+    "Siteid": -1,
+    "SynchStatus": false,
+    "IsChanged": false
+  }
+]

@@ -1,0 +1,990 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF244E4D-B6F8-4FB7-979D-3E82236FE4AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Inventory</RootNamespace>
+    <AssemblyName>Inventory</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="Category, Version=2.110.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Category\bin\x86\Debug\Category.dll</HintPath>
+    </Reference>
+    <Reference Include="DashBoard">
+      <HintPath>..\DashBoard\bin\x86\Debug\DashBoard.dll</HintPath>
+    </Reference>
+    <Reference Include="DataGridViewExtension, Version=1.1.1.0, Culture=neutral, PublicKeyToken=81fb70b94a00c054, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DataGridViewExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="DataGridViewExtension.XmlSerializers, Version=1.1.1.0, Culture=neutral, PublicKeyToken=81fb70b94a00c054, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DataGridViewExtension.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="DGVEExcelExporting, Version=1.1.1.0, Culture=neutral, PublicKeyToken=81fb70b94a00c054, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DGVEExcelExporting.dll</HintPath>
+    </Reference>
+    <Reference Include="DGVEPdfExporting, Version=1.1.1.0, Culture=neutral, PublicKeyToken=81fb70b94a00c054, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DGVEPdfExporting.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Excel, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Core, Version=2.4.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.Microsoft.Office.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=10.0.4504.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+	<Reference Include="Vendor, Version=2.110.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Vendor\bin\x86\Debug\Vendor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApprovalRule\ApprovalLog.cs" />
+    <Compile Include="ApprovalRule\ApprovalLogDataHandler.cs" />
+    <Compile Include="ApprovalRule\ApprovalLogDTO.cs" />
+    <Compile Include="ApprovalRule\ApprovalRule.cs" />
+    <Compile Include="ApprovalRule\ApprovalRuleDataHandler.cs" />
+    <Compile Include="ApprovalRule\ApprovalRuleDTO.cs" />
+    <Compile Include="ApprovalRule\ApprovalRuleExcelDTODefinition.cs" />
+    <Compile Include="ApprovalRule\ApprovalRuleUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApprovalRule\ApprovalRuleUI.designer.cs">
+      <DependentUpon>ApprovalRuleUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalRule\IApprovalRuleUseCases.cs" />
+    <Compile Include="ApprovalRule\InboxUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApprovalRule\InboxUI.designer.cs">
+      <DependentUpon>InboxUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalRule\IUserMessagesUseCases.cs" />
+    <Compile Include="ApprovalRule\LocalApprovalRuleUseCases.cs" />
+    <Compile Include="ApprovalRule\LocalUserMessagesUseCases.cs" />
+    <Compile Include="ApprovalRule\PendingApproval.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ApprovalRule\PendingApproval.designer.cs">
+      <DependentUpon>PendingApproval.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalRule\RemoteApprovalRuleUseCases.cs" />
+    <Compile Include="ApprovalRule\RemoteUserMessagesUseCases.cs" />
+    <Compile Include="ApprovalRule\TaskHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ApprovalRule\TaskHistory.designer.cs">
+      <DependentUpon>TaskHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalRule\UserMessages.cs" />
+    <Compile Include="ApprovalRule\UserMessagesDataHandler.cs" />
+    <Compile Include="ApprovalRule\UserMessagesDTO.cs" />
+    <Compile Include="Common\Authenticate.cs" />
+    <Compile Include="Common\CardReader.cs" />
+    <Compile Include="Common\CommonFuncs.cs" />
+    <Compile Include="Common\CommonUIDisplay.cs" />
+    <Compile Include="Common\frmTaxPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\frmTaxPopUp.Designer.cs">
+      <DependentUpon>frmTaxPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryOrderHeaderBL.cs" />
+    <Compile Include="DeliveryOrderHeaderDataHandler.cs" />
+    <Compile Include="DeliveryOrderHeaderDTO.cs" />
+    <Compile Include="DeliveryOrderLineBL.cs" />
+    <Compile Include="DeliveryOrderLineDataHandler.cs" />
+    <Compile Include="DeliveryOrderLineDTO.cs" />
+    <Compile Include="IInventoryActivityLogUseCases.cs" />
+    <Compile Include="InventoryActivityLogBL.cs" />
+    <Compile Include="InventoryActivityLogDataHandler.cs" />
+    <Compile Include="InventoryActivityLogDTO.cs" />
+    <Compile Include="InventoryIssue\IInventoryIssueHeaderUseCases.cs" />
+    <Compile Include="InventoryIssue\LocalInventoryIssueHeaderUseCases.cs" />
+    <Compile Include="InventoryIssue\RemoteInventoryIssueHeaderUseCases.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueLines.cs" />
+    <Compile Include="Inventory\CustomSegmentBL.cs" />
+    <Compile Include="Inventory\CustomSegmentDataHandler.cs" />
+    <Compile Include="Inventory\CustomSegmentDTO.cs" />
+    <Compile Include="Inventory\CustomSegmentDTODefination.cs" />
+    <Compile Include="Inventory\frmaddBarcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmaddBarcode.designer.cs">
+      <DependentUpon>frmaddBarcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryIssue\InventoryIssueHeader.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueHeaderDataHandler.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueHeaderDTO.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueLinesDTO.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueLinesHandler.cs" />
+    <Compile Include="InventoryIssue\InventoryIssueUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InventoryIssue\InventoryIssueUI.Designer.cs">
+      <DependentUpon>InventoryIssueUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\BarcodeScanSummaryDTO.cs" />
+    <Compile Include="Inventory\frmBOM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmBOM.designer.cs">
+      <DependentUpon>frmBOM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryAdjustments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryAdjustments.designer.cs">
+      <DependentUpon>frmInventoryAdjustments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryReceipt.designer.cs">
+      <DependentUpon>frmInventoryReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryStockDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryStockDetails.designer.cs">
+      <DependentUpon>frmInventoryStockDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryWastageHistoryUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInventoryWastageHistoryUI.Designer.cs">
+      <DependentUpon>frmInventoryWastageHistoryUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmProduct.designer.cs">
+      <DependentUpon>frmProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmProductActivity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmProductActivity.designer.cs">
+      <DependentUpon>frmProductActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmProductTabular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmProductTabular.designer.cs">
+      <DependentUpon>frmProductTabular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmUploadProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmUploadProduct.designer.cs">
+      <DependentUpon>frmUploadProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmWasteManagementUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmWasteManagementUI.Designer.cs">
+      <DependentUpon>frmWasteManagementUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\IInventoryAdjustmentsUseCases.cs" />
+    <Compile Include="Inventory\IInventoryLotUseCases.cs" />
+    <Compile Include="Inventory\IInventoryNotesUseCases.cs" />
+    <Compile Include="Inventory\IInventoryReceiveLinesUseCases.cs" />
+    <Compile Include="Inventory\IInventoryStockUseCases.cs" />
+    <Compile Include="Inventory\IInventoryWastageUseCases.cs" />
+    <Compile Include="Inventory\Inventory.cs" />
+    <Compile Include="Inventory\InventoryAdjustmentExcelDTODefinition.cs" />
+    <Compile Include="Inventory\InventoryAdjustments.cs" />
+    <Compile Include="Inventory\InventoryAdjustmentsDataHandler.cs" />
+    <Compile Include="Inventory\InventoryAdjustmentsDTO.cs" />
+    <Compile Include="Inventory\InventoryAdjustmentsSummaryDTO.cs" />
+    <Compile Include="Inventory\InventoryDataHandler.cs" />
+    <Compile Include="Inventory\InventoryDocumentType.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeContainer.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeContainerDTO.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeContainerDTOCollection.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeContainerList.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeDataHandler.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypeDTO.cs" />
+    <Compile Include="Inventory\InventoryDocumentTypesUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\InventoryDocumentTypesUI.Designer.cs">
+      <DependentUpon>InventoryDocumentTypesUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventoryDTO.cs" />
+    <Compile Include="Inventory\InventoryLot.cs" />
+    <Compile Include="Inventory\InventoryLotDataHandler.cs" />
+    <Compile Include="Inventory\InventoryLotDTO.cs" />
+    <Compile Include="Inventory\InventoryLotUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\InventoryLotUI.Designer.cs">
+      <DependentUpon>InventoryLotUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventoryNotes.cs" />
+    <Compile Include="Inventory\InventoryNotesDataHandler.cs" />
+    <Compile Include="Inventory\InventoryNotesDTO.cs" />
+    <Compile Include="Inventory\InventoryNotesUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\InventoryNotesUI.designer.cs">
+      <DependentUpon>InventoryNotesUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventoryReceiptDataHandler.cs" />
+    <Compile Include="Inventory\InventoryReceiptDTO.cs" />
+    <Compile Include="Inventory\InventoryReceipts.cs" />
+    <Compile Include="Inventory\InventoryTransactionBL.cs" />
+    <Compile Include="Inventory\InventoryTransactionDataHandler.cs" />
+    <Compile Include="Inventory\InventoryTransactionDTO.cs" />
+    <Compile Include="Inventory\InventoryWastageExcelDTODefinition.cs" />
+    <Compile Include="Inventory\InventoryWastageSummaryBL.cs" />
+    <Compile Include="Inventory\InventoryWastageSummaryDataHandler.cs" />
+    <Compile Include="Inventory\InventoryWastageSummaryDTO.cs" />
+    <Compile Include="Inventory\IReceiptUseCases.cs" />
+    <Compile Include="Inventory\IUOMUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryAdjustmentsUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryLotUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryNotesUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryRecieveLinesUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryStockUseCases.cs" />
+    <Compile Include="Inventory\LocalInventoryWastageUseCases.cs" />
+    <Compile Include="Inventory\LocalReceiptUseCases.cs" />
+    <Compile Include="Inventory\LocalUOMUseCases.cs" />
+    <Compile Include="Inventory\PurchaseTaxUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\PurchaseTaxUI.designer.cs">
+      <DependentUpon>PurchaseTaxUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\RemoteInventoryAdjustmentsUseCases.cs" />
+    <Compile Include="Inventory\RemoteInventoryLotUseCases.cs" />
+    <Compile Include="Inventory\RemoteInventoryNotesUseCases.cs" />
+    <Compile Include="Inventory\RemoteInventoryRecieveLinesUseCases.cs" />
+    <Compile Include="Inventory\RemoteInventoryStockUseCases.cs" />
+    <Compile Include="Inventory\RemoteInventoryWastageUseCases.cs" />
+    <Compile Include="Inventory\RemoteReceiptUseCases.cs" />
+    <Compile Include="Inventory\RemoteUOMUseCases.cs" />
+    <Compile Include="Inventory\UOM.cs" />
+    <Compile Include="Inventory\UOMContainer.cs" />
+    <Compile Include="Inventory\UOMConversionFactorBL.cs" />
+    <Compile Include="Inventory\UOMConversionFactorDataHandler.cs" />
+    <Compile Include="Inventory\UOMConversionFactorDTO.cs" />
+    <Compile Include="Inventory\frmUOMConversionFactorUI .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmUOMConversionFactorUI .Designer.cs">
+      <DependentUpon>frmUOMConversionFactorUI .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\UOMDataHandler.cs" />
+    <Compile Include="Inventory\UOMDTO.cs" />
+    <Compile Include="Inventory\UOMExcelDTODefinition.cs" />
+    <Compile Include="Inventory\UOMUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\UOMUI.designer.cs">
+      <DependentUpon>UOMUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\UploadInventory.cs" />
+    <Compile Include="Inventory\UploadInventoryDataHandler.cs" />
+    <Compile Include="Inventory\UploadInventoryProductDTO.cs" />
+    <Compile Include="Inventory\UploadInventoryProductDTODefination.cs" />
+    <Compile Include="LocalInventoryActivityLogUseCases.cs" />
+    <Compile Include="Location\CustomDataUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Location\CustomDataUI.designer.cs">
+      <DependentUpon>CustomDataUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Location\ILocationTypeUseCases.cs" />
+    <Compile Include="Location\ILocationUseCases.cs" />
+    <Compile Include="Location\ImportMachines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Location\ImportMachines.designer.cs">
+      <DependentUpon>ImportMachines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Location\LocalLocationTypeUseCases.cs" />
+    <Compile Include="Location\LocalLocationUseCases.cs" />
+    <Compile Include="Location\LocationBL.cs" />
+    <Compile Include="Location\LocationContainer.cs" />
+    <Compile Include="Location\LocationContainerDTO.cs" />
+    <Compile Include="Location\LocationContainerDTOCollection.cs" />
+    <Compile Include="Location\LocationDataHandler.cs" />
+    <Compile Include="Location\LocationDTO.cs" />
+    <Compile Include="Inventory\InventoryUseCaseFactory.cs" />
+    <Compile Include="Location\LocationExcelDTODefinition.cs" />
+    <Compile Include="Location\LocationContainerList.cs" />
+    <Compile Include="Location\LocationType.cs" />
+    <Compile Include="Location\LocationTypeContainer.cs" />
+    <Compile Include="Location\LocationTypeContainerDTO.cs" />
+    <Compile Include="Location\LocationTypeContainerDTOCollection.cs" />
+    <Compile Include="Location\LocationTypeContainerList.cs" />
+    <Compile Include="Location\LocationTypeDataHandler.cs" />
+    <Compile Include="Location\LocationTypeDTO.cs" />
+    <Compile Include="Location\LocationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Location\LocationUI.designer.cs">
+      <DependentUpon>LocationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Location\RemoteLocationTypeUseCases.cs" />
+    <Compile Include="Location\RemoteLocationUseCases.cs" />
+    <Compile Include="parafaitDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>parafaitDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PhysicalCount\IInventoryPhysicalCountUseCases.cs" />
+    <Compile Include="PhysicalCount\InventoryHistory.cs" />
+    <Compile Include="PhysicalCount\InventoryHistoryDataHandler.cs" />
+    <Compile Include="PhysicalCount\InventoryHistoryDTO.cs" />
+    <Compile Include="PhysicalCount\InventoryPhysicalCount.cs" />
+    <Compile Include="PhysicalCount\InventoryPhysicalCountDataHandler.cs" />
+    <Compile Include="PhysicalCount\InventoryPhysicalCountDTO.cs" />
+    <Compile Include="PhysicalCount\InventoryPhysicalCountExcelDTODefinition.cs" />
+    <Compile Include="PhysicalCount\IPhysicalCountInventoryUseCases.cs" />
+    <Compile Include="PhysicalCount\LocalInventoryPhysicalCountUseCases.cs" />
+    <Compile Include="PhysicalCount\LocalPhysicalCountInventoryUseCases.cs" />
+    <Compile Include="PhysicalCount\PhysicalCountReview.cs" />
+    <Compile Include="PhysicalCount\PhysicalCountReviewDataHandler.cs" />
+    <Compile Include="PhysicalCount\PhysicalCountReviewDTO.cs" />
+    <Compile Include="PhysicalCount\PhysicalCountReviewExcelDTODefinition.cs" />
+    <Compile Include="PhysicalCount\RemoteInventoryPhysicalCountUseCases.cs" />
+    <Compile Include="PhysicalCount\RemotePhysicalCountInventoryUseCases.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrderReturnLineBL.cs" />
+    <Compile Include="PurchaseOrderReturnLineDataHandler.cs" />
+    <Compile Include="PurchaseOrderReturnLineDTO.cs" />
+    <Compile Include="PurchaseOrder\frmOrderPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmOrderPrint.Designer.cs">
+      <DependentUpon>frmOrderPrint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmReceiveInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmReceiveInventory.Designer.cs">
+      <DependentUpon>frmReceiveInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmOrder.designer.cs">
+      <DependentUpon>frmOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmOrderReceipts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PurchaseOrder\frmOrderReceipts.Designer.cs">
+      <DependentUpon>frmOrderReceipts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder\InventoryReceiveLines.cs" />
+    <Compile Include="PurchaseOrder\InventoryReceiveLinesDataHandler.cs" />
+    <Compile Include="PurchaseOrder\InventoryReceiveLinesDTO.cs" />
+    <Compile Include="PurchaseOrder\IPOTaxViewUseCases.cs" />
+    <Compile Include="PurchaseOrder\IPurchaseOrderUseCases.cs" />
+    <Compile Include="PurchaseOrder\LocalPOTaxViewUseCases.cs" />
+    <Compile Include="PurchaseOrder\LocalPurchaseOrderUseCases.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrder.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderDataHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderDTO.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderExcelDTODefinition.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderLine.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderLineDataHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderLineDTO.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderLineExcelDTODefinition.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderReceiveTaxLineBL.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderReceiveTaxLineDataHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderReceiveTaxLineDTO.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderTaxLineBL.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderTaxLineDataHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderTaxLineDTO.cs" />
+    <Compile Include="PurchaseOrder\RemotePOTaxViewUseCases.cs" />
+    <Compile Include="PurchaseOrder\RemotePurchaseOrderUseCases.cs" />
+    <Compile Include="Recipe\ForecastingPeriodRatioDataHandler.cs" />
+    <Compile Include="Recipe\ForecastingSummaryBL.cs" />
+    <Compile Include="Recipe\ForecastingSummaryDTO.cs" />
+    <Compile Include="Recipe\ForecastingPeriodRatioBL.cs" />
+    <Compile Include="Recipe\ForecastingPeriodRatioDTO.cs" />
+    <Compile Include="Recipe\frmAddRecipeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmAddRecipeUI.Designer.cs">
+      <DependentUpon>frmAddRecipeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmCopyRecipeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmCopyRecipeUI.Designer.cs">
+      <DependentUpon>frmCopyRecipeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmExportDateRangeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmExportDateRangeUI.Designer.cs">
+      <DependentUpon>frmExportDateRangeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmForecastingUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmForecastingUI.Designer.cs">
+      <DependentUpon>frmForecastingUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmKitchenProductionSheetUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmKitchenProductionSheetUI.Designer.cs">
+      <DependentUpon>frmKitchenProductionSheetUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmRecipeCalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmRecipeCalendar.Designer.cs">
+      <DependentUpon>frmRecipeCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\frmRecipeDailyEstimationDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recipe\frmRecipeDailyEstimationDetails.Designer.cs">
+      <DependentUpon>frmRecipeDailyEstimationDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\IAccountingCalendarUseCases.cs" />
+    <Compile Include="Recipe\IRecipeEstimationUseCases.cs" />
+    <Compile Include="Recipe\IRecipeManufacturingUseCases.cs" />
+    <Compile Include="Recipe\IRecipePlanUseCases.cs" />
+    <Compile Include="Recipe\LocalAccountingCalendarUseCases.cs" />
+    <Compile Include="Recipe\LocalRecipeEstimationUseCases.cs" />
+    <Compile Include="Recipe\LocalRecipeManufacturingUseCases.cs" />
+    <Compile Include="Recipe\LocalRecipePlanUseCases.cs" />
+    <Compile Include="Recipe\RecipeEstimationDetailsBL.cs" />
+    <Compile Include="Recipe\RecipeEstimationDetailsDataHandler.cs" />
+    <Compile Include="Recipe\RecipeEstimationDetailsDTO.cs" />
+    <Compile Include="Recipe\RecipeEstimationHeaderBL.cs" />
+    <Compile Include="Recipe\RecipeEstimationHeaderDataHandler.cs" />
+    <Compile Include="Recipe\RecipeEstimationHeaderDTO.cs" />
+    <Compile Include="Recipe\RecipeManufacturingDetailsBL.cs" />
+    <Compile Include="Recipe\RecipeManufacturingDetailsDataHandler.cs" />
+    <Compile Include="Recipe\RecipeManufacturingDetailsDTO.cs" />
+    <Compile Include="Recipe\RecipeManufacturingHeaderBL.cs" />
+    <Compile Include="Recipe\RecipeManufacturingHeaderDataHandler.cs" />
+    <Compile Include="Recipe\RecipeManufacturingHeaderDTO.cs" />
+    <Compile Include="Recipe\RecipePlanDetailsBL.cs" />
+    <Compile Include="Recipe\RecipePlanDetailsDataHandler.cs" />
+    <Compile Include="Recipe\RecipePlanDetailsDTO.cs" />
+    <Compile Include="Recipe\RecipePlanDetailsExcelDTODefination.cs" />
+    <Compile Include="Recipe\RecipePlanHeaderBL.cs" />
+    <Compile Include="Recipe\RecipePlanHeaderDataHandler.cs" />
+    <Compile Include="Recipe\RecipePlanHeaderDTO.cs" />
+    <Compile Include="Recipe\RecipeUseCaseFactory.cs" />
+    <Compile Include="Recipe\RemoteAccountingCalendarUseCases.cs" />
+    <Compile Include="Recipe\RemoteRecipeEstimationUseCases.cs" />
+    <Compile Include="Recipe\RemoteRecipeManufacturingUseCases.cs" />
+    <Compile Include="Recipe\RemoteRecipePlanUseCases.cs" />
+    <Compile Include="RemoteInventoryActivityLogUseCases.cs" />
+    <Compile Include="ReorderStockBL.cs" />
+    <Compile Include="ReorderStockDataHandler.cs" />
+    <Compile Include="ReorderStockDTO.cs" />
+    <Compile Include="ReorderStockLineBL.cs" />
+    <Compile Include="ReorderStockLineDataHandler.cs" />
+    <Compile Include="ReorderStockLineDTO.cs" />
+    <Compile Include="Requisition\BarcodeReader.cs" />
+    <Compile Include="Requisition\frmListRequisitions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Requisition\frmListRequisitions.designer.cs">
+      <DependentUpon>frmListRequisitions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Requisition\frmRequisition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Requisition\frmRequisition.designer.cs">
+      <DependentUpon>frmRequisition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Requisition\frmRequisitionTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Requisition\frmRequisitionTemplate.designer.cs">
+      <DependentUpon>frmRequisitionTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Requisition\IRequisitionTemplatesUseCases.cs" />
+    <Compile Include="Requisition\IRequisitionUseCases.cs" />
+    <Compile Include="Requisition\LocalRequisitionTemplatesUseCases.cs" />
+    <Compile Include="Requisition\LocalRequisitionUseCases.cs" />
+    <Compile Include="Requisition\PrintUtils.cs" />
+    <Compile Include="Requisition\RemoteRequisitionTemplatesUseCases.cs" />
+    <Compile Include="Requisition\RemoteRequisitionUseCases.cs" />
+    <Compile Include="Requisition\RequisitionBL.cs" />
+    <Compile Include="Requisition\RequisitionDataHandler.cs" />
+    <Compile Include="Requisition\RequisitionDTO.cs" />
+    <Compile Include="Requisition\RequisitionExcelDTODefinition.cs" />
+    <Compile Include="Requisition\RequisitionLinesBL.cs" />
+    <Compile Include="Requisition\RequisitionLinesDataHandler.cs" />
+    <Compile Include="Requisition\RequisitionLinesDTO.cs" />
+    <Compile Include="Requisition\RequisitionLinesExcelDTODefinition.cs" />
+    <Compile Include="Requisition\RequisitionTemplateLinesBL.cs" />
+    <Compile Include="Requisition\RequisitionTemplateLinesDTO.cs" />
+    <Compile Include="Requisition\RequisitionTemplatesBL.cs" />
+    <Compile Include="Requisition\RequisitionTemplatesDataHandler.cs" />
+    <Compile Include="Requisition\RequisitionTemplatesDTO.cs" />
+    <Compile Include="Requisition\RequisitionTemplatesLinesDH.cs" />
+    <Compile Include="VendorItemBL.cs" />
+    <Compile Include="VendorItemDataHandler.cs" />
+    <Compile Include="VendorItemDTO.cs" />
+    <Compile Include="Vendor\frmVendor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vendor\frmVendor.Designer.cs">
+      <DependentUpon>frmVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor\frmVendorReturns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vendor\frmVendorReturns.designer.cs">
+      <DependentUpon>frmVendorReturns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor\VendorReturnsBL.cs" />
+    <Compile Include="Vendor\VendorReturnsDataHandler.cs" />
+    <Compile Include="Vendor\VendorReturnsDTO.cs" />
+    <Compile Include="Web References\ParafaitGateway\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ApprovalRule\ApprovalRuleUI.resx">
+      <DependentUpon>ApprovalRuleUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApprovalRule\InboxUI.resx">
+      <DependentUpon>InboxUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApprovalRule\PendingApproval.resx">
+      <DependentUpon>PendingApproval.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApprovalRule\TaskHistory.resx">
+      <DependentUpon>TaskHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\frmTaxPopUp.resx">
+      <DependentUpon>frmTaxPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmAddBarcode.resx">
+      <DependentUpon>frmaddBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InventoryIssue\InventoryIssueUI.resx">
+      <DependentUpon>InventoryIssueUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmBOM.resx">
+      <DependentUpon>frmBOM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmInventoryAdjustments.resx">
+      <DependentUpon>frmInventoryAdjustments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmInventoryReceipt.resx">
+      <DependentUpon>frmInventoryReceipt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmInventoryStockDetails.resx">
+      <DependentUpon>frmInventoryStockDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmInventoryWastageHistoryUI.resx">
+      <DependentUpon>frmInventoryWastageHistoryUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmProduct.resx">
+      <DependentUpon>frmProduct.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmProductActivity.resx">
+      <DependentUpon>frmProductActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmProductTabular.resx">
+      <DependentUpon>frmProductTabular.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmUploadProduct.resx">
+      <DependentUpon>frmUploadProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmWasteManagementUI.resx">
+      <DependentUpon>frmWasteManagementUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\InventoryDocumentTypesUI.resx">
+      <DependentUpon>InventoryDocumentTypesUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\InventoryLotUI.resx">
+      <DependentUpon>InventoryLotUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\InventoryNotesUI.resx">
+      <DependentUpon>InventoryNotesUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\PurchaseTaxUI.resx">
+      <DependentUpon>PurchaseTaxUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\frmUOMConversionFactorUI .resx">
+      <DependentUpon>frmUOMConversionFactorUI .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\UOMUI.resx">
+      <DependentUpon>UOMUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Location\CustomDataUI.resx">
+      <DependentUpon>CustomDataUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Location\ImportMachines.resx">
+      <DependentUpon>ImportMachines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Location\LocationUI.resx">
+      <DependentUpon>LocationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseOrder\frmOrderPrint.resx">
+      <DependentUpon>frmOrderPrint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseOrder\frmReceiveInventory.resx">
+      <DependentUpon>frmReceiveInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseOrder\frmOrder.resx">
+      <DependentUpon>frmOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseOrder\frmOrderReceipts.resx">
+      <DependentUpon>frmOrderReceipts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmAddRecipeUI.resx">
+      <DependentUpon>frmAddRecipeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmCopyRecipeUI.resx">
+      <DependentUpon>frmCopyRecipeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmExportDateRangeUI.resx">
+      <DependentUpon>frmExportDateRangeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmForecastingUI.resx">
+      <DependentUpon>frmForecastingUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmKitchenProductionSheetUI.resx">
+      <DependentUpon>frmKitchenProductionSheetUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmRecipeCalendar.resx">
+      <DependentUpon>frmRecipeCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recipe\frmRecipeDailyEstimationDetails.resx">
+      <DependentUpon>frmRecipeDailyEstimationDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Requisition\frmListRequisitions.resx">
+      <DependentUpon>frmListRequisitions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Requisition\frmRequisition.resx">
+      <DependentUpon>frmRequisition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Requisition\frmRequisitionTemplate.resx">
+      <DependentUpon>frmRequisitionTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vendor\frmVendor.resx">
+      <DependentUpon>frmVendor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vendor\frmVendorReturns.resx">
+      <DependentUpon>frmVendorReturns.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="InventoryAdjustmentsDTO.datasource" />
+    <None Include="InventoryDTO.datasource" />
+    <None Include="InventoryWastageSummaryDTO.datasource" />
+    <None Include="parafaitDataSet.xsc">
+      <DependentUpon>parafaitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="parafaitDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>parafaitDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="parafaitDataSet.xss">
+      <DependentUpon>parafaitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Semnox.Parafait.Inventory.Recipe.ForecastingSummaryDTO.datasource" />
+    <None Include="Semnox.Parafait.Inventory.Recipe.RecipeEstimationDetailsDTO.datasource" />
+    <None Include="Semnox.Parafait.Inventory.Recipe.RecipeManufacturingDetailsDTO.datasource" />
+    <None Include="Semnox.Parafait.Inventory.Recipe.RecipePlanDetailsDTO.datasource" />
+    <None Include="Semnox.Parafait.Inventory.Recipe.RecipePlanHeaderDTO.datasource" />
+    <None Include="Semnox.Parafait.Product.TaxStructureDTO.datasource" />
+    <None Include="UOMConversionFactorDTO.datasource" />
+    <None Include="Web References\ParafaitGateway\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ParafaitGateway\service.wsdl" />
+    <None Include="Web References\ParafaitGateway\SiteDTO.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09EC39CF-3DD3-4920-A155-CADE5B252B8A}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970A8E60-83BE-4559-A67C-3EF7135A3E8D}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{B8974CD4-806B-4027-AFE3-D35DA8E949EE}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Publish\Publish.csproj">
+      <Project>{A707F773-C706-429B-B031-70C69C9ADFD1}</Project>
+      <Name>Publish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedemptionBarcodeUtils\RedemptionBarcodeUtils\RedemptionBarcodeUtils.csproj">
+      <Project>{9E3C0DFC-DEA4-4A14-839D-08F4F50EFED2}</Project>
+      <Name>RedemptionBarcodeUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{41A713DA-1CA8-4C0B-86ED-FA33580248D9}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\status_ok.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ordercancel1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\autoorder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddSelected.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\duplicate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redemption.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://localhost:444/ParafaitUploadService/service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ParafaitGateway\</RelPath>
+      <UpdateFromURL>https://localhost:444/ParafaitUploadService/service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Inventory_ParafaitGateway_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\ParafaitGateway\service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsmallest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\removegift.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PreLoader.GIF" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XLS_Icon.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

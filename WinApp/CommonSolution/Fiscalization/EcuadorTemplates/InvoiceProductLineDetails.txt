@@ -1,0 +1,11 @@
+{
+    "producto_id": @ProductId,
+    "cantidad": @Quantity,
+    "precio": @Price,
+    "porcentaje_iva": @ProductTaxPercentage,
+    "porcentaje_descuento": @ProductDiscountPercentage,
+    "base_cero": @ZeroBase,
+    "base_gravable": @TaxBase,
+    "base_no_gravable": @NoTax
+}
+

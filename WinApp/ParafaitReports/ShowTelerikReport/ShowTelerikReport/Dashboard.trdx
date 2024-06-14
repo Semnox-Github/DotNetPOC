@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="7.70000044504801in" Name="Dashboard" xmlns="http://schemas.telerik.com/reporting/2012/3.5">
+  <DataSources>
+    <SqlDataSource ConnectionString="ProductCost" SelectCommand="&#xD;&#xA;&#xD;&#xA;select GamesNotTapped_AM,GamesNotTapped_PM,convert(decimal(18,3),(Total-GamesNotTapped_AM-GamesNotTapped_PM))*100/Total [TotalGameTap%] from (&#xD;&#xA;select sum(isnull(case when m.[AM/PM]='AM' and g.[AM/PM] is null then 1 else null end,0)) GamesNotTapped_AM,&#xD;&#xA;sum(isnull(case when m.[AM/PM]='PM' and g.[AM/PM] is null then 1 else null end,0)) GamesNotTapped_PM,&#xD;&#xA;Total from (select machine_id,machine_name,A.[AM/PM],count(*) over() Total from machines m cross join (select 'AM'[AM/PM]&#xD;&#xA;union all select 'PM' )A&#xD;&#xA;                                      where machine_name !='Demo Reader' &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    and machine_name not like 'Check%Balance%'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; and machine_name not like 'Pause%'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    and ReferenceMachineID IS NULL&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    and active_flag='Y') M&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left join (&#xD;&#xA;&#xD;&#xA;SELECT gp.machine_id,machine_name,case when datepart(HH,play_date)&lt;13 then 'AM' &#xD;&#xA;when datepart(HH,play_date)&gt;=13 and datepart(HH,play_date)&lt;19 then'PM' end [AM/PM],&#xD;&#xA; datepart(HH,play_date) time,gameplay_id--COUNT(case when gp.technician_card='Y' then gameplay_id else null end) gameplay_count&#xD;&#xA;  FROM GameMetricViewHopper gp &#xD;&#xA; WHERE PLAY_DATE BETWEEN @FromDate and @ToDate&#xD;&#xA;   and gp.machine_name !='Demo Reader'&#xD;&#xA; and gp.machine_name not like 'Pause%' and gp.machine_name not like 'Check%Balance%' and  technician_card='Y'&#xD;&#xA; -- group by gp.machine_id&#xD;&#xA;  ) G on m.machine_id=g.machine_id and m.[AM/PM]=g.[AM/PM]&#xD;&#xA;  group by total&#xD;&#xA;  )GM&#xD;&#xA;" CommandTimeout="600" Name="dsCoinDrop">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FromDate">
+          <Value>
+            <String>= Parameters.FromDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@ToDate">
+          <Value>
+            <String>= Parameters.ToDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+      <DefaultValues>
+        <SqlDataSourceParameter DbType="String" Name="@FromDate" />
+        <SqlDataSourceParameter DbType="String" Name="@ToDate" />
+      </DefaultValues>
+    </SqlDataSource>
+    <SqlDataSource ConnectionString="Parafait19" SelectCommand="select isnull(cast(count(No_Gameplay_Marked_Out_of_Service) as int), 0) &quot;No Gameplay and Marked Out of Service&quot;,&#xD;&#xA;       isnull(cast(count(No_Gameplay_Not_Marked_Out_of_Service) as int), 0) &quot;No Gameplay and Not Marked Out of Service&quot;,&#xD;&#xA;&#x9;   isnull(cast(count(Out_of_Service_Machines) as int), 0) &quot;Out of Service Machines&quot;&#xD;&#xA; from (&#xD;&#xA;SELECT m.machine_name,&#xD;&#xA;       CASE&#xD;&#xA;         WHEN Isnull(gpav.attributevalue, 0) = 1 THEN 'Y'&#xD;&#xA;         ELSE NULL&#xD;&#xA;       END  No_Gameplay_Marked_Out_of_Service,&#xD;&#xA;       CASE&#xD;&#xA;         WHEN Isnull(gpav.attributevalue, 0) = 0 THEN 'Y'&#xD;&#xA;         ELSE NULL&#xD;&#xA;       END  No_Gameplay_Not_Marked_Out_of_Service,&#xD;&#xA;       NULL Out_of_Service_Machines&#xD;&#xA;FROM   site s,&#xD;&#xA;       games g,&#xD;&#xA;       game_profile gp,&#xD;&#xA;       machines m&#xD;&#xA;       LEFT OUTER JOIN (SELECT GPAV.attributevalue,&#xD;&#xA;                               gpav.machine_id&#xD;&#xA;                        FROM   gameprofileattributevalues gpav,&#xD;&#xA;                               gameprofileattributes gpa&#xD;&#xA;                        WHERE  gpav.attributeid = gpa.attributeid&#xD;&#xA;                               AND gpa.attribute = 'OUT_OF_SERVICE') gpav&#xD;&#xA;                    ON gpav.machine_id = m.machine_id&#xD;&#xA;WHERE  m.game_id = g.game_id&#xD;&#xA;       AND m.referencemachineid IS NULL&#xD;&#xA;       AND g.game_profile_id = gp.game_profile_id&#xD;&#xA;       AND m.active_flag = 'Y'&#xD;&#xA;       AND gp.profile_name != 'Token Dispenser'&#xD;&#xA;       AND gp.profile_name != 'Check Balance'&#xD;&#xA;       AND gp.profile_name != 'Pause Station'&#xD;&#xA;       AND gp.profile_name != 'Demo Reader'&#xD;&#xA;       AND NOT EXISTS (SELECT 'x'&#xD;&#xA;                       FROM   gameplay gv,&#xD;&#xA;                              cards c&#xD;&#xA;                       WHERE  gv.machine_id = m.machine_id&#xD;&#xA;                              AND gv.card_id = c.card_id&#xD;&#xA;                              AND c.technician_card = 'N'&#xD;&#xA;                              AND play_date &gt; Dateadd(hh, -48, Getdate()))&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT m.machine_name,&#xD;&#xA;       NULL,&#xD;&#xA;       NULL,&#xD;&#xA;       'Y'&#xD;&#xA;FROM   gameprofileattributevalues gpav,&#xD;&#xA;       gameprofileattributes gpa,&#xD;&#xA;       machines M&#xD;&#xA;WHERE  gpav.attributeid = gpa.attributeid&#xD;&#xA;       AND gpav.attributevalue = 1&#xD;&#xA;       AND m.active_flag = 'Y'&#xD;&#xA;       AND m.referencemachineid IS NULL&#xD;&#xA;       AND gpav.machine_id = m.machine_id&#xD;&#xA;       AND gpa.attribute = 'OUT_OF_SERVICE'&#xD;&#xA;)inline" CommandTimeout="600" Name="dsMachineDown" />
+  </DataSources>
+  <Items>
+    <DetailSection Height="4.50000031789144in" Name="detailSection1">
+      <Style BackgroundColor="DarkGray" />
+      <Items>
+        <TextBox Width="2.60000038146972in" Height="0.300000190734863in" Left="2.60000006357829in" Top="0in" Value="Technician Dashboard" Name="textBox1">
+          <Style TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+            <BorderColor Default="Transparent" />
+            <BorderWidth Default="0pt" />
+            <Font Name="Tahoma" Size="16pt" Bold="True" />
+          </Style>
+          <Action>null</Action>
+        </TextBox>
+        <Panel Width="7.31999969482421in" Height="2in" Left="0.199999968210856in" Top="2.40000025431315in" Name="panel2">
+          <Style BackgroundColor="Olive" LineWidth="0pt" LineColor="Transparent">
+            <BorderColor Default="Transparent" />
+          </Style>
+          <Items>
+            <TextBox Width="2.49999964237213in" Height="0.200000122189522in" Left="2.39999993642171in" Top="0.100000063578288in" Value="Game Tap Summary" Name="textBox9">
+              <Style Color="Black" TextAlign="Center" LineWidth="0pt" LineColor="Transparent">
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0pt" />
+                <Font Name="Tahoma" Size="16pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <Table DataSourceName="dsCoinDrop" Width="2.19in" Height="1.4in" Left="0.2in" Top="0.4in" Name="table4" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.19in" Height="0.7in" Left="0in" Top="0in" Value="= Fields.GamesNotTapped_AM" Name="textBox10" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="255, 128, 128" Color="OrangeRed" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                          <BorderColor Default="Salmon" />
+                          <Font Size="12pt" Bold="True" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="2.19in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.7in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style BackgroundColor="Salmon" LineWidth="0pt" LineColor="Transparent">
+                <BorderStyle Default="None" />
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0px" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup>
+                  <ReportItem>
+                    <TextBox Width="2.19in" Height="0.7in" Left="0in" Top="0in" Value="AM  Games Not Tapped" Name="textBox11" StyleName="Normal.TableHeader">
+                      <Style BackgroundColor="Salmon" Color="White" TextAlign="Center" VerticalAlign="Bottom" LineWidth="0pt" LineColor="Transparent">
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="Salmon" />
+                        <BorderWidth Default="0px" />
+                        <Font Size="12pt" Bold="True" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+              <Action>
+                <NavigateToReportAction>
+                  <ReportSource>
+                    <UriReportSource Uri="CoinDrop.trdx">
+                      <Parameters>
+                        <Parameter Name="FromDate">
+                          <Value>
+                            <String>= Parameters.FromDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="ToDate">
+                          <Value>
+                            <String>= Parameters.ToDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="Count">
+                          <Value>
+                            <String>0</String>
+                          </Value>
+                        </Parameter>
+                      </Parameters>
+                    </UriReportSource>
+                  </ReportSource>
+                </NavigateToReportAction>
+              </Action>
+            </Table>
+            <Table DataSourceName="dsCoinDrop" Width="2.37in" Height="1.4in" Left="2.50000015894572in" Top="0.400000005960464in" Name="table5" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.37in" Height="0.7in" Left="0in" Top="0in" Value="= Fields.GamesNotTapped_PM" Name="textBox12" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="Salmon" Color="OrangeRed" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="Salmon" />
+                          <BorderWidth Default="0px" />
+                          <Font Size="12pt" Bold="True" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="2.37in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.7in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style BackgroundColor="255, 192, 128" LineWidth="0pt" LineColor="Transparent">
+                <BorderStyle Default="None" />
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0px" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup>
+                  <ReportItem>
+                    <TextBox Width="2.37in" Height="0.7in" Left="0in" Top="0in" Value="PM  Games Not Tapped" Name="textBox13" StyleName="Normal.TableHeader">
+                      <Style BackgroundColor="Salmon" Color="White" TextAlign="Center" VerticalAlign="Bottom" LineWidth="0pt" LineColor="Transparent">
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="Salmon" />
+                        <BorderWidth Default="0px" />
+                        <Font Size="12pt" Bold="True" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+              <Action>
+                <NavigateToReportAction>
+                  <ReportSource>
+                    <UriReportSource Uri="CoinDrop.trdx">
+                      <Parameters>
+                        <Parameter Name="FromDate">
+                          <Value>
+                            <String>= Parameters.FromDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="ToDate">
+                          <Value>
+                            <String>= Parameters.ToDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="Count">
+                          <Value>
+                            <String>1</String>
+                          </Value>
+                        </Parameter>
+                      </Parameters>
+                    </UriReportSource>
+                  </ReportSource>
+                </NavigateToReportAction>
+              </Action>
+            </Table>
+            <Table DataSourceName="dsCoinDrop" Width="2.22083376566569in" Height="1.4in" Left="5in" Top="0.39999994635582in" Name="table6" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.22083376566569in" Height="0.7in" Left="0in" Top="0in" Value="= Fields.[TotalGameTap%]" Format="{0:N2}" Name="textBox14" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="Salmon" Color="OrangeRed" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="Salmon" />
+                          <BorderWidth Default="0px" />
+                          <Font Size="12pt" Bold="True" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="2.22083376566569in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.7in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style BackgroundColor="255, 192, 128" LineWidth="0pt" LineColor="Transparent">
+                <BorderStyle Default="None" />
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0px" />
+                <Font Bold="True" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup>
+                  <ReportItem>
+                    <TextBox Width="2.22083376566569in" Height="0.7in" Left="0in" Top="0in" Value="Daily Completion Percentage" Name="textBox15" StyleName="Normal.TableHeader">
+                      <Style BackgroundColor="255, 128, 128" Color="White" TextAlign="Center" VerticalAlign="Bottom" LineWidth="0pt" LineColor="Transparent">
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="Salmon" />
+                        <BorderWidth Default="0px" />
+                        <Font Size="12pt" Bold="True" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+              <Action>
+                <NavigateToReportAction>
+                  <ReportSource>
+                    <UriReportSource Uri="CoinDrop.trdx">
+                      <Parameters>
+                        <Parameter Name="FromDate">
+                          <Value>
+                            <String>= Parameters.FromDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="ToDate">
+                          <Value>
+                            <String>= Parameters.ToDate.Value</String>
+                          </Value>
+                        </Parameter>
+                        <Parameter Name="Count">
+                          <Value>
+                            <String>2</String>
+                          </Value>
+                        </Parameter>
+                      </Parameters>
+                    </UriReportSource>
+                  </ReportSource>
+                </NavigateToReportAction>
+              </Action>
+            </Table>
+          </Items>
+        </Panel>
+        <Panel Width="7.29999987284342in" Height="2in" Left="0.199999968210856in" Top="0.300000031789144in" Name="panel3">
+          <Style BackgroundColor="Teal">
+            <Font Size="16pt" />
+          </Style>
+          <Items>
+            <Panel Width="2.18746058146159in" Height="1.40000009536743in" Left="0.100000063578288in" Top="0.400000095367432in" Name="panel4">
+              <Style BackgroundColor="0, 192, 0" />
+            </Panel>
+            <Panel Width="2.37083435058594in" Height="1.4in" Left="2.39999993642171in" Top="0.400000095367432in" Name="panel5">
+              <Style BackgroundColor="0, 192, 0" />
+            </Panel>
+            <TextBox Width="3.1000003417333in" Height="0.200000122189522in" Left="2.10000038146972in" Top="0.100000061094761in" Value="Machine Down Summary" Name="textBox3">
+              <Style TextAlign="Center" LineWidth="0pt" LineColor="Transparent">
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0pt" />
+                <Font Name="Tahoma" Size="16pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <Table DataSourceName="dsMachineDown" Width="2.37083363533019in" Height="1.39992077151934in" Left="2.40000025431315in" Top="0.400118350982666in" Name="table2" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.37083363533019in" Height="0.69996038575967in" Left="0in" Top="0in" Value="= Fields.[No Gameplay and Not Marked Out of Service]" Name="textBox5" StyleName="Normal.TableBody">
+                        <Style Color="SaddleBrown" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="Lime" />
+                          <BorderWidth Default="0px" />
+                          <Font Size="12pt" Bold="True" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="2.37083363533019in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.69996038575967in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style LineWidth="0pt" LineColor="Transparent">
+                <BorderStyle Default="None" />
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0px" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup>
+                  <ReportItem>
+                    <TextBox Width="2.37083363533019in" Height="0.69996038575967in" Left="0in" Top="0in" Value="No Gameplay and Not Marked Out of Service" Name="textBox6" StyleName="Normal.TableHeader">
+                      <Style Color="White" TextAlign="Center" VerticalAlign="Bottom" LineWidth="0pt" LineColor="Transparent">
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="Lime" />
+                        <BorderWidth Default="0px" />
+                        <Font Size="12pt" Bold="True" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+              <Action>
+                <NavigateToReportAction>
+                  <ReportSource>
+                    <UriReportSource Uri="MachineDown.trdx">
+                      <Parameters>
+                        <Parameter Name="Type">
+                          <Value>
+                            <String>No_Gameplay_Not_Marked_Out_of_Service</String>
+                          </Value>
+                        </Parameter>
+                      </Parameters>
+                    </UriReportSource>
+                  </ReportSource>
+                </NavigateToReportAction>
+              </Action>
+            </Table>
+            <Panel Width="2.32083368301392in" Height="1.39999997615814in" Left="4.90000025431315in" Top="0.400118271509806in" Name="panel6">
+              <Style BackgroundColor="0, 192, 0" />
+              <Items>
+                <Table DataSourceName="dsMachineDown" Width="2.32083376248677in" Height="1.39992105960846in" Left="0in" Top="0in" Name="table3" StyleName="Normal.TableNormal">
+                  <Body>
+                    <Cells>
+                      <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                        <ReportItem>
+                          <TextBox Width="2.32083376248677in" Height="0.69996052980423in" Left="0in" Top="0in" Value="= Fields.[Out of Service Machines]" Name="textBox7" StyleName="Normal.TableBody">
+                            <Style Color="SaddleBrown" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                              <BorderStyle Default="None" />
+                              <BorderColor Default="Lime" />
+                              <BorderWidth Default="0px" />
+                              <Font Size="12pt" Bold="True" />
+                            </Style>
+                          </TextBox>
+                        </ReportItem>
+                      </TableCell>
+                    </Cells>
+                    <Columns>
+                      <Column Width="2.32083376248677in" />
+                    </Columns>
+                    <Rows>
+                      <Row Height="0.69996052980423in" />
+                    </Rows>
+                  </Body>
+                  <Corner />
+                  <Style LineWidth="0pt">
+                    <BorderStyle Default="None" />
+                    <BorderColor Default="Transparent" />
+                    <BorderWidth Default="0px" />
+                  </Style>
+                  <RowGroups>
+                    <TableGroup Name="Detail">
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                  </RowGroups>
+                  <ColumnGroups>
+                    <TableGroup>
+                      <ReportItem>
+                        <TextBox Width="2.32083376248677in" Height="0.69996052980423in" Left="0in" Top="0in" Value="Out of Service Machines" Name="textBox8" StyleName="Normal.TableHeader">
+                          <Style Color="White" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                            <BorderStyle Default="None" />
+                            <BorderColor Default="Lime" />
+                            <BorderWidth Default="0px" />
+                            <Font Size="12pt" Bold="True" />
+                          </Style>
+                        </TextBox>
+                      </ReportItem>
+                    </TableGroup>
+                  </ColumnGroups>
+                  <Action>
+                    <NavigateToReportAction>
+                      <ReportSource>
+                        <UriReportSource Uri="MachineDown.trdx">
+                          <Parameters>
+                            <Parameter Name="Type">
+                              <Value>
+                                <String>Out_of_Service_Machines</String>
+                              </Value>
+                            </Parameter>
+                          </Parameters>
+                        </UriReportSource>
+                      </ReportSource>
+                    </NavigateToReportAction>
+                  </Action>
+                </Table>
+              </Items>
+            </Panel>
+            <Table DataSourceName="dsMachineDown" Width="2.18746058146158in" Height="1.39992108941078in" Left="0.100000063578288in" Top="0.39996067682902in" Name="table1" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.18746058146158in" Height="0.69996054470539in" Left="0in" Top="0in" Value="= Fields.[No Gameplay and Marked Out of Service]" Name="textBox4" StyleName="Normal.TableBody">
+                        <Style Color="SaddleBrown" TextAlign="Center" VerticalAlign="Middle" LineWidth="0pt" LineColor="Transparent">
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="Lime" />
+                          <BorderWidth Default="0px" />
+                          <Font Size="12pt" Bold="True" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="2.18746058146158in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.69996054470539in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style LineWidth="0pt" LineColor="Transparent">
+                <BorderStyle Default="None" />
+                <BorderColor Default="Transparent" />
+                <BorderWidth Default="0px" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup>
+                  <ReportItem>
+                    <TextBox Width="2.18746058146158in" Height="0.69996054470539in" Left="0in" Top="0in" Value="No Gameplay and Marked Out of Service" Name="textBox2" StyleName="Normal.TableHeader">
+                      <Style Color="White" TextAlign="Center" VerticalAlign="Bottom" LineWidth="0pt" LineColor="Transparent">
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="Lime" />
+                        <BorderWidth Default="0px" />
+                        <Font Size="12pt" Bold="True" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+              <Action>
+                <NavigateToReportAction>
+                  <ReportSource>
+                    <UriReportSource Uri="MachineDown.trdx">
+                      <Parameters>
+                        <Parameter Name="Type">
+                          <Value>
+                            <String>No_Gameplay_Marked_Out_of_Service</String>
+                          </Value>
+                        </Parameter>
+                      </Parameters>
+                    </UriReportSource>
+                  </ReportSource>
+                </NavigateToReportAction>
+              </Action>
+            </Table>
+          </Items>
+        </Panel>
+      </Items>
+    </DetailSection>
+  </Items>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="10pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <PageSettings>
+    <PageSettings PaperKind="Letter" Landscape="True" ColumnCount="1" ColumnSpacing="0in">
+      <Margins>
+        <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+      </Margins>
+    </PageSettings>
+  </PageSettings>
+  <ReportParameters>
+    <ReportParameter Name="FromDate" Type="DateTime" Text="FromDate" />
+    <ReportParameter Name="ToDate" Type="DateTime" Text="ToDate" />
+  </ReportParameters>
+</Report>

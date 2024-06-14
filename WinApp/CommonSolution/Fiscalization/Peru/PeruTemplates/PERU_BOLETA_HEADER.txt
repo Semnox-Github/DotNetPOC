@@ -1,0 +1,232 @@
+{  
+  "_D" : "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+  "_S" : "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+  "_B" : "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+  "_E" : "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+  "Invoice" : 
+	[ { 
+    	@DiscountTotalSection 
+		"UBLVersionID" : 
+			[ {  "IdentifierContent" : "@UBLVersionId"  }  ],
+		"CustomizationID" : 
+			[ {  
+				"IdentifierContent" : "@CustomizationId" ,
+                "IdentificationSchemeAgencyNameText": "@CustomizationAgencyName"
+				} ],
+		"ID" : 
+			[ {  "IdentifierContent" : "@InvoiceId"  }  ],
+		"IssueDate" : 
+			[ {  "DateContent" : "@IssueDate"  }  ],
+		"IssueTime" : 
+			[  {  "DateTimeContent" : "@IssueTime" }  ],
+		"InvoiceTypeCode" : 
+			[ {  
+			    "CodeContent" : "@InvoiceTypeCodeCodeContent",
+				"CodeListNameText" : "@InvoiceTypeCodeCodeListNameText",
+				"CodeListSchemeUniformResourceIdentifier" : "@InvoiceTypeCodeCodeListSchemeURI",
+				"CodeListIdentifier" : "@InvoiceTypeCodeCodeListID",
+				"CodeNameText" : "@InvoiceTypeCodeCodeNameText",
+				"CodeListUniformResourceIdentifier" : "@InvoiceTypeCodeCodeListURI",
+				"CodeListAgencyNameText" : "@InvoiceTypeCodeCodeListAgencyNameText"  
+			  }
+  		    ],
+		"DocumentCurrencyCode" : 
+			[ {  
+				"CodeContent" : "@DocumentCurrencyCodeCodeContent",
+				"CodeListIdentifier" : "@DocumentCurrencyCodeCodeListID",
+				"CodeListNameText" : "@DocumentCurrencyCodeCodeListNameText",
+				"CodeListAgencyNameText" : "@DocumentCurrencyCodeCodeListAgencyNameText"  
+			   }
+  		    ],
+		"LineCountNumeric": [
+			{
+				"NumericContent": @TrxLineCount
+			}
+		],
+		"Signature" : 
+			[ { "ID" : 
+					[ {  
+						"IdentifierContent" : "@SignatureIDContent"
+						} 
+					],
+				"SignatoryParty" : 
+				[ {  
+					"PartyIdentification" : 
+						[ {  
+							"ID" : 
+								[ {  
+								    "IdentifierContent" : "@SignatoryPartyPartyIdentificationID" ,
+									"IdentificationSchemeIdentifier": "@SignatureIDSchmeId",
+									"IdentificationSchemeNameText": "@SignatureIDSchmeName",
+									"IdentificationSchemeAgencyNameText": "@SignatureIDSchmeAgency",
+									"IdentificationSchemeUniformResourceIdentifier": "@SignatureIDSchmeURI"			
+									}  ]  
+						  }
+						],
+					"PartyName" : 
+						[ {  
+							"Name" : 
+								[ {  "TextContent" : "@PartyNameName"  }  ]  
+							} 
+						]  
+					}
+				],
+				"DigitalSignatureAttachment" : 
+				[ {  
+					"ExternalReference" : 
+					[ {  "URI" : 
+						[ {  "TextContent" : "@DigitalSignatureAttachmentExternalReferenceURI"  }  ]  
+					  }
+					]  
+				  } 
+ 			    ]
+			}  ],
+		"AccountingSupplierParty" : 
+			[ {  "Party" : 
+				[ {  "PartyIdentification" : 
+						[ {  
+							"ID" : 
+								[ {  
+								      "IdentifierContent" : "@ASPID",
+									  "IdentificationSchemeIdentifier" : "@ASPIdentificationSchemeID",
+									  "IdentificationSchemeNameText" : "@ASPIdentificationSchemeNameText",
+									  "IdentificationSchemeAgencyNameText" : "@ASPIdentificationSchemeAgencyNameText",
+									  "IdentificationSchemeUniformResourceIdentifier" : "@ASPIdentificationSchemeURI" 
+									 }
+								 ]
+						   }
+					    ],
+					"PartyName" : 
+						[ {
+							"Name" : 
+								[ {  "TextContent" : "@ASPPartyName"  }  ]  
+							}
+						],
+					"PartyLegalEntity" : 
+						[ { 
+							"RegistrationName" : 
+								[ {  "TextContent" : "@ASPRegistrationName"  }  ],
+							"RegistrationAddress" : 
+								[ {  
+									"ID" : 
+									[ { 
+										"IdentifierContent" : "@ASPRegistrationAddressID",
+										"IdentificationSchemeAgencyNameText": "@ASPRegistrationIDSchemeAgency",
+										"IdentificationSchemeNameText": "@ASPRegistrationIDSchemeName" 
+										}  
+									 ],
+									"AddressTypeCode" : 
+									[ {  
+										"CodeContent" : "@ASPRegistrationAddressCodeContent",
+										"CodeListAgencyNameText" : "@ASPRegistrationAddressCodeListAgencyNameText",
+										"CodeListNameText" : "@ASPRegistrationAddressCodeListNameText" 	
+										} 
+									],
+									"CityName" : 
+										[ {  "TextContent" : "@ASPCity"  }  ],
+									"CountrySubentity" : 
+										 [ {  "TextContent" : "@ASPCountrySubentity"  }  ],
+									"District" : 
+										 [ {  "TextContent" : "@ASPDistrict"  }  ],
+									"AddressLine" : 
+										 [ {  "Line" : 
+												[ {  "TextContent" : "@ASPAddressLine"  }  ]  }  ],
+									"Country" : 
+										 [ {  "IdentificationCode" : 
+											[ { 
+												"CodeContent" : "@ASPCountryCodeContent" ,
+												"CodeListIdentifier": "@ASPCountryCodeListId",
+												"CodeListAgencyNameText": "@ASPCountryCodeListAgency" ,
+												"CodeListNameText": "@ASPCountryCodeListName"
+												}
+											]  
+											}
+										 ]
+									} 
+								]
+							}
+						],
+					"Contact": 
+					[
+						{
+						  "ElectronicMail": [
+							{
+							  "TextContent":  "@ASPEmail"  
+							}
+						  ]
+						}
+					]						
+				  }  
+				] 
+			  }
+			],
+		"AccountingCustomerParty" : 
+			[ {  
+				"Party" : 
+					[ {  
+					"PartyIdentification" : 
+						[ {  
+							"ID" : 
+								[ {  
+									"IdentifierContent" : "@ACPID",
+									"IdentificationSchemeIdentifier" : "@ACPIdentificationSchemeID",
+									"IdentificationSchemeNameText" : "@ACPIdentificationSchemeNameText",
+									"IdentificationSchemeAgencyNameText" : "@ACPIdentificationSchemeAgencyNameText",
+									"IdentificationSchemeUniformResourceIdentifier" : "@ACPIdentificationSchemeURI"  
+									}
+								]
+						  } 
+					    ],
+				  "PartyName" : 
+					 [ { 
+						"Name" : 
+							[ {  "TextContent" : "@ACPPartyName"  }  ]  
+						}
+					  ],
+				  "PartyLegalEntity" : 
+					 [ {  
+						  "RegistrationName" : 
+							[ { 
+								"TextContent" : "@ACPPartyLegalEntityRegistrationName"  }  ],
+						  "RegistrationAddress" : 
+							[ {  "ID" : 
+									[ {  "IdentifierContent" : "@ACPIdentifierContent",
+										 "IdentificationSchemeAgencyNameText" : "@ACPIdentificationSchemeAgencyNameText",
+										 "IdentificationSchemeNameText" : "@ACPIdentificationSchemeNameText"  }  ],
+								  "CityName" : 
+									[ {  "TextContent" : "@ACPCityName"  }  ],
+								  "CountrySubentity" : 
+									[ {  "TextContent" : "@ACPCountrySubentity"  }  ],
+								  "District" : 
+									[ {  "TextContent" : "@ACPDistrict"  }  ],
+								  "AddressLine" : 
+									[ {  "Line" : 
+											[ {  "TextContent" : "@ACPAddressLine"  }  ]  
+											}
+									],
+								  "Country" : 
+									[ {  "IdentificationCode" : 
+											[ {  
+												"CodeContent" : "@ACPCountryID",
+												"CodeListIdentifier": "@ACPCountryCodeListId",
+												"CodeListAgencyNameText": "@ACPCountryCodeListAgency" ,
+												"CodeListNameText": "@ACPCountryCodeListName"  
+												}
+											]  
+										  }  
+									]  
+								}
+							]
+						} 
+					],
+				  "Contact" : 
+						[ {  "ElectronicMail" : 
+								[ {  "TextContent" : "@ACPMailID"  }  ]  
+							}
+						]
+					}  
+				 ]  
+			 } 
+			],
+
+  

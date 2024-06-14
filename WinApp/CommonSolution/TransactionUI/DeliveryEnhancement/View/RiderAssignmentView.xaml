@@ -1,0 +1,79 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.RiderAssignmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Style="{StaticResource ChildWindowStyle}"
+        Title="RiderAssignmentView" Height="450" Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RiderAssignmentView}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <common:CustomTextBlock 
+            Text="Rider Assignment" 
+            HorizontalAlignment="Left" 
+            Margin="20,10"
+            Height="{StaticResource CustomActionButton.Height}"
+            FontSize="{StaticResource FontSize.Medium}"
+            FontWeight="{StaticResource FontWeight.Bold}"
+            VerticalAlignment="Top"/>
+            <common:CustomActionButton x:Name="btnAssignNewRider"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Right" 
+                                    Margin="20,10"
+                                    Content="ASSIGN NEW RIDER"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding AssignNewRiderCommand}"
+                                    IsEnabled="{Binding AssignNewRiderButtonIsEnabled}"/>
+        </Grid>
+        
+        
+        <!--<common:ComboGroupUserControl x:Name="ComboGroupUserControl"
+            Grid.Row="1" DataContext="{Binding ComboGroupVM}" Height="Auto" VerticalAlignment="Top"/>-->
+        <common:CustomDataGridUserControl DataContext="{Binding TransactionOrderDispensingCustomDataGridVM, Mode=TwoWay}"   
+                                          Grid.Row="1" Height="Auto" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.SelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RiderAssignmentView}}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ButtonClicked">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=common:CustomDataGridUserControl}}"
+                                                                   Command="{Binding DataContext.MoreClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:RiderAssignmentView}}" />
+                    
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="ComboBoxSelectionChanged">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=common:CustomDataGridUserControl}}"
+                            Command="{Binding DataContext.ComboBoxSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                </i:EventTrigger>
+
+
+            </i:Interaction.Triggers>
+        </common:CustomDataGridUserControl>
+
+        <Grid Grid.Row="3">
+            <common:CustomActionButton x:Name="btnSave"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Center" 
+                                    Content="SAVE"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding SaveCommand}"/>
+        </Grid>
+
+    </Grid>
+</Window>

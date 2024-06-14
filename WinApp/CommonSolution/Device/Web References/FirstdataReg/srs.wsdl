@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://securetransport.dw/srs/soap" name="srs" targetNamespace="http://securetransport.dw/srs/soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://securetransport.dw/srs/soap">
+      <xsd:complexType name="RequestType">
+        <xsd:sequence>
+          <xsd:element name="ReqClientID" type="tns:ReqClientIDType" />
+          <xsd:choice>
+            <xsd:element name="Registration" type="tns:RegistrationType" />
+            <xsd:element name="Activation" type="tns:ActivationType" />
+          </xsd:choice>
+          <xsd:element minOccurs="0" name="Custom1" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Custom2" type="xsd:string" />
+        </xsd:sequence>
+        <xsd:attribute fixed="3" name="Version" type="tns:VersionType" use="required" />
+        <xsd:attribute name="ClientTimeout" type="tns:ClientTimeoutType" />
+      </xsd:complexType>
+      <xsd:complexType name="ResponseType">
+        <xsd:sequence>
+          <xsd:element name="RespClientID" type="tns:RespClientIDType" />
+          <xsd:element name="Status" type="tns:StatusType" />
+          <xsd:choice>
+            <xsd:element name="RegistrationResponse" type="tns:RegistrationResponseType" />
+            <xsd:element name="ActivationResponse" type="tns:ActivationResponseType" />
+          </xsd:choice>
+          <xsd:element minOccurs="0" name="Custom1" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Custom2" type="xsd:string" />
+        </xsd:sequence>
+        <xsd:attribute fixed="3" name="Version" type="tns:VersionType" use="required" />
+      </xsd:complexType>
+      <xsd:simpleType name="VersionType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="ClientTimeoutType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:complexType name="ReqClientIDType">
+        <xsd:sequence>
+          <xsd:element name="DID" type="tns:DIDType" />
+          <xsd:element name="App" type="tns:AppType" />
+          <xsd:element name="Auth" type="tns:AuthType" />
+          <xsd:element name="ClientRef" type="tns:ClientRefType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RespClientIDType">
+        <xsd:sequence>
+          <xsd:element name="DID" type="tns:DIDType" />
+          <xsd:element name="ClientRef" type="tns:ClientRefType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="StatusType">
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="StatusCode" type="tns:StatusCodeType" use="required" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="StatusCodeType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="OK" />
+          <xsd:enumeration value="AuthenticationError" />
+          <xsd:enumeration value="UnknownServiceID" />
+          <xsd:enumeration value="Timeout" />
+          <xsd:enumeration value="XMLError" />
+          <xsd:enumeration value="OtherError" />
+          <xsd:enumeration value="AccessDenied" />
+          <xsd:enumeration value="InvalidMerchant" />
+          <xsd:enumeration value="Failed" />
+          <xsd:enumeration value="Duplicated" />
+          <xsd:enumeration value="Retry" />
+          <xsd:enumeration value="NotFound" />
+          <xsd:enumeration value="SOAPError" />
+          <xsd:enumeration value="InternalError" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="RegistrationType">
+        <xsd:sequence>
+          <xsd:element name="ServiceID" type="tns:ServiceIDType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="ServiceIDType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:complexType name="RegistrationResponseType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="DID" type="tns:DIDType" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="URL" type="tns:URLType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ActivationType">
+        <xsd:sequence>
+          <xsd:element name="ServiceID" type="tns:ServiceIDType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ActivationResponseType" />
+      <xsd:simpleType name="DIDType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="AppType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="AuthType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="ClientRefType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="URLType">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:element name="Request" type="tns:RequestType" />
+      <xsd:element name="Response" type="tns:ResponseType" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SrsOperationRequest">
+    <wsdl:part name="body" element="tns:Request" />
+  </wsdl:message>
+  <wsdl:message name="SrsOperationResponse">
+    <wsdl:part name="body" element="tns:Response" />
+  </wsdl:message>
+  <wsdl:portType name="srsPortType">
+    <wsdl:operation name="SrsOperation">
+      <wsdl:input message="tns:SrsOperationRequest" />
+      <wsdl:output message="tns:SrsOperationResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="srsServiceBinding" type="tns:srsPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SrsOperation">
+      <soap:operation soapAction="http://securetransport.dw/srs" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="srsService">
+    <wsdl:port name="srsServicePort" binding="tns:srsServiceBinding">
+      <soap:address location="https://stagingsupport.datawire.net/rc/srssoap/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

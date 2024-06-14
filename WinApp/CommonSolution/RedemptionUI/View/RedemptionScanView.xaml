@@ -1,0 +1,361 @@
+﻿<Window x:Class="Semnox.Parafait.RedemptionUI.RedemptionScanView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:local="clr-namespace:Semnox.Parafait.RedemptionUI"
+        Style="{StaticResource PopupWindowStyle}"
+        mc:Ignorable="d"
+        Title="RedemptionScanView">
+    <Window.Resources>
+
+        <Style x:Key="CommonTextBlockStyle"
+               TargetType="{x:Type common:CustomTextBlock}"
+               BasedOn="{StaticResource {x:Type common:CustomTextBlock}}">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="TextWrapping"
+                    Value="WrapWithOverflow" />
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="Margin"
+                    Value="0,8,16,0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="True">
+                    <Setter Property="Margin"
+                            Value="0,8,4,0" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ScanGiftTextBlockStyle"
+               TargetType="{x:Type common:CustomTextBlock}"
+               BasedOn="{StaticResource CommonTextBlockStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ScanGiftButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ScanTicketTextBlockStyle"
+               TargetType="{x:Type common:CustomTextBlock}"
+               BasedOn="{StaticResource CommonTextBlockStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ScanTicketButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EnterTicketTextBlockStyle"
+               TargetType="{x:Type common:CustomTextBlock}"
+               BasedOn="{StaticResource CommonTextBlockStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding EnterTicketButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CommonPathStyle"
+               TargetType="{x:Type Path}">
+            <Setter Property="Stretch"
+                    Value="Uniform" />
+            <Setter Property="Fill"
+                    Value="{StaticResource Action.Active.Background}" />
+        </Style>
+
+        <Style x:Key="CloseButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Right" />
+            <Setter Property="Margin"
+                    Value="0,-20,-20,0" />
+            <Setter Property="Height"
+                    Value="48" />
+            <Setter Property="Width"
+                    Value="{Binding ActualHeight,RelativeSource={RelativeSource Mode=Self}}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="OutsideBorder"
+                                Background="{StaticResource Action.Active.Background}"
+                                CornerRadius="{Binding ActualWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}">
+                            <Path x:Name="ClosePath"
+                                  Stretch="Uniform"
+                                  StrokeThickness="2"
+                                  Data="M0,0 L1,1 M0,1 L1,0"
+                                  Stroke="{StaticResource Action.Active.Foreground}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="False">
+                                <Setter Property="Padding"
+                                        TargetName="OutsideBorder"
+                                        Value="12" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="True">
+                                <Setter Property="Padding"
+                                        TargetName="OutsideBorder"
+                                        Value="8" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="True">
+                    <Setter Property="Margin"
+                            Value="0,-20,-10,0" />
+                    <Setter Property="Height"
+                            Value="36" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CommonOuterBorderStyle"
+               TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="CornerRadius"
+                    Value="{StaticResource CornerRadius}" />
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource Control.BorderBrush}" />
+            <Setter Property="Background"
+                    Value="{StaticResource Action.Light.Background}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="True">
+                    <Setter Property="Padding"
+                            Value="8" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="False">
+                    <Setter Property="Padding"
+                            Value="32" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CommonButtonMarginStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="0,8,16,0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="True">
+                    <Setter Property="Margin"
+                            Value="0,8,4,0" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ScanGiftButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonMarginStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Style="{StaticResource CommonOuterBorderStyle}">
+                            <UniformGrid x:Name="ContentGrid"
+                                         Columns="2">
+                                <Path x:Name="GiftPath"
+                                      Margin="0,0,8,0"
+                                      Style="{StaticResource CommonPathStyle}"
+                                      Data="M36.008 0c3.05 0 6.101.764 8.85 2.292.11.061.22.123.328.187.076-.097.155-.192.236-.285 1.22-1.39 2.995-2.2 4.876-2.193 1.78.008 3.387.733 4.548 1.9 1.16 1.165 1.874 2.772 1.866 4.54.003 1.288-.383 2.512-1.068 3.538-.526.79-1.228 1.462-2.065 1.957-.107.063-.216.123-.325.18.043.12.085.239.126.359 1.815 5.34 1.028 11.22-2.12 15.897h6.103c2.114 0 4.028.854 5.413 2.234 1.384 1.38 2.241 3.286 2.241 5.391 0 2.106-.857 4.012-2.241 5.391-1.385 1.38-3.299 2.234-5.413 2.234h-4.21v6.543c2.142.814 3.922 2.245 5.168 4.044 1.31 1.895 2.029 4.197 1.95 6.616-.003 3.08-1.121 5.857-2.917 7.87-1.822 2.042-4.338 3.3-7.112 3.3-1.938-.012-3.818-.627-5.38-1.751-.074-.053-.146-.106-.218-.161l-.245.12c-2.61 1.245-5.481 1.86-8.38 1.792-2.92.069-5.792-.547-8.401-1.793-.083-.039-.164-.079-.246-.119-.072.055-.144.108-.217.16-1.562 1.125-3.443 1.74-5.383 1.751-2.77 0-5.288-1.257-7.109-3.299-1.796-2.013-2.914-4.79-2.917-7.856-.079-2.433.64-4.735 1.95-6.63 1.246-1.799 3.026-3.23 5.168-4.044v-6.543h-4.21c-2.114 0-4.028-.853-5.413-2.234C7.857 40.008 7 38.103 7 35.998c0-2.106.857-4.012 2.241-5.392 1.385-1.38 3.299-2.234 5.413-2.234h6.1c-3.147-4.68-3.932-10.561-2.115-15.902.04-.12.083-.24.126-.358-.11-.057-.218-.117-.324-.18-.83-.495-1.54-1.17-2.075-1.982-.978-1.48-1.26-3.215-.927-4.823.333-1.609 1.283-3.09 2.769-4.065C19.694.088 21.436-.194 23.05.14c1.343.276 2.598.976 3.544 2.055.082.093.16.188.236.285.109-.063.218-.126.328-.187C29.91.764 32.96 0 36.01 0zm-.031 3.464c-3.634.017-7.278 1.357-10.173 4.03-1.306 1.23-2.382 2.69-3.172 4.305-1.385 2.819-1.801 5.92-1.308 8.888.488 2.936 1.864 5.743 4.122 8.067.415.315.663.803.671 1.335 0 .472-.193.9-.504 1.209-.312.31-.742.503-1.218.503h-9.741c-1.163 0-2.215.47-2.977 1.228-.762.76-1.233 1.81-1.233 2.968 0 1.16.471 2.209 1.233 2.968.762.76 1.814 1.229 2.977 1.229h5.933c.475 0 .906.192 1.218.503.311.31.504.738.504 1.211v7.759c2.559.15 4.87 1.374 6.573 3.283 1.8 2.017 2.918 4.8 2.918 7.873 0 .353-.017.704-.096 1.46-.024.207-.05.417-.184 1.122-.038.17-.083.369-.257.993-.05.165-.11.347-.333.955-.067.165-.141.334-.405.902-.08.163-.169.323-.406.737-.118.208-.201.35-.266.461.167.068.337.132.507.194 1.8.65 3.713.963 5.672.92 1.943.044 3.876-.277 5.565-1.14.144-.074.287-.152.427-.233-.118-.187-.178-.292-.239-.398-.1-.177-.198-.35-.483-.949-.074-.163-.149-.331-.386-.958-.057-.162-.116-.34-.299-.976-.046-.173-.084-.349-.22-1.013-.033-.2-.059-.41-.13-1.024-.031-.348-.049-.7-.049-1.053 0-3.072 1.119-5.856 2.918-7.873 1.703-1.91 4.014-3.133 6.573-3.283v-7.759c0-.473.193-.901.504-1.211.312-.311.743-.503 1.218-.503h5.932c1.163 0 2.215-.47 2.977-1.229.762-.76 1.233-1.809 1.233-2.968s-.471-2.208-1.233-2.968c-.762-.759-1.814-1.228-2.977-1.228h-9.741c-.477 0-.934-.196-1.26-.545-.322-.345-.474-.787-.458-1.224.015-.434.196-.862.545-1.19 2.28-2.226 3.716-5.054 4.232-8.04.517-2.992.11-6.141-1.296-9.002-.79-1.617-1.868-3.077-3.28-4.403-2.85-2.633-6.483-3.949-10.128-3.933zM21.768 53.08c-.166 0-.33.017-.929.087-1.596.27-3.004 1.212-4.014 2.562-1.02 1.365-1.636 3.147-1.636 5.094 0 2.145.746 4.093 1.96 5.503 1.182 1.375 2.813 2.238 4.623 2.24 1.567-.018 3.064-.65 4.19-1.784.185-.18.36-.371.563-.62.147-.18.283-.365.502-.696.106-.168.209-.343.401-.704.086-.17.165-.345.328-.735.068-.175.13-.36.255-.765.053-.186.098-.38.188-.8.037-.2.064-.409.114-.82.024-.271.038-.544.038-.82 0-2.144-.746-4.092-1.959-5.502-1.184-1.377-2.817-2.24-4.624-2.24zm28.404 0c-1.777.023-3.382.881-4.55 2.24-1.214 1.41-1.96 3.358-1.96 5.503 0 .28.015.56.067 1.032.023.205.05.413.137.843.042.193.087.385.21.8.057.181.12.365.275.75.075.177.156.353.34.707.093.174.192.347.391.653.129.189.266.375.45.602.162.198.338.39.534.585 1.106 1.116 2.607 1.752 4.185 1.771 1.804-.002 3.434-.864 4.618-2.24 1.213-1.41 1.959-3.358 1.959-5.503 0-1.97-.63-3.77-1.73-5.147-1.067-1.338-2.581-2.262-4.926-2.596zM27.994 34.894c.295-.59 1.013-.83 1.604-.535l6.638 3.326 6.638-3.32c.37-.184.81-.164 1.162.053.353.218.568.603.568 1.017v7.173c.001.188-.042.373-.126.54-.295.591-1.013.83-1.604.536l-6.638-3.326-6.638 3.326c-.168.084-.353.127-.54.126-.661-.004-1.193-.542-1.19-1.202v-7.173c0-.187.042-.373.126-.54zm2.265 2.476v3.304l3.304-1.652-3.304-1.652zm11.954 0l-3.304 1.652 3.304 1.652V37.37zm-5.977-23.393c4.613 0 8.368 3.217 8.368 7.172 0 3.956-3.755 7.173-8.368 7.173s-8.368-3.217-8.368-7.173c0-3.955 3.755-7.172 8.368-7.172zm0 2.39l.164.006c1.244.084 2.227 1.12 2.227 2.386 0 1.32-1.07 2.39-2.39 2.39-1.321 0-2.392-1.07-2.392-2.39s1.07-2.391 2.391-2.391c-3.296 0-5.977 2.144-5.977 4.781 0 2.638 2.681 4.782 5.977 4.782 3.296 0 5.977-2.144 5.977-4.782 0-2.637-2.68-4.781-5.977-4.781zm-4.781-5.976v2.39h-2.391v-2.39h2.39zm11.954 0v2.39h-2.391v-2.39h2.39zM21.746 3.428c-.831.004-1.582.342-2.124.887-.543.545-.877 1.297-.874 2.126-.002.615.184 1.196.512 1.68.147.216.321.412.52.584.136.117.28.22.433.31.082-.138.165-.276.251-.412.887-1.413 1.963-2.699 3.197-3.823.12-.109.242-.217.365-.323-.118-.134-.247-.258-.387-.37-.53-.423-1.195-.661-1.893-.659zm28.499 0c-.687.003-1.344.24-1.867.659-.14.111-.27.235-.387.37.123.105.244.213.364.323 1.235 1.124 2.31 2.41 3.198 3.822.085.137.169.274.25.412.153-.089.298-.192.433-.309.2-.171.374-.368.52-.584.33-.485.515-1.065.513-1.676 0-.835-.34-1.589-.887-2.134-.547-.545-1.302-.883-2.137-.883z" />
+                                <Path x:Name="ScannerPath"
+                                      Style="{StaticResource CommonPathStyle}"
+                                      Width="{Binding ActualWidth, ElementName=GiftPath}"
+                                      Height="{Binding ActualHeight, ElementName=GiftPath}"
+                                      Data="M139.758 70.616l10.805 48.668 4.148 19.071c1.22 5.727-.006 10.874-3.211 14.94-3.36 4.261-8.416 6.705-13.876 6.705H96.253c-1.078-.083-1.974-.471-2.642-1.041-.72-.615-1.188-1.446-1.331-2.395l-7.602-50.186h-20.01c-1.098-.087-2.007-.489-2.679-1.076-.725-.634-1.185-1.489-1.307-2.458l-4.066-32.215H10.52c-1.14-.093-2.077-.526-2.756-1.152-.732-.675-1.176-1.58-1.249-2.595L2 4.264c.028-1.42.442-2.295 1.087-2.98C3.857.464 4.935 0 6.064 0h131.802c4.725.146 8.925 1.955 12.034 4.821 3.153 2.908 5.185 6.904 5.508 11.377l2.58 35.772c.177 5.277-1.53 9.747-4.669 13.093-3.992 3.936-8.709 5.736-13.56 5.553zm-74.94.013l3.495 27.678H82.67l-3.494-27.678H64.82zm66.622 0H87.495l12.314 81.3 38.365-.015c2.723-.153 5.22-1.443 6.914-3.59 1.808-2.294 2.435-5.233 1.716-8.056l-4.18-19.198L131.44 70.63zm15.805-54.311c-.285-2.332-1.438-4.393-3.118-5.872-1.68-1.48-3.886-2.377-6.28-2.377H10.434l3.93 54.49 126.587-.014c2.454-.131 4.712-1.176 6.402-2.973 1.808-1.923 2.702-4.43 2.513-7.051l-2.622-36.203z" />
+                            </UniformGrid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ScanGiftButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ScanTicketButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonMarginStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Style="{StaticResource CommonOuterBorderStyle}">
+                            <UniformGrid x:Name="ContentGrid"
+                                         Columns="2">
+                                <Path x:Name="TicketPath"
+                                      Margin="0,0,8,0"
+                                      Style="{StaticResource CommonPathStyle}"
+                                      Data="M25.355 0c.818 0 1.472.573 1.636 1.39C27.727 5.81 31.409 9 35.909 9c4.5 0 8.182-3.19 8.836-7.61C44.91.574 45.564 0 46.382 0h5.89c3.6 0 6.546 2.945 6.546 6.545v58.91c0 3.6-2.945 6.545-6.545 6.545h-5.81c-.818 0-1.472-.573-1.636-1.39C44.091 66.19 40.41 63 35.91 63c-4.5 0-8.182 3.19-8.836 7.61-.164.817-.818 1.39-1.637 1.39h-5.89C15.945 72 13 69.055 13 65.455V6.545C13 2.945 15.945 0 19.545 0zm-1.228 3.273h-4.582c-1.8 0-3.272 1.472-3.272 3.272v14.728H23.8v3.272h-7.527v40.91c0 1.8 1.472 3.272 3.272 3.272h4.582c1.391-5.318 6.218-9 11.782-9s10.31 3.682 11.782 9h4.582c1.8 0 3.272-1.472 3.272-3.272v-40.91h-7.527v-3.272h7.527V6.545c0-1.8-1.472-3.272-3.272-3.272H47.69c-1.391 5.318-6.218 9-11.782 9s-10.309-3.682-11.782-9zM48.182 45v3.273H23.636V45h24.546zm-2.455-7.364v3.273H26.091v-3.273h19.636zm-3.19-16.363v3.272H29.2v-3.272h13.336z" />
+                                <Path x:Name="ScannerPath"
+                                      Style="{StaticResource CommonPathStyle}"
+                                      Width="{Binding ActualWidth, ElementName=TicketPath}"
+                                      Height="{Binding ActualHeight, ElementName=TicketPath}"
+                                      Data="M139.758 70.616l10.805 48.668 4.148 19.071c1.22 5.727-.006 10.874-3.211 14.94-3.36 4.261-8.416 6.705-13.876 6.705H96.253c-1.078-.083-1.974-.471-2.642-1.041-.72-.615-1.188-1.446-1.331-2.395l-7.602-50.186h-20.01c-1.098-.087-2.007-.489-2.679-1.076-.725-.634-1.185-1.489-1.307-2.458l-4.066-32.215H10.52c-1.14-.093-2.077-.526-2.756-1.152-.732-.675-1.176-1.58-1.249-2.595L2 4.264c.028-1.42.442-2.295 1.087-2.98C3.857.464 4.935 0 6.064 0h131.802c4.725.146 8.925 1.955 12.034 4.821 3.153 2.908 5.185 6.904 5.508 11.377l2.58 35.772c.177 5.277-1.53 9.747-4.669 13.093-3.992 3.936-8.709 5.736-13.56 5.553zm-74.94.013l3.495 27.678H82.67l-3.494-27.678H64.82zm66.622 0H87.495l12.314 81.3 38.365-.015c2.723-.153 5.22-1.443 6.914-3.59 1.808-2.294 2.435-5.233 1.716-8.056l-4.18-19.198L131.44 70.63zm15.805-54.311c-.285-2.332-1.438-4.393-3.118-5.872-1.68-1.48-3.886-2.377-6.28-2.377H10.434l3.93 54.49 126.587-.014c2.454-.131 4.712-1.176 6.402-2.973 1.808-1.923 2.702-4.43 2.513-7.051l-2.622-36.203z" />
+                            </UniformGrid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ScanTicketButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EnterTicketNoButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonMarginStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Style="{StaticResource CommonOuterBorderStyle}">
+                            <Path x:Name="EnterTicketNoPath"
+                                  Grid.Column="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Style="{StaticResource CommonPathStyle}"
+                                  Data="M37.124 17.233c1.007 0 2 .378 2.79 1.027 1.206.989 1.949 2.47 1.952 3.99l.014 3.13.187-.068c.913-.309 1.907-.307 2.839.066l.214.093.197.099c1.4.743 2.244 2.037 2.568 3.611.036.174.066.351.091.533.068.486.097.915.103 1.477v.308l.122-.046c1.254-.427 2.613-.193 3.714.548l.191.135.168.132c1.205.988 1.948 2.469 1.951 3.99l.014 3.346.186-.067c.913-.31 1.907-.308 2.839.067l.22.097h.016l.133.074.308.164.01.023.167.109c1.139.784 1.835 1.959 2.128 3.358l.05.265.04.255c.018.143.034.287.047.434.06.679.056 1.282.002 2.179l-.094 1.399-.103 1.142c-.76 8.216-1.71 12.87-4.053 17.578l-.17.335c-1.16 2.37-3.347 4.007-5.852 4.215l-.26.016-.19.003-.58.083c-5.624.78-10.129.81-14.352-.164l-.468-.112-.466-.12c-.102-.028-.201-.066-.3-.115-3.312-1.659-5.025-4.346-6.858-9.42l-.296-.836-.019-.062c-1.562-5.576-1.946-8.667-.89-12.175.041-.138.101-.269.178-.392.57-.907 1.268-1.614 2.29-2.408l.551-.416.785-.576c.574-.428.952-.748 1.245-1.072l.147-.17.029-.03c1.137-1.187 1.63-1.838 1.813-2.508l.009-.04-.003-15.955-.014-.886c-.008-.84.015-1.36.098-1.977.022-.165.048-.327.08-.487.31-1.607 1.153-2.927 2.573-3.69.524-.283 1.084-.442 1.657-.48l.252-.009zm.041 3.196l-.074.005c-.103.013-.216.05-.346.121-.545.292-.788.677-.94 1.467l-.044.268c-.051.369-.071.795-.071 1.397l.013 1.294v27.143c.006.428-.163.848-.465 1.153-.3.305-.718.479-1.146.479-.428 0-.846-.174-1.147-.479-.263-.267-.426-.621-.458-.985l-.006-.156v-6.1l-.062.065c-.291.286-.61.565-.969.854l-.448.35c-.377.286-1.058.792-1.178.884-.579.444-.968.792-1.25 1.136l-.118.153-.031.12c-.64 2.434-.36 4.978.741 9.093l.24.874c1.577 4.536 2.98 6.964 5.266 8.237l.13.07.335.085c3.867.945 8.134.935 13.502.191l.601-.086c.074-.015.135-.023.2-.026h.104c1.384.012 2.68-.856 3.452-2.286l.092-.182c2.224-4.348 3.152-8.801 3.89-16.736l.1-1.117.082-1.27c.054-.914.054-1.533-.018-2.065-.127-.938-.393-1.412-.992-1.746-.423-.225-.74-.158-1.189.257-.383.356-.674.944-.718 1.374l-.002 7.633c.007.428-.162.848-.462 1.154-.3.304-.718.48-1.146.48-.428.001-.846-.172-1.147-.476-.302-.304-.472-.724-.467-1.14l.004-7.074c-.022-.262-.021-.525-.002-.719l-.004-5.088c-.003-.672-.005-1.315-.01-1.949l-.004-.808c0-.5-.329-1.155-.775-1.52-.39-.321-.68-.393-.997-.258l-.152.076-.115.066c-.35.216-.555.505-.704.982l-.047.166c-.064.243-.109.525-.135.826l-.016.229v7.426c.006.428-.163.848-.465 1.153-.3.305-.718.479-1.146.479-.429 0-.846-.174-1.147-.479-.264-.267-.426-.621-.459-.985l-.006-.156.001-5.968-.015-.52c-.007-.323-.005-.601.005-.864l.01-.194v-4.05l.012-.78.002-.491c-.004-.688-.04-1.168-.126-1.585-.156-.762-.398-1.138-.927-1.419-.428-.229-.75-.161-1.2.255-.382.354-.671.937-.717 1.364l-.002 7.859c.007.428-.161.849-.462 1.154-.3.305-.717.48-1.146.48-.428.001-.845-.172-1.147-.476-.302-.304-.472-.723-.467-1.14l.004-7.286c-.021-.265-.02-.532-.002-.728l-.002-4.377c-.003-1.147-.008-2.197-.016-3.247 0-.5-.328-1.155-.774-1.52-.273-.225-.503-.322-.705-.32zM6.72 31.2c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24S.48 40.886.48 37.44s2.794-6.24 6.24-6.24zm15.36 0c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24-6.24-2.794-6.24-6.24 2.794-6.24 6.24-6.24zM6.72 34.08c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zm15.36 0c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zM6.72 15.84c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24S.48 25.526.48 22.08s2.794-6.24 6.24-6.24zm15.36 0c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24-6.24-2.794-6.24-6.24 2.794-6.24 6.24-6.24zM6.72 18.72c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zm15.36 0c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zM6.72.48c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24S.48 10.166.48 6.72 3.274.48 6.72.48zm15.36 0c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24-6.24-2.794-6.24-6.24S18.634.48 22.08.48zm15.36 0c3.446 0 6.24 2.794 6.24 6.24s-2.794 6.24-6.24 6.24-6.24-2.794-6.24-6.24S33.994.48 37.44.48zM6.72 3.36c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zm15.36 0c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36zm15.36 0c-1.856 0-3.36 1.504-3.36 3.36 0 1.856 1.504 3.36 3.36 3.36 1.856 0 3.36-1.504 3.36-3.36 0-1.856-1.504-3.36-3.36-3.36z" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="True">
+                                <Setter Property="Padding"
+                                        TargetName="border"
+                                        Value="8,16" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColumnCount}"
+                                         Value="2">
+                                <Setter Property="HorizontalAlignment"
+                                        TargetName="EnterTicketNoPath"
+                                        Value="Stretch" />
+                                <Setter Property="VerticalAlignment"
+                                        TargetName="EnterTicketNoPath"
+                                        Value="Stretch" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding EnterTicketButtonVisible}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType = {x:Type local:RedemptionScanView}}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="ScanHeaderBorder"
+                Grid.Row="0"
+                Padding="0,12"
+                BorderThickness="0,0,0,1"
+                BorderBrush="{StaticResource Control.BorderBrush}">
+            <common:CustomTextBlock x:Name="tbHeader"
+                                    Text="{Binding Heading}"
+                                    TextSize="Medium"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    FontWeight="{StaticResource FontWeight.Bold}" />
+        </Border>
+
+        <Button x:Name="btnClose"
+                Grid.Row="0"
+                Command="{Binding CloseCommand}"
+                Style="{StaticResource CloseButtonStyle}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+
+        <Grid x:Name="ContentAreaGrid"
+              Grid.Row="1">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Margin"
+                            Value="24" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="4,18" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <UniformGrid x:Name="ContentButtonUniformGrid"
+                         Grid.Row="0"
+                         Columns="{Binding ColumnCount}">
+                <Button x:Name="btnGiftScan"
+                        Style="{StaticResource ScanGiftButtonStyle}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                        Command="{Binding GiftCommand}" />
+                <Button x:Name="btnTicketScan"
+                        Style="{StaticResource ScanTicketButtonStyle}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                        Command="{Binding TicketCommand}" />
+                <Button x:Name="btnEnterTicket"
+                        Style="{StaticResource EnterTicketNoButtonStyle}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                        Command="{Binding EnterTicketCommand}" />
+            </UniformGrid>
+            <UniformGrid x:Name="ContentUniformGrid"
+                         Grid.Row="1"
+                         Columns="{Binding ColumnCount}">
+                <common:CustomTextBlock x:Name="tbGiftScan"
+                                        Text="{Binding GiftHeading}"
+                                        Style="{StaticResource ScanGiftTextBlockStyle}" />
+                <common:CustomTextBlock x:Name="tbTicketScan"
+                                        Text="{Binding TicketHeading}"
+                                        Style="{StaticResource ScanTicketTextBlockStyle}" />
+                <common:CustomTextBlock x:Name="tbEnterTicket"
+                                        Text="{Binding EnterTicketHeading}"
+                                        Style="{StaticResource EnterTicketTextBlockStyle}" />
+            </UniformGrid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,531 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.FooterUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d">
+    <Grid x:Name="MainGrid">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="MainGridSideBarButtonFirstRow"
+                              Width="1*"
+                              MaxWidth="{DynamicResource MaxWidth}" />
+            <ColumnDefinition x:Name="MainGridSideBarButtonSecondRow"
+                              Width="1*"
+                              MaxWidth="{DynamicResource MaxWidth}" />
+            <ColumnDefinition x:Name="MainGridContentAreaFirstRow"
+                              Width="1*" />
+            <ColumnDefinition x:Name="MainGridContentAreaSecondRow"
+                              Width="1*" />
+            <ColumnDefinition x:Name="MainGridContentAreaThirdRow"
+                              Width="1*" />
+            <ColumnDefinition x:Name="MainGridContentAreaFourthRow"
+                              Width="1*" />
+            <ColumnDefinition x:Name="MainGridKeyboardButtonFirstRow"
+                              Width="1*" />
+            <ColumnDefinition x:Name="MainGridKeyboardButtonSecondRow"
+                              Width="1*"
+                              MaxWidth="{DynamicResource MaxWidth}" />
+            <ColumnDefinition x:Name="MainGridTimeContentFirstRow"
+                              Width="1*"
+                              MaxWidth="{DynamicResource MaxWidth}" />
+            <ColumnDefinition x:Name="MainGridTimeContentSecondRow"
+                              Width="1*"
+                              MaxWidth="{DynamicResource MaxWidth}" />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="SideBarButton"
+                Grid.Column="0"
+                Margin="16,8,0,8"
+                Visibility="{Binding HideSideBarVisibility}"
+                HorizontalAlignment="Stretch"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FooterUserControl}}"
+                Command="{Binding HideSideBarCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="SideBarButtonBackgroundBorder"
+                                        BorderBrush="{StaticResource Control.BorderBrush}"
+                                        BorderThickness="{StaticResource BorderThickness}"
+                                        CornerRadius="{StaticResource CornerRadius}"
+                                        Background="{StaticResource HideButton.Background}">
+                                    <Grid x:Name="SideBarButtonMainGrid">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition x:Name="SideBarButtonIconRow"
+                                                              Width="Auto" />
+                                            <ColumnDefinition x:Name="SideBarButtonTextBlockRow"
+                                                              Width="7.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid x:Name="SideBarButtonIconGrid"
+                                              Grid.Column="0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="16,8,16,8">
+                                            <Path x:Name="SideBarButtonIconAlignmentPath"
+                                                  Data="M0 0H32V32H0z" />
+                                            <Path x:Name="SideBarButtonIconArrowPath"
+                                                  Data="M19.824 0c.241 0 .471.036.688.108.221.075.425.187.608.334.395.319.61.745.61 1.234 0 .35-.11.672-.341.962l-.126.143-.143.129L4.75 16.105l16.174 13.04.143.131c.286.296.439.66.439 1.063 0 .482-.217.902-.61 1.219-.367.295-.814.442-1.315.442-.347 0-.668-.07-.974-.224l-.181-.103-.16-.115L.582 17.299l-.143-.131C.153 16.872 0 16.508 0 16.105c0-.345.112-.662.343-.95l.125-.14.143-.129L18.56.416l.166-.114c.137-.083.284-.15.442-.198.22-.069.44-.104.655-.104zm10.27 0c.24 0 .471.036.688.108.22.075.424.187.607.334.395.319.611.745.611 1.234 0 .35-.111.672-.342.962l-.125.143-.144.129-16.368 13.195 16.173 13.04.143.131c.287.296.44.66.44 1.063 0 .482-.218.902-.611 1.219-.366.295-.813.442-1.315.442-.346 0-.667-.07-.973-.224l-.182-.103-.159-.115-17.685-14.259-.143-.131c-.287-.296-.44-.66-.44-1.063 0-.345.113-.662.344-.95l.125-.14.142-.129L28.831.416l.165-.114c.137-.083.285-.15.442-.198.221-.069.44-.104.655-.104z"
+                                                  Fill="{StaticResource Footer.Foreground}"
+                                                  RenderTransformOrigin="0.5,0.5">
+                                            </Path>
+                                        </Grid>
+                                        <ContentControl x:Name="SidebarContentControl"
+                                                        Grid.Column="1"
+                                                        Content="{Binding}">
+                                            <ContentControl.Style>
+                                                <Style TargetType="{x:Type ContentControl}">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <local:CustomTextBlock x:Name="SideBarButtonTextBlock"
+                                                                                       HorizontalAlignment="Left"
+                                                                                       VerticalAlignment="Center"
+                                                                                       TextWrapping="Wrap"
+                                                                                       Text="{Binding SideBarContent}"
+                                                                                       TextSize="Small"
+                                                                                       FontWeight="{StaticResource FontWeight.Bold}"
+                                                                                       Foreground="{StaticResource Footer.Foreground}" />
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.MultiScreenMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FooterUserControl}}"
+                                                                     Value="True">
+                                                            <Setter Property="ContentTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <local:CustomTextBlock x:Name="SideBarButtonTextBlock"
+                                                                                               HorizontalAlignment="Left"
+                                                                                               VerticalAlignment="Center"
+                                                                                               TextWrapping="Wrap"
+                                                                                               Text="{Binding SideBarContent}"
+                                                                                               TextSize="Large"
+                                                                                               FontWeight="{StaticResource FontWeight.Bold}"
+                                                                                               Foreground="{StaticResource Footer.Foreground}" />
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
+                                        </ContentControl>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding SideBarContent}"
+                                                 Value="Show Sidebar">
+                                        <Setter Property="RenderTransform"
+                                                TargetName="SideBarButtonIconArrowPath">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="180" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SpanHideSideBar}"
+                                     Value="False">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="2" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SpanHideSideBar}"
+                                     Value="True">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="2" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SpanHideSideBar}"
+                                           Value="True" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="3" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Border x:Name="ContentAreaBorder"
+                Margin="16,8,0,0">
+
+            <ContentControl x:Name="MessageContentControl"
+                            Content="{Binding}">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <local:CustomTextBlock x:Name="ContentAreaMessageTextBlock"
+                                                           Text="{Binding Message}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextWrapping="Wrap"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{StaticResource Footer.Foreground}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding MessageType}"
+                                               Value="Warning" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <local:CustomTextBlock x:Name="ContentAreaMessageTextBlock"
+                                                                   Text="{Binding Message}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextWrapping="Wrap"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{StaticResource Footer.Warning.Foreground}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.MultiScreenMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FooterUserControl}}"
+                                         Value="True">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <local:CustomTextBlock x:Name="ContentAreaMessageTextBlock"
+                                                                   Text="{Binding Message}"
+                                                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextSize="Large"
+                                                                   TextWrapping="Wrap"
+                                                                   VerticalAlignment="Center" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding MessageType}"
+                                               Value="Warning" />
+                                    <Condition Binding="{Binding DataContext.MultiScreenMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FooterUserControl}}"
+                                               Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <local:CustomTextBlock x:Name="ContentAreaMessageTextBlock"
+                                                                   Text="{Binding Message}"
+                                                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextWrapping="Wrap"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{StaticResource Footer.Warning.Foreground}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:FooterUserControl}}"
+                                               Command="{Binding MessageClickedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="TouchDown">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:FooterUserControl}}"
+                                               Command="{Binding MessageClickedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ContentControl>
+
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLowerResoultion}"
+                                     Value="True">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="2" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsLowerResoultion}"
+                                     Value="False">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="4" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="True">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="7" />
+                            <Setter Property="Grid.Column"
+                                    Value="2" />
+                            <Setter Property="Height"
+                                    Value="36" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SpanHideSideBar}"
+                                           Value="True" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="6" />
+                            <Setter Property="Grid.Column"
+                                    Value="3" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="False">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="5" />
+                            <Setter Property="Grid.Column"
+                                    Value="2" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsLowerResoultion}"
+                                           Value="True" />
+                                <Condition Binding="{Binding HideSideBarVisibility}"
+                                           Value="Collapsed" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Grid.Column"
+                                    Value="0" />
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="5" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsLowerResoultion}"
+                                           Value="False" />
+                                <Condition Binding="{Binding HideSideBarVisibility}"
+                                           Value="Collapsed" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Grid.Column"
+                                    Value="0" />
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="6" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <StackPanel x:Name="KeyboardAndTimeStackPanel"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLowerResoultion}"
+                                     Value="True">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="7" />
+                            <Setter Property="Grid.Column"
+                                    Value="4" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsLowerResoultion}"
+                                     Value="False">
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="5" />
+                            <Setter Property="Grid.Column"
+                                    Value="6" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="0,0,16,0" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Button x:Name="btnKeyboard"
+                    Grid.Column="6"
+                    Margin="0,8">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="KeyboardButtonBackgroundBorder"
+                                            BorderBrush="{StaticResource Control.BorderBrush}"
+                                            BorderThickness="{StaticResource BorderThickness}"
+                                            CornerRadius="{StaticResource CornerRadius}"
+                                            Background="{StaticResource HideButton.Background}">
+                                        <Grid x:Name="KeyboardButtonIconGrid"
+                                              Margin="8"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center">
+                                            <Path x:Name="KeyboardButtonIconAlignmentPath"
+                                                  Data="M0 0H54V32H0z" />
+                                            <Path x:Name="KeyboardButtonIconPath"
+                                                  Data="M50.4 32c1.997 0 3.6-1.583 3.6-3.556V3.556C54 1.583 52.397 0 50.4 0H3.6C1.603 0 0 1.583 0 3.556v24.888C0 30.417 1.603 32 3.6 32h46.8zm0-3.556H3.6V3.556h46.8v24.888zM10.35 10.667c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.195.45-.445V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 7.11c.253 0 .45-.194.45-.444V7.556c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v6.666h-3.15c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h6.3zm-32.4 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-6.3c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h6.3zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm7.2 0c.253 0 .45-.194.45-.444v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm-25.2 7.112c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7zm28.8 0c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-24.3c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h24.3zm7.2 0c.253 0 .45-.195.45-.445v-2.666c0-.25-.197-.445-.45-.445h-2.7c-.253 0-.45.195-.45.445v2.666c0 .25.197.445.45.445h2.7z"
+                                                  Fill="{StaticResource Footer.Foreground}" />
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Grid x:Name="StatusAndTimeGrid"
+                  HorizontalAlignment="Right"
+                  Margin="8,8,16,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MultiScreenMode}"
+                                         Value="False">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="ConnectionStatusRow"
+                                   Height="1*" />
+                    <RowDefinition x:Name="TimeRow"
+                                   Height="1*" />
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="StatusStackPanel"
+                            Grid.Row="0"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Ellipse x:Name="StatusEllipse"
+                             Width="8"
+                             Height="8"
+                             Margin="0,0,8,0">
+                        <Ellipse.Style>
+                            <Style TargetType="Ellipse">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ConnectionStatus}"
+                                                 Value="Online">
+                                        <Setter Property="Fill"
+                                                Value="{StaticResource Footer.Online.Background}" />
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding ConnectionStatus}"
+                                                 Value="Offline">
+                                        <Setter Property="Fill"
+                                                Value="{StaticResource Footer.Offline.Background}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                    </Ellipse>
+                    <ContentControl Content="{Binding}">
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <local:CustomTextBlock x:Name="ConnectionStatusTextBlock"
+                                                                   Text="{Binding ConnectionStatus}"
+                                                                   Foreground="{StaticResource Footer.Foreground}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding MessageType}"
+                                                       Value="Warning" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <local:CustomTextBlock x:Name="ConnectionStatusTextBlock"
+                                                                           Text="{Binding ConnectionStatus}"
+                                                                           Foreground="{StaticResource Footer.Warning.Foreground}" />
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </StackPanel>
+                <ContentControl Content="{Binding}"
+                                Grid.Row="1">
+                    <ContentControl.Style>
+                        <Style TargetType="{x:Type ContentControl}">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <local:CustomTextBlock x:Name="TimeTextBlock"
+                                                               Text="{Binding Time}"
+                                                               Foreground="{StaticResource Footer.Foreground}">
+                                        </local:CustomTextBlock>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding MessageType}"
+                                                   Value="Warning" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <local:CustomTextBlock x:Name="TimeTextBlock"
+                                                                       Text="{Binding Time}"
+                                                                       Foreground="{StaticResource Footer.Warning.Foreground}">
+                                                </local:CustomTextBlock>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+
+            </Grid>
+
+        </StackPanel>
+
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path = MessageType}"
+                                 Value="Warning">
+                        <Setter Property="Background"
+                                Value="{StaticResource Footer.Warning.Background}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path = MessageType}"
+                                 Value="Error">
+                        <Setter Property="Background"
+                                Value="{StaticResource Footer.Error.Background}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path = MessageType}"
+                                 Value="Info">
+                        <Setter Property="Background"
+                                Value="{StaticResource Footer.Info.Background}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path = MessageType}"
+                                 Value="None">
+                        <Setter Property="Background"
+                                Value="{StaticResource Footer.None.Background}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+    </Grid>
+</UserControl>

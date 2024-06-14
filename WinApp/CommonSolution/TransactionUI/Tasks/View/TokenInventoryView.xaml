@@ -1,0 +1,252 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TokenInventoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:commonUI="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource ChildWindowStyle}"
+        Title="TokenInventoryView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Margin="271,0,271,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <commonUI:CustomTextBlock FontWeight="Bold"
+                                          x:Name="tbTypes"
+                                          Text="TYPES"
+                                          VerticalAlignment="Center" />
+                <commonUI:CustomTextBlock FontWeight="Bold"
+                                          x:Name="tbUserEntries"
+                                          Text="USER ENTRIES"
+                                          Grid.Column="1"
+                                          Margin="25,0,0,0"
+                                          VerticalAlignment="Center" />
+            </Grid>
+            <Border Grid.Row="1"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="TokenFromKioskGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock FontWeight="Bold"
+                                              Margin="10"
+                                              x:Name="tbTokenKiosk"
+                                              Text="Token Collected from Kiosk"
+                                              VerticalAlignment="Center" />
+                    <commonUI:CustomTextBox x:Name="txtTokenKiosk"
+                                            DefaultValue="Enter..."
+                                            Grid.Column="1"                                           
+                                            Text="{Binding TokenFromKiosk, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding TokenKioskTag}"
+                                            ValidationType="NumberOnly" 
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="TokenFromPOSGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock VerticalAlignment="Center"
+                                              FontWeight="Bold"
+                                              x:Name="tbTokenPOS"
+                                              Text="Token Collected from Pos"
+                                              Margin="10" />
+                    <commonUI:CustomTextBox Grid.Column="1"
+                                            x:Name="txtTokenPOS"
+                                            DefaultValue="Enter..."
+                                            Text="{Binding TokenfromPOS, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding TokenPOSTag}"
+                                            ValidationType="NumberOnly"
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="3"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="OnHandTokenGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock VerticalAlignment="Center"
+                                              FontWeight="Bold"
+                                              x:Name="tbHandToken"
+                                              Text="Remaining on Hand Token"
+                                              Margin="10" />
+                    <commonUI:CustomTextBox x:Name="txtHandToken"
+                                            DefaultValue="Enter..."
+                                            Grid.Column="1"
+                                            Text="{Binding RemainingOnHandToken, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding TokenHandTag}"
+                                            ValidationType="NumberOnly"
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="4"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="TransferredTokenGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock VerticalAlignment="Center"
+                                              FontWeight="Bold"
+                                              x:Name="tbTransferredToken"
+                                              Text="Transferred Tokens"
+                                              Margin="10" />
+                    <commonUI:CustomTextBox x:Name="txtTransferredToken"
+                                            DefaultValue="Enter..."
+                                            Grid.Column="1"
+                                            Text="{Binding TransferredToken, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding TransferredTokenTag }"
+                                            ValidationType="NumberOnly"
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="5"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="CardsOnHandGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock VerticalAlignment="Center"
+                                              FontWeight="Bold"
+                                              x:Name="tbCardsOnHand"
+                                              Text="Total Cards on Hand"
+                                              Margin="10" />
+                    <commonUI:CustomTextBox x:Name="txtCardsOnHand"
+                                            DefaultValue="Enter..."
+                                            Grid.Column="1"
+                                            Text="{Binding TotalCardsOnHand, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding CardsOnHandTag}"
+                                            ValidationType="NumberOnly"
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="6"
+                    Margin="2"
+                    Background="{StaticResource Grid.Background}"
+                    BorderBrush="{StaticResource Grid.Background}"
+                    BorderThickness="{StaticResource Control.Border.Thickness}"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <Grid x:Name="CardsPurchasedGrid"
+                      Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock VerticalAlignment="Center"
+                                              x:Name="tbCardsPurchased"
+                                              Text="Cards Purchased"
+                                              Margin="10"
+                                              FontWeight="Bold" />
+                    <commonUI:CustomTextBox x:Name="txtCardsPurchased"
+                                            DefaultValue="Enter..."
+                                            Grid.Column="1"
+                                            Text="{Binding CardsPurchased, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                            Tag="{Binding CardPurchasedTag}"
+                                            ValidationType="NumberOnly" 
+                                            ErrorTextVisible="False"
+                                            MaxWidth="200"
+                                            Padding="5,8"
+                                            Margin="0,0,0,8"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Border Margin="0,5,0,0"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{StaticResource Grid.Background}">
+                <StackPanel Margin="0,20,0,0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <commonUI:CustomActionButton x:Name="btnReset"
+                                                 Content="RESET"
+                                                 Width="{StaticResource ActionButton.Width}"
+                                                 Height="{StaticResource CustomActionButton.Height}"
+                                                 Background="{StaticResource Grid.Background}"
+                                                 Foreground="{StaticResource Action.Passive.Foreground}"
+                                                 Command="{Binding ClearClickedCommand}"
+                                                 Margin="0,0,8,8" />
+                    <commonUI:CustomActionButton x:Name="btnConfirm"
+                                                 Content="CONFIRM"
+                                                 Width="{StaticResource ActionButton.Width}"
+                                                 Height="{StaticResource CustomActionButton.Height}"
+                                                 Background="{StaticResource LeftPane.Selected.Border}"
+                                                 Foreground="{StaticResource Action.Active.Foreground}"
+                                                 Margin="8,0,0,8"
+                                                 Command="{Binding ConfirmClickedCommand}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

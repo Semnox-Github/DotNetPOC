@@ -1,0 +1,2365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="8.00000063578288in" Name="InventoryIssueReceipt" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="parafait" SelectCommand="select  IDT.Name Type, IIH.Status,IIH.IssueNumber,IIH.ReferenceNumber&#xD;&#xA; from InventoryIssueHeader IIH&#xD;&#xA;left outer join InventoryDocumentType IDT on IDT.DocumentTypeId = IIH.DocumentTypeID&#xD;&#xA;left outer join InventoryRequisition IR on IR.RequisitionId = iih.RequisitionID&#xD;&#xA;left outer join site loc1 on loc1.site_id = iih.FromSiteID&#xD;&#xA;left outer join site loc2 on loc2.site_id = iih.ToSiteID&#xD;&#xA;left outer join (select V1.VendorCode, V1.Name, PO1.OrderNumber, PO1.OrderDate, IIH1.InventoryIssueId from PurchaseOrder PO1, Vendor V1, InventoryIssueHeader IIH1 where&#xD;&#xA;PO1.PurchaseOrderId = IIH1.PurchaseOrderId &#xD;&#xA;and PO1.VendorId = V1.VendorId &#xD;&#xA;and IIH1.InventoryIssueId = @issueId) PO ON PO.InventoryIssueId =  iih.RequisitionID&#xD;&#xA;where&#xD;&#xA;iih.InventoryIssueId = @issueId" Name="dsIssueTypeStatus">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select Remarks from InventoryIssueHeader where &#xD;&#xA;&#x9;&#x9;&#x9;InventoryIssueId = @issueId" Name="dsIssueRemarks">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select &#xD;&#xA; sum(iil.Quantity * p.Cost) TotalBasic from &#xD;&#xA;InventoryIssueLines IIL&#xD;&#xA;left outer join Location loc1 on loc1.LocationId = IIL.FromLocationID&#xD;&#xA;left outer join Location loc2 on loc2.LocationId = IIL.ToLocationID,&#xD;&#xA;Product P&#xD;&#xA;left outer join  UOM uom on P.UomId = uom.UOMId&#xD;&#xA;where IIL.ProductId = P.ProductId&#xD;&#xA;and iil.IssueId = @issueId" Name="dsTotalBasic">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="set @PurchaseOrderId = (select isnull(purchaseorderid,-1) from InventoryIssueHeader where InventoryIssueId=@issueId)&#xD;&#xA;&#xD;&#xA;if @PurchaseOrderId != -1&#xD;&#xA;select isnull((sum(POTL.TaxAmount * POL.Quantity)),0.00) TotalTaxAmount&#xD;&#xA;from PurchaseOrderTaxLine POTL, PurchaseOrder_Line POL&#xD;&#xA;where POTL.PurchaseOrderId = POL.PurchaseOrderId&#xD;&#xA;AND POTL.PurchaseOrderLineId = POL.PurchaseOrderLineId&#xD;&#xA;AND  POL.PurchaseOrderId = @PurchaseOrderId&#xD;&#xA;AND POTL.IsActive = 1&#xD;&#xA;else&#xD;&#xA;select 0.00 TotalTaxAmount" Name="dsTotalTax">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@PurchaseOrderId" />
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="set @IssueSiteId = (select isnull(site_id,-1) from InventoryIssueHeader where  InventoryIssueId = @issueId)&#xD;&#xA;select top 1 site_name, site_address &#xD;&#xA;from site &#xD;&#xA;where &#xD;&#xA;((site_id = @IssueSiteId) or (-1 = @IssueSiteId))" Name="dsSiteDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@IssueSiteId" />
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="parafait" SelectCommand="select ir.RequisitionNumber, iih.IssueDate&#xD;&#xA; from InventoryIssueHeader IIH&#xD;&#xA;left outer join InventoryDocumentType IDT on IDT.DocumentTypeId = IIH.DocumentTypeID&#xD;&#xA;left outer join InventoryRequisition IR on IR.RequisitionId = iih.RequisitionID&#xD;&#xA;left outer join site loc1 on loc1.site_id = iih.FromSiteID&#xD;&#xA;left outer join site loc2 on loc2.site_id = iih.ToSiteID&#xD;&#xA;left outer join (select V1.VendorCode, V1.Name, PO1.OrderNumber, PO1.OrderDate, IIH1.InventoryIssueId from PurchaseOrder PO1, Vendor V1, InventoryIssueHeader IIH1 where&#xD;&#xA;PO1.PurchaseOrderId = IIH1.PurchaseOrderId &#xD;&#xA;and PO1.VendorId = V1.VendorId &#xD;&#xA;and IIH1.InventoryIssueId = @issueId) PO ON PO.InventoryIssueId =  iih.InventoryIssueId&#xD;&#xA;where&#xD;&#xA;iih.InventoryIssueId = @issueId" Name="dsRegularIssue">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="parafait" SelectCommand="select  iih.IssueDate&#xD;&#xA;from InventoryIssueHeader IIH&#xD;&#xA;left outer join InventoryDocumentType IDT on IDT.DocumentTypeId = IIH.DocumentTypeID&#xD;&#xA;left outer join InventoryRequisition IR on IR.RequisitionId = iih.RequisitionID&#xD;&#xA;left outer join site loc1 on loc1.site_id = iih.FromSiteID&#xD;&#xA;left outer join site loc2 on loc2.site_id = iih.ToSiteID&#xD;&#xA;left outer join (select V1.VendorCode, V1.Name, PO1.OrderNumber, PO1.OrderDate, IIH1.InventoryIssueId from PurchaseOrder PO1, Vendor V1, InventoryIssueHeader IIH1 where&#xD;&#xA;PO1.PurchaseOrderId = IIH1.PurchaseOrderId &#xD;&#xA;and PO1.VendorId = V1.VendorId &#xD;&#xA;and IIH1.InventoryIssueId = @issueId) PO ON PO.InventoryIssueId =  iih.InventoryIssueId&#xD;&#xA;where&#xD;&#xA;iih.InventoryIssueId = @issueId" Name="dsAdj-StockTransferIssue">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="parafait" SelectCommand="select ir.RequisitionNumber,iih.IssueDate,&#xD;&#xA; loc1.site_name FromSite, loc2.site_name ToSite &#xD;&#xA; from InventoryIssueHeader IIH&#xD;&#xA;left outer join InventoryDocumentType IDT on IDT.DocumentTypeId = IIH.DocumentTypeID&#xD;&#xA;left outer join InventoryRequisition IR on IR.RequisitionId = iih.RequisitionID&#xD;&#xA;left outer join site loc1 on loc1.site_id = iih.FromSiteID&#xD;&#xA;left outer join site loc2 on loc2.site_id = iih.ToSiteID&#xD;&#xA;left outer join (select V1.VendorCode, V1.Name, PO1.OrderNumber, PO1.OrderDate, IIH1.InventoryIssueId from PurchaseOrder PO1, Vendor V1, InventoryIssueHeader IIH1 where&#xD;&#xA;PO1.PurchaseOrderId = IIH1.PurchaseOrderId &#xD;&#xA;and PO1.VendorId = V1.VendorId &#xD;&#xA;and IIH1.InventoryIssueId = @issueId) PO ON PO.InventoryIssueId =  iih.InventoryIssueId&#xD;&#xA;where&#xD;&#xA;iih.InventoryIssueId = @issueId" Name="dsInterStoreAdjustmentIssue">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait2" SelectCommand="select isnull(IIH.IssueNumber, IIH.InventoryIssueId) IssueNumber, IDT.Name, IIH.Status, IIH.ReferenceNumber, ir.RequisitionNumber, PO.OrderNumber, PO.OrderDate, iih.IssueDate,&#xD;&#xA; iih.DeliveryNoteNumber, iih.DeliveryNoteDate,iih.SupplierInvoiceNumber, iih.SupplierInvoiceDate, loc1.site_name FromSite, loc2.site_name ToSite,&#xD;&#xA; PO.VendorCode, PO.Name VendorName&#xD;&#xA; from InventoryIssueHeader IIH&#xD;&#xA;left outer join InventoryDocumentType IDT on IDT.DocumentTypeId = IIH.DocumentTypeID&#xD;&#xA;left outer join InventoryRequisition IR on IR.RequisitionId = iih.RequisitionID&#xD;&#xA;left outer join site loc1 on loc1.site_id = iih.FromSiteID&#xD;&#xA;left outer join site loc2 on loc2.site_id = iih.ToSiteID&#xD;&#xA;left outer join (select V1.VendorCode, V1.Name, PO1.OrderNumber, PO1.OrderDate, IIH1.InventoryIssueId from PurchaseOrder PO1, Vendor V1, InventoryIssueHeader IIH1 where&#xD;&#xA;PO1.PurchaseOrderId = IIH1.PurchaseOrderId &#xD;&#xA;and PO1.VendorId = V1.VendorId &#xD;&#xA;and IIH1.InventoryIssueId = @issueId) PO ON PO.InventoryIssueId =  iih.InventoryIssueId&#xD;&#xA;where&#xD;&#xA;iih.InventoryIssueId = @issueId" Name="dsDirectIssue">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="&#xD;&#xA;select p.Code, (select case cnt when 0 then '' &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;                                else stuff((select ' | '+ cast(BarCode as nvarchar(250))&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                FROM ProductBarcode&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                WHERE productid = p.ProductId and isactive = 'Y'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                group by BarCode&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                FOR XML PATH('')&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                )&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;                                , 1, 3, '') end&#xD;&#xA;&#x9;&#x9;                                from (select count(*) cnt&#xD;&#xA;&#x9;&#x9;&#x9;                                  from ProductBarcode &#xD;&#xA;&#x9;&#x9;&#x9;                                  where ProductId = p.ProductId and isactive = 'Y'&#xD;&#xA;&#x9;&#x9;&#x9;                                  group by productid)v&#xD;&#xA;&#x9;&#x9;&#x9;                                 ) BarCode,&#xD;&#xA; P.ProductName, uom.UOM, loc1.Name LocationFrom, loc2.Name locationTo, iil.Quantity, p.Cost cost,(iil.Quantity * p.Cost) TotalBasic from &#xD;&#xA;InventoryIssueLines IIL&#xD;&#xA;left outer join Location loc1 on loc1.LocationId = IIL.FromLocationID&#xD;&#xA;left outer join Location loc2 on loc2.LocationId = IIL.ToLocationID,&#xD;&#xA;Product P&#xD;&#xA;left outer join  UOM uom on P.UomId = uom.UOMId&#xD;&#xA;where IIL.ProductId = P.ProductId&#xD;&#xA;and iil.IssueId = @issueId&#xD;&#xA;&#xD;&#xA;" Name="IssueLines">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="set @PurchaseOrderId = (select isnull(purchaseorderid,-1) from InventoryIssueHeader where InventoryIssueId=@issueId)&#xD;&#xA;&#xD;&#xA;if @PurchaseOrderId != -1&#xD;&#xA;select isnull(TaxStructureName,'Tax') TaxStructureName , isnull(sum(POTL.TaxAmount * POL.Quantity),0) TaxAmount&#xD;&#xA;from PurchaseOrderTaxLine POTL, PurchaseOrder_Line POL&#xD;&#xA;where POTL.PurchaseOrderId = POL.PurchaseOrderId&#xD;&#xA;AND POTL.PurchaseOrderLineId = POL.PurchaseOrderLineId&#xD;&#xA;AND  POL.PurchaseOrderId = @PurchaseOrderId&#xD;&#xA;AND POTL.IsActive = 1&#xD;&#xA;group by TaxStructureName&#xD;&#xA;else&#xD;&#xA;select 'Tax' TaxStructureName, 0.00 TaxAmount" Name="taxlines">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@PurchaseOrderId" />
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select s.site_name,s.site_address,pd.default_value TIN from InventoryIssueHeader iH inner join parafait_defaults pd &#xD;&#xA;on (ih.FromSiteID = pd.site_id or ih.FromSiteID is null)&#xD;&#xA;and pd.default_value_name = 'TAX_IDENTIFICATION_NUMBER'&#xD;&#xA;and iH.InventoryIssueId = @issueId, site s &#xD;&#xA;where&#xD;&#xA;(iH.FromSiteID = s.site_id or iH.FromSiteID is null)&#xD;&#xA;and iH.InventoryIssueId = @issueId&#xD;&#xA;" Name="dsFromLocation">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select s.site_name,s.site_address,pd.default_value TIN from InventoryIssueHeader iH inner join parafait_defaults pd &#xD;&#xA;on (ih.ToSiteID = pd.site_id or ih.ToSiteID is null)&#xD;&#xA;and pd.default_value_name = 'TAX_IDENTIFICATION_NUMBER'&#xD;&#xA;and iH.InventoryIssueId = @issueId, site s &#xD;&#xA;where&#xD;&#xA;(iH.ToSiteID = s.site_id or iH.ToSiteID is null)&#xD;&#xA;and iH.InventoryIssueId = @issueId&#xD;&#xA;" Name="dsTOLocation">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@issueId">
+          <Value>
+            <String>= Parameters.IssueId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select OrderStatus, ReceiveRemarks from PurchaseOrder&#xD;&#xA;where&#xD;&#xA;PurchaseOrderId=@PurchaseOrderId" Name="dsOrderDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@PurchaseOrderId">
+          <Value>
+            <String>= Parameters.PurchaseOrderId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection KeepTogether="False" Height="10.147918065389in" Name="detailSection1">
+      <Style Visible="True">
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="7.97912549972534in" Height="0.299999867876371in" Left="0.00003941853841147in" Top="0.447916666666667in" Value="= ToUpper(Parameters.IssueType.Value)" Name="textBox39">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="13pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <BorderWidth Default="1pt" />
+            <Padding Left="5pt" />
+          </Style>
+        </TextBox>
+        <Table DataSourceName="dsSiteDetails" Width="7.97916666666667in" Height="0.379166700690981in" Left="0.00003941853841146in" Top="0in" Name="table1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="7.97916666666667in" Height="0.189583271245153in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox40" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="14.5pt" Bold="True" Italic="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Top="1pt" Bottom="1pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="7.97916666666667in" Height="0.189583440745877in" Left="0in" Top="0in" Value="= Fields.site_address" Name="textBox46" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial Unicode MS" Size="11.5pt" Bold="True" Italic="False" />
+                      <BorderStyle Default="None" />
+                      <Padding Top="1pt" Bottom="1pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="7.97916666666667in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.189583248645056in" />
+              <Row Height="0.189583440745877in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+            <TableGroup Name="group5" />
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_address" />
+          </ColumnGroups>
+        </Table>
+        <Panel Width="7.97912549972534in" Height="0.622995674610138in" Left="0.0200393994649251in" Top="0.877916653951009in" CanShrink="True" Name="panel2">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <BorderWidth Default="1pt" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsRegularIssue" Width="7.47500341196618in" Height="0.283333328787364in" Left="0.0694838364919027in" Top="0.0700000127156575in" Name="crosstab3" StyleName="Office.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.26875099328348in" Height="0.283333333333333in" Left="0in" Top="0in" Value="= Fields.RequisitionNumber" CanShrink="True" Name="textBox3" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.64374933020891in" Height="0.283333328787364in" Left="0in" Top="0in" Value="= Fields.IssueDate" CanShrink="True" Name="textBox4" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.34375029902921in" Height="0.283333333333333in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('REQUISITION NO :')" CanShrink="True" Name="textBox5" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.21875064843729in" Height="0.283333333333333in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE DATE:')" CanShrink="True" Name="textBox7" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.0937502621276in" Height="0.283333333333333in" Left="0in" Top="0in" Value="=Parameters.IssueNumber.Value" CanShrink="True" Name="textBox38" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.906250771361496in" Height="0.283333328787364in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE NO:')" CanShrink="True" Name="textBox48" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="0.906250793079097in" />
+                  <Column Width="1.09375052122177in" />
+                  <Column Width="1.34375078993397in" />
+                  <Column Width="1.26875098778588in" />
+                  <Column Width="1.21875082265721in" />
+                  <Column Width="1.64374933020891in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.283333328787364in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <ChildGroups>
+                    <TableGroup Name="group12" />
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group10" />
+                <TableGroup Name="group9" />
+                <TableGroup Name="group1" />
+                <TableGroup Name="requisitionNumber" />
+                <TableGroup Name="group3" />
+                <TableGroup Name="issueDate" />
+              </ColumnGroups>
+              <Bindings>
+                <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Regular Issue&quot;), true,false)" />
+              </Bindings>
+            </Crosstab>
+            <Table Width="2.98958468437195in" Height="0.23958332836628in" Left="0.0694838364919027in" Top="0.35341215133667in" Name="table2">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.72916781902313in" Height="0.23958332836628in" Left="0in" Top="0in" Value="= Parameters.Reference.Value" Name="textBox62">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Size="9pt" Bold="False" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.26041698455811in" Height="0.23958332836628in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('REFERENCE NO:')" Name="textBox47">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Size="9pt" Bold="True" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.26041651790784in" />
+                  <Column Width="1.72916798827097in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.23958332836628in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <RowGroups>
+                <TableGroup Name="detailTableGroup">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="tableGroup" />
+                <TableGroup Name="tableGroup2" />
+              </ColumnGroups>
+            </Table>
+          </Items>
+          <Bindings>
+            <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Regular Issue&quot;), true,false)" />
+          </Bindings>
+        </Panel>
+        <Panel Width="7.95908610026042in" Height="0.376925468444824in" Left="0.0200393994649251in" Top="1.47099113464355in" CanShrink="True" Name="panel1">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <BorderWidth Default="1pt" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsAdj-StockTransferIssue" Width="4.97708469083289in" Height="0.283333331346512in" Left="0.02in" Top="0.03in" Name="crosstab5" StyleName="Office.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.53958444383164in" Height="0.283333331346512in" Left="0in" Top="0in" Value="= Fields.IssueDate" CanShrink="True" Name="textBox2" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.3229171037674in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE DATE :')" CanShrink="True" Name="textBox8" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.09374997017853in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE NO:')" CanShrink="True" Name="textBox58" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.02083329524006in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=Parameters.IssueNumber.Value" Name="textBox14" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.09375011810936in" />
+                  <Column Width="1.0208333694044in" />
+                  <Column Width="1.32291682011766in" />
+                  <Column Width="1.53958423487279in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.283333331346512in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group14" />
+                <TableGroup Name="group13" />
+                <TableGroup Name="group3" />
+                <TableGroup Name="issueDate" />
+              </ColumnGroups>
+              <Bindings>
+                <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Adjustment Issue&quot; or Parameters.IssueType.Value =&quot;Stock Transfer Issue&quot;), true,false)" />
+              </Bindings>
+            </Crosstab>
+            <Table Width="2.55208442492322in" Height="0.30208332836628in" Left="5in" Top="0.03in" Name="table5">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.3750014840546in" Height="0.30208332836628in" Left="0in" Top="0in" Value="= Parameters.Reference.Value" Name="textBox24">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Size="9pt" Bold="False" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.17708292919103in" Height="0.30208332836628in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('REFERENCE NO:')" Name="textBox26">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Size="9pt" Bold="True" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.17708294086862in" />
+                  <Column Width="1.3750014840546in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.30208332836628in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <RowGroups>
+                <TableGroup Name="detailTableGroup">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="tableGroup" />
+                <TableGroup Name="tableGroup2" />
+              </ColumnGroups>
+            </Table>
+          </Items>
+          <Bindings>
+            <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Adjustment Issue&quot; or Parameters.IssueType.Value =&quot;Stock Transfer Issue&quot;), true,false)" />
+          </Bindings>
+        </Panel>
+        <Panel Width="7.97912534077962in" Height="0.600000063578288in" Left="0.00003941853841147in" Top="1.84791660308838in" CanShrink="True" Name="panel3">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <BorderWidth Default="1pt" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsInterStoreAdjustmentIssue" Width="7.54791879653931in" Height="0.483333379030228in" Left="0.02in" Top="0.02in" Name="crosstab7" StyleName="Office.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.13333356380463in" Height="0.283333331346512in" Left="0in" Top="0in" Value="= Fields.RequisitionNumber" CanShrink="True" Name="textBox1" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.50833368301392in" Height="0.283333361148834in" Left="0in" Top="0in" Value="= Fields.IssueDate" CanShrink="True" Name="textBox6" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.30208456516266in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Requisition :')" CanShrink="True" Name="textBox29" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.33333396911621in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Issue Date :')" CanShrink="True" Name="textBox31" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.21874988079071in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE NO:')" CanShrink="True" Name="textBox61" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.21875023841858in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('From :')" CanShrink="True" Name="textBox76" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.05208325386047in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.FromSite" CanShrink="True" Name="textBox36" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.30208456516266in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('To :')" CanShrink="True" Name="textBox63" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.13333356380463in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.ToSite" CanShrink="True" Name="textBox64" StyleName="Office.TableBody">
+                        <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.05208325386047in" Height="0.283333331346512in" Left="0in" Top="0in" Value="=Parameters.IssueNumber.Value" CanShrink="True" Name="textBox15" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.33333361148834in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('REFERENCE NO:')" Name="textBox28">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.50833368301392in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Parameters.Reference.Value" Name="textBox32">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.2187501581703in" />
+                  <Column Width="1.05208341892431in" />
+                  <Column Width="1.30208437133896in" />
+                  <Column Width="1.13333328700351in" />
+                  <Column Width="1.33333357654966in" />
+                  <Column Width="1.50833364713431in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.283333368068455in" />
+                  <Row Height="0.20000002536623in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+                <TableGroup Name="group18" />
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group16" />
+                <TableGroup Name="group15" />
+                <TableGroup Name="group1" />
+                <TableGroup Name="requisitionNumber" />
+                <TableGroup Name="group3" />
+                <TableGroup Name="issueDate" />
+              </ColumnGroups>
+              <Bindings>
+                <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Inter Store Adjustment Issue&quot;), true,false)" />
+              </Bindings>
+            </Crosstab>
+          </Items>
+          <Bindings>
+            <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Inter Store Adjustment Issue&quot;), true,false)" />
+          </Bindings>
+        </Panel>
+        <Panel Width="7.97908592224121in" Height="1.09992122650146in" Left="0.00003941853841147in" Top="2.44791666666667in" CanShrink="True" Name="panel4">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <BorderWidth Default="1pt" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsDirectIssue" Width="7.20833102431718in" Height="0.956249844748512in" Left="0.02in" Top="0.0999997854232788in" Name="crosstab2" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.927083551883698in" Height="0.252082884311676in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Requisition :')" CanShrink="True" Name="textBox9" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.55208313465118in" Height="0.252082884311676in" Left="0in" Top="0in" Value="= Fields.RequisitionNumber" CanShrink="True" Name="textBox10" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.11458241939545in" Height="0.252082884311676in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Issue Date :')" CanShrink="True" Name="textBox11" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.61458241753447in" Height="0.25208286890312in" Left="0in" Top="0in" Value="= Fields.IssueDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" Format="{0:P2}" CanShrink="True" Name="textBox12" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999940395355in" Height="0.252082884311676in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE NO:')" CanShrink="True" Name="textBox69" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1in" Height="0.210416629910469in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Invoice Date :')" CanShrink="True" Name="textBox86" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1in" Height="0.210416629910469in" Left="0in" Top="0in" Value="= Fields.SupplierInvoiceDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" CanShrink="True" Name="textBox65" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.927083671092987in" Height="0.210416629910469in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Vendor Code :')" CanShrink="True" Name="textBox70" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.55208325386047in" Height="0.210416629910469in" Left="0in" Top="0in" Value="= Fields.VendorCode" CanShrink="True" Name="textBox71" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.11458241939545in" Height="0.210416629910469in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('PO :')" CanShrink="True" Name="textBox78" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.61458241753447in" Height="0.210416686459187in" Left="0in" Top="0in" Value="= Fields.OrderNumber" CanShrink="True" Name="textBox79" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1in" Height="0.262500107288361in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Delivery Note')" CanShrink="True" Name="textBox81" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1in" Height="0.262500107288361in" Left="0in" Top="0in" Value="= Fields.DeliveryNoteNumber" CanShrink="True" Name="textBox35" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.927083611488342in" Height="0.262500107288361in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Invoice :')" CanShrink="True" Name="textBox33" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.55208313465118in" Height="0.262500107288361in" Left="0in" Top="0in" Value="= Fields.SupplierInvoiceNumber" CanShrink="True" Name="textBox17" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.11458241939545in" Height="0.262500107288361in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Vendor :')" CanShrink="True" Name="textBox18" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.61458241753447in" Height="0.262500169723457in" Left="0in" Top="0in" Value="= Fields.VendorName" CanShrink="True" Name="textBox19" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999940395355in" Height="0.231250122189522in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('PO Date :')" CanShrink="True" Name="textBox20" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999940395355in" Height="0.231250122189522in" Left="0in" Top="0in" Value="= Fields.OrderDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" CanShrink="True" Name="textBox34" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.927083611488342in" Height="0.231250122189522in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Delivery Note Date :')" CanShrink="True" Name="textBox68" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.55208313465118in" Height="0.231250122189522in" Left="0in" Top="0in" Value="= Fields.DeliveryNoteDate.ToString(&quot;MM\/dd\/yyyy hh:mm tt&quot;)" CanShrink="True" Name="textBox80" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999940395355in" Height="0.252082884311676in" Left="0in" Top="0in" Value="=Parameters.IssueNumber.Value" CanShrink="True" Name="textBox13" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" Color="Black" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.11458241939545in" Height="0.231250122189522in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('REFERENCE NO:')" Name="textBox22">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.61458241753447in" Height="0.231250105413514in" Left="0in" Top="0in" Value="= Parameters.Reference.Value" Name="textBox23">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="0.999999764734828in" />
+                  <Column Width="0.999999764734828in" />
+                  <Column Width="0.927083646691024in" />
+                  <Column Width="1.55208305657372in" />
+                  <Column Width="1.11458237404831in" />
+                  <Column Width="1.61458241753447in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.25208286890312in" />
+                  <Row Height="0.210416686459187in" />
+                  <Row Height="0.262500169723457in" />
+                  <Row Height="0.231250119662748in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <ChildGroups>
+                    <TableGroup Name="group" />
+                    <TableGroup Name="group7" />
+                    <TableGroup Name="group2" />
+                    <TableGroup Name="group17" />
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group4" />
+                <TableGroup Name="group6" />
+                <TableGroup Name="name" />
+                <TableGroup Name="vendorBillNumber" />
+                <TableGroup Name="gRN" />
+                <TableGroup Name="receiveDate" />
+              </ColumnGroups>
+              <Bindings>
+                <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Direct Issue&quot;), true,false)" />
+              </Bindings>
+            </Crosstab>
+          </Items>
+          <Bindings>
+            <Binding Path="Visible" Expression="=IIF((Parameters.IssueType.Value =&quot;Direct Issue&quot;), true,false)" />
+          </Bindings>
+        </Panel>
+        <Panel Width="7.97916603088379in" Height="4.5in" Left="0.00003941853841161in" Top="5.44791730244954in" Name="panel5">
+          <Style>
+            <BorderStyle Default="Solid" Bottom="Solid" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="IssueLines" Width="7.97916605716649in" Height="0.745833218426728in" Left="0in" Top="0in" ColumnHeadersPrintOnEveryPage="True" KeepTogether="False" Name="crosstab4" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.408537105398706in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= RowNumber('crosstab4')" Name="textBox52" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="5pt" Right="5pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.29196238235121in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.ProductName" Name="textBox27" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.934250783057305in" Height="0.241666678608183in" Left="0in" Top="0in" Value="= Fields.LocationFrom" Name="textBox30" StyleName="Normal.TableBody">
+                        <Style TextAlign="Left" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.902998979081227in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.locationTo" Format="{0:N2}" Name="textBox37" StyleName="Normal.TableBody">
+                        <Style TextAlign="Left" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.590499541262364in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.Quantity" Format="{0:N0}" Name="textBox41" StyleName="Normal.TableBody">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.913417224998339in" Height="0.241666678608183in" Left="0in" Top="0in" Value="= Fields.TotalBasic" Format="{0:N2}" Name="textBox42" StyleName="Normal.TableBody">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.408537119095979in" Height="0.199999891080149in" Left="0in" Top="0in" Name="textBox51" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" Right="5pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.29196254379035in" Height="0.199999891080149in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total:')" Name="textBox55" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.934250783057305in" Height="0.19999991330771in" Left="0in" Top="0in" Name="textBox56" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.902998950295265in" Height="0.199999891080149in" Left="0in" Top="0in" Name="textBox57" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.590499561060403in" Height="0.199999891080149in" Left="0in" Top="0in" Value="=Sum(Fields.Quantity)" Format="{0:N0}" Name="textBox59" StyleName="Normal.GrandTotal">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.913417224998339in" Height="0.19999991330771in" Left="0in" Top="0in" Value="= Sum(Fields.TotalBasic)" Format="{0:N2}" Name="textBox25" StyleName="Normal.GrandTotal">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Top="Solid" Bottom="Solid" Left="Solid" Right="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.843749445396564in" Height="0.241666678608183in" Left="0in" Top="0in" Value="= Fields.Code" Name="textBox16" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="5pt" Right="5pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.843749445396564in" Height="0.19999991330771in" Left="0in" Top="0in" Name="textBox21" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" Right="5pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.583332819288835in" Height="0.199999891080149in" Left="0in" Top="0in" Name="textBox82" StyleName="Normal.GrandTotal">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.58333279973108in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.cost" Format="{0:N0}" Name="textBox72" StyleName="Normal.TableBody">
+                        <Style TextAlign="Right" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="False" />
+                          <BorderStyle Default="Solid" />
+                          <BorderColor Default="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999878362956in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.BarCode" Name="textBox77" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.51041700447571in" Height="0.241666652263018in" Left="0in" Top="0in" Value="= Fields.UOM" Name="textBox66" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.510417021588773in" Height="0.199999891080149in" Left="0in" Top="0in" Name="textBox73" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.999999911890564in" Height="0.199999891080149in" Left="0in" Top="0in" Name="textBox74" StyleName="Normal.TableBody">
+                        <Style VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="Solid" Top="Solid" />
+                          <BorderColor Default="50, 50, 50" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="0px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="0.408537185743502in" />
+                  <Column Width="0.843749504501838in" />
+                  <Column Width="1.29196251963027in" />
+                  <Column Width="1.00000011732864in" />
+                  <Column Width="0.510416964350837in" />
+                  <Column Width="0.934250783057305in" />
+                  <Column Width="0.902999114807031in" />
+                  <Column Width="0.590499613186611in" />
+                  <Column Width="0.583332807280839in" />
+                  <Column Width="0.913417447279625in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.241666678608183in" />
+                  <Row Height="0.19999991330771in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+                <TableGroup Name="group11" />
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group8">
+                  <ReportItem>
+                    <TextBox Width="0.408537192071218in" Height="0.30416665595541in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('SR NO')" Name="textBox54" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        <Padding Left="5pt" Right="5pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="group19">
+                  <ReportItem>
+                    <TextBox Width="0.843749445396564in" Height="0.304166626510835in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('CODE')" Name="textBox60" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        <Padding Left="5pt" Right="5pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="productName">
+                  <ReportItem>
+                    <TextBox Width="1.29196223094584in" Height="0.304166636894329in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('PRODUCT NAME')" Name="textBox53" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="group20">
+                  <ReportItem>
+                    <TextBox Width="1in" Height="0.30416663285636in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ITEM CODE')" Name="textBox75" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="group21">
+                  <ReportItem>
+                    <TextBox Width="0.51041698683138in" Height="0.304166646890523in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('UOM')" Name="textBox50" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="locationFrom">
+                  <ReportItem>
+                    <TextBox Width="0.934250783057305in" Height="0.304166626510835in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('LOCATION FROM')" Name="textBox43" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="locationTo">
+                  <ReportItem>
+                    <TextBox Width="0.902998923835429in" Height="0.304166636894326in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('LOCATION TO')" Name="textBox44" StyleName="Normal.TableBody">
+                      <Style TextAlign="Left" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="quantity1">
+                  <ReportItem>
+                    <TextBox Width="0.590499528135014in" Height="0.304166646890523in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ISSUE QTY')" Name="textBox45" StyleName="Normal.TableBody">
+                      <Style TextAlign="Right" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="group22">
+                  <ReportItem>
+                    <TextBox Width="0.58333277071733in" Height="0.304166655955396in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('BASIC RATE')" Name="textBox83" StyleName="Normal.TableBody">
+                      <Style TextAlign="Right" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+                <TableGroup Name="cost">
+                  <ReportItem>
+                    <TextBox Width="0.913417224998339in" Height="0.304166626510835in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('BASIC AMOUNT')" Name="textBox49" StyleName="Normal.TableBody">
+                      <Style TextAlign="Right" VerticalAlign="Middle">
+                        <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                        <BorderStyle Default="Solid" Top="Solid" Bottom="Solid" />
+                        <BorderColor Default="50, 50, 50" Top="50, 50, 50" Bottom="50, 50, 50" />
+                        <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                        <Padding Right="5pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                </TableGroup>
+              </ColumnGroups>
+            </Crosstab>
+            <Table DataSourceName="dsIssueRemarks" Width="7.76037534077962in" Height="0.400000005960464in" Left="0.0999606053034465in" Top="2.40000025431315in" Name="table3" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="7.76037534077962in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Remarks" Name="textBox67" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Italic="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="0pt" Bottom="0pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="7.76037534077962in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.200000002980232in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="group27">
+                  <ReportItem>
+                    <TextBox Width="7.76037534077962in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Remarks:')" Name="textBox84" StyleName="Normal.TableHeader">
+                      <Style>
+                        <Font Name="Arial Unicode MS" Size="9pt" Bold="True" Italic="False" />
+                        <BorderStyle Default="None" />
+                        <BorderColor Default="50, 50, 50" />
+                        <BorderWidth Default="1px" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="receiveRemarks" />
+                  </ChildGroups>
+                </TableGroup>
+              </ColumnGroups>
+            </Table>
+            <Crosstab DataSourceName="taxlines" Width="2.6416662585239in" Height="0.4in" Left="4.69996070861816in" Top="1.10000038146973in" Name="crosstab8" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.66458303853249in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.TaxStructureName + &quot; :&quot;" Name="textBox104" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.977082801150695in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.TaxAmount" Name="textBox105" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.977082801150695in" Height="0.2in" Left="0in" Top="0in" Value="= Parameters.TotalBasic.Value" Format="{0:N2}" Name="textBox103" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.66458303853249in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Basic Amt') + &quot; :&quot;" Name="textBox106" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="True" />
+                          <BorderStyle Default="None" Top="None" Bottom="None" />
+                          <BorderColor Default="LightGray" Top="50, 50, 50" />
+                          <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.66458337864542in" />
+                  <Column Width="0.977082722422906in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.2in" />
+                  <Row Height="0.2in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="group26" />
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="taxStructureName" />
+                <TableGroup Name="taxAmount" />
+              </ColumnGroups>
+            </Crosstab>
+            <Panel Width="4.07908535003662in" Height="0.299920409917831in" Left="3.9in" Top="1.53in" Name="panel8">
+              <Style>
+                <BorderStyle Top="Solid" />
+              </Style>
+              <Items>
+                <TextBox Width="1.6645040512085in" Height="0.200000002980232in" Left="0.799960772196452in" Top="0.05in" Value="=MessagesFunctions.getMessage('Grand Total') + ' :'" Name="textBox107">
+                  <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" Italic="False" />
+                    <BorderStyle Bottom="None" />
+                    <BorderColor Default="LightGray" Top="50, 50, 50" />
+                    <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                    <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                  </Style>
+                </TextBox>
+                <TextBox Width="0.977084080378214in" Height="0.199999496340752in" Left="2.46454334259033in" Top="0.05in" Value="= (Parameters.TotalBasic.Value + Parameters.TotalTax.Value)" Format="{0:N2}" Name="textBox102">
+                  <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" Italic="False" />
+                    <BorderStyle Bottom="None" />
+                    <BorderColor Default="LightGray" />
+                    <BorderWidth Default="2px" Top="1px" Bottom="1px" Left="1px" Right="1px" />
+                    <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                  </Style>
+                </TextBox>
+              </Items>
+            </Panel>
+            <TextBox Width="2.99999976158142in" Height="0.200000122189522in" Left="4.29996077219645in" Top="3.59999974568685in" Value="=MessagesFunctions.getMessage(&quot;Authorised By: &quot;)" Name="textBox87">
+              <Style TextAlign="Center">
+                <Font Name="Arial Unicode MS" Italic="False" />
+              </Style>
+            </TextBox>
+            <TextBox Width="3in" Height="0.200000122189522in" Left="0.549130439758301in" Top="3.3999989827474in" Value="" Name="textBox89">
+              <Style>
+                <Font Name="Arial Unicode MS" />
+                <BorderStyle Bottom="Solid" />
+              </Style>
+            </TextBox>
+            <TextBox Width="3in" Height="0.200000002980232in" Left="4.29996077219645in" Top="3.3999989827474in" Value="" Name="textBox85">
+              <Style>
+                <Font Name="Arial Unicode MS" />
+                <BorderStyle Bottom="Solid" />
+              </Style>
+            </TextBox>
+            <TextBox Width="3in" Height="0.200000122189522in" Left="0.549130439758301in" Top="3.59999974568685in" Value="=MessagesFunctions.getMessage(&quot;Prepared By: &quot;)" Name="textBox88">
+              <Style TextAlign="Center">
+                <Font Name="Arial Unicode MS" Italic="False" />
+              </Style>
+            </TextBox>
+          </Items>
+        </Panel>
+        <Panel Width="4.00000000000001in" Height="1.90000152587891in" Left="0in" Top="3.54791673024495in" Name="panel6">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsFromLocation" Width="3.81041679883167in" Height="0.800000120481564in" Left="0.0999999841054281in" Top="0.100000063578288in" Name="crosstab1" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416691867029in" Height="0.220833380001909in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox92" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416691867029in" Height="0.241666757699298in" Left="0in" Top="0in" Value="= Fields.site_address" Name="textBox95" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416691867029in" Height="0.220833359636986in" Left="0in" Top="0in" Value="= Fields.TIN" Name="textBox97" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625004620754in" Height="0.22083332974883in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('From Location :')" CanShrink="True" Name="textBox90" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625012288643in" Height="0.241666690509046in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ADDRESS :')" CanShrink="True" Name="textBox91" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625004620753in" Height="0.220833380001909in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('TIN :')" CanShrink="True" Name="textBox93" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20624995777162in" Height="0.116666680263251in" Left="0in" Top="0in" Name="textBox108" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Top="None" Bottom="None" Left="None" Right="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416684106006in" Height="0.116666680263251in" Left="0in" Top="0in" Name="textBox109" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" />
+                          <BorderStyle Top="None" Bottom="None" Left="None" Right="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.20624995777162in" />
+                  <Column Width="2.60416684106005in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.220833382485839in" />
+                  <Row Height="0.116666680263251in" />
+                  <Row Height="0.241666734851288in" />
+                  <Row Height="0.220833334802116in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+                <TableGroup Name="group28" />
+                <TableGroup Name="group24" />
+                <TableGroup Name="group25" />
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="site_name" />
+                <TableGroup Name="group23" />
+              </ColumnGroups>
+            </Crosstab>
+          </Items>
+        </Panel>
+        <Panel Width="3.97912470499674in" Height="1.90000089009603in" Left="4in" Top="3.54791673024495in" Name="panel7">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="50, 50, 50" />
+            <Padding Left="5pt" />
+          </Style>
+          <Items>
+            <Crosstab DataSourceName="dsTOLocation" Width="3.81041636907802in" Height="0.800000128734284in" Left="0.0833333333333333in" Top="0.100000063578288in" Name="crosstab6" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416698455811in" Height="0.220833376049995in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox94" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416698455811in" Height="0.24166676402092in" Left="0in" Top="0in" Value="= Fields.site_address" Name="textBox96" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416698455811in" Height="0.220833361148834in" Left="0in" Top="0in" Value="= Fields.TIN" Name="textBox98" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Bold="False" />
+                          <BorderStyle Default="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625007152557in" Height="0.220833331346512in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('From Location :')" CanShrink="True" Name="textBox99" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625007152557in" Height="0.241666689515114in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('ADDRESS :')" CanShrink="True" Name="textBox100" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625007152557in" Height="0.220833376049995in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('TIN :')" CanShrink="True" Name="textBox101" StyleName="Normal.TableBody">
+                        <Style Visible="True" BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.20625004884456in" Height="0.116666681466773in" Left="0in" Top="0in" Name="textBox110" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                          <BorderStyle Top="None" Bottom="None" Left="None" Right="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="2.60416654735198in" Height="0.116666681466773in" Left="0in" Top="0in" Name="textBox111" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                          <Font Name="Arial Unicode MS" />
+                          <BorderStyle Top="None" Bottom="None" Left="None" Right="None" />
+                          <BorderColor Default="LightGray" />
+                          <Padding Left="1pt" Right="1pt" Top="1px" Bottom="1px" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.2062499352853in" />
+                  <Column Width="2.60416632023346in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.220833313238349in" />
+                  <Row Height="0.116666681466773in" />
+                  <Row Height="0.241666785028021in" />
+                  <Row Height="0.220833313238349in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+                <TableGroup Name="group29" />
+                <TableGroup Name="group24" />
+                <TableGroup Name="group25" />
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="site_name" />
+                <TableGroup Name="group23" />
+              </ColumnGroups>
+            </Crosstab>
+          </Items>
+        </Panel>
+      </Items>
+    </DetailSection>
+    <ReportHeaderSection CanShrink="True" Height="0.0520833333333335in" Name="reportHeaderSection1" />
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="0.100000001490116in" Right="0.100000001490116in" Top="0.200000002980232in" Bottom="0.200000002980232in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="188, 211, 241" Color="20, 34, 77">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="35, 92, 169" Color="238, 244, 251">
+        <Font Name="Calibri" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="238, 244, 251" Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowNull="True" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="IssueId" Type="Integer" Text="IssueId" Visible="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CustomerPassPhrase" Text="CustomerPassPhrase" AllowNull="True" />
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Text="AmountWithCurSymbolCellFormat" />
+    <ReportParameter Name="IssueType" Text="IssueType" AllowNull="True">
+      <AvailableValues DataSourceName="dsIssueTypeStatus" DisplayMember="= Fields.Type" ValueMember="= Fields.Type" />
+      <Value>
+        <String>= Fields.Type</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="IssueSatus" Text="IssueSatus" AllowNull="True">
+      <AvailableValues DataSourceName="dsIssueTypeStatus" DisplayMember="= Fields.Status" ValueMember="= Fields.Status" />
+      <Value>
+        <String>= Fields.Status</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="IssueRemarks" Text="IssueRemarks" AllowNull="True">
+      <AvailableValues DataSourceName="dsIssueRemarks" DisplayMember="= Fields.Remarks" ValueMember="= Fields.Remarks" />
+      <Value>
+        <String>= Fields.Remarks</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="IssueNumber" Text="IssueNumber">
+      <AvailableValues DataSourceName="dsIssueTypeStatus" DisplayMember="= Fields.IssueNumber" ValueMember="= Fields.IssueNumber" />
+      <Value>
+        <String>= Fields.IssueNumber</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="Reference" Text="Reference" AllowNull="True">
+      <AvailableValues DataSourceName="dsIssueTypeStatus" DisplayMember="= Fields.ReferenceNumber" ValueMember="= Fields.ReferenceNumber" />
+      <Value>
+        <String>= Fields.ReferenceNumber</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="TotalBasic" Type="Float" Text="TotalBasic">
+      <AvailableValues DataSourceName="dsTotalBasic" DisplayMember="= Fields.TotalBasic" ValueMember="= Fields.TotalBasic" />
+      <Value>
+        <String>= Fields.TotalBasic</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="TotalTax" Type="Float" Text="TotalTax">
+      <AvailableValues DataSourceName="dsTotalTax" DisplayMember="= Fields.TotalTaxAmount" ValueMember="= Fields.TotalTaxAmount" />
+      <Value>
+        <String>= Fields.TotalTaxAmount</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

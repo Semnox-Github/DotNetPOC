@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="10.2995878855387in" Name="Transaction" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="--declare @fromdate datetime = '2022-06-27 6:00'&#xD;&#xA;--declare @todate datetime = '2022-6-28 6:00';&#xD;&#xA;--DECLARE @site int=-1&#xD;&#xA;--declare @offset int=0&#xD;&#xA;--declare @userid int=-1&#xD;&#xA;--declare @pos varchar(20)='Guru A POS'&#xD;&#xA;--declare @dfromdate datetime &#xD;&#xA;--declare @dtodate datetime&#xD;&#xA;--declare @EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT varchar(10)='Y'&#xD;&#xA;--declare @loginuserid int=3&#xD;&#xA;&#xD;&#xA;EXEC dbo.Setcontextinfo &#xD;&#xA;  @loginUserId; &#xD;&#xA;&#xD;&#xA;set @dfromDate = dbo.Converttoservertime(@fromDate, @offSet) &#xD;&#xA;set @dtoDate = dbo.Converttoservertime(@toDate, @offSet) &#xD;&#xA;SET FMTONLY OFF;&#xD;&#xA;&#xD;&#xA;IF( @EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT = 'N' ) &#xD;&#xA;  BEGIN ; &#xD;&#xA;IF OBJECT_ID('tempdb..#tempProd') IS NOT NULL DROP Table #tempProd&#xD;&#xA;&#xD;&#xA;;WITH cte&#xD;&#xA;     AS (SELECT th.trxid, &#xD;&#xA;                case when tl.parentlineid = tl.lineid then null else tl.ParentLineId end parentlineid, &#xD;&#xA;                0 level, &#xD;&#xA;                tl.lineid, &#xD;&#xA;                tl.product_id &#xD;&#xA;         FROM   trx_header th, &#xD;&#xA;                trx_lines tl &#xD;&#xA;         WHERE  th.trxid = tl.trxid &#xD;&#xA;                AND th.trxdate &gt;= @dfromDate&#xD;&#xA;                AND th.trxdate &lt; @dtoDate&#xD;&#xA;AND ( ( th.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) )&#xD;&#xA;                AND th.status = 'CLOSED' &#xD;&#xA;         UNION ALL &#xD;&#xA;         SELECT th.trxid, &#xD;&#xA;                case when tl.parentlineid = tl.lineid then null else tl.ParentLineId end parentlineid,&#xD;&#xA;                cte.level + 1, &#xD;&#xA;                cte.lineid, &#xD;&#xA;                tl.product_id &#xD;&#xA;         FROM   trx_header th, &#xD;&#xA;                trx_lines tl, &#xD;&#xA;                cte &#xD;&#xA;         WHERE  th.trxid = tl.trxid &#xD;&#xA;                AND th.trxdate &gt;=@dfromDate&#xD;&#xA;                AND th.trxdate &lt; @dtoDate&#xD;&#xA;                AND tl.lineid = cte.parentlineid &#xD;&#xA;                AND tl.trxid = cte.trxid &#xD;&#xA;AND ( ( th.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) )&#xD;&#xA;                AND th.status = 'CLOSED') &#xD;&#xA;SELECT  product_type,&#xD;&#xA;       product_category, &#xD;&#xA;       package_name, &#xD;&#xA;       product_name, &#xD;&#xA;       discount_name, &#xD;&#xA;       price, &#xD;&#xA;       Sum(quantity)                 Quantity, &#xD;&#xA;       sum( (gamecard_net_amount) )   GameCard_Net_Amount, &#xD;&#xA;       sum( (gamecard_tax_amount) )   GameCard_Tax_Amount, &#xD;&#xA;       sum( (gamecard_total_amount))   GameCard_Total_Amount, &#xD;&#xA;       sum( cash_credit_net_amount ) Cash_Credit_Net_Amount, &#xD;&#xA;       sum(cash_credit_tax_amount )  Cash_Credit_Tax_Amount, &#xD;&#xA;       sum( cash_credit_total_amount ) Cash_Credit_Total_Amount ,sort&#xD;&#xA;&#x9;   into #tempProd&#xD;&#xA;FROM   (SELECT &#xD;&#xA; th.trxid, &#xD;&#xA; pt.reportgroup              AS product_type, &#xD;&#xA; c.NAME                      Product_Category, &#xD;&#xA; parent_product.product_name Package_Name, &#xD;&#xA; p.product_name              Product_Name, &#xD;&#xA; ( CASE pt.product_type &#xD;&#xA;     WHEN 'CARDSALE' THEN '0' &#xD;&#xA;     WHEN 'CARDDEPOSIT' THEN '0' &#xD;&#xA;     WHEN 'NEW' THEN '1' &#xD;&#xA;     WHEN 'RECHARGE' THEN '3' &#xD;&#xA;     WHEN 'VARIABLECARD' THEN '4' &#xD;&#xA;     WHEN 'MANUAL' THEN '7' &#xD;&#xA;     WHEN 'COMBO' THEN '7' &#xD;&#xA;     WHEN 'REFUND' THEN '2' &#xD;&#xA;     WHEN 'GAMETIME' THEN '5' &#xD;&#xA;     WHEN 'ATTRACTION' THEN '6' &#xD;&#xA;     ELSE '8' &#xD;&#xA;   END )                     sort, &#xD;&#xA; Discount_name Discount_Name, &#xD;&#xA; round(CASE &#xD;&#xA;   WHEN pt.product_type = 'VARIABLECARD' THEN NULL &#xD;&#xA;   ELSE tl.price &#xD;&#xA; END  ,4)                       Price, &#xD;&#xA; Sum(tl.quantity)            Quantity, &#xD;&#xA;         CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.net_amount +ServiceChargesAmount+GratuityAmount) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Net_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.tax+isnull(TaxOnServiceCharges,0)) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Tax_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.amount+ServiceChargesAmount+isnull(TaxOnServiceCharges,0)+GratuityAmount) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Total_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;            (tv.net_amount +ServiceChargesAmount+GratuityAmount)* &#xD;&#xA;                   ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Net_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;                   (tv.tax+isnull(TaxOnServiceCharges,0))* ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Tax_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;                   (tv.amount+ServiceChargesAmount+isnull(TaxOnServiceCharges,0)+GratuityAmount) * ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Total_Amount &#xD;&#xA;       FROM   trx_header th, &#xD;&#xA;       transactionview tv, &#xD;&#xA;       trx_lines tl &#xD;&#xA;       left outer join (select td.trxid,td.lineid,Discount_name,sum(td.discountamount )&#x9;   discountamount,&#xD;&#xA;sum(CONVERT(DECIMAL(18, 6),DiscountPercentage)) DiscountPercentage from trxdiscounts  td&#xD;&#xA;&#x9;          LEFT OUTER JOIN (&#xD;&#xA;select distinct  t.trxid, t.lineid, STUFF((SELECT distinct ', ' + rc.Discount_name + '(' &#xD;&#xA; + CONVERT(VARCHAR(10), CONVERT(DECIMAL(18, 2), t1.discountpercentage)) &#xD;&#xA; + '%)'        &#xD;&#xA;        from trxdiscounts t1 inner join discounts rc on rc.discount_id = t1.discountid&#xD;&#xA;      and  t.trxid = t1.trxid  and t.lineid=t1.lineid&#xD;&#xA;            FOR XML PATH(''), TYPE&#xD;&#xA;           ).value('.', 'NVARCHAR(MAX)')&#xD;&#xA;       ,1,2,'')  Discount_name&#xD;&#xA;from trxdiscounts t&#xD;&#xA;&#xD;&#xA;) Y on  td.trxid=y.TrxId  and  td.LineId=y.LineId&#xD;&#xA;                    group by td.trxid,td.lineid,Discount_name) td on tl.trxid = td.trxid and tl.lineid = td.lineid, &#xD;&#xA;       &#xD;&#xA;       products p, &#xD;&#xA;       cte, &#xD;&#xA;       products parent_product &#xD;&#xA;       LEFT OUTER JOIN category c &#xD;&#xA;                    ON c.categoryid = parent_product.categoryid, &#xD;&#xA;       site s, &#xD;&#xA;       product_type pt &#xD;&#xA;       WHERE  th.trxdate &gt;= @dfromDate &#xD;&#xA;       AND th.trxdate &lt; @dtoDate&#xD;&#xA;       AND ( s.site_id = th.site_id &#xD;&#xA;              OR th.site_id IS NULL ) &#xD;&#xA;       AND tv.trxid = th.trxid &#xD;&#xA;       AND tv.trxid = tl.trxid &#xD;&#xA;       AND tv.lineid = tl.lineid &#xD;&#xA;       AND tv.product_id = p.product_id &#xD;&#xA;       AND cte.trxid = tl.trxid &#xD;&#xA;       AND cte.lineid = tl.lineid &#xD;&#xA;       AND cte.parentlineid IS NULL &#xD;&#xA;       --and (tl.price != 0 or p.InventoryProductCode is not null) &#xD;&#xA;&#x9;   AND parent_product.product_id = cte.product_id &#xD;&#xA;       AND pt.product_type_id = p.product_type_id &#xD;&#xA;       AND th.status = 'CLOSED' &#xD;&#xA;       AND ( tv.user_id IN ( @userId ) &#xD;&#xA;         OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( tv.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( tv.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;       GROUP  BY th.trxid, &#xD;&#xA;          c.NAME, &#xD;&#xA;          parent_product.product_name, &#xD;&#xA;          p.product_name, &#xD;&#xA;       Discount_name,&#xD;&#xA;&#x9;   ( CASE &#xD;&#xA;       WHEN pt.product_type = 'VARIABLECARD' THEN NULL &#xD;&#xA;       ELSE tl.price &#xD;&#xA;       END ) ,&#xD;&#xA;       s.site_name, &#xD;&#xA;       pt.product_type, &#xD;&#xA;       pt.reportgroup) A &#xD;&#xA;GROUP  BY product_type, &#xD;&#xA;          product_category, &#xD;&#xA;          package_name, &#xD;&#xA;          product_name, &#xD;&#xA;          discount_name, &#xD;&#xA;          price, &#xD;&#xA;          sort &#xD;&#xA;&#xD;&#xA;&#x9;&#x9;  select case when product_type not  in('GRATUITY','Service Charge') then 1 &#xD;&#xA;       when product_type in('GRATUITY') then 2 else 3 end orderid,product_type product_type1,* from #tempProd&#xD;&#xA;&#x9;   union all&#xD;&#xA;&#x9;&#x9;  select 1 orderid,product_type product_type1,product_type+ ' Total',Null,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),sort from #tempProd&#xD;&#xA;          where product_type&lt;&gt;'Gratuity'&#xD;&#xA;          group by product_type,sort&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select 4,'Gratuity','Gratuity',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1,Null from #tempProd where product_type='Gratuity'&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select 5,'Total','Total',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),Null from #tempProd where product_type&lt;&gt;'Gratuity'&#xD;&#xA;&#x9;&#x9;   union all&#xD;&#xA;&#x9;&#x9;  select 6,'Servicecharge Total','Servicecharge Total',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1,Null from #tempProd where product_type='Service Charge'&#xD;&#xA;                   union all&#xD;&#xA;&#x9;&#x9;  select 7,'Grand Total','Grand Total',NUll,Null,Null,Null,Null,&#xD;&#xA;                  sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),Null from (&#xD;&#xA;&#x9;&#x9;  select sum(Quantity) Quantity,sum(GameCard_Net_Amount) GameCard_Net_Amount,sum(GameCard_Tax_Amount) GameCard_Tax_Amount,sum(GameCard_Total_Amount) GameCard_Total_Amount,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount) Cash_Credit_Net_Amount,sum(Cash_Credit_Tax_Amount) Cash_Credit_Tax_Amount,sum(Cash_Credit_Total_Amount) Cash_Credit_Total_Amount from #tempProd where product_type&lt;&gt;'Gratuity'&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1 from #tempProd where product_type='Service Charge'&#xD;&#xA;&#x9;&#x9;  )A&#xD;&#xA;ORDER  BY orderid,product_type1,product_type,sort,&#xD;&#xA;product_category,            &#xD;&#xA;          package_name, &#xD;&#xA;          product_name, &#xD;&#xA;          discount_name, &#xD;&#xA;          price, &#xD;&#xA;         Quantity&#xD;&#xA;  END &#xD;&#xA;ELSE &#xD;&#xA;  BEGIN ; &#xD;&#xA;SET FMTONLY OFF;&#xD;&#xA;      IF OBJECT_ID('tempdb..#tempProd1') IS NOT NULL DROP Table #tempProd1&#xD;&#xA;&#xD;&#xA;;WITH cte&#xD;&#xA;     AS (SELECT th.trxid, &#xD;&#xA;                case when tl.parentlineid = tl.lineid then null else tl.ParentLineId end parentlineid, &#xD;&#xA;                0 level, &#xD;&#xA;                tl.lineid, &#xD;&#xA;                tl.product_id &#xD;&#xA;         FROM   trx_header th, &#xD;&#xA;                trx_lines tl &#xD;&#xA;         WHERE  th.trxid = tl.trxid &#xD;&#xA;                AND th.trxdate &gt;= @dfromDate&#xD;&#xA;                AND th.trxdate &lt; @dtoDate&#xD;&#xA;AND ( ( th.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) )&#xD;&#xA;                AND th.status = 'CLOSED' &#xD;&#xA;         UNION ALL &#xD;&#xA;         SELECT th.trxid, &#xD;&#xA;                case when tl.parentlineid = tl.lineid then null else tl.ParentLineId end parentlineid,&#xD;&#xA;                cte.level + 1, &#xD;&#xA;                cte.lineid, &#xD;&#xA;                tl.product_id &#xD;&#xA;         FROM   trx_header th, &#xD;&#xA;                trx_lines tl, &#xD;&#xA;                cte &#xD;&#xA;         WHERE  th.trxid = tl.trxid &#xD;&#xA;                AND th.trxdate &gt;=@dfromDate&#xD;&#xA;                AND th.trxdate &lt; @dtoDate&#xD;&#xA;                AND tl.lineid = cte.parentlineid &#xD;&#xA;                AND tl.trxid = cte.trxid &#xD;&#xA;AND ( ( th.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) )&#xD;&#xA;                AND th.status = 'CLOSED') &#xD;&#xA;&#xD;&#xA;&#xD;&#xA;SELECT  product_type,&#xD;&#xA;       product_category, &#xD;&#xA;       package_name, &#xD;&#xA;       product_name, &#xD;&#xA;       discount_name, &#xD;&#xA;       price, &#xD;&#xA;       Sum(quantity)                 Quantity, &#xD;&#xA;       sum( (gamecard_net_amount) )   GameCard_Net_Amount, &#xD;&#xA;       sum( (gamecard_tax_amount) )   GameCard_Tax_Amount, &#xD;&#xA;       sum( (gamecard_total_amount))   GameCard_Total_Amount, &#xD;&#xA;       sum( cash_credit_net_amount ) Cash_Credit_Net_Amount, &#xD;&#xA;       sum(cash_credit_tax_amount )  Cash_Credit_Tax_Amount, &#xD;&#xA;       sum( cash_credit_total_amount ) Cash_Credit_Total_Amount ,sort&#xD;&#xA;&#x9;   into #tempProd1&#xD;&#xA;FROM   (SELECT &#xD;&#xA; th.trxid, &#xD;&#xA; pt.reportgroup              AS product_type, &#xD;&#xA; c.NAME                      Product_Category, &#xD;&#xA; parent_product.product_name Package_Name, &#xD;&#xA; p.product_name              Product_Name, &#xD;&#xA; ( CASE pt.product_type &#xD;&#xA;     WHEN 'CARDSALE' THEN '0' &#xD;&#xA;     WHEN 'CARDDEPOSIT' THEN '0' &#xD;&#xA;     WHEN 'NEW' THEN '1' &#xD;&#xA;     WHEN 'RECHARGE' THEN '3' &#xD;&#xA;     WHEN 'VARIABLECARD' THEN '4' &#xD;&#xA;     WHEN 'MANUAL' THEN '7' &#xD;&#xA;     WHEN 'COMBO' THEN '7' &#xD;&#xA;     WHEN 'REFUND' THEN '2' &#xD;&#xA;     WHEN 'GAMETIME' THEN '5' &#xD;&#xA;     WHEN 'ATTRACTION' THEN '6' &#xD;&#xA;     ELSE '8' &#xD;&#xA;   END )                     sort, &#xD;&#xA; Discount_name Discount_Name, &#xD;&#xA; round(CASE &#xD;&#xA;   WHEN pt.product_type = 'VARIABLECARD' THEN NULL &#xD;&#xA;   ELSE tl.price &#xD;&#xA; END     ,4)                    Price, &#xD;&#xA; Sum(tl.quantity)            Quantity, &#xD;&#xA;         CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.net_amount +ServiceChargesAmount+GratuityAmount) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Net_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.tax+isnull(TaxOnServiceCharges,0)) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Tax_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;             (tv.amount+ServiceChargesAmount+isnull(TaxOnServiceCharges,0)+GratuityAmount) * tv.gamecardratio * &#xD;&#xA; ( 1 - &#xD;&#xA;                         Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                       GameCard_Total_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;            (tv.net_amount +ServiceChargesAmount+GratuityAmount)* &#xD;&#xA;                   ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Net_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;                   (tv.tax+isnull(TaxOnServiceCharges,0))* ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Tax_Amount, &#xD;&#xA;       CONVERT(DECIMAL(18, 8), Sum( &#xD;&#xA;                   (tv.amount+ServiceChargesAmount+isnull(TaxOnServiceCharges,0)+GratuityAmount) * ( tv.cashratio + tv.creditcardratio ) * ( 1 - &#xD;&#xA;                   Isnull(( td.discountpercentage / 100 ), 0) ))) &#xD;&#xA;                                   Cash_Credit_Total_Amount &#xD;&#xA;       FROM   trx_header th, &#xD;&#xA;       transactionview tv, &#xD;&#xA;       trx_lines tl &#xD;&#xA;       left outer join (select td.trxid,td.lineid,Discount_name,sum(td.discountamount )&#x9;   discountamount,&#xD;&#xA;sum(CONVERT(DECIMAL(18, 6),DiscountPercentage)) DiscountPercentage from trxdiscounts  td&#xD;&#xA;&#x9;          LEFT OUTER JOIN (&#xD;&#xA;select distinct  t.trxid, t.lineid, STUFF((SELECT distinct ', ' + rc.Discount_name + '(' &#xD;&#xA; + CONVERT(VARCHAR(10), CONVERT(DECIMAL(18, 2), t1.discountpercentage)) &#xD;&#xA; + '%)'        &#xD;&#xA;        from trxdiscounts t1 inner join discounts rc on rc.discount_id = t1.discountid&#xD;&#xA;      and  t.trxid = t1.trxid  and t.lineid=t1.lineid&#xD;&#xA;            FOR XML PATH(''), TYPE&#xD;&#xA;           ).value('.', 'NVARCHAR(MAX)')&#xD;&#xA;       ,1,2,'')  Discount_name&#xD;&#xA;from trxdiscounts t&#xD;&#xA;&#xD;&#xA;) Y on  td.trxid=y.TrxId  and  td.LineId=y.LineId&#xD;&#xA;                    group by td.trxid,td.lineid,Discount_name) td on tl.trxid = td.trxid and tl.lineid = td.lineid, &#xD;&#xA;       &#xD;&#xA;       products p, &#xD;&#xA;       cte, &#xD;&#xA;       products parent_product &#xD;&#xA;       LEFT OUTER JOIN category c &#xD;&#xA;                    ON c.categoryid = parent_product.categoryid, &#xD;&#xA;       site s, &#xD;&#xA;       product_type pt &#xD;&#xA;       WHERE  th.trxdate &gt;= @dfromDate &#xD;&#xA;       AND th.trxdate &lt; @dtoDate&#xD;&#xA;       AND ( s.site_id = th.site_id &#xD;&#xA;              OR th.site_id IS NULL ) &#xD;&#xA;       AND tv.trxid = th.trxid &#xD;&#xA;       AND tv.trxid = tl.trxid &#xD;&#xA;       AND tv.lineid = tl.lineid &#xD;&#xA;       AND tv.product_id = p.product_id &#xD;&#xA;       AND cte.trxid = tl.trxid &#xD;&#xA;       AND cte.lineid = tl.lineid &#xD;&#xA;       AND cte.parentlineid IS NULL &#xD;&#xA;       --and (tl.price != 0 or p.InventoryProductCode is not null) &#xD;&#xA;&#x9;   and (tv.amount+ServiceChargesAmount+GratuityAmount)!=0&#xD;&#xA;       AND parent_product.product_id = cte.product_id &#xD;&#xA;       AND pt.product_type_id = p.product_type_id &#xD;&#xA;       AND th.status = 'CLOSED' &#xD;&#xA;       AND ( tv.user_id IN ( @userId ) &#xD;&#xA;         OR -1 IN ( @userId ) ) &#xD;&#xA;       AND ( tv.pos_machine IN ( @pos ) ) &#xD;&#xA;       AND ( ( tv.site_id IN ( @site ) ) &#xD;&#xA;              OR ( -1 IN ( @site ) ) ) &#xD;&#xA;       GROUP  BY th.trxid, &#xD;&#xA;          c.NAME, &#xD;&#xA;          parent_product.product_name, &#xD;&#xA;          p.product_name, &#xD;&#xA;       Discount_name,&#xD;&#xA;&#x9;   ( CASE &#xD;&#xA;       WHEN pt.product_type = 'VARIABLECARD' THEN NULL &#xD;&#xA;       ELSE tl.price &#xD;&#xA;       END ) ,&#xD;&#xA;       s.site_name, &#xD;&#xA;       pt.product_type, &#xD;&#xA;       pt.reportgroup) A &#xD;&#xA;GROUP  BY product_type, &#xD;&#xA;          product_category, &#xD;&#xA;          package_name, &#xD;&#xA;          product_name, &#xD;&#xA;          discount_name, &#xD;&#xA;          price, &#xD;&#xA;          sort &#xD;&#xA;&#xD;&#xA;&#x9;&#x9;  select case when product_type not  in('GRATUITY','Service Charge') then 1 &#xD;&#xA;       when product_type in('GRATUITY') then 2 else 3 end orderid,product_type product_type1,* from #tempProd1&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select 1 orderid,product_type product_type1,product_type+ ' Total',Null,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),sort from #tempProd1&#xD;&#xA;          where product_type&lt;&gt;'Gratuity'&#xD;&#xA;          group by product_type,sort&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select 4,'Gratuity','Gratuity',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1,Null from #tempProd1 where product_type='Gratuity'&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select 5,'Total','Total',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),Null from #tempProd1 where product_type&lt;&gt;'Gratuity'&#xD;&#xA;&#x9;&#x9;   union all&#xD;&#xA;&#x9;&#x9;  select 6,'Servicecharge Total','Servicecharge Total',NUll,Null,Null,Null,Null,sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1,Null from #tempProd1 where product_type='Service Charge'&#xD;&#xA;                  union all&#xD;&#xA;&#x9;&#x9;  select 7,'Grand Total','Grand Total',NUll,Null,Null,Null,Null,&#xD;&#xA;                  sum(Quantity),sum(GameCard_Net_Amount),sum(GameCard_Tax_Amount),sum(GameCard_Total_Amount),&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount),sum(Cash_Credit_Tax_Amount),sum(Cash_Credit_Total_Amount),Null from (&#xD;&#xA;&#x9;&#x9;  select sum(Quantity) Quantity,sum(GameCard_Net_Amount) GameCard_Net_Amount,sum(GameCard_Tax_Amount) GameCard_Tax_Amount,sum(GameCard_Total_Amount) GameCard_Total_Amount,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount) Cash_Credit_Net_Amount,sum(Cash_Credit_Tax_Amount) Cash_Credit_Tax_Amount,sum(Cash_Credit_Total_Amount) Cash_Credit_Total_Amount from #tempProd1 where product_type&lt;&gt;'Gratuity'&#xD;&#xA;&#x9;&#x9;  union all&#xD;&#xA;&#x9;&#x9;  select sum(Quantity),sum(GameCard_Net_Amount)*-1,sum(GameCard_Tax_Amount)*-1,sum(GameCard_Total_Amount)*-1,&#xD;&#xA;&#x9;&#x9;  sum(Cash_Credit_Net_Amount)*-1,sum(Cash_Credit_Tax_Amount)*-1,sum(Cash_Credit_Total_Amount)*-1 from #tempProd1 where product_type='Service Charge'&#xD;&#xA;&#x9;&#x9;  )A&#xD;&#xA;ORDER  BY orderid,product_type1,product_type,sort,&#xD;&#xA;product_category,            &#xD;&#xA;          package_name, &#xD;&#xA;          product_name, &#xD;&#xA;          discount_name, &#xD;&#xA;          price, &#xD;&#xA;         Quantity&#xD;&#xA;  END " CommandTimeout="0" Name="dsProductBreakdown">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@loginUserId">
+          <Value>
+            <String>= Parameters.loginUserId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dfromDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromDate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@dtoDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@toDate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT">
+          <Value>
+            <String>=Parameters.EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>=Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@userId">
+          <Value>
+            <String>=Parameters.userId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@pos">
+          <Value>
+            <String>=Parameters.pos.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.5in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="9.99995708465576in" Height="0.200000002980232in" Left="0.0104166666666667in" Top="0.200000127156576in" KeepTogether="False" Value="=MessagesFunctions.getMessage('Product Breakdown')" Name="textBox148">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+          <Bindings>
+            <Binding Path="Visible" Expression="= Parameters.EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT.Value = &quot;N&quot;" />
+          </Bindings>
+        </TextBox>
+        <Crosstab DataSourceName="dsProductBreakdown" Width="10.2891712188721in" Height="0.399999856948853in" Left="0.0104166666666667in" Top="0.400078932444255in" ColumnHeadersPrintOnEveryPage="False" KeepTogether="False" Name="crosstab2" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.980000019073486in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.product_name" Name="textBox133" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                    <Action>null</Action>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.28291702270508in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Product_Category" Name="textBox206" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.822916984558105in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Discount_Name" Name="textBox210" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333194255829in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Price" Format="{0:N2}" Name="textBox214" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.939999997615814in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Quantity" Format="{0:N0}" Name="textBox13" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.779999971389771in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.GameCard_Net_Amount" Format="{0:N2}" Name="textBox69" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.660000026226044in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.GameCard_Tax_Amount" Format="{0:N2}" Name="textBox87" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.710000038146973in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.GameCard_Total_Amount" Format="{0:N2}" Name="textBox109" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.769999980926514in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Cash_Credit_Net_Amount" Format="{0:N2}" Name="textBox202" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.730000019073486in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Cash_Credit_Tax_Amount" Format="{0:N2}" Name="textBox218" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.780000030994415in" Height="0.199999883770943in" Left="0in" Top="0in" Value="= Fields.Cash_Credit_Total_Amount" Format="{0:N2}" Name="textBox223" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Bold="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.28291678060383in" />
+              <Column Width="0.980000583446983in" />
+              <Column Width="0.822918110349266in" />
+              <Column Width="0.833333331952022in" />
+              <Column Width="0.940000695743964in" />
+              <Column Width="0.780000454989195in" />
+              <Column Width="0.660000715219839in" />
+              <Column Width="0.709999789080543in" />
+              <Column Width="0.770000272247616in" />
+              <Column Width="0.730000231223999in" />
+              <Column Width="0.780000454989195in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.199999868869803in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Type')" Name="textBox128" StyleName="Civic.TableHeader">
+                    <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style LineColor="LightGray">
+            <BorderStyle Default="Solid" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Product_type">
+              <ReportItem>
+                <TextBox Width="1in" Height="0.199999868869781in" Left="0in" Top="0in" Value="= Fields.product_type" Name="textBox154" StyleName="Civic.TableGroup">
+                  <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <ConditionalFormatting>
+                    <FormattingRule>
+                      <Style>
+                        <Font Bold="True" />
+                      </Style>
+                      <Filters>
+                        <Filter Expression="= Fields.product_type" Operator="Like" Value="%Total" />
+                      </Filters>
+                    </FormattingRule>
+                  </ConditionalFormatting>
+                </TextBox>
+              </ReportItem>
+              <ChildGroups>
+                <TableGroup Name="Detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="=Fields.product_type" />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group11">
+              <ReportItem>
+                <TextBox Width="1.28291702270508in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Category')" Name="textBox209" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="0.980000019073486in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Name')" Name="textBox136" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group12">
+              <ReportItem>
+                <TextBox Width="0.822916984558105in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Discount Name')" Name="textBox213" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group13">
+              <ReportItem>
+                <TextBox Width="0.833333194255829in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Price')" Name="textBox217" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group7">
+              <ReportItem>
+                <TextBox Width="0.939999997615814in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Qty')" Name="textBox83" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group8">
+              <ReportItem>
+                <TextBox Width="0.779999971389771in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('GameCard Net Amount')" Name="textBox86" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group14">
+              <ReportItem>
+                <TextBox Width="0.660000026226044in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('GameCard Tax Amount')" Name="textBox88" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group18">
+              <ReportItem>
+                <TextBox Width="0.710000038146973in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('GameCard Total Amount')" Name="textBox108" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group23">
+              <ReportItem>
+                <TextBox Width="0.769999980926514in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash Credit Net Amount')" Name="textBox201" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group24">
+              <ReportItem>
+                <TextBox Width="0.730000019073486in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash Credit Tax Amount')" Name="textBox207" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group25">
+              <ReportItem>
+                <TextBox Width="0.780000030994415in" Height="0.199999988079071in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash Credit Total Amount')" Name="textBox222" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="PowderBlue" Color="Black" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Bindings>
+            <Binding Path="Visible" Expression="= Parameters.EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT.Value = &quot;N&quot;" />
+          </Bindings>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.0582427978515625in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.258242925008138in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085329691569in" Height="0.300000190734863in" Left="6.00000063578288in" Top="0.0582427978515625in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount&#xD;&#xA;" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="1in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="9.76457818349202in" Height="0.19999997317791in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Breakdown')" Name="textBox46">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.76457818349202in" Height="0.19999997317791in" Left="0in" Top="0.19999997317791in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox96">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.75416088104248in" Height="0.19999997317791in" Left="0.0104166666666667in" Top="0.400000015894572in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox97">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.76457786560058in" Height="0.19999997317791in" Left="0in" Top="0.599999984105428in" Value="=MessagesFunctions.getMessage('POS') + &quot;: &quot; + Parameters.SelectedPOSMachines.Value" Format="{0:f}" Name="textBox98">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.76457786560058in" Height="0.19999997317791in" Left="0in" Top="0.800000011920929in" Value="=MessagesFunctions.getMessage('User') + &quot;: &quot; + Parameters.SelectedUsers.Label" Format="{0:f}" Name="textBox110">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="pos" Mergeable="False" Text="Select POS" MultiValue="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="userId" Type="Integer" Mergeable="False" Text="userId" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False">
+      <Value>
+        <String>= Parameters.DateTimeCellFormat.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False">
+      <Value>
+        <String>= Parameters.AmountCellFormat.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Mergeable="False" Text="AmountWithCurSymbolCellFormat" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="ENABLE_POS_FILTER_IN_TRX_REPORT" Mergeable="False" Text="ENABLE_POS_FILTER_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT" Mergeable="False" Text="EXCLUDE_ZERO_PRICE_SALE_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_SPECIAL_PRICING_IN_TRX_REPORT" Mergeable="False" Text="EXCLUDE_SPECIAL_PRICING_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT" Text="EXCLUDE_PRODUCT_BREAKDOWN_IN_TRX_REPORT" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SelectedPOSMachines" Mergeable="False" Text="SelectedPOSMachines" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SelectedUsers" Mergeable="False" Text="SelectedUsers" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SiteName" Mergeable="False" Text="SiteName" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="user">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="role" Text="role">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="status" Text="status" />
+    <ReportParameter Name="trxid" Type="Integer" Text="trxid">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="loginUserId" Type="Integer" Text="loginUserId" />
+  </ReportParameters>
+</Report>

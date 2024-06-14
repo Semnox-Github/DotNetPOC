@@ -1,0 +1,34 @@
+﻿[
+  {
+    "Id": 1,
+    "DisplayGroup": "SamTest",
+    "ButtonColor": "",
+    "TextColor": "",
+    "Font": "",
+    "SortOrder": 2,
+    "Guid": "534e7977-6778-4e69-b7fb-e2410eac2a76",
+    "SynchStatus": false,
+    "SiteId": -1,
+    "ImageFileName": "",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-22T16:36:44.69",
+    "Description": "testing",
+    "IsChanged": false
+  },
+  {
+    "Id": 0,
+    "DisplayGroup": "testNa",
+    "ButtonColor": "",
+    "TextColor": "",
+    "Font": "",
+    "SortOrder": 1,
+    "Guid": "d44a46b5-de41-4f1f-8c7b-d4b4b268f12d",
+    "SynchStatus": false,
+    "SiteId": -1,
+    "ImageFileName": "",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-18T18:27:42.133",
+    "Description": "ok",
+    "IsChanged": false
+  }
+]

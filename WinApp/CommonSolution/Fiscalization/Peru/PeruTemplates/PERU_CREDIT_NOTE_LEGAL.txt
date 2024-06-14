@@ -1,0 +1,28 @@
+"LegalMonetaryTotal" : 
+	[ {
+		"LineExtensionAmount" : 
+			[ { 
+				"AmountContent" : "@LegalMonetaryTotalLineExtensionAmountAmountContent", 
+				"AmountCurrencyIdentifier" : "@CurrencyID" 
+				}
+			],
+		"TaxInclusiveAmount" : 
+			[ { 
+				"AmountContent" : "@LegalMonetaryTotalLineExtensionAmountTaxInclusiveAmountAmountContent", 
+				"AmountCurrencyIdentifier" : "@CurrencyID" 
+				}
+			], 		
+	  "AllowanceTotalAmount": [
+		{
+		  "AmountContent": "@LegalMonetaryTotalAllowanceTotalAmountContent",
+		  "AmountCurrencyIdentifier": "@CurrencyID" 
+		}
+	  ],
+		"PayableAmount" : 
+			[ { 
+				"AmountContent" : "@LegalMonetaryTotalLineExtensionAmountTaxInclusiveAmountPayableAmountAmountContent", 
+				"AmountCurrencyIdentifier" : "@CurrencyID" 
+				}
+			]
+	  }
+	],

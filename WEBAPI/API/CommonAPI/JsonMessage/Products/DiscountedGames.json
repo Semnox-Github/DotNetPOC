@@ -1,0 +1,67 @@
+﻿[
+  {
+    "Id": 0,
+    "DiscountId": 70,
+    "GameId": 942,
+    "Discounted": "Y",
+    "GameName": "gqqg",
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "de6c1746-c307-490b-89a9-d328ac17d9f2",
+    "IsChanged": false
+  },
+  {
+    "Id": 1,
+    "DiscountId": 70,
+    "GameId": 939,
+    "Discounted": "Y",
+    "GameName": "test game indra",
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "f6f2305c-14c8-4ba5-9662-d33242b16402",
+    "IsChanged": false
+  },
+  {
+    "Id": 2,
+    "DiscountId": 70,
+    "GameId": 925,
+    "Discounted": "N",
+    "GameName": "test jagan",
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "62ded31f-5bd8-4fed-bc88-44445e43a34d",
+    "IsChanged": false
+  },
+  {
+    "Id": 3,
+    "DiscountId": 70,
+    "GameId": 921,
+    "Discounted": "N",
+    "GameName": "test1",
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "2970498f-7930-4ac6-8100-4991ec8d47d8",
+    "IsChanged": false
+  },
+  {
+    "Id": 4,
+    "DiscountId": 70,
+    "GameId": 941,
+    "Discounted": "Y",
+    "GameName": "Text2",
+    "IsActive": "Y",
+    "SiteId": 1010,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "790e8295-a5b3-4bfa-a134-da2cec7dcd84",
+    "IsChanged": false
+  }
+]

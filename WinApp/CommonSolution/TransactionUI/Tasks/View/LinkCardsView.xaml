@@ -1,0 +1,273 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.LinkCardsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:customcontrols="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accountsui="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        Title="LinkCardsView"
+        Style="{StaticResource TaskWindowStyle}">
+  
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}"
+               x:Key="ClearButtonStyle">
+            <Style.Setters>
+                <Setter Property="Margin"
+                        Value="16,0" />
+                <Setter Property="Width"
+                        Value="48" />
+                <Setter Property="Height"
+                        Value="{Binding ActualWidth,RelativeSource={RelativeSource Mode=Self}}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Padding="14"
+                                    CornerRadius="{Binding ActualWidth,RelativeSource={RelativeSource Mode=Self}}"
+                                    Background="{StaticResource Action.Active.Background}">
+                                <Path Stroke="{StaticResource Action.Active.Foreground}"
+                                      Data="M0,0 L1,1 M0,1 L1,0"
+                                      Stretch="Uniform"
+                                      StrokeThickness="2" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height ="72"/>
+            <RowDefinition Height ="*"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="0,0,0,1"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource LeftPane.Selected.Border}"
+                        CornerRadius="8,0,8,0"
+                        Padding="16"
+                        Grid.Column="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnBack"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                Command="{Binding BackButtonCommand}"
+                                Style="{StaticResource BackButtonStyle}"/>
+                        <customcontrols:CustomTextBlock Grid.Column="1"
+                                                        Text="Link"
+                                                        x:Name="tbHeading"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        TextSize="Medium"
+                                                        VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                <accountsui:CardDetailsUserControl x:Name="ParentCardDetailsUserControl"
+                                                   DataContext="{Binding ParentDetailsVM}"
+                                                   Grid.Column="1"
+                                                   Margin="16,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CardAdded">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsui:CardDetailsUserControl}}"
+                                                   Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </accountsui:CardDetailsUserControl>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="16,4,0,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="0">
+                    <customcontrols:CustomTextBlock x:Name="tbCardsToBeLinked"
+                                            Text="Cards to be linked"
+                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                    <customcontrols:CustomTextBlock x:Name="tbLeftParenthesis"
+                                            Text=" ("
+                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                    <customcontrols:CustomTextBlock x:Name="tbCount"
+                                            Text="{Binding TotalCardsToBeLinked}"
+                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                    <customcontrols:CustomTextBlock x:Name="tbRightParenthesis"
+                                            Text=")"
+                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                </StackPanel>
+                <customcontrols:CustomTextBlock Grid.Row="1"
+                                                Text="Day Limit %"
+                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                Margin="0,8,0,0"
+                                                TextSize="Small">
+                    <customcontrols:CustomTextBlock.Style>
+                        <Style TargetType="{x:Type customcontrols:CustomTextBlock}"
+                               BasedOn="{StaticResource {x:Type customcontrols:CustomTextBlock}}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowDailyLimitText}"
+                                             Value="true">
+                                    <Setter Property="Visibility" Value="Visible"   />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </customcontrols:CustomTextBlock.Style>
+                </customcontrols:CustomTextBlock>
+                                                
+                <customcontrols:CustomScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                                   VerticalScrollBarVisibility="Auto"
+                                                   Grid.Row="2"
+                                                   x:Name="scvChildControls">
+                    <ItemsControl ItemsSource="{Binding ChildCardsCollection}"
+                                  VerticalAlignment="Top">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="9*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <customcontrols:CustomTextBox Text="{Binding DailyLimitPercentage}"
+                                                                  IsReadOnly="True"
+                                                                  Grid.Column="0"
+                                                                  Size="Small"
+                                                                  ErrorTextVisible="False"
+                                                                  VerticalAlignment="Bottom"/>
+                                    <accountsui:CardDetailsUserControl DataContext = "{Binding ChildCardDetailsVM}"
+                                                                       Grid.Column="1"
+                                                                       Margin="10,0,0,0"
+                                                                       VerticalAlignment="Bottom">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="CardAdded">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CardAddedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=accountsui:CardDetailsUserControl}}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </accountsui:CardDetailsUserControl>
+                                    <Button x:Name="btnClear"
+                                        Grid.Column="2"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding DataContext.CardDetailsClearCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                        Style="{StaticResource ClearButtonStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Control.Margin" Value="4"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </customcontrols:CustomScrollViewer>
+                
+            </Grid>
+            <Grid Grid.Column="1"
+                  Margin="0,5,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0"
+                         Stretch="Fill"
+                         VerticalAlignment="Top"
+                         Margin="8,8,8,0">
+                    <customcontrols:GenericToggleButtonsUserControl DataContext="{Binding GenericToggleButtonsVM}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="ToggleChecked">
+                                <i:InvokeCommandAction CommandParameter="{Binding SelectedToggleButtonItem}"
+                                                Command="{Binding DataContext.ToggleButtonCheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </customcontrols:GenericToggleButtonsUserControl>
+                </Viewbox>
+                
+                <customcontrols:CustomNumericUpDown Grid.Row="1"
+                                                    Margin="8,8,8,8" 
+                                                    x:Name="NumericUpDown"
+                                                    Value="{Binding CustomFirstCardValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                      
+                                                    MaxValue="100"
+                                                    MinValue="0"        
+                                                    StepSize="5"
+                                                    Visibility="{Binding ShowCustomNumericUpDown}"/>
+                <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Vertical"
+                            Grid.Row="2"
+                            Margin="0,8,8,0"
+                            x:Name="TapOrEnterStackPanel">
+                    <customcontrols:CustomTextBlock x:Name="tbTapMultipleCards"
+                                            Text="Tap multiple cards"
+                                            VerticalAlignment="Center"
+                                            TextSize="Medium"
+                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                            Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal">
+                        <customcontrols:CustomTextBlock x:Name="tbOR"
+                                                Text="OR"
+                                                TextSize="Medium"
+                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                Margin="0,0,8,0"
+                                                VerticalAlignment="Center"/>
+                        <customcontrols:CustomActionButton x:Name="btnEnterCardNo"
+                                                   Content="ENTER CARD NO"
+                                                   Padding="12"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                   Command="{Binding EnterCardNoClickedCommand}"
+                                                   Height="{StaticResource CustomActionButton.Height.Medium}">
+                            <customcontrols:CustomActionButton.Style>
+                                <Style TargetType="{x:Type customcontrols:CustomActionButton}"
+                                       BasedOn="{StaticResource {x:Type customcontrols:CustomActionButton}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ParentDetailsVM}" Value="{x:Null}">
+                                            <Setter Property="IsEnabled"
+                                                    Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ParentDetailsVM.AccountDTO}" Value="{x:Null}">
+                                            <Setter Property="IsEnabled"
+                                                    Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </customcontrols:CustomActionButton.Style>
+                        </customcontrols:CustomActionButton>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

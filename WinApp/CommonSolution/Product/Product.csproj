@@ -1,0 +1,701 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1BA74AA-2DC7-48C1-8CBD-254F8C2B63F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Product</RootNamespace>
+    <AssemblyName>Product</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\..\..\..\OTS\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountingCodeCombination.cs" />
+    <Compile Include="AccountingCodeCombinationDataHandler.cs" />
+    <Compile Include="AccountingCodeCombinationDTO.cs" />
+    <Compile Include="AccountingCodeCombinationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountingCodeCombinationUI.designer.cs">
+      <DependentUpon>AccountingCodeCombinationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AttractionPlaysBL.cs" />
+    <Compile Include="AttractionPlaysDataHandler.cs" />
+    <Compile Include="AttractionPlaysDTO.cs" />
+    <Compile Include="BOMBL.cs" />
+    <Compile Include="BOMDataHandler.cs" />
+    <Compile Include="BOMDTO.cs" />
+    <Compile Include="BOMExcelDTO.cs" />
+    <Compile Include="BOMViewExcelDTODefination.cs" />
+    <Compile Include="CheckOutPricesBL.cs" />
+    <Compile Include="CheckOutPricesDataHandler.cs" />
+    <Compile Include="CheckOutPricesDTO.cs" />
+    <Compile Include="ComboProductBL.cs" />
+    <Compile Include="ComboProductContainerDTO.cs" />
+    <Compile Include="ComboProductDatahandler.cs" />
+    <Compile Include="ComboProductDTO.cs" />
+    <Compile Include="CreditPlusConsumptionRulesContainerDTO.cs" />
+    <Compile Include="CustomerProfilingBL.cs" />
+    <Compile Include="CustomerProfilingContainerDTO.cs" />
+    <Compile Include="CustomerProfilingDataHandler.cs" />
+    <Compile Include="CustomerProfilingDTO.cs" />
+    <Compile Include="CustomerProfilingGroupBL.cs" />
+    <Compile Include="CustomerProfilingGroupContainerDTO.cs" />
+    <Compile Include="CustomerProfilingGroupDataHandler.cs" />
+    <Compile Include="CustomerProfilingGroupDTO.cs" />
+    <Compile Include="FacilityContainer.cs" />
+    <Compile Include="FacilityContainerDTO.cs" />
+    <Compile Include="FacilityContainerDTOCollection.cs" />
+    <Compile Include="FacilityContainerList.cs" />
+    <Compile Include="FacilitySeatLayoutContainerDTO.cs" />
+    <Compile Include="FacilitySeatsContainerDTO.cs" />
+    <Compile Include="FacilityTableContainerDTO.cs" />
+    <Compile Include="FacilityTables.cs" />
+    <Compile Include="FacilityWaiverContainerDTO.cs" />
+    <Compile Include="IProductDiscountUseCases.cs" />
+    <Compile Include="IProductGamesUseCases.cs" />
+    <Compile Include="IProductsAllowedInFacilityMapUseCases.cs" />
+    <Compile Include="IProductsCalenderUseCases.cs" />
+    <Compile Include="IProductsSpecialPricingUseCases.cs" />
+    <Compile Include="IUpsellOfferUseCases.cs" />
+    <Compile Include="CMSGroupDisplayGroupDataHandler.cs" />
+    <Compile Include="CMSGroupDisplayGroupDTO.cs" />
+    <Compile Include="CMSGroupDisplayGroups.cs" />
+    <Compile Include="CreditPlusConsumptionRulesBL.cs" />
+    <Compile Include="CreditPlusConsumptionRulesDataHandler.cs" />
+    <Compile Include="CreditPlusConsumptionRulesDTO.cs" />
+    <Compile Include="DataGridViewPrinter.cs" />
+    <Compile Include="Facility.cs" />
+    <Compile Include="FacilityDataHandler.cs" />
+    <Compile Include="FacilityDTO.cs" />
+    <Compile Include="FacilitySeatLayoutBL.cs" />
+    <Compile Include="FacilitySeatLayoutDataHandler.cs" />
+    <Compile Include="FacilitySeatLayoutDTO.cs" />
+    <Compile Include="FacilitySeats.cs" />
+    <Compile Include="FacilitySeatsDTO.cs" />
+    <Compile Include="FacilityTableDataHandler.cs" />
+    <Compile Include="FacilityTableDTO.cs" />
+    <Compile Include="FacilityTableParams.cs" />
+    <Compile Include="FacilityWaiverBL.cs" />
+    <Compile Include="FacilityWaiverDTO.cs" />
+    <Compile Include="FacilityWaiversDataHandler.cs" />
+    <Compile Include="FaciltySeatDatahandler.cs" />
+    <Compile Include="IAttractionPlaysUseCases.cs" />
+    <Compile Include="IBOMUseCases.cs" />
+    <Compile Include="ICheckOutPricesUseCases.cs" />
+    <Compile Include="IComboProductUseCases.cs" />
+    <Compile Include="IFacilityMapUseCases.cs" />
+    <Compile Include="IFacilityUseCases.cs" />
+    <Compile Include="IMasterScheduleUseCases.cs" />
+    <Compile Include="IMembershipExclusionRuleUseCases.cs" />
+    <Compile Include="IModifierSetUseCases.cs" />
+    <Compile Include="InventoryItemContainerDTO.cs" />
+    <Compile Include="IOrderTypeGroupUseCases.cs" />
+    <Compile Include="IOrderTypeUseCases.cs" />
+    <Compile Include="IProductActivityUseCases.cs" />
+    <Compile Include="IProductAvailabilityUseCases.cs" />
+    <Compile Include="IProductBarCodeUseCases.cs" />
+    <Compile Include="IProductCreditPlusUseCases.cs" />
+    <Compile Include="IProductDisplayGroupFormatUseCases.cs" />
+    <Compile Include="IProductDisplayGroupUseCases.cs" />
+    <Compile Include="IProductSubscriptionUseCases.cs" />
+    <Compile Include="IProductsUseCases.cs" />
+    <Compile Include="IProductTypeUseCases.cs" />
+    <Compile Include="ISaleGroupProductMapUseCases.cs" />
+    <Compile Include="ISalesOfferGroupUseCases.cs" />
+    <Compile Include="ISegmentDefinitionUseCases.cs" />
+    <Compile Include="ITaxUseCases.cs" />
+    <Compile Include="LocalAttractionPlaysUseCases.cs" />
+    <Compile Include="LocalBOMUseCases.cs" />
+    <Compile Include="LocalCheckOutPricesUseCases.cs" />
+    <Compile Include="LocalComboProductUseCases.cs" />
+    <Compile Include="LocalFacilityMapUseCases.cs" />
+    <Compile Include="LocalFacilityUseCases.cs" />
+    <Compile Include="LocalMasterScheduleUseCases.cs" />
+    <Compile Include="LocalMembershipExclusionRuleUseCases.cs" />
+    <Compile Include="LocalModifierSetUseCases.cs" />
+    <Compile Include="LocalOrderTypeGroupUseCases.cs" />
+    <Compile Include="LocalOrderTypeUseCases.cs" />
+    <Compile Include="LocalProductActivityUseCases.cs" />
+    <Compile Include="LocalProductAvailabilityUseCases.cs" />
+    <Compile Include="LocalProductBarCodeUseCases.cs" />
+    <Compile Include="LocalProductCreditPlusUseCases.cs" />
+    <Compile Include="LocalProductDiscountUseCases.cs" />
+    <Compile Include="LocalProductDisplayGroupFormatUseCases.cs" />
+    <Compile Include="LocalProductDisplayGroupUseCases.cs" />
+    <Compile Include="LocalProductGamesUseCases.cs" />
+    <Compile Include="LocalProductsAllowedInFacilityMapUseCases.cs" />
+    <Compile Include="LocalProductsCalenderUseCases.cs" />
+    <Compile Include="LocalProductsSpecialPricingUseCases.cs" />
+    <Compile Include="LocalProductSubscriptionUseCases.cs" />
+    <Compile Include="LocalProductsUseCases.cs" />
+    <Compile Include="LocalSaleGroupProductMapUseCases.cs" />
+    <Compile Include="LocalSalesOfferGroupUseCases.cs" />
+    <Compile Include="LocalProductTypeUseCases.cs" />
+    <Compile Include="LocalSegmentDefinitionUseCases.cs" />
+    <Compile Include="LocalTaxUseCases.cs" />
+    <Compile Include="LocalUpsellOfferUseCases.cs" />
+    <Compile Include="ManualProductType.cs" />
+    <Compile Include="MasterSchedule.cs" />
+    <Compile Include="MasterScheduleDataHandler.cs" />
+    <Compile Include="MasterScheduleDTO.cs" />
+    <Compile Include="MembershipExclusionRuleBL.cs" />
+    <Compile Include="MembershipExclusionRuleDataHandler.cs" />
+    <Compile Include="MembershipExclusionRuleDTO.cs" />
+    <Compile Include="ModifierSetBL.cs" />
+    <Compile Include="ModifierSetContainer.cs" />
+    <Compile Include="ModifierSetContainerDTO.cs" />
+    <Compile Include="ModifierSetContainerDTOCollection.cs" />
+    <Compile Include="ModifierSetContainerList.cs" />
+    <Compile Include="ModifierSetDataHandler.cs" />
+    <Compile Include="ModifierSetDetailsBL.cs" />
+    <Compile Include="ModifierSetDetailsContainerDTO.cs" />
+    <Compile Include="ModifierSetDetailsDataHandler.cs" />
+    <Compile Include="ModifierSetDetailsDTO.cs" />
+    <Compile Include="ModifierSetDTO.cs" />
+    <Compile Include="OrderTypeBL.cs" />
+    <Compile Include="OrderTypeContainer.cs" />
+    <Compile Include="OrderTypeContainerDTO.cs" />
+    <Compile Include="OrderTypeContainerDTOCollection.cs" />
+    <Compile Include="OrderTypeContainerList.cs" />
+    <Compile Include="OrderTypeDataHandler.cs" />
+    <Compile Include="OrderTypeDTO.cs" />
+    <Compile Include="OrderTypeGroupBL.cs" />
+    <Compile Include="OrderTypeGroupDataHandler.cs" />
+    <Compile Include="OrderTypeGroupDTO.cs" />
+    <Compile Include="OrderTypeGroupListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderTypeGroupListUI.designer.cs">
+      <DependentUpon>OrderTypeGroupListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTypeGroupMapBL.cs" />
+    <Compile Include="OrderTypeGroupMapDataHandler.cs" />
+    <Compile Include="OrderTypeGroupMapDTO.cs" />
+    <Compile Include="OrderTypeGroupMapListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderTypeGroupMapListUI.designer.cs">
+      <DependentUpon>OrderTypeGroupMapListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTypeListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderTypeListUI.designer.cs">
+      <DependentUpon>OrderTypeListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParentModifierBL.cs" />
+    <Compile Include="ParentModifierDataHandler.cs" />
+    <Compile Include="ParentModifierDTO.cs" />
+    <Compile Include="POSProductExclusionsBL.cs" />
+    <Compile Include="POSProductExclusionsContainerDTO.cs" />
+    <Compile Include="POSProductExclusionsDataHandler.cs" />
+    <Compile Include="POSProductExclusionsDTO.cs" />
+    <Compile Include="PrintHelper.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductActivityViewDataHandler.cs" />
+    <Compile Include="ProductActivityViewDTO.cs" />
+    <Compile Include="ProductActivityViewExcelDTODefination.cs" />
+    <Compile Include="ProductActivityViewList.cs" />
+    <Compile Include="ProductBarcodeContainerDTO.cs" />
+    <Compile Include="ProductCalanderCalculator.cs" />
+    <Compile Include="ProductCalendarContainer.cs" />
+    <Compile Include="ProductCalendarContainerDTO.cs" />
+    <Compile Include="ProductCalendarContainerDTOCollection.cs" />
+    <Compile Include="ProductCalendarDetailContainerDTO.cs" />
+    <Compile Include="ProductContainer.cs" />
+    <Compile Include="ProductCreditPlusBL.cs" />
+    <Compile Include="ProductCreditPlusContainerDTO.cs" />
+    <Compile Include="ProductCreditPlusDataHandler.cs" />
+    <Compile Include="ProductCreditPlusDTO.cs" />
+    <Compile Include="ProductDiscountsBL.cs" />
+    <Compile Include="ProductDiscountsDataHandler.cs" />
+    <Compile Include="ProductDiscountsDTO.cs" />
+    <Compile Include="ProductDisplayGroupFormatContainer.cs" />
+    <Compile Include="ProductDisplayGroupFormatContainerDTO.cs" />
+    <Compile Include="ProductDisplayGroupFormatContainerDTOCollection.cs" />
+    <Compile Include="ProductDisplayGroupFormatContainerList.cs" />
+    <Compile Include="ProductGamesBL.cs" />
+    <Compile Include="ProductGamesContainerDTO.cs" />
+    <Compile Include="ProductGamesDataHandler.cs" />
+    <Compile Include="ProductGamesDTO.cs" />
+    <Compile Include="ProductGamesExtendedBL.cs" />
+    <Compile Include="ProductGamesExtendedContainerDTO.cs" />
+    <Compile Include="ProductGamesExtendedDataHandler.cs" />
+    <Compile Include="ProductGamesExtendedDTO.cs" />
+    <Compile Include="ProductGroupBL.cs" />
+    <Compile Include="ProductGroupContainer.cs" />
+    <Compile Include="ProductGroupContainerDTO.cs" />
+    <Compile Include="ProductGroupContainerDTOCollection.cs" />
+    <Compile Include="ProductGroupContainerList.cs" />
+    <Compile Include="ProductGroupDataHandler.cs" />
+    <Compile Include="ProductGroupDTO.cs" />
+    <Compile Include="ProductGroupMapBL.cs" />
+    <Compile Include="ProductGroupMapContainerDTO.cs" />
+    <Compile Include="ProductGroupMapDataHandler.cs" />
+    <Compile Include="ProductGroupMapDTO.cs" />
+    <Compile Include="ProductMenuBL.cs" />
+    <Compile Include="ProductMenuContainerSnapshotDTO.cs" />
+    <Compile Include="ProductMenuDataHandler.cs" />
+    <Compile Include="ProductMenuDTO.cs" />
+    <Compile Include="ProductMenuObjectTypes.cs" />
+    <Compile Include="ProductMenuPanelBL.cs" />
+    <Compile Include="ProductMenuPanelContainerDTO.cs" />
+    <Compile Include="ProductMenuContainerSnapshotDTOCollection.cs" />
+    <Compile Include="ProductMenuPanelContentBL.cs" />
+    <Compile Include="ProductMenuPanelContentButtonType.cs" />
+    <Compile Include="ProductMenuPanelContentContainerDTO.cs" />
+    <Compile Include="ProductMenuPanelContentDataHandler.cs" />
+    <Compile Include="ProductMenuPanelContentDTO.cs" />
+    <Compile Include="ProductMenuPanelDataHandler.cs" />
+    <Compile Include="ProductMenuPanelDTO.cs" />
+    <Compile Include="ProductMenuPanelExclusionBL.cs" />
+    <Compile Include="ProductMenuPanelExclusionDataHandler.cs" />
+    <Compile Include="ProductMenuPanelExclusionDTO.cs" />
+    <Compile Include="ProductMenuPanelMappingBL.cs" />
+    <Compile Include="ProductMenuPanelMappingDataHandler.cs" />
+    <Compile Include="ProductMenuPanelMappingDTO.cs" />
+    <Compile Include="ProductMenuPOSMachineMapBL.cs" />
+    <Compile Include="ProductMenuPOSMachineMapDataHandler.cs" />
+    <Compile Include="ProductMenuPOSMachineMapDTO.cs" />
+    <Compile Include="ProductMenuType.cs" />
+    <Compile Include="ProductModifierContainerDTO.cs" />
+    <Compile Include="ProductsAllowedInFacilityMapBL.cs" />
+    <Compile Include="ProductsAllowedInFacilityMapDatahandler.cs" />
+    <Compile Include="ProductsAllowedInFacilityMapDTO.cs" />
+    <Compile Include="ProductsAvailabilityAttributes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductsAvailabilityAttributes.Designer.cs">
+      <DependentUpon>ProductsAvailabilityAttributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductBarcodeBL.cs" />
+    <Compile Include="ProductBarcodeDataHandler.cs" />
+    <Compile Include="ProductBarcodeDTO.cs" />
+    <Compile Include="ProductDataHandler.cs" />
+    <Compile Include="ProductDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProductDetails.Designer.cs">
+      <DependentUpon>ProductDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDisplayGroupFormat.cs" />
+    <Compile Include="ProductDisplayGroupFormatDataHandler.cs" />
+    <Compile Include="ProductDisplayGroupFormatDTO.cs" />
+    <Compile Include="ProductDTO.cs" />
+    <Compile Include="ProductsAvailabilityBL.cs" />
+    <Compile Include="ProductsAvailabilityDataHandler.cs" />
+    <Compile Include="ProductsAvailabilityDTO.cs" />
+    <Compile Include="ProductModifiersBL.cs" />
+    <Compile Include="ProductModifiersDataHandler.cs" />
+    <Compile Include="ProductModifiersDTO.cs" />
+    <Compile Include="Products.cs" />
+    <Compile Include="ProductsCalender.cs" />
+    <Compile Include="ProductsCalenderDatahandler.cs" />
+    <Compile Include="ProductsCalenderDTO.cs" />
+    <Compile Include="ProductsContainer.cs" />
+    <Compile Include="ProductsContainerDTO.cs" />
+    <Compile Include="ProductsContainerDTOCollection.cs" />
+    <Compile Include="ProductsContainerList.cs" />
+    <Compile Include="ProductsDataHandler.cs" />
+    <Compile Include="ProductsDisplayGroup.cs" />
+    <Compile Include="ProductsDisplayGroupContainerDTO.cs" />
+    <Compile Include="ProductsDisplayGroupDataHandler.cs" />
+    <Compile Include="ProductsDisplayGroupDTO.cs" />
+    <Compile Include="ProductsDTO.cs" />
+    <Compile Include="ProductsFilterParams.cs" />
+    <Compile Include="ProductSpecialPricesBL.cs" />
+    <Compile Include="ProductSpecialPricesDataHandler.cs" />
+    <Compile Include="ProductSpecialPricesDTO.cs" />
+    <Compile Include="ProductsSpecialPricingBL.cs" />
+    <Compile Include="ProductsSpecialPricingDTO.cs" />
+    <Compile Include="ProductsSpecialPricingHandler.cs" />
+    <Compile Include="ProductsStruct.cs" />
+    <Compile Include="ProductSubscriptionBL.cs" />
+    <Compile Include="ProductSubscriptionDataHandler.cs" />
+    <Compile Include="ProductSubscriptionContainerDTO.cs" />
+    <Compile Include="ProductSubscriptionDTO.cs" />
+    <Compile Include="ProductSummaryDTO.cs" />
+    <Compile Include="ProductsUseCaseFactory.cs" />
+    <Compile Include="ProductTypeBL.cs" />
+    <Compile Include="SaleGroupProductMapContainerDTO.cs" />
+    <Compile Include="SalesOfferGroupContainerDTO.cs" />
+    <Compile Include="TaxContainer.cs" />
+    <Compile Include="TaxContainerDTO.cs" />
+    <Compile Include="TaxContainerDTOCollection.cs" />
+    <Compile Include="TaxContainerList.cs" />
+    <Compile Include="TaxStructureContainerDTO.cs" />
+    <Compile Include="TransactionProfileContainer.cs" />
+    <Compile Include="ProductTypeContainer.cs" />
+    <Compile Include="ProductTypeContainerDTO.cs" />
+    <Compile Include="TransactionProfileContainerList.cs" />
+    <Compile Include="TransactionProfileContainerDTOCollection.cs" />
+    <Compile Include="ProductTypeContainerDTOCollection.cs" />
+    <Compile Include="ProductTypeDataHandler.cs" />
+    <Compile Include="ProductTypeDTO.cs" />
+    <Compile Include="ProductTypeContainerList.cs" />
+    <Compile Include="ProductTypeUseCaseFactory.cs" />
+    <Compile Include="ProductUserGroupsBL.cs" />
+    <Compile Include="ProductUserGroupsDataHandler.cs" />
+    <Compile Include="ProductUserGroupsDTO.cs" />
+    <Compile Include="ProductUserGroupsMappingBL.cs" />
+    <Compile Include="ProductUserGroupsMappingDataHandler.cs" />
+    <Compile Include="ProductUserGroupsMappingDTO.cs" />
+    <Compile Include="ProductUserGroupsUseCaseFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="PurchaseTax.cs" />
+    <Compile Include="PurchaseTaxDataHandler.cs" />
+    <Compile Include="PurchaseTaxDTO.cs" />
+    <Compile Include="RemoteAttractionPlaysUseCases.cs" />
+    <Compile Include="RemoteBOMUseCases.cs" />
+    <Compile Include="RemoteCheckOutPricesUseCases.cs" />
+    <Compile Include="RemoteComboProductUseCases.cs" />
+    <Compile Include="RemoteFacilityMapUseCases.cs" />
+    <Compile Include="RemoteFacilityUseCases.cs" />
+    <Compile Include="RemoteMasterScheduleUseCases.cs" />
+    <Compile Include="RemoteMembershipExclusionRuleUseCases.cs" />
+    <Compile Include="RemoteModifierSetUseCases.cs" />
+    <Compile Include="RemoteOrderTypeGroupUseCases.cs" />
+    <Compile Include="RemoteOrderTypeUseCases.cs" />
+    <Compile Include="RemoteProductActivityUseCases.cs" />
+    <Compile Include="RemoteProductAvailabilityUseCases.cs" />
+    <Compile Include="RemoteProductBarCodeUseCases.cs" />
+    <Compile Include="RemoteProductCreditPlusUseCases.cs" />
+    <Compile Include="RemoteProductDiscountUseCases.cs" />
+    <Compile Include="RemoteProductDisplayGroupFormatUseCases.cs" />
+    <Compile Include="RemoteProductDisplayGroupUseCases.cs" />
+    <Compile Include="RemoteProductGamesUseCases.cs" />
+    <Compile Include="RemoteProductsAllowedInFacilityMapUseCases.cs" />
+    <Compile Include="RemoteProductsCalenderUseCases.cs" />
+    <Compile Include="RemoteProductsSpecialPricingUseCases.cs" />
+    <Compile Include="RemoteProductSubscriptionUseCases.cs" />
+    <Compile Include="RemoteProductsUseCases.cs" />
+    <Compile Include="RemoteProductTypeUseCases.cs" />
+    <Compile Include="RemoteProductUserGroupsUseCases.cs" />
+    <Compile Include="IProductUserGroupsUseCases.cs" />
+    <Compile Include="LocalProductUserGroupsUseCases.cs" />
+    <Compile Include="RemoteSaleGroupProductMapUseCases.cs" />
+    <Compile Include="RemoteSalesOfferGroupUseCases.cs" />
+    <Compile Include="RemoteSegmentDefinitionUseCases.cs" />
+    <Compile Include="RemoteTaxUseCases.cs" />
+    <Compile Include="RemoteUpsellOfferUseCases.cs" />
+    <Compile Include="SaleGroupProductMap.cs" />
+    <Compile Include="SaleGroupProductMapDataHandler.cs" />
+    <Compile Include="SaleGroupProductMapDTO.cs" />
+    <Compile Include="SalesOfferGroup.cs" />
+    <Compile Include="SalesOfferGroupDataHandler.cs" />
+    <Compile Include="SalesOfferGroupDTO.cs" />
+    <Compile Include="ScheduleRules.cs" />
+    <Compile Include="ScheduleRulesDataHandler.cs" />
+    <Compile Include="ScheduleRulesDTO.cs" />
+    <Compile Include="Schedules.cs" />
+    <Compile Include="SchedulesDataHandler.cs" />
+    <Compile Include="SchedulesDTO.cs" />
+    <Compile Include="ScheduleDetailsDTO.cs" />
+    <Compile Include="SegmentCategorization.cs" />
+    <Compile Include="SegmentCategorizationDataHandler.cs" />
+    <Compile Include="SegmentCategorizationDTO.cs" />
+    <Compile Include="SegmentCategorizationValue.cs" />
+    <Compile Include="SegmentCategorizationValueDataHandler.cs" />
+    <Compile Include="SegmentCategorizationValueDTO.cs" />
+    <Compile Include="SegmentCategorizationValueWrapperDTO.cs" />
+    <Compile Include="SegmentDefinition.cs" />
+    <Compile Include="SegmentDefinitionDataHandler.cs" />
+    <Compile Include="SegmentDefinitionDTO.cs" />
+    <Compile Include="SegmentDefinitionSourceMap.cs" />
+    <Compile Include="SegmentDefinitionSourceMapDataHandler.cs" />
+    <Compile Include="SegmentDefinitionSourceMapDTO.cs" />
+    <Compile Include="SegmentDefinitionSourceValue.cs" />
+    <Compile Include="SegmentDefinitionSourceValueDataHandler.cs" />
+    <Compile Include="SegmentDefinitionSourceValueDTO.cs" />
+    <Compile Include="SegmentExcelDTODefinition.cs" />
+    <Compile Include="SpecialPricingOptionsBL.cs" />
+    <Compile Include="SpecialPricingOptionsDataHandler.cs" />
+    <Compile Include="SpecialPricingOptionsDTO.cs" />
+    <Compile Include="Tax.cs" />
+    <Compile Include="TaxDataHandler.cs" />
+    <Compile Include="TaxDTO.cs" />
+    <Compile Include="TaxExcelDTODefinition.cs" />
+    <Compile Include="TaxStructureBL.cs" />
+    <Compile Include="TaxStructureDataHandler.cs" />
+    <Compile Include="TaxStructureDTO.cs" />
+    <Compile Include="TransactionProfileBL.cs" />
+    <Compile Include="TransactionProfileContainerDTO.cs" />
+    <Compile Include="TransactionProfileDataHandler.cs" />
+    <Compile Include="TransactionProfileDTO.cs" />
+    <Compile Include="TransactionProfileTaxRuleContainerDTO.cs" />
+    <Compile Include="TransactionProfileTaxRules.cs" />
+    <Compile Include="TransactionProfileTaxRulesDataHandler.cs" />
+    <Compile Include="TransactionProfileTaxRulesDTO.cs" />
+    <Compile Include="UI\DisplayGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DisplayGroup.designer.cs">
+      <DependentUpon>DisplayGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmMapProductsToFacilityMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmMapProductsToFacilityMap.Designer.cs">
+      <DependentUpon>frmMapProductsToFacilityMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmAllowedProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmAllowedProducts.Designer.cs">
+      <DependentUpon>frmAllowedProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmlistBarCodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmlistBarCodes.designer.cs">
+      <DependentUpon>frmlistBarCodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmProductsDisplayGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmProductsDisplayGroup.designer.cs">
+      <DependentUpon>frmProductsDisplayGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SaleGroupProductMapUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SaleGroupProductMapUI.designer.cs">
+      <DependentUpon>SaleGroupProductMapUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SalesOfferGroupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SalesOfferGroupUI.designer.cs">
+      <DependentUpon>SalesOfferGroupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpsellOffer.cs" />
+    <Compile Include="UpsellOfferDataHandler.cs" />
+    <Compile Include="UpsellOfferProductsDTO.cs" />
+    <Compile Include="UpsellOffersContainerDTO.cs" />
+    <Compile Include="UpsellOffersDTO.cs" />
+    <Compile Include="UserRoleDisplayGroups.cs" />
+    <Compile Include="UserRoleDisplayGroupsDataHandler.cs" />
+    <Compile Include="UserRoleDisplayGroupsDTO.cs" />
+    <Compile Include="FacilityMapBL.cs" />
+    <Compile Include="FacilityMapDataHandler.cs" />
+    <Compile Include="FacilityMapDetailsBL.cs" />
+    <Compile Include="FacilityMapDetailsDataHandler.cs" />
+    <Compile Include="FacilityMapDetailsDTO.cs" />
+    <Compile Include="FacilityMapDTO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AccountingCodeCombinationUI.resx">
+      <DependentUpon>AccountingCodeCombinationUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderTypeGroupListUI.resx">
+      <DependentUpon>OrderTypeGroupListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderTypeGroupMapListUI.resx">
+      <DependentUpon>OrderTypeGroupMapListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderTypeListUI.resx">
+      <DependentUpon>OrderTypeListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductsAvailabilityAttributes.resx">
+      <DependentUpon>ProductsAvailabilityAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductDetails.resx">
+      <DependentUpon>ProductDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DisplayGroup.resx">
+      <DependentUpon>DisplayGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmMapProductsToFacilityMap.resx">
+      <DependentUpon>frmMapProductsToFacilityMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmAllowedProducts.resx">
+      <DependentUpon>frmAllowedProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmlistBarCodes.resx">
+      <DependentUpon>frmlistBarCodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmProductsDisplayGroup.resx">
+      <DependentUpon>frmProductsDisplayGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SaleGroupProductMapUI.resx">
+      <DependentUpon>SaleGroupProductMapUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SalesOfferGroupUI.resx">
+      <DependentUpon>SalesOfferGroupUI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vendor\Vendor.csproj">
+      <Project>{585e3765-3096-451d-89c0-97c9b845dbe7}</Project>
+      <Name>Vendor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\FacilityMapDetailsDTO.datasource" />
+    <None Include="Properties\DataSources\FacilityMapDTO.datasource" />
+    <None Include="Properties\DataSources\ProductsAllowedInFacilityMapDTO.datasource" />
+    <None Include="Properties\DataSources\ProductsAvailabilityDTO.datasource" />
+    <None Include="Resources\autoorder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customer_button_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customer_button_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left-arrow_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left-arrow_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right-arrow_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right-arrow_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonNav2Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonNav2Pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed3.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

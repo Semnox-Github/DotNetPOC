@@ -1,0 +1,11 @@
+{
+    "pos" : @ApiTokenOfPOS,
+    "fecha_emision": @DocIssueDate,
+    "tipo_documento": @DocType,
+    "documento": @DocNumber,
+    "electronico" : true,
+    "autorizacion": "",
+    
+    
+    
+  

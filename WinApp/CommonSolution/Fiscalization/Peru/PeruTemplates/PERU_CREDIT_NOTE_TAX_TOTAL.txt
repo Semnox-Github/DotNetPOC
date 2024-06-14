@@ -1,0 +1,14 @@
+"TaxTotal" : 
+ [ { 
+	"TaxAmount" : 
+		[ { 
+			"AmountContent" : "@TaxTotalAmountContent",
+			"AmountCurrencyIdentifier" : "@TaxTotalAmountCurrencyID" 
+			}
+		],
+	"TaxSubtotal" : 
+		[ 
+		  @TaxTotalSubTotal
+		]
+	}
+],

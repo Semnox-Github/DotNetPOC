@@ -1,0 +1,700 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2ED56A8-E75C-47FD-BB64-794C1D94B9D8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parafait_FnB_Kiosk</RootNamespace>
+    <AssemblyName>Parafait FnB Kiosk</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\BaseFormMenuChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\BaseFormMenuChoice.Designer.cs">
+      <DependentUpon>BaseFormMenuChoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\BaseFormProductSale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\BaseFormProductSale.Designer.cs">
+      <DependentUpon>BaseFormProductSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\CardFunctions.cs" />
+    <Compile Include="Classes\clsOrderDetails.cs" />
+    <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\frmMenuChoiceBasic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\frmMenuChoiceBasic.Designer.cs">
+      <DependentUpon>frmMenuChoiceBasic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Helper.cs" />
+    <Compile Include="Classes\ScreenModel.cs" />
+    <Compile Include="Classes\UserTransaction.cs" />
+    <Compile Include="Home\frmAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmAdmin.designer.cs">
+      <DependentUpon>frmAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmAlert.Designer.cs">
+      <DependentUpon>frmAlert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmHome.Designer.cs">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmMessage.Designer.cs">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmShowContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmShowContent.designer.cs">
+      <DependentUpon>frmShowContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Home\SetUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home\SetUp.designer.cs">
+      <DependentUpon>SetUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Sales\frmAgeGate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmAgeGate.Designer.cs">
+      <DependentUpon>frmAgeGate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmBillPayMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmBillPayMessage.designer.cs">
+      <DependentUpon>frmBillPayMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmCardSale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmCardSale.Designer.cs">
+      <DependentUpon>frmCardSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmCheckout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmCheckout.Designer.cs">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmCustomerDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmCustomerDashboard.designer.cs">
+      <DependentUpon>frmCustomerDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmFinishOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmFinishOrder.Designer.cs">
+      <DependentUpon>frmFinishOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleAlcohol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleAlcohol.Designer.cs">
+      <DependentUpon>frmProductSaleAlcohol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleBasic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleBasic.Designer.cs">
+      <DependentUpon>frmProductSaleBasic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleBuffet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleBuffet.Designer.cs">
+      <DependentUpon>frmProductSaleBuffet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleDrinks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleDrinks.Designer.cs">
+      <DependentUpon>frmProductSaleDrinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSalePizza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSalePizza.Designer.cs">
+      <DependentUpon>frmProductSalePizza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleSubs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleSubs.Designer.cs">
+      <DependentUpon>frmProductSaleSubs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleValueMeal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmProductSaleValueMeal.Designer.cs">
+      <DependentUpon>frmProductSaleValueMeal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmTapCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmTapCard.designer.cs">
+      <DependentUpon>frmTapCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmTentSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmTentSelection.Designer.cs">
+      <DependentUpon>frmTentSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\frmUpsellProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sales\frmUpsellProduct.Designer.cs">
+      <DependentUpon>frmUpsellProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TransactionServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOut.designer.cs">
+      <DependentUpon>frmTimeOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOutCounter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimeOut\frmTimeOutCounter.designer.cs">
+      <DependentUpon>frmTimeOutCounter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeOut\TimeOut.cs" />
+    <EmbeddedResource Include="Classes\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\BaseFormMenuChoice.resx">
+      <DependentUpon>BaseFormMenuChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\BaseFormProductSale.resx">
+      <DependentUpon>BaseFormProductSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\frmMenuChoiceBasic.resx">
+      <DependentUpon>frmMenuChoiceBasic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmAdmin.resx">
+      <DependentUpon>frmAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmHome.resx">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmMessage.resx">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmShowContent.resx">
+      <DependentUpon>frmShowContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Home\SetUp.resx">
+      <DependentUpon>SetUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Sales\frmAgeGate.resx">
+      <DependentUpon>frmAgeGate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmBillPayMessage.resx">
+      <DependentUpon>frmBillPayMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmCardSale.resx">
+      <DependentUpon>frmCardSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmCheckout.resx">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmCustomerDashboard.resx">
+      <DependentUpon>frmCustomerDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmFinishOrder.resx">
+      <DependentUpon>frmFinishOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmProductSaleBasic.resx">
+      <DependentUpon>frmProductSaleBasic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmProductSaleBuffet.resx">
+      <DependentUpon>frmProductSaleBuffet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmProductSaleDrinks.resx">
+      <DependentUpon>frmProductSaleDrinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmProductSalePizza.resx">
+      <DependentUpon>frmProductSalePizza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmProductSaleSubs.resx">
+      <DependentUpon>frmProductSaleSubs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmTapCard.resx">
+      <DependentUpon>frmTapCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmTentSelection.resx">
+      <DependentUpon>frmTentSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sales\frmUpsellProduct.resx">
+      <DependentUpon>frmUpsellProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmTimeOut.resx">
+      <DependentUpon>frmTimeOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeOut\frmTimeOutCounter.resx">
+      <DependentUpon>frmTimeOutCounter.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Media\Buffet_Screen\OneNote Table Of Contents.onetoc2" />
+    <None Include="Media\VAG-Rounded\VAG Rounded Bold.ttf" />
+    <None Include="Media\VAG-Rounded\VAG Rounded Thin.ttf" />
+    <None Include="Media\VAG-Rounded\VAG-Rounded-Std-Thin.ttf" />
+    <None Include="Media\VAG-Rounded\VAGRoundedStd-Bold.otf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.ConfirmCardProductPurchaseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.KeyValueStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.ParafaitStatusNameValue.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.PaymentModeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.PurchasedProductStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.Transaction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.TransactionDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.TransactionKeyValueStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.TransactionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.TransactionStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.TransactionStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\Parafait_FnB_Kiosk.TransactionServices.WaiverSignedDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TransactionServices\TransactionServices.wsdl" />
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.ChangePasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.CoreKeyValueStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.KeyValueStruct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.ManagementFormAccessDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.ManagementFormDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.ResetPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\Parafait_FnB_Kiosk.UserServices.UsersDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServices\UserServices.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Media\Appetizers_Screen_New\Cheesy Bread_Order.png" />
+    <Content Include="Media\Appetizers_Screen_New\Family Sampler Platter_Order.png" />
+    <Content Include="Media\Appetizers_Screen_New\Parmesan Breadsticks_Order.png" />
+    <Content Include="Media\Appetizers_Screen_New\Party Sampler Platter_Order.png" />
+    <Content Include="Media\Appetizers_Screen_New\See our Wings.png" />
+    <Content Include="Media\Appetizers_Screen_New\Tater Bites_Order.png" />
+    <Content Include="Media\Bday _Screen\Bday_Screen_Top Banner.png" />
+    <Content Include="Media\Bday _Screen\Collectible Cup_Order.png" />
+    <Content Include="Media\Bday _Screen\Dippin Dots_Order.png" />
+    <Content Include="Media\Bday _Screen\Marshmallow Treat_Order.png" />
+    <Content Include="Media\Bday _Screen\Party Platters_Order_1.png" />
+    <Content Include="Media\Bday _Screen\Party Platters_Order_2.png" />
+    <Content Include="Media\Bday _Screen\Party Platters_Order_3.png" />
+    <Content Include="Media\Bday _Screen\Pull String Pinata_Order.png" />
+    <Content Include="Media\Bday _Screen\Super Goody Bag_Order.png" />
+    <Content Include="Media\Buffet_Screen\Buffet_Screen_Image.png" />
+    <Content Include="Media\Buffet_Screen\Confirm_Btn.png" />
+    <Content Include="Media\Buffet_Screen\Drinks.png" />
+    <Content Include="Media\Buffet_Screen\Kids Under 3.png" />
+    <Content Include="Media\Buffet_Screen\Lunch Buffet_Image.png" />
+    <Content Include="Media\Buffet_Screen\Playpass.png" />
+    <Content Include="Media\Buffet_Screen\Wings.png" />
+    <Content Include="Media\Checkout_Screen\Arrow Up.png" />
+    <Content Include="Media\Checkout_Screen\Arrow.png" />
+    <Content Include="Media\Checkout_Screen\Back toMenu.png" />
+    <Content Include="Media\Checkout_Screen\Bg_Grey_Add Item.png" />
+    <Content Include="Media\Checkout_Screen\Bg_Purple.png" />
+    <Content Include="Media\Checkout_Screen\Cancel Order.png" />
+    <Content Include="Media\Checkout_Screen\Change Delete.png" />
+    <Content Include="Media\Checkout_Screen\Credit Card_Icon.png" />
+    <Content Include="Media\Checkout_Screen\Debit Card Pin.png" />
+    <Content Include="Media\Checkout_Screen\Down Arrow_Btn.png" />
+    <Content Include="Media\Checkout_Screen\Line.png" />
+    <Content Include="Media\Checkout_Screen\Minus_Btn.png" />
+    <Content Include="Media\Checkout_Screen\Place Order.png" />
+    <Content Include="Media\Checkout_Screen\PlusMinus.png" />
+    <Content Include="Media\Checkout_Screen\Plus_Btn.png" />
+    <Content Include="Media\Checkout_Screen\Up Arrow_Btn.png" />
+    <Content Include="Media\Control Images\Arrow scroll down.gif" />
+    <Content Include="Media\Control Images\Backspace_Btn.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Finished_Screen_Image_1216.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Key Pad_Key.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Key Pad_Left Arrow Key.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Key Pad_Right Arrow Key.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Number Display.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Number Display_Orange.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\OrderNumber.png" />
+    <Content Include="Media\Control Images\Checkout Screen _Popup\Popup 955x1845.png" />
+    <Content Include="Media\Control Images\Check_No.png" />
+    <Content Include="Media\Control Images\Check_Yes.png" />
+    <Content Include="Media\Control Images\Drinks Pop up Screen_Purple Bg.png" />
+    <Content Include="Media\Control Images\Drinks Pop up Screen_White Bg.png" />
+    <Content Include="Media\Control Images\Dropdown_Btn_1.png" />
+    <Content Include="Media\Control Images\Dropdown_Btn_11.png" />
+    <Content Include="Media\Control Images\Dropdown_Btn_2.png" />
+    <Content Include="Media\Control Images\Dropdown_Btn_3.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount_Green.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Any amount_Purple.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key_Green.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Keypad _Key_Purple.png" />
+    <Content Include="Media\Control Images\EatPlay_Screen_Cards Pop Up\Pop up_Purple.png" />
+    <Content Include="Media\Control Images\game-price-table.png" />
+    <Content Include="Media\Control Images\Pizza_Screen_BYO Popup.png" />
+    <Content Include="Media\Control Images\Play Pass Package_Popup\Character_Image.png" />
+    <Content Include="Media\Control Images\Play Pass Package_Popup\Green_Popup_Bg.png" />
+    <Content Include="Media\Control Images\Play Pass Package_Popup\Purple_Close btn.png" />
+    <Content Include="Media\Control Images\product-table.png" />
+    <Content Include="Media\Control Images\Subs_Screen_Background.png" />
+    <Content Include="Media\Control Images\timeout-box-violet.png" />
+    <Content Include="Media\Desserts_Screen_New\Cakes_Order.png" />
+    <Content Include="Media\Desserts_Screen_New\Churros_Order.png" />
+    <Content Include="Media\Desserts_Screen_New\Dessert-Pizza_Order.png" />
+    <Content Include="Media\Desserts_Screen_New\Dippin Dots_Order.png" />
+    <Content Include="Media\Desserts_Screen_New\Gaint Warm Cookie_Order.png" />
+    <Content Include="Media\Drinks_Screen_New\Coffee_Order.png" />
+    <Content Include="Media\Drinks_Screen_New\Kids Soft Drink_Order.png" />
+    <Content Include="Media\Drinks_Screen_New\Milk Apple Juice Water_Order.png" />
+    <Content Include="Media\Drinks_Screen_New\Soft Drink_Order.png" />
+    <Content Include="Media\Drinks_Screen_New\Untitled-1_0000_Top-Image.png" />
+    <Content Include="Media\Drinks_Screen_New\Untitled-1_0001_Adult-Drinks.png" />
+    <Content Include="Media\EatPlay_Screen_New\Bottom Text.png" />
+    <Content Include="Media\EatPlay_Screen_New\Lunch Buffet.png" />
+    <Content Include="Media\EatPlay_Screen_New\Value Deal_ #1.png" />
+    <Content Include="Media\EatPlay_Screen_New\Value Deal_#2.png" />
+    <Content Include="Media\EatPlay_Screen_New\Value Deal_#3.png" />
+    <Content Include="Media\EatPlay_Screen_New\Value Deal_#4.png" />
+    <Content Include="Media\Eat_Screen\Lunch Buffet.png" />
+    <Content Include="Media\Eat_Screen\View Desserts.png" />
+    <Content Include="Media\Eat_Screen\View New Food.png" />
+    <Content Include="Media\Eat_Screen\View Pizzas.png" />
+    <Content Include="Media\Eat_Screen\View Salad Bar.png" />
+    <Content Include="Media\headeritems\Header_Bg.png" />
+    <Content Include="Media\headeritems\Header_Bg_New.png" />
+    <Content Include="Media\headeritems\Header_MainMenu_Btn.png" />
+    <Content Include="Media\headeritems\White_Header_Btn.png" />
+    <Content Include="Media\Kids _Screen_New\Chicken Nuggets_Order.png" />
+    <Content Include="Media\Kids _Screen_New\Kid%27s Drink_Order.png" />
+    <Content Include="Media\Kids _Screen_New\Kids_Screen_0915.png" />
+    <Content Include="Media\Kids _Screen_New\Kids_Screen_Top Banner.png" />
+    <Content Include="Media\Kids _Screen_New\Milk Juice Water_Order.png" />
+    <Content Include="Media\Kids _Screen_New\Personal Pizza_Order.png" />
+    <Content Include="Media\Kids _Screen_New\Tater Bites_Order.png" />
+    <Content Include="Media\Menu Items\Appetizers_Normal.png" />
+    <Content Include="Media\Menu Items\Appetizers_Selected.png" />
+    <Content Include="Media\Menu Items\Birthday Add Ons_Normal.png" />
+    <Content Include="Media\Menu Items\Birthday Add Ons_Selected.png" />
+    <Content Include="Media\Menu Items\Buffet_Normal.png" />
+    <Content Include="Media\Menu Items\Buffet_Selected.png" />
+    <Content Include="Media\Menu Items\Desserts_Normal.png" />
+    <Content Include="Media\Menu Items\Desserts_Selected.png" />
+    <Content Include="Media\Menu Items\Drinks_Normal.png" />
+    <Content Include="Media\Menu Items\Drinks_Selected.png" />
+    <Content Include="Media\Menu Items\Kids Options_Normal.png" />
+    <Content Include="Media\Menu Items\Kids Options_Selected.png" />
+    <Content Include="Media\Menu Items\Menu Header.png" />
+    <Content Include="Media\Menu Items\New Food_Normal.png" />
+    <Content Include="Media\Menu Items\New Food_Selected.png" />
+    <Content Include="Media\Menu Items\Pizzas_Normal.png" />
+    <Content Include="Media\Menu Items\Pizzas_Selected.png" />
+    <Content Include="Media\Menu Items\Play Pass Packages_Normal.png" />
+    <Content Include="Media\Menu Items\Play Pass Packages_Selected.png" />
+    <Content Include="Media\Menu Items\Salad &amp; Sandwiches_Normal.png" />
+    <Content Include="Media\Menu Items\Salad &amp; Sandwiches_Selected.png" />
+    <Content Include="Media\Menu Items\Value Deals_Normal.png" />
+    <Content Include="Media\Menu Items\Value Deals_Selected.png" />
+    <Content Include="Media\Menu Items\Wings_Normal.png" />
+    <Content Include="Media\Menu Items\Wings_Selected.png" />
+    <Content Include="Media\New Food_Screen_New\Gaint Warm Cookie_Order.png" />
+    <Content Include="Media\New Food_Screen_New\New Food_Screen_Top Banner.png" />
+    <Content Include="Media\New Food_Screen_New\Parmesan BreadSticks_Order.png" />
+    <Content Include="Media\New Food_Screen_New\Tator Bites_Order.png" />
+    <Content Include="Media\Open_Screen\Allergen &amp; Nutrition.png" />
+    <Content Include="Media\Open_Screen\Buffet_Btn.png" />
+    <Content Include="Media\Open_Screen\Buy Play Points_Btn.png" />
+    <Content Include="Media\Open_Screen\Cards_Info.png" />
+    <Content Include="Media\Open_Screen\Language.png" />
+    <Content Include="Media\Open_Screen\Number_Btn.png" />
+    <Content Include="Media\Open_Screen\Number_Btn_Pressed.png" />
+    <Content Include="Media\Open_Screen\Order Food_Btn.png" />
+    <Content Include="Media\Open_Screen\Other_Btn.png" />
+    <Content Include="Media\Open_Screen\Other_Btn_Pressed.png" />
+    <Content Include="Media\Open_Screen\Privacy.png" />
+    <Content Include="Media\Open_Screen\Terms of Use.png" />
+    <Content Include="Media\Open_Screen\Value Deals_Btn.png" />
+    <Content Include="Media\Open_Screen\White_Btn.png" />
+    <Content Include="Media\Pizzas_Screen_New\All-Meat Combo_Order.png" />
+    <Content Include="Media\Pizzas_Screen_New\BBQ Chicken_Order.png" />
+    <Content Include="Media\Pizzas_Screen_New\Cali Alfredo_Image.png" />
+    <Content Include="Media\Pizzas_Screen_New\Cali Alfredo_Order.png" />
+    <Content Include="Media\Pizzas_Screen_New\Gluten Free_Order.png" />
+    <Content Include="Media\Pizzas_Screen_New\Pizzas_Screen_Header Image.png" />
+    <Content Include="Media\Pizzas_Screen_New\Super Combo_Order.png" />
+    <Content Include="Media\Pizzas_Screen_New\Veggie_Order.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\120 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\250 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\30 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\70 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Add Any Amount_Topup.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Buy New Card_Screen\150 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Buy New Card_Screen\250 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Buy New Card_Screen\30 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Buy New Card_Screen\80 Play Points.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Buy New Card_Screen\Add Any Amount_New Card.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Play Choices\Check Balance.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Play Choices\New Card.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Play Choices\Recharge.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\Play Choices\Top Banner.png" />
+    <Content Include="Media\PlayPass_Packages_Screen\PlayPoints Text.png" />
+    <Content Include="Media\popupitems\Close_Btn.png" />
+    <Content Include="Media\popupitems\Green_Btn.png" />
+    <Content Include="Media\popupitems\Pop up_Bg.png" />
+    <Content Include="Media\popupitems\ProductSalePopUp1.png" />
+    <Content Include="Media\popupitems\ProductSalePopUp2.png" />
+    <Content Include="Media\popupitems\ProductSalePopUp3.png" />
+    <Content Include="Media\popupitems\ProductSalePopUp4.png" />
+    <Content Include="Media\popupitems\White_Drop Down.png" />
+    <Content Include="Media\Sandwiches_Screen_New\BBQ Chicken Ciabatta_Order.png" />
+    <Content Include="Media\Sandwiches_Screen_New\Chicken Caesar Wrap_Order.png" />
+    <Content Include="Media\Sandwiches_Screen_New\Club Wrap_Order.png" />
+    <Content Include="Media\Sandwiches_Screen_New\Italian Sub Ciabatta_Order.png" />
+    <Content Include="Media\Sandwiches_Screen_New\Sandwiches_Bottom Banner.png" />
+    <Content Include="Media\Sandwiches_Screen_New\Sandwiches_Top Banner.png" />
+    <Content Include="Media\splashscreenkeypadbuttons\Splash Screen Pizza.png" />
+    <Content Include="Media\splashscreenkeypadbuttons\Splash_Screen.png" />
+    <Content Include="Media\splashscreenkeypadbuttons\Splash_Screen_40th_1216.png" />
+    <Content Include="Media\Wings _Screen_New\Family Size Wings_Order.png" />
+    <Content Include="Media\Wings _Screen_New\Party Size Wings_Order1.png" />
+    <Content Include="Media\Wings _Screen_New\Small Size Wings_Order1.png" />
+    <Content Include="Media\Wings _Screen_New\Untitled-1_0000_Layer-16.png" />
+    <Content Include="Media\Wings _Screen_New\Untitled-1_0001_We-re-Winging-It!-Choose-bone-in-or-boneless-oven-baked,-all-wh.png" />
+    <Content Include="Media\Wings _Screen_New\XL Party Size Wings_Order.png" />
+    <Content Include="Resources\Cash_Icon.png" />
+    <None Include="Service References\UserServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\UserServices\configuration.svcinfo" />
+    <None Include="Service References\UserServices\configuration91.svcinfo" />
+    <None Include="Service References\UserServices\UserServices.disco" />
+    <None Include="Service References\TransactionServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TransactionServices\configuration.svcinfo" />
+    <None Include="Service References\TransactionServices\configuration91.svcinfo" />
+    <None Include="Service References\TransactionServices\TransactionServices.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TransactionServices\" />
+    <WCFMetadataStorage Include="Service References\UserServices\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonSolution\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Game\Game.csproj">
+      <Project>{970A8E60-83BE-4559-A67C-3EF7135A3E8D}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\ThirdParty\ThirdParty.csproj">
+      <Project>{45c69515-b9a7-44f3-882b-0b53548226f1}</Project>
+      <Name>ThirdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KioskCore\KioskCore\KioskCore.csproj">
+      <Project>{c43d25ad-fa0f-4e26-8948-c05ca296b367}</Project>
+      <Name>KioskCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,411 @@
+﻿namespace Parafait_Kiosk
+{
+    partial class frmAttractionQty
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.txtMessage = new System.Windows.Forms.Button();
+            this.btnProceed = new System.Windows.Forms.Button();
+            this.panelButtons = new System.Windows.Forms.Panel();
+            this.pnlQuantity = new System.Windows.Forms.Panel();
+            this.pnlEditQty = new System.Windows.Forms.Panel();
+            this.pcbDecreaseQty = new System.Windows.Forms.PictureBox();
+            this.pcbIncreaseQty = new System.Windows.Forms.PictureBox();
+            this.pnlQtyTxtBox = new System.Windows.Forms.Panel();
+            this.txtQty = new System.Windows.Forms.TextBox();
+            this.lblEnterQtyMsg = new System.Windows.Forms.Label();
+            this.lblHowManyMsg = new System.Windows.Forms.Label();
+            this.pbQuantity = new System.Windows.Forms.PictureBox();
+            this.lblBuyText = new System.Windows.Forms.Label();
+            this.lblProductName = new System.Windows.Forms.Label();
+            this.flpComboProducts = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlComboDetails = new System.Windows.Forms.Panel();
+            this.bigVerticalScrollView = new Semnox.Core.GenericUtilities.BigVerticalScrollBarView();
+            this.lblComboDetails = new System.Windows.Forms.Label();
+            this.lblProductDescription = new System.Windows.Forms.Label();
+            this.pnlQuantity.SuspendLayout();
+            this.pnlEditQty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbDecreaseQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbIncreaseQty)).BeginInit();
+            this.pnlQtyTxtBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbQuantity)).BeginInit();
+            this.pnlComboDetails.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // btnHome
+            // 
+            this.btnHome.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.home_button;
+            this.btnHome.FlatAppearance.BorderColor = System.Drawing.Color.PowderBlue;
+            this.btnHome.FlatAppearance.BorderSize = 0;
+            this.btnHome.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.btnHome.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnHome.Margin = new System.Windows.Forms.Padding(0);
+            this.btnHome.TabIndex = 20013;
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.FlatAppearance.BorderColor = System.Drawing.Color.PowderBlue;
+            this.btnPrev.FlatAppearance.BorderSize = 0;
+            this.btnPrev.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnPrev.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnPrev.Font = new System.Drawing.Font("Gotham Rounded Bold", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrev.Location = new System.Drawing.Point(465, 882);
+            this.btnPrev.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.PowderBlue;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnCancel.Font = new System.Drawing.Font("Gotham Rounded Bold", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(834, 882);
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.AutoEllipsis = true;
+            this.txtMessage.BackColor = System.Drawing.Color.Transparent;
+            this.txtMessage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtMessage.FlatAppearance.BorderSize = 0;
+            this.txtMessage.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.txtMessage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.txtMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.txtMessage.Font = new System.Drawing.Font("Gotham Rounded Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMessage.ForeColor = System.Drawing.Color.White;
+            this.txtMessage.Location = new System.Drawing.Point(0, 1011);
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(1920, 50);
+            this.txtMessage.TabIndex = 147;
+            this.txtMessage.Text = "Message";
+            this.txtMessage.UseVisualStyleBackColor = false;
+            // 
+            // btnProceed
+            // 
+            this.btnProceed.BackColor = System.Drawing.Color.Transparent;
+            this.btnProceed.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.Back_button_box;
+            this.btnProceed.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnProceed.FlatAppearance.BorderSize = 0;
+            this.btnProceed.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.btnProceed.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnProceed.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnProceed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProceed.Font = new System.Drawing.Font("Gotham Rounded Bold", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProceed.ForeColor = System.Drawing.Color.White;
+            this.btnProceed.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProceed.Location = new System.Drawing.Point(1203, 882);
+            this.btnProceed.Name = "btnProceed";
+            this.btnProceed.Size = new System.Drawing.Size(250, 125);
+            this.btnProceed.TabIndex = 1078;
+            this.btnProceed.Text = "Proceed";
+            this.btnProceed.UseVisualStyleBackColor = false;
+            this.btnProceed.Click += new System.EventHandler(this.btnProceed_Click);
+            // 
+            // panelButtons
+            // 
+            this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelButtons.BackColor = System.Drawing.Color.Transparent;
+            this.panelButtons.Font = new System.Drawing.Font("Gotham Rounded Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelButtons.Location = new System.Drawing.Point(333, 880);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Size = new System.Drawing.Size(1261, 131);
+            this.panelButtons.TabIndex = 20005;
+            // 
+            // pnlQuantity
+            // 
+            this.pnlQuantity.BackColor = System.Drawing.Color.Transparent;
+            this.pnlQuantity.Controls.Add(this.pnlEditQty);
+            this.pnlQuantity.Controls.Add(this.lblEnterQtyMsg);
+            this.pnlQuantity.Controls.Add(this.lblHowManyMsg);
+            this.pnlQuantity.Controls.Add(this.pbQuantity);
+            this.pnlQuantity.Location = new System.Drawing.Point(1236, 285);
+            this.pnlQuantity.Name = "pnlQuantity";
+            this.pnlQuantity.Size = new System.Drawing.Size(500, 550);
+            this.pnlQuantity.TabIndex = 20020;
+            // 
+            // pnlEditQty
+            // 
+            this.pnlEditQty.BackColor = System.Drawing.Color.Transparent;
+            this.pnlEditQty.Controls.Add(this.pcbDecreaseQty);
+            this.pnlEditQty.Controls.Add(this.pcbIncreaseQty);
+            this.pnlEditQty.Controls.Add(this.pnlQtyTxtBox);
+            this.pnlEditQty.Location = new System.Drawing.Point(53, 410);
+            this.pnlEditQty.Name = "pnlEditQty";
+            this.pnlEditQty.Size = new System.Drawing.Size(394, 127);
+            this.pnlEditQty.TabIndex = 20034;
+            // 
+            // pcbDecreaseQty
+            // 
+            this.pcbDecreaseQty.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.DecreaseQty;
+            this.pcbDecreaseQty.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pcbDecreaseQty.Location = new System.Drawing.Point(3, 6);
+            this.pcbDecreaseQty.Name = "pcbDecreaseQty";
+            this.pcbDecreaseQty.Size = new System.Drawing.Size(116, 116);
+            this.pcbDecreaseQty.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pcbDecreaseQty.TabIndex = 76;
+            this.pcbDecreaseQty.TabStop = false;
+            this.pcbDecreaseQty.Click += new System.EventHandler(this.pcbDecreaseQty_Click);
+            // 
+            // pcbIncreaseQty
+            // 
+            this.pcbIncreaseQty.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.IncreaseQty;
+            this.pcbIncreaseQty.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pcbIncreaseQty.Location = new System.Drawing.Point(271, 6);
+            this.pcbIncreaseQty.Name = "pcbIncreaseQty";
+            this.pcbIncreaseQty.Size = new System.Drawing.Size(116, 116);
+            this.pcbIncreaseQty.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pcbIncreaseQty.TabIndex = 75;
+            this.pcbIncreaseQty.TabStop = false;
+            this.pcbIncreaseQty.Click += new System.EventHandler(this.pcbIncreaseQty_Click);
+            // 
+            // pnlQtyTxtBox
+            // 
+            this.pnlQtyTxtBox.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.textbox_quantity;
+            this.pnlQtyTxtBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnlQtyTxtBox.Controls.Add(this.txtQty);
+            this.pnlQtyTxtBox.Location = new System.Drawing.Point(127, 0);
+            this.pnlQtyTxtBox.Name = "pnlQtyTxtBox";
+            this.pnlQtyTxtBox.Size = new System.Drawing.Size(136, 124);
+            this.pnlQtyTxtBox.TabIndex = 1040;
+            // 
+            // txtQty
+            // 
+            this.txtQty.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.txtQty.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtQty.Font = new System.Drawing.Font("Gotham Rounded Bold", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQty.ForeColor = System.Drawing.Color.Black;
+            this.txtQty.Location = new System.Drawing.Point(4, 30);
+            this.txtQty.Name = "txtQty";
+            this.txtQty.ReadOnly = true;
+            this.txtQty.Size = new System.Drawing.Size(129, 64);
+            this.txtQty.TabIndex = 1;
+            this.txtQty.Text = " 1";
+            this.txtQty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtQty.Click += new System.EventHandler(this.txtQty_Click);
+            // 
+            // lblEnterQtyMsg
+            // 
+            this.lblEnterQtyMsg.BackColor = System.Drawing.Color.Transparent;
+            this.lblEnterQtyMsg.Font = new System.Drawing.Font("Gotham Rounded Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEnterQtyMsg.ForeColor = System.Drawing.Color.White;
+            this.lblEnterQtyMsg.Location = new System.Drawing.Point(0, 55);
+            this.lblEnterQtyMsg.Name = "lblEnterQtyMsg";
+            this.lblEnterQtyMsg.Size = new System.Drawing.Size(500, 50);
+            this.lblEnterQtyMsg.TabIndex = 10;
+            this.lblEnterQtyMsg.Text = "Enter the quantity";
+            this.lblEnterQtyMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHowManyMsg
+            // 
+            this.lblHowManyMsg.BackColor = System.Drawing.Color.Transparent;
+            this.lblHowManyMsg.Font = new System.Drawing.Font("Gotham Rounded Bold", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHowManyMsg.ForeColor = System.Drawing.Color.White;
+            this.lblHowManyMsg.Location = new System.Drawing.Point(0, 5);
+            this.lblHowManyMsg.Name = "lblHowManyMsg";
+            this.lblHowManyMsg.Size = new System.Drawing.Size(500, 50);
+            this.lblHowManyMsg.TabIndex = 9;
+            this.lblHowManyMsg.Text = "How many?";
+            this.lblHowManyMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pbQuantity
+            // 
+            this.pbQuantity.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.Quantity;
+            this.pbQuantity.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbQuantity.Location = new System.Drawing.Point(125, 151);
+            this.pbQuantity.Name = "pbQuantity";
+            this.pbQuantity.Size = new System.Drawing.Size(250, 200);
+            this.pbQuantity.TabIndex = 8;
+            this.pbQuantity.TabStop = false;
+            // 
+            // lblBuyText
+            // 
+            this.lblBuyText.BackColor = System.Drawing.Color.Transparent;
+            this.lblBuyText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblBuyText.Font = new System.Drawing.Font("Gotham Rounded Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuyText.ForeColor = System.Drawing.Color.White;
+            this.lblBuyText.Location = new System.Drawing.Point(435, 20);
+            this.lblBuyText.Name = "lblBuyText";
+            this.lblBuyText.Size = new System.Drawing.Size(1051, 46);
+            this.lblBuyText.TabIndex = 132;
+            this.lblBuyText.Text = "Buying the Combo";
+            this.lblBuyText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblProductName
+            // 
+            this.lblProductName.BackColor = System.Drawing.Color.Transparent;
+            this.lblProductName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblProductName.Font = new System.Drawing.Font("Gotham Rounded Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.ForeColor = System.Drawing.Color.White;
+            this.lblProductName.Location = new System.Drawing.Point(435, 66);
+            this.lblProductName.Name = "lblProductName";
+            this.lblProductName.Size = new System.Drawing.Size(1051, 74);
+            this.lblProductName.TabIndex = 20021;
+            this.lblProductName.Text = "Super Combo";
+            this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // flpComboProducts
+            // 
+            this.flpComboProducts.AutoScroll = true;
+            this.flpComboProducts.BackColor = System.Drawing.Color.Transparent;
+            this.flpComboProducts.Location = new System.Drawing.Point(60, 50);
+            this.flpComboProducts.Name = "flpComboProducts";
+            this.flpComboProducts.Size = new System.Drawing.Size(900, 450);
+            this.flpComboProducts.TabIndex = 20023;
+            // 
+            // pnlComboDetails
+            // 
+            this.pnlComboDetails.BackColor = System.Drawing.Color.Transparent;
+            this.pnlComboDetails.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.PanelComboDetails;
+            this.pnlComboDetails.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnlComboDetails.Controls.Add(this.bigVerticalScrollView);
+            this.pnlComboDetails.Controls.Add(this.flpComboProducts);
+            this.pnlComboDetails.Location = new System.Drawing.Point(236, 285);
+            this.pnlComboDetails.Name = "pnlComboDetails";
+            this.pnlComboDetails.Size = new System.Drawing.Size(1000, 550);
+            this.pnlComboDetails.TabIndex = 20024;
+            // 
+            // bigVerticalScrollView
+            // 
+            this.bigVerticalScrollView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bigVerticalScrollView.AutoHide = false;
+            this.bigVerticalScrollView.BackColor = System.Drawing.SystemColors.Control;
+            this.bigVerticalScrollView.DataGridView = null;
+            this.bigVerticalScrollView.DownButtonBackgroundImage = global::Parafait_Kiosk.Properties.Resources.Scroll_Down_Button;
+            this.bigVerticalScrollView.DownButtonDisabledBackgroundImage = global::Parafait_Kiosk.Properties.Resources.Scroll_Down_Button_Disabled;
+            this.bigVerticalScrollView.Location = new System.Drawing.Point(904, 50);
+            this.bigVerticalScrollView.Margin = new System.Windows.Forms.Padding(0, 0, 20, 0);
+            this.bigVerticalScrollView.Name = "bigVerticalScrollView";
+            this.bigVerticalScrollView.ScrollableControl = this.flpComboProducts;
+            this.bigVerticalScrollView.ScrollViewer = null;
+            this.bigVerticalScrollView.Size = new System.Drawing.Size(63, 450);
+            this.bigVerticalScrollView.TabIndex = 20019;
+            this.bigVerticalScrollView.UpButtonBackgroundImage = global::Parafait_Kiosk.Properties.Resources.Scroll_Up_Button;
+            this.bigVerticalScrollView.UpButtonDisabledBackgroundImage = global::Parafait_Kiosk.Properties.Resources.Scroll_Up_Button_Disabled;
+            // 
+            // lblComboDetails
+            // 
+            this.lblComboDetails.BackColor = System.Drawing.Color.Transparent;
+            this.lblComboDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblComboDetails.Font = new System.Drawing.Font("Gotham Rounded Bold", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblComboDetails.ForeColor = System.Drawing.Color.White;
+            this.lblComboDetails.Location = new System.Drawing.Point(236, 227);
+            this.lblComboDetails.Name = "lblComboDetails";
+            this.lblComboDetails.Size = new System.Drawing.Size(1000, 50);
+            this.lblComboDetails.TabIndex = 20024;
+            this.lblComboDetails.Text = "Package Details";
+            this.lblComboDetails.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblProductDescription
+            // 
+            this.lblProductDescription.BackColor = System.Drawing.Color.Transparent;
+            this.lblProductDescription.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblProductDescription.Font = new System.Drawing.Font("Gotham Rounded Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductDescription.ForeColor = System.Drawing.Color.White;
+            this.lblProductDescription.Location = new System.Drawing.Point(435, 140);
+            this.lblProductDescription.Name = "lblProductDescription";
+            this.lblProductDescription.Size = new System.Drawing.Size(1051, 73);
+            this.lblProductDescription.TabIndex = 20025;
+            this.lblProductDescription.Text = "Product Description goes here";
+            this.lblProductDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // frmAttractionQty
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = global::Parafait_Kiosk.Properties.Resources.Home_screen;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
+            this.Controls.Add(this.lblComboDetails);
+            this.Controls.Add(this.lblProductDescription);
+            this.Controls.Add(this.btnProceed);
+            this.Controls.Add(this.pnlComboDetails);
+            this.Controls.Add(this.lblProductName);
+            this.Controls.Add(this.pnlQuantity);
+            this.Controls.Add(this.panelButtons);
+            this.Controls.Add(this.lblBuyText);
+            this.Controls.Add(this.txtMessage);
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Bango Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Name = "frmAttractionQty";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "frmChooseProduct";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAttractionQty_FormClosed);
+            this.Load += new System.EventHandler(this.frmAttractionQty_Load);
+            this.Controls.SetChildIndex(this.txtMessage, 0);
+            this.Controls.SetChildIndex(this.lblBuyText, 0);
+            this.Controls.SetChildIndex(this.panelButtons, 0);
+            this.Controls.SetChildIndex(this.pnlQuantity, 0);
+            this.Controls.SetChildIndex(this.lblProductName, 0);
+            this.Controls.SetChildIndex(this.pnlComboDetails, 0);
+            this.Controls.SetChildIndex(this.btnCart, 0);
+            this.Controls.SetChildIndex(this.btnCancel, 0);
+            this.Controls.SetChildIndex(this.btnHome, 0);
+            this.Controls.SetChildIndex(this.btnPrev, 0);
+            this.Controls.SetChildIndex(this.btnProceed, 0);
+            this.Controls.SetChildIndex(this.lblProductDescription, 0);
+            this.Controls.SetChildIndex(this.lblComboDetails, 0);
+            this.pnlQuantity.ResumeLayout(false);
+            this.pnlEditQty.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pcbDecreaseQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbIncreaseQty)).EndInit();
+            this.pnlQtyTxtBox.ResumeLayout(false);
+            this.pnlQtyTxtBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbQuantity)).EndInit();
+            this.pnlComboDetails.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+        private System.Windows.Forms.Button txtMessage;
+        private System.Windows.Forms.Button btnProceed;
+        private System.Windows.Forms.Panel panelButtons;
+        private Semnox.Core.GenericUtilities.BigVerticalScrollBarView bigVerticalScrollView;
+        private System.Windows.Forms.Panel pnlQuantity;
+        private System.Windows.Forms.Label lblEnterQtyMsg;
+        private System.Windows.Forms.Label lblHowManyMsg;
+        private System.Windows.Forms.PictureBox pbQuantity;
+        private System.Windows.Forms.Panel pnlEditQty;
+        private System.Windows.Forms.PictureBox pcbDecreaseQty;
+        private System.Windows.Forms.PictureBox pcbIncreaseQty;
+        private System.Windows.Forms.Panel pnlQtyTxtBox;
+        private System.Windows.Forms.TextBox txtQty;
+        internal System.Windows.Forms.Label lblBuyText;
+        internal System.Windows.Forms.Label lblProductName;
+        private System.Windows.Forms.FlowLayoutPanel flpComboProducts;
+        private System.Windows.Forms.Panel pnlComboDetails;
+        private System.Windows.Forms.Label lblComboDetails;
+        internal System.Windows.Forms.Label lblProductDescription;
+    }
+}

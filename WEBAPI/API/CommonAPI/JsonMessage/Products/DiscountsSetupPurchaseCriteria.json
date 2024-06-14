@@ -1,0 +1,47 @@
+﻿[
+  {
+    "CriteriaId": 3,
+    "DiscountId": 1,
+    "ProductId": 116,
+    "CategoryId": -1,
+    "MinQuantity": 22,
+    "IsActive": "Y",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-25T11:39:48.577",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "fc957f78-79d1-4b6c-94f4-afd7517e5449",
+    "IsChanged": false
+  },
+  {
+    "CriteriaId": 1,
+    "DiscountId": 1,
+    "ProductId": 1,
+    "CategoryId": -1,
+    "MinQuantity": 10,
+    "IsActive": "N",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-25T11:40:43.67",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "c40921b4-ff93-4648-b0f0-5d09b9565cc1",
+    "IsChanged": false
+  },
+  {
+    "CriteriaId": 2,
+    "DiscountId": 1,
+    "ProductId": -1,
+    "CategoryId": 0,
+    "MinQuantity": 20,
+    "IsActive": "Y",
+    "LastUpdatedBy": "semnox",
+    "LastUpdatedDate": "2019-01-25T11:11:30.87",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "f0ddbc01-db8d-4e4a-bc1d-6a2d2bf64379",
+    "IsChanged": false
+  }
+]

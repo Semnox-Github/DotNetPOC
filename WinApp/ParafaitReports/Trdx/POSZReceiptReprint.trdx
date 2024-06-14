@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="2.65in" Name="POSZReceipt" Zoom="1.5" SnapToGrid="False" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <Style>
+    <BorderColor Default="LightGray" />
+    <BorderWidth Default="1pt" />
+  </Style>
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="select distinct pos_machine from trx_header where TrxDate &gt;=@fromdate and TrxDate &lt; @todate&#xD;&#xA;AND ((site_id IN (@site)) OR ( -1 IN (@site))) " Name="dsPOSList">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="SELECT Replicate(' ',12) [column1],&#xD;&#xA;       Replicate(' ',12) [column2],&#xD;&#xA;       Replicate(' ',12) [column3]&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('=',12),&#xD;&#xA;       'TENDER',&#xD;&#xA;       Replicate('=',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Description',&#xD;&#xA;       '     CNT',&#xD;&#xA;       'Amount'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT   p.paymentmode,&#xD;&#xA;         '',&#xD;&#xA;         Replicate(' ',(&#xD;&#xA;         CASE&#xD;&#xA;                  WHEN Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;                  ELSE (18                                                                  -( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;         END) -Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106) amount&#xD;&#xA;FROM     trx_header h ,&#xD;&#xA;         trxpayments tp ,&#xD;&#xA;         paymentmodes p&#xD;&#xA;WHERE    h.trxid=tp.trxid&#xD;&#xA;AND      tp.paymentmodeid=p.paymentmodeid&#xD;&#xA;AND      trxdate &gt;=@fromdate&#xD;&#xA;AND      trxdate &lt;@todate&#xD;&#xA;AND      tp.posmachine IN (@posmachine)&#xD;&#xA;GROUP BY p.paymentmode&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Total',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                                  -( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)&#xD;&#xA;FROM   trx_header h ,&#xD;&#xA;       trxpayments tp ,&#xD;&#xA;       paymentmodes p&#xD;&#xA;WHERE  h.trxid=tp.trxid&#xD;&#xA;AND    tp.paymentmodeid=p.paymentmodeid&#xD;&#xA;AND    trxdate BETWEEN @fromdate AND    @todate&#xD;&#xA;AND    tp.posmachine IN (@posmachine)&#xD;&#xA;UNION ALL&#xD;&#xA;-------------------------Department Grouping&#xD;&#xA;SELECT Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('=',12),&#xD;&#xA;       'DEPT LIST',&#xD;&#xA;       Replicate('=',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'DEPT',&#xD;&#xA;       'CNT',&#xD;&#xA;       'Amount'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT          Isnull(sdv.valuechar,p.product_name) department,&#xD;&#xA;                Replicate(' ',(17-2*(Len(CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106)))))+CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106),&#xD;&#xA;                Replicate(' ',(&#xD;&#xA;                CASE&#xD;&#xA;                                WHEN Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106))))&#xD;&#xA;                                ELSE (18-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106))))&#xD;&#xA;                END) -Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)&#xD;&#xA;FROM            transactionview t&#xD;&#xA;LEFT JOIN       trxdiscounts td&#xD;&#xA;ON              t.trxid=td.trxid&#xD;&#xA;AND             t.lineid=td.lineid,&#xD;&#xA;                products p&#xD;&#xA;LEFT OUTER JOIN segmentdataview sdv&#xD;&#xA;ON              p.segmentcategoryid=sdv.segmentcategoryid&#xD;&#xA;AND             sdv.segmentname='Product Department'&#xD;&#xA;WHERE           trxdate BETWEEN @fromdate AND             @todate&#xD;&#xA;AND             t.product_type IS NOT NULL&#xD;&#xA;AND             t.product_type != 'LOYALTY'&#xD;&#xA;AND             t.pos_machine IN (@posmachine)&#xD;&#xA;AND             t.product_id=p.product_id&#xD;&#xA;AND             NOT (&#xD;&#xA;                                t.product_name IN ('Refund Card',&#xD;&#xA;                                                   'Registration Points',&#xD;&#xA;                                                   'Load Staff Games',&#xD;&#xA;                                                   'Store Registration',&#xD;&#xA;                                                   'Sell Card (PARAFAIT)')&#xD;&#xA;                AND             t.amount = 0 )&#xD;&#xA;GROUP BY        Isnull(sdv.valuechar,p.product_name)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT          'Total' department,&#xD;&#xA;                Replicate(' ',(17-2*(Len(CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106)))))+CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106),&#xD;&#xA;                Replicate(' ',(&#xD;&#xA;                CASE&#xD;&#xA;                                WHEN Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106))))&#xD;&#xA;                                ELSE (18-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106))))&#xD;&#xA;                END) -Len(CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(net_amount*(1-(Isnull(td.discountpercentage,0)/100))) AS MONEY),106)&#xD;&#xA;FROM            transactionview t&#xD;&#xA;LEFT JOIN       trxdiscounts td&#xD;&#xA;ON              t.trxid=td.trxid&#xD;&#xA;AND             t.lineid=td.lineid,&#xD;&#xA;                products p&#xD;&#xA;LEFT OUTER JOIN segmentdataview sdv&#xD;&#xA;ON              p.segmentcategoryid=sdv.segmentcategoryid&#xD;&#xA;AND             sdv.segmentname='Product Department'&#xD;&#xA;WHERE           trxdate BETWEEN @fromdate AND             @todate&#xD;&#xA;AND             t.product_type IS NOT NULL&#xD;&#xA;AND             t.product_type != 'LOYALTY'&#xD;&#xA;AND             t.pos_machine IN (@posmachine)&#xD;&#xA;AND             t.product_id=p.product_id&#xD;&#xA;AND             NOT (&#xD;&#xA;                                t.product_name IN ('Refund Card',&#xD;&#xA;                                                   'Registration Points',&#xD;&#xA;                                                   'Load Staff Games',&#xD;&#xA;                                                   'Store Registration',&#xD;&#xA;                                                   'Sell Card (PARAFAIT)')&#xD;&#xA;                AND             t.amount = 0 )&#xD;&#xA;UNION ALL&#xD;&#xA;--------------------------Department Grouping end&#xD;&#xA;SELECT Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('=',12),&#xD;&#xA;       'PLU LIST',&#xD;&#xA;       Replicate('=',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'PLU',&#xD;&#xA;       'CNT',&#xD;&#xA;       'Amount'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN product_name LIKE 'Top up%' THEN 'Recharge'&#xD;&#xA;                    ELSE product_name&#xD;&#xA;          END product_name,&#xD;&#xA;          Replicate(' ',(17-2*(Len(CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106)))))+CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106),&#xD;&#xA;          Replicate(' ',(&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;                    ELSE (18                                                                   -( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;          END) -Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)&#xD;&#xA;FROM      transactionview t&#xD;&#xA;LEFT JOIN trxdiscounts td&#xD;&#xA;ON        t.trxid=td.trxid&#xD;&#xA;AND       t.lineid=td.lineid&#xD;&#xA;WHERE     trxdate BETWEEN @fromdate AND       @todate&#xD;&#xA;AND       t.pos_machine IN (@posmachine)&#xD;&#xA;AND       t.product_type IS NOT NULL&#xD;&#xA;AND       t.product_type != 'LOYALTY'&#xD;&#xA;AND       NOT (&#xD;&#xA;                    t.product_name IN ('Refund Card',&#xD;&#xA;                                       'Registration Points',&#xD;&#xA;                                       'Load Staff Games',&#xD;&#xA;                                       'Store Registration',&#xD;&#xA;                                       'Sell Card (PARAFAIT)')&#xD;&#xA;          AND       t.amount = 0 )&#xD;&#xA;GROUP BY&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN product_name LIKE 'Top up%' THEN 'Recharge'&#xD;&#xA;                    ELSE product_name&#xD;&#xA;          END&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Unis Card Transfer'                                                                                                       product_name,&#xD;&#xA;       Replicate(' ',(17-2*(Len(CONVERT(VARCHAR,Cast(Count(*) AS NUMERIC),106)))))+CONVERT(VARCHAR,Cast(Count(*) AS NUMERIC),106) cnt,&#xD;&#xA;       ''                                                                                                                         amt&#xD;&#xA;FROM   legacy_cards&#xD;&#xA;WHERE  transfer_date BETWEEN @fromdate AND    @todate&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT    'Total' product_name,&#xD;&#xA;          '',--replicate(' ',(17-2*(len(convert(varchar,cast(sum(quantity)as numeric),106)))))+convert(varchar,cast(sum(quantity)as numeric),106),&#xD;&#xA;          Replicate(' ',(&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;                    ELSE (18                                                                   -( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;          END) -Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)&#xD;&#xA;FROM      transactionview t&#xD;&#xA;LEFT JOIN trxdiscounts td&#xD;&#xA;ON        t.trxid=td.trxid&#xD;&#xA;AND       t.lineid=td.lineid&#xD;&#xA;WHERE     trxdate BETWEEN @fromdate AND       @todate&#xD;&#xA;AND       t.pos_machine IN (@posmachine)&#xD;&#xA;AND       t.product_type IS NOT NULL&#xD;&#xA;AND       t.product_type != 'LOYALTY'&#xD;&#xA;AND       NOT (&#xD;&#xA;                    t.product_name IN ('Refund Card',&#xD;&#xA;                                       'Registration Points',&#xD;&#xA;                                       'Load Staff Games',&#xD;&#xA;                                       'Store Registration',&#xD;&#xA;                                       'Sell Card (PARAFAIT)')&#xD;&#xA;          AND       t.amount = 0 )&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('=', 12),&#xD;&#xA;       'Sales',&#xD;&#xA;       Replicate('=', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Total',&#xD;&#xA;       'Quantity',&#xD;&#xA;       'Amount'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12),&#xD;&#xA;       Replicate('-', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT    'Taxable Amount' AS [Description],&#xD;&#xA;          Replicate(' ',(17-2*(Len(CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106)))))+CONVERT(VARCHAR,Cast(Sum(quantity)AS NUMERIC),106) [Quantity],&#xD;&#xA;          Replicate(' ',(&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;                    ELSE (18                                                                   -( Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106))))&#xD;&#xA;          END) -Len(CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(net_amount) AS MONEY),106) [Amount]&#xD;&#xA;FROM      transactionview t&#xD;&#xA;LEFT JOIN trxdiscounts td&#xD;&#xA;ON        t.trxid=td.trxid&#xD;&#xA;AND       t.lineid=td.lineid&#xD;&#xA;WHERE     trxdate &gt;=@fromdate&#xD;&#xA;AND       trxdate &lt;@todate&#xD;&#xA;AND       t.pos_machine IN (@posmachine)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Tax',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(tax) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(tax) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                            -( Len(CONVERT(VARCHAR,Cast(Sum(tax) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(tax) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(tax) AS MONEY),106)&#xD;&#xA;FROM   transactionview t&#xD;&#xA;WHERE  trxdate &gt;=@fromdate&#xD;&#xA;AND    trxdate &lt;@todate&#xD;&#xA;AND    t.pos_machine IN (@posmachine)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT    'Gross Amount',&#xD;&#xA;          '',&#xD;&#xA;          Replicate(' ',(&#xD;&#xA;          CASE&#xD;&#xA;                    WHEN Len(CONVERT(VARCHAR,Cast(Sum(amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(amount) AS MONEY),106))))&#xD;&#xA;                    ELSE (18                                                               -( Len(CONVERT(VARCHAR,Cast(Sum(amount) AS MONEY),106))))&#xD;&#xA;          END) -Len(CONVERT(VARCHAR,Cast(Sum(amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(amount) AS MONEY),106) amount&#xD;&#xA;FROM      transactionview t&#xD;&#xA;LEFT JOIN trxdiscounts td&#xD;&#xA;ON        t.trxid=td.trxid&#xD;&#xA;AND       t.lineid=td.lineid&#xD;&#xA;WHERE     trxdate &gt;=@fromdate&#xD;&#xA;AND       trxdate &lt;@todate&#xD;&#xA;AND       t.pos_machine IN (@posmachine)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate('=', 12),&#xD;&#xA;       'CASH LIST',&#xD;&#xA;       Replicate('=', 12)&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Float Cash',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                                          -( Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)&#xD;&#xA;FROM   (&#xD;&#xA;              SELECT Sum( sf.shift_amount ) posz_float_amount&#xD;&#xA;              FROM   shiftlog sf,&#xD;&#xA;                     shift s&#xD;&#xA;              WHERE  sf.shift_time BETWEEN @fromdate AND    @todate&#xD;&#xA;              AND    sf.shift_key=s.shift_key&#xD;&#xA;              AND    sf.shift_action='Open'&#xD;&#xA;              AND    s.pos_machine=@posmachine ) b&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Cash Drop',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                                          -( Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(posz_float_amount) AS MONEY),106)&#xD;&#xA;FROM   (&#xD;&#xA;              SELECT Sum(&#xD;&#xA;                     CASE&#xD;&#xA;                            WHEN sf.shift_action='Paid Out' THEN -1*sf.shift_amount&#xD;&#xA;                            ELSE sf.shift_amount&#xD;&#xA;                     END ) posz_float_amount&#xD;&#xA;              FROM   shiftlog sf,&#xD;&#xA;                     shift s&#xD;&#xA;              WHERE  sf.shift_time BETWEEN @fromdate AND    @todate&#xD;&#xA;              AND    sf.shift_key=s.shift_key&#xD;&#xA;              AND    sf.shift_action IN('Paid In',&#xD;&#xA;                                        'Paid Out')&#xD;&#xA;              AND    s.pos_machine=@posmachine ) b&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Cash Sales',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                                  -( Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(tp.amount) AS MONEY),106) cash_amount&#xD;&#xA;FROM   trx_header h ,&#xD;&#xA;       trxpayments tp ,&#xD;&#xA;       paymentmodes p&#xD;&#xA;WHERE  h.trxid=tp.trxid&#xD;&#xA;AND    tp.paymentmodeid=p.paymentmodeid&#xD;&#xA;AND    paymentdate &gt;=@fromdate&#xD;&#xA;AND    paymentdate &lt;@todate&#xD;&#xA;AND    tp.posmachine IN (@posmachine)&#xD;&#xA;AND    p.paymentmode ='Cash'&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Total',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                             -( Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)&#xD;&#xA;FROM   (&#xD;&#xA;              SELECT&#xD;&#xA;                     (&#xD;&#xA;                            SELECT Sum(posz_float_amount)&#xD;&#xA;                            FROM   (&#xD;&#xA;                                          SELECT Sum(total) posz_float_amount&#xD;&#xA;                                          FROM   (&#xD;&#xA;                                                          SELECT   sf.shift_key,&#xD;&#xA;                                                                   Sum(&#xD;&#xA;                                                                   CASE&#xD;&#xA;                                                                            WHEN shift_action='close' THEN 0&#xD;&#xA;                                                                            WHEN sf.shift_action='Paid Out' THEN -1*sf.shift_amount&#xD;&#xA;                                                                            ELSE sf.shift_amount&#xD;&#xA;                                                                   END) total&#xD;&#xA;                                                          FROM     shiftlog sf&#xD;&#xA;                                                          WHERE    shift_time BETWEEN @fromdate AND      @todate&#xD;&#xA;                                                          GROUP BY sf.shift_key) sl ,&#xD;&#xA;                                                 shift s&#xD;&#xA;                                          WHERE  sl.shift_key=s.shift_key&#xD;&#xA;                                          AND    s.pos_machine=@posmachine ) B) +&#xD;&#xA;                     (&#xD;&#xA;                            SELECT Sum(tp.amount)&#xD;&#xA;                            FROM   trx_header h ,&#xD;&#xA;                                   trxpayments tp ,&#xD;&#xA;                                   paymentmodes p&#xD;&#xA;                            WHERE  h.trxid=tp.trxid&#xD;&#xA;                            AND    tp.paymentmodeid=p.paymentmodeid&#xD;&#xA;                            AND    paymentdate &gt;=@fromdate&#xD;&#xA;                            AND    paymentdate &lt;@todate&#xD;&#xA;                            AND    tp.posmachine IN (@posmachine)&#xD;&#xA;                            AND    p.paymentmode ='Cash' ) diff ) k&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12),&#xD;&#xA;       Replicate(' ',12)&#xD;&#xA;UNION ALL&#xD;&#xA;--POSZ closing amount&#xD;&#xA;SELECT 'Shift Close',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(shift_amount) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(shift_amount) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                                     -( Len(CONVERT(VARCHAR,Cast(Sum(shift_amount) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(shift_amount) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(shift_amount) AS MONEY),106)&#xD;&#xA;FROM   shift s&#xD;&#xA;WHERE  s.shift_time BETWEEN @fromdate AND    @todate&#xD;&#xA;AND    s.pos_machine=@posmachine&#xD;&#xA;AND    s.shift_action ='Close'&#xD;&#xA;AND    NOT EXISTS&#xD;&#xA;       (&#xD;&#xA;              SELECT 1&#xD;&#xA;              FROM   shift s1&#xD;&#xA;              WHERE  s1.shift_action='Close'&#xD;&#xA;              AND    s1.shift_time BETWEEN CONVERT(DATE,s.shift_time) AND    Dateadd(dd,1,CONVERT(DATE,s.shift_time))&#xD;&#xA;              AND    s1.shift_time &gt; s.shift_time&#xD;&#xA;              AND    s1.pos_machine=s.pos_machine )&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT 'Difference',&#xD;&#xA;       '',&#xD;&#xA;       Replicate(' ',(&#xD;&#xA;       CASE&#xD;&#xA;              WHEN Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)) &lt;= 6 THEN (17-( Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106))))&#xD;&#xA;              ELSE (18                                                             -( Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106))))&#xD;&#xA;       END) -Len(CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)))+CONVERT(VARCHAR,Cast(Sum(diff) AS MONEY),106)&#xD;&#xA;FROM   (&#xD;&#xA;              SELECT Sum(shift_amount-total) diff&#xD;&#xA;              FROM   (&#xD;&#xA;                              SELECT   sf.shift_key,&#xD;&#xA;                                       Sum(&#xD;&#xA;                                       CASE&#xD;&#xA;                                                WHEN sf.shift_action='close' THEN sf.actual_amount&#xD;&#xA;                                                WHEN sf.shift_action='Paid Out' THEN -1*sf.shift_amount&#xD;&#xA;                                                ELSE sf.shift_amount&#xD;&#xA;                                       END) total&#xD;&#xA;                              FROM     shiftlog sf&#xD;&#xA;                              WHERE    shift_time BETWEEN @fromdate AND      @todate&#xD;&#xA;                              GROUP BY sf.shift_key) sl ,&#xD;&#xA;                     shift s&#xD;&#xA;              WHERE  sl.shift_key=s.shift_key&#xD;&#xA;              AND    s.pos_machine=@posmachine ) b &#xD;&#xA;--begin&#xD;&#xA;--UPDATE posmachines&#xD;&#xA;--SET    dayendtime = @todate&#xD;&#xA;--WHERE  posname IN (@posmachine)&#xD;&#xA;--AND    ((&#xD;&#xA;--              dayendtime &lt; @todate&#xD;&#xA;--       AND    dayendtime &lt; daybegintime)&#xD;&#xA;--       OR     dayendtime IS NULL)&#xD;&#xA;--end" Name="dsPOSZ">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="String" Name="@posmachine">
+          <Value>
+            <String>= Parameters.PosMachine.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="0.222017685572307in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+        <BorderWidth Default="0pt" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsPOSZ" Width="2.64305539371828in" Height="0.104166666666667in" Left="0.00003941853841146in" Top="0.0516730944315592in" Name="crosstab1" StyleName="Solstice.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.15590181863688in" Height="0.104166666666667in" Left="0in" Top="0in" Value="= Fields.column1" Name="textBox4" StyleName="Solstice.TableBody">
+                    <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Left="2px" Right="2px" Top="1px" Bottom="1px" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.48750050168663in" Height="0.104166666666667in" Left="0in" Top="0in" Value="= Fields.column2" Name="textBox5" StyleName="Solstice.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Left="2px" Right="2px" Top="1px" Bottom="1px" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.999652918180175in" Height="0.104166666666667in" Left="0in" Top="0in" Value="= Fields.column3" Name="textBox6" StyleName="Solstice.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="None" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Left="2px" Right="2px" Top="1px" Bottom="1px" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.15590169252128in" />
+              <Column Width="0.487500580455818in" />
+              <Column Width="0.999653160125781in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.104166666666667in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="column1" />
+            <TableGroup Name="column2" />
+            <TableGroup Name="column3" />
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.298918922742208in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="2.61611122224065in" Height="0.123532275358836in" Left="0.0139283078412215in" Top="0.0989583333333333in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.263222045368619in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="2.63in" Height="0.15in" Left="0.00003941853841146in" Top="0.0104166666666667in" Value="=MessagesFunctions.getMessage('POSZ')" Name="textBox233">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Custom" PaperSize="3.15000009536743in, 11.6928997039795in" Landscape="False" ContinuousPaper="True">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="238, 244, 251" Color="20, 34, 77">
+        <Font Name="Calibri" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="188, 211, 241" Color="20, 34, 77">
+        <Font Name="Calibri" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="35, 92, 169" Color="238, 244, 251">
+        <Font Name="Calibri" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Solstice.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="79, 39, 28" Color="231, 222, 201" VerticalAlign="Middle">
+        <Font Name="Gill Sans MT" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String><![CDATA[
+]]></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="PosMachine" Text="POS" Visible="True">
+      <AvailableValues DataSourceName="dsPOSList" DisplayMember="= Fields.pos_machine" ValueMember="= Fields.pos_machine" />
+      <Value>
+        <String>= Fields.pos_machine</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="userid" Text="userid" AllowNull="True" />
+  </ReportParameters>
+</Report>

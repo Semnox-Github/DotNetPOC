@@ -1,0 +1,207 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskRedeemBonusForTicketsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accounts="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        mc:Ignorable="d"
+        Style="{StaticResource TaskWindowStyle}"
+        Title="Redeem Bonus">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <common:LeftPaneHeadingConverter x:Key="LeftPaneHeadingConverter"></common:LeftPaneHeadingConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0"
+                    Padding="8"
+                    Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding NavigationClickCommand}"
+                            Style="{StaticResource TaskPopupBackButtonStyle}" />
+                    <UniformGrid Grid.Column="1"
+                                 Rows="2"
+                                 Visibility="{Binding HeadingArrowVisibility}">
+                        <common:CustomTextBlock x:Name="tbRedeem"
+                                                Text="{Binding ModuleName}"
+                                                Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                TextSize="Medium"
+                                                VerticalAlignment="Center" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <common:CustomTextBlock x:Name="tbBonus"
+                                                    Grid.Column="0"
+                                                    Text="{Binding FromEntitlement}"
+                                                    Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                                    TextSize="Medium" />
+                            <Path Data="M12 16L4 8 20 8z"
+                                  Margin="4,4,4,0"
+                                  Grid.Column="1"
+                                  x:Name="ArrowPath"
+                                  Stretch="Uniform"
+                                  Fill="{StaticResource LeftPane.TextBlock.Foreground}"
+                                  RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="-90" />
+                                </Path.RenderTransform>
+                            </Path>
+                            <common:CustomTextBlock x:Name="tbTickets"
+                                                    Grid.Column="2"
+                                                    Text="{Binding ToEntitlement}"
+                                                    Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                                    TextSize="Medium" />
+                        </Grid>
+                    </UniformGrid>
+
+                    <common:CustomTextBlock x:Name="tbRedeem1"
+                                            Grid.Column="1"
+                                            Margin="16,0,0,0"
+                                            Visibility="{Binding RedeemTypeVisibility}"
+                                            Text="{Binding ModuleName, Converter={StaticResource LeftPaneHeadingConverter}}"
+                                            Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                            TextSize="Medium"
+                                            VerticalAlignment="Center" />
+
+                </Grid>
+            </Border>
+            <accounts:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                             Margin="16,0,0,0"
+                                             Grid.Column="1"
+                                             DataContext="{Binding CardDetailsVM}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accounts:CardDetailsUserControl}}"
+                                               Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accounts:CardDetailsUserControl>
+        </Grid>
+        <Grid Grid.Row="1"
+              x:Name="MainGrid"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Width="450px">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <common:CustomTextBlock x:Name="tbChooseRedeemType"
+                                    Text="{Binding ChooseRedeemType}"
+                                    TextSize="Small"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStretch="{StaticResource FontStretch}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Visibility="{Binding RedeemTypeVisibility}"
+                                    Grid.Row="0" />
+
+
+            <common:GenericToggleButtonsUserControl x:Name="ChooseRedeemTypeToggleButton"
+                                                    Grid.Row="1"
+                                                    Visibility="{Binding RedeemTypeVisibility}"
+                                                    DataContext="{Binding GenericToggleButtonsVM}"
+                                                    Margin="0,5,0,5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ToggleChecked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TaskRedeemBonusForTicketsView}}"
+                                               Command="{Binding DataContext.ToggleCheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="ToggleUnchecked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TaskRedeemBonusForTicketsView}}"
+                                               Command="{Binding DataContext.ToggleUncheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </common:GenericToggleButtonsUserControl>
+
+            <common:CustomTextBlock x:Name="tbBonusTicketsAvailableHeading"
+                                    Text="{Binding BonusTicketsAvailableHeading}"
+                                    FontSize="{StaticResource FontSize.Small}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStretch="{StaticResource FontStretch}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="2" />
+            <common:CustomTextBox x:Name="txtBonusTicketsAvailable"
+                                  Text="{Binding BonusTicketsAvailable}"
+                                  Grid.Row="3"
+                                  IsReadOnly="True"
+                                  TextAlignment="Center"
+                                  Size="Medium"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  FontStretch="{StaticResource FontStretch}"
+                                  Foreground="{StaticResource Control.Heading.ForeGround}"
+                                  Padding="0,5,0,5" />
+
+            <common:CustomTextBlock x:Name="tbBonusTicketsToRedeemHeading"
+                                    Text="{Binding BonusTicketsToRedeemHeading}"
+                                    FontSize="{StaticResource FontSize.Small}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStretch="{StaticResource FontStretch}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="4" />
+
+
+            <common:CustomTextBox x:Name="txtBonusTicketsToRedeem"
+                                  Text="{Binding BonusTicketsToRedeem,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  DefaultValue=""
+                                  Grid.Row="5"
+                                  FontSize="{StaticResource FontSize.Medium}"
+                                  TextAlignment="Center"
+                                  ValidationType="DecimalOnly"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  Foreground="{StaticResource Control.Heading.ForeGround}"
+                                  Padding="0,5,0,5">
+            </common:CustomTextBox>
+
+
+            <common:CustomTextBlock x:Name="tbBonusTicketsEligible"
+                                    Text="{Binding BonusTicketsEligible}"
+                                    Grid.Row="6"
+                                    TextAlignment="Center"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    FontSize="{StaticResource FontSize.Small}" />
+
+
+        </Grid>
+    </Grid>
+</Window>

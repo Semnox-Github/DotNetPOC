@@ -1,0 +1,583 @@
+﻿<Window x:Class="Semnox.Parafait.CommonUI.KeyboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource KeyboardStyle}"
+        Title="KeyboardView">
+    <Window.Resources>
+        <Style BasedOn="{StaticResource InformButton}"
+               TargetType="{x:Type Button}"
+               x:Key="MultiScreenButtonStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}"
+                             Value="False">
+                    <Setter Property="Background"
+                            Value="{StaticResource Keyboard.Background}" />
+                </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User1" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User1.ScreenColor}" />
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User2" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User2.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User3" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User3.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User4" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User4.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User5" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User5.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User6" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User6.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User7" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User7.ScreenColor}" />
+
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ColorCode}"
+                                   Value="User8" />
+                        <Condition Binding="{Binding MultiScreenMode}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background"
+                            Value="{StaticResource Redemption.MultiUserControl.LeftPane.KeyBoard.User8.ScreenColor}" />
+
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border x:Name="KeyboardView_MainBorder"
+                CornerRadius="{StaticResource CornerRadius}"
+                Padding="5"
+                Focusable="False">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MultiScreenMode}"
+                                     Value="False">
+                            <Setter Property="Background"
+                                    Value="{StaticResource Keyboard.MainBorder.Background}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User1" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User1.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User2" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User2.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User3" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User3.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User4" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User4.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User5" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User5.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User6" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User6.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User7" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User7.ScreenColor}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ColorCode}"
+                                           Value="User8" />
+                                <Condition Binding="{Binding MultiScreenMode}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User8.ScreenColor}" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border x:Name="Border_Keyboard"
+                    CornerRadius="{StaticResource CornerRadius}">
+                <StackPanel Orientation="Vertical">
+                    <UniformGrid Columns="10">
+                        <Button x:Name="btncmd1"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="1" />
+
+                        <Button x:Name="btncmd2"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="2" />
+
+                        <Button x:Name="btncmd3"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="3" />
+
+                        <Button x:Name="btncmd4"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="4" />
+
+                        <Button x:Name="btncmd5"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="5" />
+
+                        <Button x:Name="btncmd6"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="6" />
+
+                        <Button x:Name="btncmd7"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="7" />
+
+                        <Button x:Name="btncmd8"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="8" />
+
+                        <Button x:Name="btncmd9"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="9" />
+
+                        <Button x:Name="btncmd0"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="0" />
+                    </UniformGrid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <UniformGrid Columns="10"
+                                     Grid.Column="0">
+
+                            <Button x:Name="btncmdQ"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="Q" />
+
+                            <Button x:Name="btncmdW"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="W" />
+
+                            <Button x:Name="btncmdE"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="E" />
+
+                            <Button x:Name="btncmdR"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="R" />
+
+                            <Button x:Name="btncmdT"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="T" />
+
+                            <Button x:Name="btncmdY"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="Y" />
+
+                            <Button x:Name="btncmdU"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="U" />
+
+                            <Button x:Name="btncmdI"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="I" />
+
+                            <Button x:Name="btncmdO"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="O" />
+
+                            <Button x:Name="btncmdP"
+                                    Style="{StaticResource MultiScreenButtonStyle}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                    Command="{Binding ButtonClickedCommand}"
+                                    Content="P" />
+                        </UniformGrid>
+
+                        <Button x:Name="btncmdBackspace"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                Grid.Column="1"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="Backspace" />
+                    </Grid>
+
+                    <UniformGrid Columns="12">
+
+                        <Button x:Name="btncmdA"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="A" />
+
+                        <Button x:Name="btncmdS"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="S" />
+
+                        <Button x:Name="btncmdD"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="D" />
+
+                        <Button x:Name="btncmdF"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="F" />
+
+                        <Button x:Name="btncmdG"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="G" />
+
+                        <Button x:Name="btncmdH"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="H" />
+
+                        <Button x:Name="btncmdJ"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="J" />
+
+                        <Button x:Name="btncmdK"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="K" />
+
+                        <Button x:Name="btncmdL"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="L" />
+
+                        <Button x:Name="btncmdSlash"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="/" />
+
+                        <Button x:Name="btncmdDot"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="." />
+
+                        <Button x:Name="btncmdColon"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content=":" />
+
+                    </UniformGrid>
+
+                    <UniformGrid Columns="12">
+
+                        <Button x:Name="btncmdAT"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="@" />
+
+                        <Button x:Name="btncmdDotCom"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content=".com" />
+
+                        <Button x:Name="btncmdZ"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="Z" />
+
+                        <Button x:Name="btncmdX"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="X" />
+
+                        <Button x:Name="btncmdC"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="C" />
+
+                        <Button x:Name="btncmdV"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="V" />
+
+                        <Button x:Name="btncmdB"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="B" />
+
+                        <Button x:Name="btncmdN"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="N" />
+
+                        <Button x:Name="btncmdM"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="M" />
+
+                        <Button x:Name="btncmdPlus"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="+" />
+
+                        <Button x:Name="btncmdHypen"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="-">
+                        </Button>
+
+                        <Button x:Name="btncmdUnderScore"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="_">
+                        </Button>
+
+                    </UniformGrid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btncmdCapsLock"
+                                Grid.Column="0"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="Caps Lock">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}"
+                                       BasedOn="{StaticResource MultiScreenButtonStyle}">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CapsLockFlag}"
+                                                           Value="True" />
+                                                <Condition Binding="{Binding MultiScreenMode}"
+                                                           Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="FontWeight"
+                                                    Value="{StaticResource FontWeight.Bold}" />
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource Keyboard.CapsLock.Enabled.Background}" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CapsLockFlag}"
+                                                           Value="True" />
+                                                <Condition Binding="{Binding MultiScreenMode}"
+                                                           Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="FontWeight"
+                                                    Value="{StaticResource FontWeight.Bold}" />
+                                            <Setter Property="Opacity"
+                                                    Value="{StaticResource Keyboard.CapsLock.Enabled.MultiScreen.Opacity}" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <Button x:Name="btncmdSpace"
+                                Grid.Column="1"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="Space">
+                        </Button>
+
+                        <Button x:Name="btncmdOk"
+                                Grid.Column="2"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="OK">
+                        </Button>
+
+                        <Button x:Name="btncmdClose"
+                                Grid.Column="3"
+                                Style="{StaticResource MultiScreenButtonStyle}"
+                                FontSize="{StaticResource FontSize.Small}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                Command="{Binding ButtonClickedCommand}"
+                                Content="Close">
+                        </Button>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://user/parafaitcentral/parafaitws/service.asmx?wsdl" docRef="http://user/parafaitcentral/parafaitws/service.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://user/parafaitcentral/parafaitws/service.asmx" xmlns:q1="http://semnox.com/ParafaitWS/" binding="q1:ServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://user/parafaitcentral/parafaitws/service.asmx" xmlns:q2="http://semnox.com/ParafaitWS/" binding="q2:ServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

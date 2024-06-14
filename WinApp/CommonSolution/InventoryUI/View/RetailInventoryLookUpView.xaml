@@ -1,0 +1,109 @@
+﻿<Window x:Class="Semnox.Parafait.InventoryUI.RetailInventoryLookUpView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.InventoryUI"
+        mc:Ignorable="d"
+        xmlns:commonUI ="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="RetailInventoryLookUpView"
+        Style="{StaticResource PopupWithFooterWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0"
+                    Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                               Command="{Binding BackNavigationCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Command="{Binding BackNavigationCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource TaskPopupBackButtonStyle}"/>
+                    <StackPanel VerticalAlignment="Center"
+                                Margin="8,0,0,0"
+                                Grid.Column="1"
+                                Orientation="Vertical">
+                        <commonUI:CustomTextBlock x:Name="tbInventory"
+                                                  Text="Inventory"
+                                                  Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                                  TextSize="Medium"
+                                                  VerticalAlignment="Center" />
+                        <commonUI:CustomTextBlock x:Name="tbLookUp"
+                                                  Text="Lookup"
+                                                  Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                                  TextSize="Medium"
+                                                  VerticalAlignment="Center" />
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+                <commonUI:CustomSearchTextBox x:Name="txtSearch"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="4"
+                                          Size="DataGridSize"
+                                          VerticalAlignment="Bottom"
+                                          Text="{Binding TextToBeSearched}"
+                                          DefaultValue="Search Product Name/Description/Search Description/HsnSacCode/BarCode"/>
+            <commonUI:CustomActionButton x:Name="btnPerformSearch"
+                                         Grid.Column="4"
+                                         Content="Search"
+                                         Margin="16,0,16,0"
+                                         Command="{Binding SearchInventoryCommand}"
+                                         Width="{StaticResource ActionButton.Width}"
+                                         Height="{StaticResource CustomDataGrid.ActionButton.Width}"
+                                         VerticalAlignment="Bottom"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <commonUI:CustomDataGridUserControl  x:Name="InventoryCustomDataGridUserControl"
+                                                 DataContext="{Binding CustomDataGridVM}">
+
+            </commonUI:CustomDataGridUserControl>
+        </Grid>
+    </Grid>
+</Window>

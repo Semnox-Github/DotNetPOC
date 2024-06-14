@@ -1,0 +1,10 @@
+"cliente": {
+        "ruc": @ClientRUC,
+        "cedula": @ClientIDNumber,
+        "razon_social": @ClientName,
+        "telefonos": @ClientContactNumber,
+        "direccion": @ClientAddress,
+        "tipo": @ClientType,
+        "email": @ClientEmail,
+        "es_extranjero": @ClientIsForeigner
+    },

@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09EC39CF-3DD3-4920-A155-CADE5B252B8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Customer</RootNamespace>
+    <AssemblyName>Customer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\..\..\OTS\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\..\..\OTS\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="GenCode128">
+      <HintPath>..\..\..\..\OTS\GenCode128.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.4.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\TFS_WORKSPACE_LATEST\OTS\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\AccountActivityDataHandler.cs" />
+    <Compile Include="Accounts\AccountActivityDTO.cs" />
+    <Compile Include="Accounts\AccountActivityDTODefinition.cs" />
+    <Compile Include="Accounts\AccountActivityHelper.cs" />
+    <Compile Include="Accounts\AccountActivityListBL.cs" />
+    <Compile Include="Accounts\AccountAuditBL.cs" />
+    <Compile Include="Accounts\AccountAuditDataHandler.cs" />
+    <Compile Include="Accounts\AccountAuditDTO.cs" />
+    <Compile Include="Accounts\AccountBL.cs" />
+    <Compile Include="Accounts\AccountCreditPlusBL.cs" />
+    <Compile Include="Accounts\AccountCreditPlusConsumptionBL.cs" />
+    <Compile Include="Accounts\AccountCreditPlusConsumptionDataHandler.cs" />
+    <Compile Include="Accounts\AccountCreditPlusConsumptionDTO.cs" />
+    <Compile Include="Accounts\AccountGameExtendedSummaryBL.cs" />
+    <Compile Include="Accounts\AccountGameSummaryBL.cs" />
+    <Compile Include="Accounts\AccountCreditPlusSummaryBL.cs" />
+    <Compile Include="Accounts\AccountGameSummaryCollection.cs" />
+    <Compile Include="Accounts\AccountSummaryOptions.cs" />
+    <Compile Include="Accounts\AccountGameExtendedSummaryDTO.cs" />
+    <Compile Include="Accounts\AccountCreditPlusSummaryDTO.cs" />
+    <Compile Include="Accounts\AccountGameSummaryDTO.cs" />
+    <Compile Include="Accounts\AccountCreditPlusConsumptionSummaryDTO.cs" />
+    <Compile Include="Accounts\AccountCreditPlusDataHandler.cs" />
+    <Compile Include="Accounts\AccountCreditPlusDTO.cs" />
+    <Compile Include="Accounts\AccountCreditPlusPurchaseCriteriaBL.cs" />
+    <Compile Include="Accounts\AccountCreditPlusPurchaseCriteriaDataHandler.cs" />
+    <Compile Include="Accounts\AccountCreditPlusPurchaseCriteriaDTO.cs" />
+    <Compile Include="Accounts\AccountDiscountsSummaryViewBL.cs" />
+    <Compile Include="Accounts\AccountDiscountsSummaryViewDataHandler.cs" />
+    <Compile Include="Accounts\AccountDiscountsSummaryViewDTO.cs" />
+    <Compile Include="Accounts\AccountDTOCollection.cs" />
+    <Compile Include="Accounts\AccountGamesSummaryViewBL.cs" />
+    <Compile Include="Accounts\AccountGamesSummaryViewDataHandler.cs" />
+    <Compile Include="Accounts\AccountGamesSummaryViewDTO.cs" />
+    <Compile Include="Accounts\AccountCreditPlusSummaryCollection.cs" />
+    <Compile Include="Accounts\AccountQRType.cs" />
+    <Compile Include="Accounts\AccountCreditPlusConsumptionSummaryBL.cs" />
+    <Compile Include="Accounts\AccountSummaryBL.cs" />
+    <Compile Include="Accounts\AccountSummaryDTO.cs" />
+    <Compile Include="Accounts\AccountDataHandler.cs" />
+    <Compile Include="Accounts\AccountDiscountBL.cs" />
+    <Compile Include="Accounts\AccountDiscountDataHandler.cs" />
+    <Compile Include="Accounts\AccountDiscountDTO.cs" />
+    <Compile Include="Accounts\AccountDTO.cs" />
+    <Compile Include="Accounts\AccountDTODefinition.cs" />
+    <Compile Include="Accounts\AccountGameBL.cs" />
+    <Compile Include="Accounts\AccountGameDataHandler.cs" />
+    <Compile Include="Accounts\AccountGameDTO.cs" />
+    <Compile Include="Accounts\AccountGameExtendedBL.cs" />
+    <Compile Include="Accounts\AccountGameExtendedDataHandler.cs" />
+    <Compile Include="Accounts\AccountGameExtendedDTO.cs" />
+    <Compile Include="Accounts\AccountRelationshipBL.cs" />
+    <Compile Include="Accounts\AccountRelationshipDataHandler.cs" />
+    <Compile Include="Accounts\AccountRelationshipDTO.cs" />
+    <Compile Include="Accounts\AccountSearchCriteria.cs" />
+    <Compile Include="Accounts\AccountSearchParams.cs" />
+    <Compile Include="Accounts\AccountSummaryViewBL.cs" />
+    <Compile Include="Accounts\AccountSummaryViewDataHandler.cs" />
+    <Compile Include="Accounts\AccountSummaryViewDTO.cs" />
+    <Compile Include="Accounts\AccountUseCaseFactory.cs" />
+    <Compile Include="Accounts\CardCreditPlusPauseTimeLogBL.cs" />
+    <Compile Include="Accounts\CardCreditPlusPauseTimeLogDataHandler.cs" />
+    <Compile Include="Accounts\CardCreditPlusPauseTimeLogDTO.cs" />
+    <Compile Include="Accounts\CardTypeBL.cs" />
+    <Compile Include="Accounts\CardTypeDataHandler.cs" />
+    <Compile Include="Accounts\CardTypeDTO.cs" />
+    <Compile Include="Accounts\CardTypeMigrationBL.cs" />
+    <Compile Include="Accounts\CardTypeMigrationDataHandler.cs" />
+    <Compile Include="Accounts\CardTypeToMembership.cs" />
+    <Compile Include="Accounts\CreditPlusType.cs" />
+    <Compile Include="Accounts\GamePlayDTODefinition.cs" />
+    <Compile Include="Accounts\GamePlaySummaryDataHandler.cs" />
+    <Compile Include="Accounts\GamePlaySummaryListBL.cs" />
+    <Compile Include="Accounts\IAccountUseCases.cs" />
+    <Compile Include="Accounts\ILinkedAccountUseCases.cs" />
+    <Compile Include="Accounts\ITokenCardInventoryUseCases.cs" />
+    <Compile Include="Accounts\LinkedAccountListBL.cs" />
+    <Compile Include="Accounts\LinkedAccountUseCaseFactory.cs" />
+    <Compile Include="Accounts\LocalAccountUseCases.cs" />
+    <Compile Include="Accounts\LocalLinkedAccountUseCases.cs" />
+    <Compile Include="Accounts\LocalTokenCardInventoryUseCases.cs" />
+    <Compile Include="Accounts\LinkNewCardDTO.cs" />
+    <Compile Include="Accounts\PerformAccountActivityDTO .cs" />
+    <Compile Include="Accounts\ProductKeyServiceBL.cs" />
+    <Compile Include="Accounts\RemoteAccountUseCases.cs" />
+    <Compile Include="Accounts\RemoteLinkedAccountUseCases.cs" />
+    <Compile Include="Accounts\RemoteTokenCardInventoryUseCases.cs" />
+    <Compile Include="Accounts\TokenCardInventory.cs" />
+    <Compile Include="Accounts\TokenCardInventoryDataHandler.cs" />
+    <Compile Include="Accounts\TokenCardInventoryDTO.cs" />
+    <Compile Include="Accounts\TokenCardInventoryUseCaseFactory.cs" />
+    <Compile Include="ActiveCampaignCustomerInfoDataHandler.cs" />
+    <Compile Include="ActiveCampaignCustomerInfoDTO.cs" />
+    <Compile Include="ActiveCampaignCustomerInfoListBL.cs" />
+    <Compile Include="AddressTypeContainer.cs" />
+    <Compile Include="AddressTypeContainerDTO.cs" />
+    <Compile Include="AddressTypeContainerDTOCollection.cs" />
+    <Compile Include="AddressTypeContainerList.cs" />
+    <Compile Include="AdvancedSearchBL.cs" />
+    <Compile Include="AdvancedSearchDTO.cs" />
+    <Compile Include="Campaign\CampaignCommunicationDefinitionBL.cs" />
+    <Compile Include="Campaign\CampaignCommunicationDefinitionDataHandler.cs" />
+    <Compile Include="Campaign\CampaignCommunicationDefinitionDTO.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileBL.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileDataHandler.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileDetailBL.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileDetailDataHandler.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileDetailDTO.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileDTO.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileMapBL.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileMapDataHandler.cs" />
+    <Compile Include="Campaign\CampaignCustomerProfileMapDTO.cs" />
+    <Compile Include="Campaign\CampaignDefinitionBL.cs" />
+    <Compile Include="Campaign\CampaignDefinitionDataHandler.cs" />
+    <Compile Include="Campaign\CampaignDefinitionDTO.cs" />
+    <Compile Include="Campaign\CampaignDiscountDefinitionBL.cs" />
+    <Compile Include="Campaign\CampaignDiscountDefinitionDataHandler.cs" />
+    <Compile Include="Campaign\CampaignDiscountDefinitionDTO.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogBL.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogDataHandler.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogDetailBL.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogDetailDTO.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogDetailsDataHandler.cs" />
+    <Compile Include="Campaign\CampaignExecutionLogDTO.cs" />
+    <Compile Include="CustomerActivityUserLogBL.cs" />
+    <Compile Include="CustomerActivityUserLogDataHandler.cs" />
+    <Compile Include="CustomerActivityUserLogDTO.cs" />
+    <Compile Include="NickNameDTO.cs" />
+    <Compile Include="CustomerEventsBL.cs" />
+    <Compile Include="CustomerMessageContentBuilder.cs" />
+    <Compile Include="CustomerPasswordHistoryBL.cs" />
+    <Compile Include="CustomerPasswordHistoryDataHandler.cs" />
+    <Compile Include="CustomerPasswordHistoryDTO.cs" />
+    <Compile Include="CustomerRelationshipTypeContainer.cs" />
+    <Compile Include="CustomerRelationshipTypeContainerDTO.cs" />
+    <Compile Include="CustomerRelationshipTypeContainerDTOCollection.cs" />
+    <Compile Include="CustomerRelationshipTypeContainerList.cs" />
+    <Compile Include="CustomerSecurity.cs" />
+    <Compile Include="CustomerSummaryBL.cs" />
+    <Compile Include="CustomerSummaryDTO.cs" />
+    <Compile Include="CustomerTemplateKeywordFormatter.cs" />
+    <Compile Include="CustomerType.cs" />
+    <Compile Include="CustomerUIMetadataContainer.cs" />
+    <Compile Include="CustomerUIMetadataContainerDTO.cs" />
+    <Compile Include="CustomerUIMetadataContainerDTOCollection.cs" />
+    <Compile Include="CustomerUIMetadataContainerList.cs" />
+    <Compile Include="CustomerUIMetadataDTO.cs" />
+    <Compile Include="CustomerTypeConverter.cs" />
+    <Compile Include="CustomerUseCaseFactory.cs" />
+    <Compile Include="DeleteCustomerBL.cs" />
+    <Compile Include="IAddressTypeUseCases.cs" />
+    <Compile Include="ICustomerFeedbackQuestionsUseCases.cs" />
+    <Compile Include="ICustomerFeedbackResponseUseCases.cs" />
+    <Compile Include="ICustomerFeedBackSurveyDataSetUseCases.cs" />
+    <Compile Include="ICustomerFeedBackSurveyDataUseCases.cs" />
+    <Compile Include="ICustomerFeedbackSurveyDetailsUseCases.cs" />
+    <Compile Include="ICustomerFeedbackSurveyUseCases.cs" />
+    <Compile Include="ICustomerRelationshipTypeUseCases.cs" />
+    <Compile Include="ICustomerUIMetadataUseCases.cs" />
+    <Compile Include="ICustomerUseCases.cs" />
+    <Compile Include="IDefaultAddressUseCases.cs" />
+    <Compile Include="LocalAddressTypeUseCases.cs" />
+    <Compile Include="LocalCustomerFeedbackQuestionsUseCases.cs" />
+    <Compile Include="LocalCustomerFeedbackResponseUseCases.cs" />
+    <Compile Include="LocalCustomerFeedBackSurveyDataSetUseCases.cs" />
+    <Compile Include="LocalCustomerFeedBackSurveyDataUseCases.cs" />
+    <Compile Include="LocalCustomerFeedbackSurveyDetailsUseCases.cs" />
+    <Compile Include="LocalCustomerFeedbackSurveyUseCases.cs" />
+    <Compile Include="LocalCustomerRelationshipTypeUseCases.cs" />
+    <Compile Include="LocalCustomerUIMetadataUseCases.cs" />
+    <Compile Include="LocalCustomerUseCases.cs" />
+    <Compile Include="LocalDefaultAddressUseCases.cs" />
+    <Compile Include="Membership\IMembershipRuleUseCases.cs" />
+    <Compile Include="Membership\IMembershipUseCases.cs" />
+    <Compile Include="Membership\LocalMembershipRuleUseCases.cs" />
+    <Compile Include="Membership\LocalMembershipUseCases.cs" />
+    <Compile Include="Membership\MembershipContainer.cs" />
+    <Compile Include="Membership\MembershipContainerDTO.cs" />
+    <Compile Include="Membership\MembershipContainerDTOCollection.cs" />
+    <Compile Include="Membership\MembershipContainerList.cs" />
+    <Compile Include="Membership\MembershipRewardsContainerDTO.cs" />
+    <Compile Include="Membership\MembershipRuleContainerDTO.cs" />
+    <Compile Include="Membership\RemoteMembershipRuleUseCases.cs" />
+    <Compile Include="Membership\RemoteMembershipUseCases.cs" />
+    <Compile Include="NicknameBL.cs" />
+    <Compile Include="RemoteAddressTypeUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedbackQuestionsUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedbackResponseUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedBackSurveyDataSetUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedBackSurveyDataUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedbackSurveyDetailsUseCases.cs" />
+    <Compile Include="RemoteCustomerFeedbackSurveyUseCases.cs" />
+    <Compile Include="RemoteCustomerRelationshipTypeUseCases.cs" />
+    <Compile Include="RemoteCustomerUIMetadataUseCases.cs" />
+    <Compile Include="RemoteCustomerUseCases.cs" />
+    <Compile Include="RemoteDefaultAddressUseCases.cs" />
+    <Compile Include="SubscriptionUnPauseDetailsDTO.cs" />
+    <Compile Include="UI\AddressDeleteEventArgs.cs" />
+    <Compile Include="UI\ContactGroupView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ContactGroupView.Designer.cs">
+      <DependentUpon>ContactGroupView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerAssociatedCardsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerAssociatedCardsUI.Designer.cs">
+      <DependentUpon>CustomerAssociatedCardsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CreateRelatedCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CreateRelatedCustomerForm.designer.cs">
+      <DependentUpon>CreateRelatedCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IContactInfo.cs" />
+    <Compile Include="ProfileContentHistoryBL.cs" />
+    <Compile Include="ProfileContentHistoryDataHandler.cs" />
+    <Compile Include="ProfileContentHistoryDTO.cs" />
+    <Compile Include="Membership\MembershipEngine.cs" />
+    <Compile Include="Membership\MembershipEngineDataHandler.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="AddressBL.cs" />
+    <Compile Include="AddressDataHandler.cs" />
+    <Compile Include="AddressDTO.cs" />
+    <Compile Include="AddressDTODefinition.cs" />
+    <Compile Include="AddressTypeBL.cs" />
+    <Compile Include="AddressTypeDataHandler.cs" />
+    <Compile Include="AddressTypeDTO.cs" />
+    <Compile Include="ContactBL.cs" />
+    <Compile Include="ContactDataHandler.cs" />
+    <Compile Include="ContactDTO.cs" />
+    <Compile Include="ContactDTODefinition.cs" />
+    <Compile Include="ContactTypeBL.cs" />
+    <Compile Include="ContactTypeDataHandler.cs" />
+    <Compile Include="ContactTypeDTO.cs" />
+    <Compile Include="CountryValueConverter.cs" />
+    <Compile Include="CriteriaUI.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataSetDTODefinition.cs" />
+    <Compile Include="CustomerBackwardCompatibityDataHandler.cs" />
+    <Compile Include="CustomerBL.cs" />
+    <Compile Include="CustomerContactInfoEnteredEventHandler.cs" />
+    <Compile Include="CustomerDataHandler.cs" />
+    <Compile Include="CustomerDTO.cs" />
+    <Compile Include="CustomerDTODefinition.cs" />
+    <Compile Include="CustomerFeedbackQuestions.cs" />
+    <Compile Include="CustomerFeedbackQuestionsDataHandler.cs" />
+    <Compile Include="CustomerFeedbackQuestionsDTO.cs" />
+    <Compile Include="CustomerFeedbackResponse.cs" />
+    <Compile Include="CustomerFeedbackResponseDataHandler.cs" />
+    <Compile Include="CustomerFeedbackResponseDTO.cs" />
+    <Compile Include="CustomerFeedbackResponseValues.cs" />
+    <Compile Include="CustomerFeedbackResponseValuesDataHandler.cs" />
+    <Compile Include="CustomerFeedbackResponseValuesDTO.cs" />
+    <Compile Include="CustomerFeedbackSurvey.cs" />
+    <Compile Include="CustomerFeedbackSurveyData.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataDTO.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataSet.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataSetDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyDataSetDTO.cs" />
+    <Compile Include="CustomerFeedbackSurveyDetails.cs" />
+    <Compile Include="CustomerFeedbackSurveyDetailsDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyDetailsDTO.cs" />
+    <Compile Include="CustomerFeedBackSurveyDTO.cs" />
+    <Compile Include="CustomerFeedbackSurveyMapping.cs" />
+    <Compile Include="CustomerFeedbackSurveyMappingDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyMappingDTO.cs" />
+    <Compile Include="CustomerFeedbackSurveyPOSMapping.cs" />
+    <Compile Include="CustomerFeedbackSurveyPOSMappingDataHandler.cs" />
+    <Compile Include="CustomerFeedbackSurveyPOSMappingDTO.cs" />
+    <Compile Include="CustomerFieldStruct.cs" />
+    <Compile Include="CustomerMemberrshipRewardsLogDTO.cs" />
+    <Compile Include="CustomerMembershipProgression.cs" />
+    <Compile Include="CustomerMembershipProgressionDataHandler.cs" />
+    <Compile Include="CustomerMembershipProgressionDTO.cs" />
+    <Compile Include="CustomerMembershipRewardsLogBL.cs" />
+    <Compile Include="CustomerMembershipRewardsLogDataHandler.cs" />
+    <Compile Include="CustomerParams.cs" />
+    <Compile Include="CustomerRelationshipBL.cs" />
+    <Compile Include="CustomerRelationshipDataHandler.cs" />
+    <Compile Include="CustomerRelationshipDTO.cs" />
+    <Compile Include="CustomerRelationshipTypeBL.cs" />
+    <Compile Include="CustomerRelationshipTypeDataHandler.cs" />
+    <Compile Include="CustomerRelationshipTypeDTO.cs" />
+    <Compile Include="CustomerRewards.cs" />
+    <Compile Include="Customers.cs" />
+    <Compile Include="CustomersDatahandler.cs" />
+    <Compile Include="CustomersDTO.cs" />
+    <Compile Include="CustomerSearchCriteria.cs" />
+    <Compile Include="CustomerUIMetadataBL.cs" />
+    <Compile Include="CustomerUIMetadataDataHandler.cs" />
+    <Compile Include="CustomerVerificationBL.cs" />
+    <Compile Include="CustomerVerificationDataHandler.cs" />
+    <Compile Include="CustomerVerificationDTO.cs" />
+    <Compile Include="Membership\MembershipBL.cs" />
+    <Compile Include="Membership\MembershipDataHandler.cs" />
+    <Compile Include="Membership\MembershipDTO.cs" />
+    <Compile Include="Membership\MembershipMasterList.cs" />
+    <Compile Include="Membership\MembershipRewardsBL.cs" />
+    <Compile Include="Membership\MembershipRewardsDataHandler.cs" />
+    <Compile Include="Membership\MembershipRewardsDTO.cs" />
+    <Compile Include="Membership\MembershipRuleBL.cs" />
+    <Compile Include="Membership\MembershipRuleDataHandler.cs" />
+    <Compile Include="Membership\MembershipRuleDTO.cs" />
+    <Compile Include="ProfileBL.cs" />
+    <Compile Include="ProfileDataHandler.cs" />
+    <Compile Include="ProfileDTO.cs" />
+    <Compile Include="ProfileTypeBL.cs" />
+    <Compile Include="ProfileTypeDataHandler.cs" />
+    <Compile Include="ProfileTypeDTO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StateValueConverter.cs" />
+    <Compile Include="TagSerialMappingBL.cs" />
+    <Compile Include="TagSerialMappingDataHandler.cs" />
+    <Compile Include="TagSerialMappingDTO.cs" />
+    <Compile Include="TagSerialMappingDTODefinition.cs" />
+    <Compile Include="UI\Accounts\AdvancedSearchUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Accounts\AdvancedSearchUI.designer.cs">
+      <DependentUpon>AdvancedSearchUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AddCustomer.designer.cs">
+      <DependentUpon>AddCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddressListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\AddressListView.Designer.cs">
+      <DependentUpon>AddressListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddressView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\AddressView.Designer.cs">
+      <DependentUpon>AddressView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AdvancedSearchUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AdvancedSearchUI.designer.cs">
+      <DependentUpon>AdvancedSearchUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ContactDeleteEventArgs.cs" />
+    <Compile Include="UI\ContactListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ContactListView.Designer.cs">
+      <DependentUpon>ContactListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerDetailForm.designer.cs">
+      <DependentUpon>CustomerDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerDetailUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerDetailUI.designer.cs">
+      <DependentUpon>CustomerDetailUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerDetailUITestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerDetailUITestForm.designer.cs">
+      <DependentUpon>CustomerDetailUITestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerExportUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerExportUI.designer.cs">
+      <DependentUpon>CustomerExportUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedBackLaunchUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedBackLaunchUI.designer.cs">
+      <DependentUpon>CustomerFeedBackLaunchUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackQuestionnairUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackQuestionnairUI.designer.cs">
+      <DependentUpon>CustomerFeedbackQuestionnairUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackQuestionUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackQuestionUI.designer.cs">
+      <DependentUpon>CustomerFeedbackQuestionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackResponseUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackResponseUI.designer.cs">
+      <DependentUpon>CustomerFeedbackResponseUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackResponseValuesUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackResponseValuesUI.designer.cs">
+      <DependentUpon>CustomerFeedbackResponseValuesUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackSurveyDetailsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerFeedbackSurveyDetailsUI.designer.cs">
+      <DependentUpon>CustomerFeedbackSurveyDetailsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerListUI.designer.cs">
+      <DependentUpon>CustomerListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerLookupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerLookupUI.Designer.cs">
+      <DependentUpon>CustomerLookupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerRelationshipListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerRelationshipListUI.designer.cs">
+      <DependentUpon>CustomerRelationshipListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerTermsandConditionsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerTermsandConditionsUI.Designer.cs">
+      <DependentUpon>CustomerTermsandConditionsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomerVerificationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomerVerificationUI.designer.cs">
+      <DependentUpon>CustomerVerificationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FrmAgeGate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmAgeGate.Designer.cs">
+      <DependentUpon>FrmAgeGate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmCustomerAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmCustomerAddress.Designer.cs">
+      <DependentUpon>frmCustomerAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FrmKioskBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmKioskBaseForm.Designer.cs">
+      <DependentUpon>FrmKioskBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FrmKioskCustomer .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmKioskCustomer .Designer.cs">
+      <DependentUpon>FrmKioskCustomer .cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IdProofUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\IdProofUI.designer.cs">
+      <DependentUpon>IdProofUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ImportCustomerUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ImportCustomerUI.designer.cs">
+      <DependentUpon>ImportCustomerUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Membership\MembershipRuleUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Membership\MembershipRuleUI.designer.cs">
+      <DependentUpon>MembershipRuleUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Membership\MembershipUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Membership\MembershipUI.designer.cs">
+      <DependentUpon>MembershipUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SingleValueContact.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SingleValueContact.Designer.cs">
+      <DependentUpon>SingleValueContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ProfilePhotoUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ProfilePhotoUI.designer.cs">
+      <DependentUpon>ProfilePhotoUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SelectRelatedCustomerUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SelectRelatedCustomerUI.Designer.cs">
+      <DependentUpon>SelectRelatedCustomerUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TagSerialMappingListUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TagSerialMappingListUI.designer.cs">
+      <DependentUpon>TagSerialMappingListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MultiValueContact.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\MultiValueContact.Designer.cs">
+      <DependentUpon>MultiValueContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateMembershipUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UpdateMembershipUI.designer.cs">
+      <DependentUpon>UpdateMembershipUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\CustomerContentForWaiverDTO .cs" />
+    <Compile Include="Waivers\CustomerSignedWaiverBL.cs" />
+    <Compile Include="Waivers\CustomerSignedWaiverDataHandler.cs" />
+    <Compile Include="Waivers\CustomerSignedWaiverDTO.cs" />
+    <Compile Include="Waivers\CustomerSignedWaiverHeaderBL.cs" />
+    <Compile Include="Waivers\CustomerSignedWaiverHeaderDTO.cs" />
+    <Compile Include="Waivers\CustomerSignedWaiversHeaderDataHandler.cs" />
+    <Compile Include="Waivers\WaiverCustomerAndSignatureBL.cs" />
+    <Compile Include="Waivers\WaiverCustomerAndSignatureDTO.cs" />
+    <Compile Include="Waivers\WaiverCustomerUtils.cs" />
+    <Compile Include="Waivers\WaiveSignatureImageWithCustomerDetailsDTO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardCoreDataHandler\CardCoreDataHandler.csproj">
+      <Project>{b1ba254d-fd7a-445f-a2a5-6fafe81325c6}</Project>
+      <Name>CardCoreDataHandler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CardCoreDTO\CardCoreDTO.csproj">
+      <Project>{d7b2505f-76db-46fe-a58b-2386268fd5ff}</Project>
+      <Name>CardCoreDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CardCore\CardCore.csproj">
+      <Project>{e1bd4cc7-8efc-4565-a533-39802828d243}</Project>
+      <Name>CardCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Category\Category.csproj">
+      <Project>{1B64EC1E-F381-485B-8C69-A07F80A27775}</Project>
+      <Name>Category</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBSynch\DBSynch.csproj">
+      <Project>{0ba61f06-b401-4dde-b374-e54f8ecae187}</Project>
+      <Name>DBSynch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24D8C63F-8F14-42CE-BC91-CFE34A088B38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Discounts\Discounts.csproj">
+      <Project>{F0FDE99A-725F-45C2-9CD8-B7961088EA2C}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PriceList\PriceList.csproj">
+      <Project>{0B195894-EAC2-4E9A-A5E3-AA8AE1A47E6B}</Project>
+      <Name>PriceList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{F1BA74AA-2DC7-48C1-8CBD-254F8C2B63F8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Publish\Publish.csproj">
+      <Project>{A707F773-C706-429B-B031-70C69C9ADFD1}</Project>
+      <Name>Publish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tags\Tags.csproj">
+      <Project>{D682B493-8A01-45A2-A934-58F141923C0D}</Project>
+      <Name>Tags</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{e30d3295-e230-44d2-880d-22bf5a349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Waiver\Waiver.csproj">
+      <Project>{b4419625-2d92-4e3b-99b3-2df03a45cd59}</Project>
+      <Name>Waiver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\ContactGroupView.resx">
+      <DependentUpon>ContactGroupView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Accounts\AdvancedSearchUI.resx">
+      <DependentUpon>AdvancedSearchUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AddCustomer.resx">
+      <DependentUpon>AddCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AddressListView.resx">
+      <DependentUpon>AddressListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AddressView.resx">
+      <DependentUpon>AddressView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AdvancedSearchUI.resx">
+      <DependentUpon>AdvancedSearchUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ContactListView.resx">
+      <DependentUpon>ContactListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CreateRelatedCustomerForm.resx">
+      <DependentUpon>CreateRelatedCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerDetailForm.resx">
+      <DependentUpon>CustomerDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerDetailUI.resx">
+      <DependentUpon>CustomerDetailUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerDetailUITestForm.resx">
+      <DependentUpon>CustomerDetailUITestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerExportUI.resx">
+      <DependentUpon>CustomerExportUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedBackLaunchUI.resx">
+      <DependentUpon>CustomerFeedBackLaunchUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedbackQuestionnairUI.resx">
+      <DependentUpon>CustomerFeedbackQuestionnairUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedbackQuestionUI.resx">
+      <DependentUpon>CustomerFeedbackQuestionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedbackResponseUI.resx">
+      <DependentUpon>CustomerFeedbackResponseUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedbackResponseValuesUI.resx">
+      <DependentUpon>CustomerFeedbackResponseValuesUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerFeedbackSurveyDetailsUI.resx">
+      <DependentUpon>CustomerFeedbackSurveyDetailsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerAssociatedCardsUI.resx">
+      <DependentUpon>CustomerAssociatedCardsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerListUI.resx">
+      <DependentUpon>CustomerListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerRelationshipListUI.resx">
+      <DependentUpon>CustomerRelationshipListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerTermsandConditionsUI.resx">
+      <DependentUpon>CustomerTermsandConditionsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomerVerificationUI.resx">
+      <DependentUpon>CustomerVerificationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FrmAgeGate.resx">
+      <DependentUpon>FrmAgeGate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmCustomerAddress.resx">
+      <DependentUpon>frmCustomerAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FrmKioskBaseForm.resx">
+      <DependentUpon>FrmKioskBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FrmKioskCustomer .resx">
+      <DependentUpon>FrmKioskCustomer .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\IdProofUI.resx">
+      <DependentUpon>IdProofUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ImportCustomerUI.resx">
+      <DependentUpon>ImportCustomerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Membership\MembershipRuleUI.resx">
+      <DependentUpon>MembershipRuleUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Membership\MembershipUI.resx">
+      <DependentUpon>MembershipUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SingleValueContact.resx">
+      <DependentUpon>SingleValueContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ProfilePhotoUI.resx">
+      <DependentUpon>ProfilePhotoUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SelectRelatedCustomerUI.resx">
+      <DependentUpon>SelectRelatedCustomerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TagSerialMappingListUI.resx">
+      <DependentUpon>TagSerialMappingListUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MultiValueContact.resx">
+      <DependentUpon>MultiValueContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateMembershipUI.resx">
+      <DependentUpon>UpdateMembershipUI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\CustomerDTO.datasource" />
+    <None Include="Properties\DataSources\CustomerRelationshipDTO.datasource" />
+    <None Include="Properties\DataSources\Semnox.Parafait.Waiver.WaiversDTO.datasource" />
+    <None Include="Resources\text-entry-box2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonNav2Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonNav2Pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera_click.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera-icon-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckMark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customer_button_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IDProof.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Player Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\profile_picture_placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stop Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\timer_SmallBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Unchecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\theme1-BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\birthdate-entry-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\T&amp;C-tick-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tick-box-checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RadioUnChecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RadioChecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-entry-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ToggleOn.png" />
+    <None Include="Resources\ToggleOff.png" />
+    <None Include="Resources\Plus_Btn_Green.png" />
+    <None Include="Resources\alphabetic-button-normal.png" />
+    <None Include="Resources\CardLinked.png" />
+    <None Include="Resources\LinkedCards.png" />
+    <Content Include="Resources\R_Remove_Btn_Normal.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

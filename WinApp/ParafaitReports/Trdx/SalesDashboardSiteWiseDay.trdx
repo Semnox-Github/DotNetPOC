@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="3.60416666666667in" Name="Redemption" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select Company_Name from Company" Name="dsCompany" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait1" SelectCommand="SELECT s.site_id,&#xD;&#xA;       s.site_name,&#xD;&#xA;       isnull(a.total,0) today_collection ,&#xD;&#xA;       isnull(b.total,0) today_consumption,&#xD;&#xA;       isnull(c.total,0) yesterday_collection,&#xD;&#xA;       isnull(d.total,0) yesterday_consumption&#xD;&#xA;FROM   site s&#xD;&#xA;       LEFT JOIN (SELECT site_id,&#xD;&#xA;                         Sum(( cashamount + creditcardamount&#xD;&#xA;                               + otherpaymentmodeamount )) total&#xD;&#xA;                  FROM   trx_header WITH (INDEX (trx_date))&#xD;&#xA;                  WHERE  trxdate &gt;= dbo.Converttoservertime(@pickDate, @offset) AND trxdate &lt; dbo.Converttoservertime(DATEADD(day, 1, @pickDate), @offset)&#xD;&#xA;                         AND status = 'CLOSED'&#xD;&#xA;&#x9;&#x9;&#x9;      GROUP  BY site_id) a&#xD;&#xA;              ON ( s.site_id = a.site_id )&#xD;&#xA;       LEFT JOIN (SELECT gp.site_id,&#xD;&#xA;                         Sum(gp.credits + cpcredits + gp.courtesy + gp.bonus&#xD;&#xA;                             + cpbonus + gp.time + cardgame + gp.CPCardBalance) total&#xD;&#xA;                  FROM   gameplay gp WITH (INDEX(ix_gameplay_playdate)),&#xD;&#xA;                         cards c&#xD;&#xA;                  WHERE  gp.card_id = c.card_id&#xD;&#xA;                         AND play_date &gt;= dbo.Converttoservertime(@pickDate, @offset) AND play_date&lt; dbo.Converttoservertime(DATEADD(day, 1, @pickDate), @offset)&#xD;&#xA;                         AND c.technician_card = 'N'&#xD;&#xA;                  GROUP  BY gp.site_id) b&#xD;&#xA;              ON ( s.site_id = b.site_id )&#xD;&#xA;       LEFT JOIN (SELECT site_id,&#xD;&#xA;                         Sum(( cashamount + creditcardamount&#xD;&#xA;                               + otherpaymentmodeamount )) total&#xD;&#xA;                  FROM   trx_header WITH (INDEX (trx_date))&#xD;&#xA;                  WHERE  trxdate &gt;= dbo.Converttoservertime(@pickDate, @offset) - 1 AND TrxDate &lt; dbo.Converttoservertime(@pickDate, @offset)&#xD;&#xA;                         AND status = 'CLOSED'&#xD;&#xA;&#x9;&#x9;&#x9;      GROUP  BY site_id) c&#xD;&#xA;              ON ( s.site_id = c.site_id)&#xD;&#xA;       LEFT JOIN (SELECT gp.site_id,&#xD;&#xA;                         Sum(gp.credits + cpcredits + gp.courtesy + gp.bonus&#xD;&#xA;                             + cpbonus + gp.time + cardgame+ gp.CPCardBalance) total&#xD;&#xA;                  FROM   gameplay gp WITH (INDEX(ix_gameplay_playdate)),&#xD;&#xA;                         cards c&#xD;&#xA;                  WHERE  gp.card_id = c.card_id&#xD;&#xA;                         AND play_date &gt;= dbo.Converttoservertime(@pickDate, @offset) - 1 AND play_date &lt; dbo.Converttoservertime(@pickDate, @offset)&#xD;&#xA;                         AND c.technician_card = 'N'&#xD;&#xA;                  GROUP  BY gp.site_id) d&#xD;&#xA;              ON ( s.site_id = d.site_id )&#xD;&#xA;where  isnull(s.SiteCode,0)&gt;0 order by 1" Name="dsCollV/sCon">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@pickDate">
+          <Value>
+            <String>= Parameters.pickDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offset">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.90000025431315in" Name="detailSection1">
+      <Style BackgroundColor="White">
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="1.75in" Height="0.2in" Left="0in" Top="0.0999999841054281in" Value="=MessagesFunctions.getMessage('Today')" Name="textBox7" StyleName="Normal.TableHeader">
+          <Style BackgroundColor="Gray" Color="White" TextAlign="Center" VerticalAlign="Middle" LineColor="LightGray">
+            <Font Name="Arial Unicode MS" Size="11pt" Bold="True" />
+            <BorderColor Default="LightGray" />
+            <Padding Top="2pt" Bottom="2pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="1.75in" Height="0.2in" Left="1.75in" Top="0.0999999841054281in" Value="=MessagesFunctions.getMessage('Yesterday')" Name="textBox8" StyleName="Normal.TableHeader">
+          <Style BackgroundColor="Gray" Color="White" TextAlign="Center" VerticalAlign="Middle" LineColor="LightGray">
+            <Font Name="Arial Unicode MS" Size="11pt" Bold="True" />
+            <BorderColor Default="LightGray" />
+            <Padding Top="2pt" Bottom="2pt" />
+          </Style>
+        </TextBox>
+        <Panel Width="3.60416674613953in" Height="1.60000002384186in" Left="0.00003941853841146in" Top="0.300000111262004in" Name="panel1">
+          <Style BackgroundColor="White" />
+          <Items>
+            <Crosstab DataSourceName="dsCollV/sCon" Width="3.60416672139226in" Height="1.46041685078166in" Left="0in" Top="0.0999212265014648in" Name="crosstab1" StyleName="Normal.TableNormal">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.75000003071351in" Height="0.345833408684177in" Left="0in" Top="0in" Value="= Format(Parameters.AmountWithCurSymbolCellFormat.Value, Fields.today_collection)" Name="textBox10" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" Color="33, 170, 222" TextAlign="Center" VerticalAlign="Bottom">
+                          <Font Name="Arial Unicode MS" Size="16pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                        <Action>
+                          <NavigateToReportAction>
+                            <ReportSource>
+                              <UriReportSource Uri="SalesDashboardPOSWiseToday.trdx">
+                                <Parameters>
+                                  <Parameter Name="reports(0).fromdate">
+                                    <Value>
+                                      <String>= Parameters.fromdate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).todate">
+                                    <Value>
+                                      <String>= Parameters.todate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).offset">
+                                    <Value>
+                                      <String>= Parameters.offset.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).user">
+                                    <Value>
+                                      <String>= Parameters.user.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).site">
+                                    <Value>
+                                      <String>= Parameters.site.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).type">
+                                    <Value>
+                                      <String>= Parameters.type.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).DateTimeCellFormat">
+                                    <Value>
+                                      <String>= Parameters.DateTimeCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).NumericCellFormat">
+                                    <Value>
+                                      <String>= Parameters.NumericCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).mode">
+                                    <Value>
+                                      <String>= Parameters.mode.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).SiteName">
+                                    <Value>
+                                      <String>= Parameters.SiteName.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="Company">
+                                    <Value>
+                                      <String>= Parameters.Company.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="AmountWithCurSymbolCellFormat">
+                                    <Value>
+                                      <String>= Parameters.AmountWithCurSymbolCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="pickDate">
+                                    <Value>
+                                      <String>= Parameters.pickDate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="businessStartTime">
+                                    <Value>
+                                      <String>= Parameters.businessStartTime.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="selectedSiteId">
+                                    <Value>
+                                      <String>= Fields.site_id</String>
+                                    </Value>
+                                  </Parameter>
+                                </Parameters>
+                              </UriReportSource>
+                            </ReportSource>
+                          </NavigateToReportAction>
+                        </Action>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.75000003071351in" Height="0.325000059860179in" Left="0in" Top="0in" Value="= Format(Parameters.AmountWithCurSymbolCellFormat.Value, Fields.today_consumption)" Name="textBox6" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Bottom">
+                          <Font Name="Arial Unicode MS" Size="16pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                        <Action>
+                          <NavigateToReportAction>
+                            <ReportSource>
+                              <UriReportSource Uri="SalesDashboardConsumptionToday.trdx">
+                                <Parameters>
+                                  <Parameter Name="reports(0).fromdate">
+                                    <Value>
+                                      <String>= Parameters.fromdate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).todate">
+                                    <Value>
+                                      <String>= Parameters.todate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).offset">
+                                    <Value>
+                                      <String>= Parameters.offset.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).user">
+                                    <Value>
+                                      <String>= Parameters.user.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).site">
+                                    <Value>
+                                      <String>= Parameters.site.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).type">
+                                    <Value>
+                                      <String>= Parameters.type.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).DateTimeCellFormat">
+                                    <Value>
+                                      <String>= Parameters.DateTimeCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).NumericCellFormat">
+                                    <Value>
+                                      <String>= Parameters.NumericCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).mode">
+                                    <Value>
+                                      <String>= Parameters.mode.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).SiteName">
+                                    <Value>
+                                      <String>= Parameters.SiteName.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="Company">
+                                    <Value>
+                                      <String>= Parameters.Company.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="AmountWithCurSymbolCellFormat">
+                                    <Value>
+                                      <String>= Parameters.AmountWithCurSymbolCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="pickDate">
+                                    <Value>
+                                      <String>= Parameters.pickDate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="businessStartTime">
+                                    <Value>
+                                      <String>= Parameters.businessStartTime.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="selectedSiteId">
+                                    <Value>
+                                      <String>= Fields.site_id</String>
+                                    </Value>
+                                  </Parameter>
+                                </Parameters>
+                              </UriReportSource>
+                            </ReportSource>
+                          </NavigateToReportAction>
+                        </Action>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.7499998956545in" Height="0.345833408684177in" Left="0in" Top="0in" Value="= Format(Parameters.AmountWithCurSymbolCellFormat.Value, Fields.yesterday_collection)" Name="textBox1" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="217, 217, 217" Color="33, 170, 222" TextAlign="Center" VerticalAlign="Bottom">
+                          <Font Name="Arial Unicode MS" Size="16pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                        <Action>
+                          <NavigateToReportAction>
+                            <ReportSource>
+                              <UriReportSource Uri="SalesDashboardPOSWiseToday.trdx">
+                                <Parameters>
+                                  <Parameter Name="reports(0).fromdate">
+                                    <Value>
+                                      <String>= Parameters.fromdate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).todate">
+                                    <Value>
+                                      <String>= Parameters.todate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).offset">
+                                    <Value>
+                                      <String>= Parameters.offset.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).user">
+                                    <Value>
+                                      <String>= Parameters.user.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).site">
+                                    <Value>
+                                      <String>= Parameters.site.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).type">
+                                    <Value>
+                                      <String>= Parameters.type.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).DateTimeCellFormat">
+                                    <Value>
+                                      <String>= Parameters.DateTimeCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).NumericCellFormat">
+                                    <Value>
+                                      <String>= Parameters.NumericCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).mode">
+                                    <Value>
+                                      <String>= Parameters.mode.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).SiteName">
+                                    <Value>
+                                      <String>= Parameters.SiteName.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="Company">
+                                    <Value>
+                                      <String>= Parameters.Company.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="AmountWithCurSymbolCellFormat">
+                                    <Value>
+                                      <String>= Parameters.AmountWithCurSymbolCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="pickDate">
+                                    <Value>
+                                      <String>= Parameters.pickDate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="businessStartTime">
+                                    <Value>
+                                      <String>= Parameters.businessStartTime.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="selectedSiteId">
+                                    <Value>
+                                      <String>= Fields.site_id</String>
+                                    </Value>
+                                  </Parameter>
+                                </Parameters>
+                              </UriReportSource>
+                            </ReportSource>
+                          </NavigateToReportAction>
+                        </Action>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.7499998956545in" Height="0.325000059860179in" Left="0in" Top="0in" Value="= Format(Parameters.AmountWithCurSymbolCellFormat.Value, Fields.yesterday_consumption)" Name="textBox11" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="217, 217, 217" TextAlign="Center" VerticalAlign="Bottom">
+                          <Font Name="Arial Unicode MS" Size="16pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                        <Action>
+                          <NavigateToReportAction>
+                            <ReportSource>
+                              <UriReportSource Uri="SalesDashboardConsumptionToday.trdx">
+                                <Parameters>
+                                  <Parameter Name="reports(0).fromdate">
+                                    <Value>
+                                      <String>= Parameters.fromdate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).todate">
+                                    <Value>
+                                      <String>= Parameters.todate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).offset">
+                                    <Value>
+                                      <String>= Parameters.offset.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).user">
+                                    <Value>
+                                      <String>= Parameters.user.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).site">
+                                    <Value>
+                                      <String>= Parameters.site.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).type">
+                                    <Value>
+                                      <String>= Parameters.type.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).DateTimeCellFormat">
+                                    <Value>
+                                      <String>= Parameters.DateTimeCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).NumericCellFormat">
+                                    <Value>
+                                      <String>= Parameters.NumericCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).mode">
+                                    <Value>
+                                      <String>= Parameters.mode.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="reports(0).SiteName">
+                                    <Value>
+                                      <String>= Parameters.SiteName.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="Company">
+                                    <Value>
+                                      <String>= Parameters.Company.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="AmountWithCurSymbolCellFormat">
+                                    <Value>
+                                      <String>= Parameters.AmountWithCurSymbolCellFormat.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="pickDate">
+                                    <Value>
+                                      <String>= Parameters.pickDate.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="businessStartTime">
+                                    <Value>
+                                      <String>= Parameters.businessStartTime.Value</String>
+                                    </Value>
+                                  </Parameter>
+                                  <Parameter Name="selectedSiteId">
+                                    <Value>
+                                      <String>= Fields.site_id</String>
+                                    </Value>
+                                  </Parameter>
+                                </Parameters>
+                              </UriReportSource>
+                            </ReportSource>
+                          </NavigateToReportAction>
+                        </Action>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="2">
+                    <ReportItem>
+                      <TextBox Width="3.49999968389647in" Height="0.200000004789981in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox2" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="242, 242, 242" Color="Black" TextAlign="Left" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                          <BorderStyle Default="None" Bottom="None" />
+                          <BorderColor Bottom="255, 128, 0" />
+                          <BorderWidth Bottom="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.75000003071351in" Height="0.200000004789981in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Collection')" Name="textBox3" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Top">
+                          <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="4" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.75000003071351in" Height="0.200000004789981in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Consumption')" Name="textBox12" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Top">
+                          <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.7499998956545in" Height="0.200000004789981in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Collection')" Name="textBox14" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="217, 217, 217" TextAlign="Center" VerticalAlign="Top">
+                          <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="4" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.7499998956545in" Height="0.200000004789981in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Consumption')" Name="textBox4" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="217, 217, 217" TextAlign="Center" VerticalAlign="Top">
+                          <Font Name="Arial Unicode MS" Size="10pt" Bold="False" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="5" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.74999988004388in" Height="0.189583356706389in" Left="0in" Top="0in" Name="textBox13" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="5" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="1.75000020228149in" Height="0.189583356706389in" Left="0in" Top="0in" Name="textBox15" StyleName="Normal.TableBody">
+                        <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle">
+                          <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                          <BorderStyle Default="None" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="1.74999988004388in" />
+                  <Column Width="1.75000020228149in" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.200000063398267in" />
+                  <Row Height="0.345833325989253in" />
+                  <Row Height="0.200000063398267in" />
+                  <Row Height="0.325000021415032in" />
+                  <Row Height="0.200000063398267in" />
+                  <Row Height="0.189583378468296in" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Default="None" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="site_name">
+                  <ReportItem>
+                    <TextBox Width="0.104166659206741in" Height="1.46041691606738in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox5" StyleName="Normal.TableGroup">
+                      <Style Visible="False" />
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="site_id">
+                      <ChildGroups>
+                        <TableGroup Name="group2" />
+                      </ChildGroups>
+                      <Groupings>
+                        <Grouping Expression="= Fields.site_id" />
+                      </Groupings>
+                      <Sortings>
+                        <Sorting Expression="= Fields.site_id" Direction="Asc" />
+                      </Sortings>
+                    </TableGroup>
+                    <TableGroup Name="detail">
+                      <ChildGroups>
+                        <TableGroup Name="group" />
+                        <TableGroup Name="group3" />
+                        <TableGroup Name="group1" />
+                        <TableGroup Name="group4" />
+                      </ChildGroups>
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                    <TableGroup Name="group5">
+                      <ChildGroups>
+                        <TableGroup Name="group6" />
+                      </ChildGroups>
+                    </TableGroup>
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping Expression="= Fields.site_name" />
+                  </Groupings>
+                  <Sortings>
+                    <Sorting Expression="= Fields.site_name" Direction="Asc" />
+                  </Sortings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="today_collection" />
+                <TableGroup Name="today_consumption" />
+              </ColumnGroups>
+            </Crosstab>
+          </Items>
+        </Panel>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.0937896728515625in" Name="pageFooterSection1" />
+    <ReportHeaderSection Height="0.799999943415324in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="3.5in" Height="0.299842627843221in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Day Wise Collection')" Format="{0:f}" Name="textBox96">
+          <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+            <BorderStyle Bottom="Solid" />
+            <BorderColor Bottom="255, 128, 64" />
+            <BorderWidth Bottom="2pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.49996066093445in" Height="0.200000002980232in" Left="0in" Top="0.400000015894572in" Value="= Parameters.Company.Value" Format="{0:f}" Name="textBox9">
+          <Style BackgroundColor="White" Color="37, 64, 97" TextAlign="Center" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="11pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.49996066093445in" Height="0.199999913573265in" Left="0in" Top="0.600078741709391in" Value="=MessagesFunctions.getMessage('Report as on') + ' ' + Parameters.pickDate.Value.ToString(&quot;dddd, dd-MMM-yyyy&quot;)" Name="textBox18">
+          <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Parameters.fromdate.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Parameters.todate.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>= Parameters.offset.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowNull="True">
+      <Value>
+        <String>= Parameters.user.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String>=AllValues(Parameters.site.Value)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="type" Type="Integer" Mergeable="False" Text="Type" AllowBlank="False">
+      <Value>
+        <String>= Parameters.type.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False">
+      <Value>
+        <String>= Parameters.mode.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SiteName" Mergeable="False" Text="SiteName" AllowBlank="False">
+      <Value>
+        <String>= Parameters.SiteName.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="Company" Text="Company">
+      <AvailableValues DataSourceName="dsCompany" DisplayMember="= Fields.Company_Name" ValueMember="= Fields.Company_Name" />
+      <Value>
+        <String>= Fields.Company_Name</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Text="AmountWithCurSymbolCellFormat" />
+    <ReportParameter Name="businessStartTime" Type="Integer" Text="businessStartTime" />
+    <ReportParameter Name="pickDate" Type="DateTime" Text="pickDate" />
+  </ReportParameters>
+</Report>

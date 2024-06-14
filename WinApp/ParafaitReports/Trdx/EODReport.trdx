@@ -1,0 +1,2071 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="9.81873893737792in" Name="EOD" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Gametime" SelectCommand="&#xD;&#xA;--declare dbo.ConvertToServerTime(@fromDate,@offSet) datetime='2019-01-15'&#xD;&#xA;--declare dbo.ConvertToServerTime(@toDate,@offSet) datetime='2020-05-16'&#xD;&#xA;--declare @site int=-1&#xD;&#xA;&#xD;&#xA;;with cte_Salesdetails  as&#xD;&#xA;(select discount_name,sum(isnull(Gross_Sales,0)) Gross_Sales,sum(isnull(Item_Discounts,0)) Item_Discounts,&#xD;&#xA; sum(isnull(tax,0)) tax,sum(refund) refund&#xD;&#xA;  from  &#xD;&#xA;(&#xD;&#xA;select discount_name,sum(Gross_Sales) Gross_Sales,sum(Item_Discounts)Item_Discounts,sum((Gross_Sales-Item_Discounts)) Sales_Less_Item_Disc,sum([%sales])[%sales],&#xD;&#xA;      sum(Taxable_Net_Amount) Taxable_Net_Amount,sum(Tax_Exempt_Net_Amount)Tax_Exempt_Net_Amount,sum(Tax_Exempt_Net_Amount)ZeroTax_Net_Amount,sum(tax)tax,&#xD;&#xA;&#x9;  sum((Taxable_Net_Amount+Tax_Exempt_Net_Amount+ZeroTax_Net_Amount+tax)) total_amount,sum(refund) refund&#xD;&#xA;from (&#xD;&#xA;select 'Regular Transactions' category,Major_Group_Sales,discount_name,&#xD;&#xA;(case when product_type in('REFUND','REFUNDCARDDEPOSIT') then (Gross_Sales)  else 0 end) refund,&#xD;&#xA;&#x9;   convert(decimal(18,8),(Gross_Sales) ) Gross_Sales,&#xD;&#xA;&#x9;   convert(decimal(18,8),(Item_Discounts) ) Item_Discounts,&#xD;&#xA;       convert(decimal(18,8),(100*((Gross_Sales-Item_Discounts)/(case when (sum(Gross_Sales-Item_Discounts) over ())=0 then 1 else (sum(Gross_Sales-Item_Discounts) over ()) end)))) [%Sales],&#xD;&#xA;&#x9;   convert(decimal(18,8), (Net_Sales-Net_Discount) ) Taxable_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8), (Net_Sales_Exempt-Net_Discount_Exempt) ) Tax_Exempt_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8),(Net_Sales_ZeroTax-Net_Discount_ZeroTax) ) ZeroTax_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8), (Tax-Tax_Discount) ) Tax&#xD;&#xA;  from (&#xD;&#xA;&#x9;&#x9;select Major_Group_Sales,product_type,discount_name,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(v.net_amount)) Gross_Sales,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(isnull(isnull((v.discountpercentage*v.Net_Amount/100),0),0))) Item_Discounts,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) &lt;&gt; 0 then v.net_amount else 0 end)) Net_Sales,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) &lt;&gt; 0 then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is not null then v.net_amount else 0 end)) Net_Sales_Exempt,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is not null then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount_Exempt,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is null then v.net_amount else 0 end)) Net_Sales_ZeroTax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is null then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount_ZeroTax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(v.tax)) Tax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(isnull(isnull((v.discountpercentage*v.tax/100),0),0))) Tax_Discount&#xD;&#xA;  from (&#xD;&#xA;  select trxdate,v.trxid,v.lineid,tl.guid,product_type,v.product_name,d.discount_name,isnull(c1.name,isnull(c3.name,isnull(c.name,isnull(c2.name,p.product_name)))) major_group_sales,v.net_amount,v.amount,v.tax,tl.trxprofileid,td.discountpercentage&#xD;&#xA;&#x9;&#x9;&#x9;   &#x9;&#x9;   &#xD;&#xA;          from &#xD;&#xA;&#x9;&#x9;       TransactionView v left outer join trxdiscounts td on td.trxid = v.trxid and td.LineId=v.lineid&#xD;&#xA;&#x9;&#x9;&#x9;   left join discounts d on td.DiscountId=d.discount_id&#xD;&#xA;&#x9;&#x9;&#x9;   ,products p left outer join category c on p.CategoryId = c.CategoryId&#xD;&#xA;&#x9;&#x9;&#x9;              left outer join category c1 on c1.categoryid = c.ParentCategoryId,&#xD;&#xA;&#x9;&#x9;       trx_lines tl left outer join trx_lines tl1 on tl1.trxid = tl.trxid and tl1.LineId = tl.ParentLineId &#xD;&#xA;&#x9;&#x9;&#x9;                left outer join products p1 on p1.product_id=tl1.product_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left outer join category c2 on c2.CategoryId=p1.CategoryId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left outer join Category c3 on c3.CategoryId=c2.ParentCategoryId&#xD;&#xA;&#x9;&#x9; where v.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;&#x9;&#x9;   and v.product_id = p.product_id&#xD;&#xA;&#x9;&#x9;   and v.amount &lt;&gt; 0&#xD;&#xA;&#x9;&#x9;   and tl.trxid = v.trxid&#xD;&#xA;--&#x9;&#x9;   and v.trxid = 31997&#xD;&#xA;&#x9;&#x9;   and tl.LineId = v.lineid&#xD;&#xA;and v.status NOT IN ('OPEN','RESERVED','BOOKING') &#xD;&#xA;and (v.site_id in (@Site) or -1 in (@Site)))v&#xD;&#xA;&#x9;&#x9; group by major_group_sales,product_type,discount_name&#xD;&#xA;        ) b ) c&#xD;&#xA;&#x9;&#x9;group  by  discount_name&#xD;&#xA;&#x9;&#x9;&#xD;&#xA;union all &#xD;&#xA;select '' discount_name,sum(tp.amount) Gross_Sales,0 Item_Discounts,sum(amount) Sales_Less_Item_Disc,&#xD;&#xA;       100 [%Sales],&#xD;&#xA;&#x9;   sum(amount) Net_Amount,0 net_amount_tax_exempt,0 net_amount_zerotax,&#xD;&#xA;&#x9;   NULL Tax,&#xD;&#xA;&#x9;   sum(amount) total_amount,0&#xD;&#xA;  from trx_header v,TrxPayments tp&#xD;&#xA;where v.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and tp.trxid = v.trxid&#xD;&#xA;and (v.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;and v.status IN ('OPEN','RESERVED','BOOKING')) A&#xD;&#xA;&#xD;&#xA;group  by  discount_name&#xD;&#xA;),cte_deposits as&#xD;&#xA;( select  category, sum(total_amount) total_amount from (&#xD;&#xA;select site_name, category ,&#xD;&#xA;(case when (category='Deposit Collected' and PaymentMode='Online Payment')  then 0&#xD;&#xA; else (total_amount) end)  total_amount&#xD;&#xA;from (&#xD;&#xA;select tp.PaymentId,s.site_name, PaymentMode,isCreditCard,&#xD;&#xA;       case when tp.PaymentDate &lt; th.TrxDate  and tp.PaymentDate &gt; dbo.ConvertToServerTime(@fromDate,@offSet)  then 'Deposit Collected'&#xD;&#xA;  when th.TrxDate &lt;dbo.ConvertToServerTime(@toDate,@offSet) and convert(date,tp.PaymentDate) &lt; convert(date,th.TrxDate)  then 'Deposit Applied'&#xD;&#xA;  else 'Regular Payment for Party' end category,(isnull(tp.amount,0)) amount,(isnull(tp.tipamount,0)) tipamount,&#xD;&#xA;  (isnull(tp.amount,0)) + (isnull(tp.tipamount,0)) total_amount&#xD;&#xA;  from trxpayments tp left outer join CCTransactionsPGW cc on cc.ResponseID = tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u--, Bookings b&#xD;&#xA;  ,site s&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid --and b.TrxId = th.TrxId&#xD;&#xA;   and (tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet))&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and tp.amount &lt;&gt; 0&#xD;&#xA;   and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA;&#xD;&#xA;union&#xD;&#xA;&#xD;&#xA;select tp.PaymentId,s.site_name,PaymentMode,isCreditCard,&#xD;&#xA;       case when    convert(date,tp.PaymentDate) &lt; convert(date,th.TrxDate) and th.TrxDate &lt; dbo.ConvertToServerTime(@toDate,@offSet)  then 'Deposit Applied'&#xD;&#xA;when tp.PaymentDate &lt; th.TrxDate and tp.PaymentDate &gt; dbo.ConvertToServerTime(@fromDate,@offSet)  then 'Deposit Collected'&#xD;&#xA;when  PaymentDate &gt;trxdate and  PaymentDate&gt;dbo.ConvertToServerTime(@toDate,@offSet) then  'Past Deposit Collected'&#xD;&#xA;else 'Regular Payment for Party'&#xD;&#xA;end category,&#xD;&#xA;    (isnull(tp.amount,0)) amount,(isnull(tp.tipamount,0)) tipamount,&#xD;&#xA;  (isnull(tp.amount,0)) + (isnull(tp.tipamount,0)) total_amount&#xD;&#xA;  from trxpayments tp left outer join CCTransactionsPGW cc on cc.ResponseID = tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u--, Bookings b&#xD;&#xA;  ,site s&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid-- and b.TrxId = th.TrxId&#xD;&#xA;   and (th.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet))&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and tp.amount &lt;&gt; 0&#xD;&#xA;   and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA;   and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;  ) A  &#xD;&#xA;  where   category in('Deposit Applied','Deposit Collected')&#xD;&#xA; -- and site_name='Daytona'&#xD;&#xA;  )A&#xD;&#xA; group by category  &#xD;&#xA;)&#xD;&#xA;  &#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select  'Sales +' Invoice,sum(Gross_Sales) amount from cte_Salesdetails&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select  'Refund -', sum(refund)&#xD;&#xA;from cte_Salesdetails&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;select 'Catering -',sum(case when  discount_name='Catering' then (Item_Discounts)*-1 else 0 end)&#xD;&#xA;from cte_Salesdetails&#xD;&#xA;union all &#xD;&#xA; select  'All other discounts -',sum(case when  discount_name!='Catering' then (Item_Discounts)*-1 else 0 end)&#xD;&#xA;from cte_Salesdetails&#xD;&#xA;&#xD;&#xA;union  all&#xD;&#xA;&#xD;&#xA;select  'Tax +', sum(tax) &#xD;&#xA;from cte_Salesdetails &#xD;&#xA; &#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;SELECT 'Credit card tips -', isnull(sum(TP.TipAmount),0)*-1&#xD;&#xA;  FROM trx_header H, TrxPayments TP,PaymentModes  p&#xD;&#xA; WHERE tp.paymentdate BETWEEN dbo.ConvertToServerTime(@fromDate,@offSet) AND dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and tp.PaymentModeId=p.PaymentModeId&#xD;&#xA;   AND H.TRXID = TP.TRXID  &#xD;&#xA;   and (h.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;   union all&#xD;&#xA;&#xD;&#xA;select 'Party Deposits Applied -',isnull(sum(total_amount),0)*-1&#xD;&#xA;from cte_deposits  where category='Deposit Applied'&#xD;&#xA; union all&#xD;&#xA;&#xD;&#xA;select 'Party Deposits Received -',isnull(sum(total_amount),0)&#xD;&#xA;from cte_deposits  where category='Deposit collected'&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;SELECT 'Credit/Check Card Charges', isnull(sum(TP.amount+tp.TipAmount),0)*-1&#xD;&#xA;  FROM trx_header H, TrxPayments TP,PaymentModes  p&#xD;&#xA; WHERE tp.paymentdate BETWEEN dbo.ConvertToServerTime(@fromDate,@offSet) AND dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and tp.PaymentModeId=p.PaymentModeId&#xD;&#xA;   AND H.TRXID = TP.TRXID  &#xD;&#xA;   and isCreditCard='y'&#xD;&#xA;   and (h.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;   union all&#xD;&#xA;&#xD;&#xA;SELECT 'Credit Used at POS', isnull(sum(TP.amount),0)*1&#xD;&#xA;  FROM trx_header H, TrxPayments TP,PaymentModes  p&#xD;&#xA; WHERE tp.paymentdate BETWEEN dbo.ConvertToServerTime(@fromDate,@offSet) AND dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and tp.PaymentModeId=p.PaymentModeId&#xD;&#xA;   AND H.TRXID = TP.TRXID  &#xD;&#xA;   and isDebitCard='y'&#xD;&#xA;   and (h.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;   union all&#xD;&#xA;&#xD;&#xA;SELECT 'Credit loaded at POS', isnull(sum(credits),0)&#xD;&#xA;  FROM  trx_lines tl,trx_header h &#xD;&#xA;where tl.trxid=h.trxid and h.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and h.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (h.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;     union all&#xD;&#xA;&#xD;&#xA;SELECT 'Credit Card Charges at Kiosk -', isnull(sum(TP.amount),0)*-1&#xD;&#xA;  FROM trx_header H, TrxPayments TP,PaymentModes  p&#xD;&#xA; WHERE tp.paymentdate BETWEEN dbo.ConvertToServerTime(@fromDate,@offSet) AND dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and tp.PaymentModeId=p.PaymentModeId&#xD;&#xA;   AND H.TRXID = TP.TRXID  &#xD;&#xA;   and (h.pos_machine like 'Kiosk' or pos_machine like '%FSK%')&#xD;&#xA;   and (h.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;     union all&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select 'Payouts',isnull(ABS(sum(sh.shift_amount)),0) 'Amount Removed' &#xD;&#xA;from ShiftLog sh inner join shift st on sh.shift_key=st.shift_key&#xD;&#xA;where sh.shift_amount &lt;0&#xD;&#xA;and sh.shift_time &gt;=dbo.ConvertToServerTime(@fromDate,@offSet)  and sh.shift_time&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (sh.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;   select 'Web Reservation Deposit Collected -',isnull(sum(isnull(tp.amount,0)),0)&#xD;&#xA;from trx_header th left  join TrxPayments tp on th.trxid=tp.trxid&#xD;&#xA;where  exists(select 1 from TransactionView TV &#xD;&#xA;where tp.PaymentDate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and tp.PaymentDate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and tv.trxid=th.trxid)&#xD;&#xA;and TrxAmount &lt;&gt;0&#xD;&#xA;and trxdate&gt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and th.Original_System_Reference is not null&#xD;&#xA;and (th.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;   select 'Web Reservation Deposit Redeemed -',isnull(sum(isnull(tp.amount,0)),0)&#xD;&#xA;from trx_header th left  join TrxPayments tp on th.trxid=tp.trxid&#xD;&#xA;where  exists(select 1 from TransactionView TV &#xD;&#xA;where th.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and th.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and tv.trxid=th.trxid)&#xD;&#xA;and TrxAmount &lt;&gt;0&#xD;&#xA;and tp.PaymentDate &lt; dbo.ConvertToServerTime(@fromDate,@offSet)  &#xD;&#xA;and th.Original_System_Reference is not null&#xD;&#xA;and (th.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Online sale',isnull(sum(isnull(t.amount,0)),0)*-1&#xD;&#xA;from trx_header th ,TransactionView t&#xD;&#xA;where  th.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and th.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and th.trxid=t.trxid&#xD;&#xA;and TrxAmount &lt;&gt;0&#xD;&#xA;and th.Original_System_Reference is not  null&#xD;&#xA;and (th.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all &#xD;&#xA;&#xD;&#xA;select 'Check &amp; Cash Over/Short +', sum(isnull([Difference_cash],0)+isnull([Difference_creditcard],0)+isnull([Difference_credit],0)) from(select &#xD;&#xA;actual_amount + lag (( case when  shift_action='open' then  shift_amount else 0 end),1) OVER (ORDER BY shift_username,shift_time)-( case when  shift_action='close' then  shift_amount else 0 end) [Difference_cash]&#xD;&#xA;,ActualCreditCardamount + lag ((case when shift_action='open' then  CreditCardamount else 0 end),1) OVER (ORDER BY shift_username,shift_time)-(case when shift_action='close' then  CreditCardamount else 0 end) [Difference_creditcard]&#xD;&#xA;,ActualChequeAmount+ActualCouponAmount+lag (( case when  shift_action='open' then  ChequeAmount+CouponAmount else 0 end),1) OVER (ORDER BY shift_username,shift_time)-(case when shift_action='close' then  ChequeAmount+CouponAmount else 0 end) [Difference_credit] &#xD;&#xA;from shift&#xD;&#xA;where shift_time&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and shift_time &lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (site_id in (@Site) or -1 in (@Site)))a&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select &#xD;&#xA;p.PaymentMode,sum(case when p.isCreditCard='Y' then (tp.amount+tp.TipAmount) else tp.Amount end) amount &#xD;&#xA; from trx_header t ,TrxPayments tp ,PaymentModes p,site s&#xD;&#xA;where t.trxid=tp.trxid and tp.PaymentModeId=p.PaymentModeId &#xD;&#xA;and (t.site_id=s.site_id or t.site_id is null) &#xD;&#xA;and tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and PaymentMode not in ('Online Payment','Round Off')&#xD;&#xA;and (t.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;group by site_name,p.PaymentMode&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;   select 'Actual Deposits -',isnull(sum(isnull(tp.amount,0)),0)&#xD;&#xA;from trx_header th inner join TrxPayments tp on th.trxid=tp.trxid&#xD;&#xA;where  tp.PaymentDate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and tp.PaymentDate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (th.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;   &#xD;&#xA;" CommandTimeout="600" Name="dsSales">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>=Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>=Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Gametime" SelectCommand="--declare @fromDate datetime = '2020-03-08 6:00'&#xD;&#xA;---declare @toDate datetime = '2020-03-09 6:00';&#xD;&#xA;&#xD;&#xA;--declare @site int=-1&#xD;&#xA;&#xD;&#xA;;with cte_deposit &#xD;&#xA;as (&#xD;&#xA;select 'Beginning Balance' deposit, isnull(sum(tp.amount),0) + isnull(sum(tp.tipamount),0) amount&#xD;&#xA;     from trxpayments tp,&#xD;&#xA;          PaymentModes pm,&#xD;&#xA;&#x9;&#x9;  trx_header th,&#xD;&#xA;&#x9;&#x9;  Bookings b&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid and b.TrxId = th.TrxId&#xD;&#xA;   and tp.PaymentDate&lt;dbo.ConvertToServerTime(@fromDate,@offSet)  &#xD;&#xA;   and trxdate &gt;= dbo.ConvertToServerTime(@fromDate,@offSet)&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;  &#xD;&#xA;  union  all&#xD;&#xA;&#xD;&#xA;  select  category, sum(total_amount) from (&#xD;&#xA;select site_name, category ,&#xD;&#xA;(case when (category='Deposit Collected' and PaymentMode='Online Payment')  then 0&#xD;&#xA; else (total_amount) end)  total_amount&#xD;&#xA;from (&#xD;&#xA;select tp.PaymentId,s.site_name, PaymentMode,isCreditCard,&#xD;&#xA;       case when tp.PaymentDate &lt; th.TrxDate  and tp.PaymentDate &gt; dbo.ConvertToServerTime(@fromDate,@offSet)  then 'Deposit Collected'&#xD;&#xA;  when th.TrxDate &lt;dbo.ConvertToServerTime(@toDate,@offSet) and convert(date,tp.PaymentDate) &lt; convert(date,th.TrxDate)  then 'Deposit Applied'&#xD;&#xA;  else 'Regular Payment for Party' end category,(isnull(tp.amount,0)) amount,(isnull(tp.tipamount,0)) tipamount,&#xD;&#xA;  (isnull(tp.amount,0)) + (isnull(tp.tipamount,0)) total_amount&#xD;&#xA;  from trxpayments tp left outer join CCTransactionsPGW cc on cc.ResponseID = tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u--, Bookings b&#xD;&#xA;  ,site s&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid --and b.TrxId = th.TrxId&#xD;&#xA;   and (tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet))&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and tp.amount &lt;&gt; 0&#xD;&#xA;   and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA;and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union&#xD;&#xA;&#xD;&#xA;select tp.PaymentId,s.site_name,PaymentMode,isCreditCard,&#xD;&#xA;       case when    convert(date,tp.PaymentDate) &lt; convert(date,th.TrxDate) and th.TrxDate &lt; dbo.ConvertToServerTime(@toDate,@offSet)  then 'Deposit Applied'&#xD;&#xA;when tp.PaymentDate &lt; th.TrxDate and tp.PaymentDate &gt; dbo.ConvertToServerTime(@fromDate,@offSet)  then 'Deposit Collected'&#xD;&#xA;when  PaymentDate &gt;trxdate and  PaymentDate&gt;dbo.ConvertToServerTime(@toDate,@offSet) then  'Past Deposit Collected'&#xD;&#xA;else 'Regular Payment for Party'&#xD;&#xA;end category,&#xD;&#xA;    (isnull(tp.amount,0)) amount,(isnull(tp.tipamount,0)) tipamount,&#xD;&#xA;  (isnull(tp.amount,0)) + (isnull(tp.tipamount,0)) total_amount&#xD;&#xA;  from trxpayments tp left outer join CCTransactionsPGW cc on cc.ResponseID = tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u--, Bookings b&#xD;&#xA;  ,site s&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid-- and b.TrxId = th.TrxId&#xD;&#xA;   and (th.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet) and dbo.ConvertToServerTime(@toDate,@offSet))&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and tp.amount &lt;&gt; 0&#xD;&#xA;   and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA;   and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;  ) A  &#xD;&#xA;  where   category in('Deposit Applied','Deposit Collected')&#xD;&#xA;  &#xD;&#xA;  )A&#xD;&#xA; group by category  &#xD;&#xA;&#xD;&#xA;  union all&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select 'Deposit Refunds',&#x9;isnull(sum(tp.amount),0) total_amount  &#xD;&#xA;  from trxpayments tp ,&#xD;&#xA;&#x9;   PaymentModes pm,&#xD;&#xA;       trx_header th,&#xD;&#xA;  users u, Bookings b&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid and b.TrxId = th.TrxId&#xD;&#xA;   and tp.PaymentDate between  dbo.ConvertToServerTime(@fromDate,@offSet)  and  dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;   and exists(select 1 from trx_header h where h.OriginalTrxID=th.TrxId)&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;   )&#xD;&#xA;&#xD;&#xA;   select * from cte_deposit &#xD;&#xA;&#xD;&#xA;   union all&#xD;&#xA;&#xD;&#xA;   select 'Ending Balance',sum(case when deposit in('Deposit Applied','Deposit Refunds')  then amount*-1 else amount end) from cte_deposit " Name="dsCustomerDeposit">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="--declare dbo.ConvertToServerTime(@fromDate,@offSet) datetime = '2020-03-08 6:00'&#xD;&#xA;--declare dbo.ConvertToServerTime(@toDate,@offSet) datetime = '2020-03-09 6:00';&#xD;&#xA;--declare @site int=-1&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select 'Beginning Balance' Account_Receivables,isnull(sum(tp.amount),0) amount&#xD;&#xA;  from trxpayments tp,paymentmodes pm&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and pm.PaymentMode in (select lookupvalue from lookupview where lookupname like '%ACCOUNT_RECEIVABLE%')&#xD;&#xA;   and tp.PaymentDate &lt; dbo.ConvertToServerTime(@fromDate,@offSet) &#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;union all&#xD;&#xA;select 'New Charges',isnull(sum(tp.amount),0)&#xD;&#xA;  from trxpayments tp,paymentmodes pm&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and pm.PaymentMode in (select lookupvalue from lookupview where lookupname ='ACCOUNT_RECEIVABLE_PAYMENT_MODES')&#xD;&#xA;   and tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;   and tp.amount &gt; 0&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;union all&#xD;&#xA;select 'Payments',isnull(sum(tp.amount),0)&#xD;&#xA;  from trxpayments tp,paymentmodes pm&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and pm.PaymentMode in (select lookupvalue from lookupview where lookupname ='ACCOUNT_RECEIVABLE_PAYMENT_MODES')&#xD;&#xA;   and tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;   and tp.amount &lt; 0&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;select 'Ending Balance',isnull(sum(tp.amount),0)&#xD;&#xA;  from trxpayments tp,paymentmodes pm&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and pm.PaymentMode in (select lookupvalue from lookupview where lookupname ='ACCOUNT_RECEIVABLE_PAYMENT_MODES')&#xD;&#xA;   and tp.PaymentDate &lt; dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;" Name="AccountsReceivable">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Gametime" SelectCommand="&#xD;&#xA;select 'Value added at POS' 'Credit',isnull(sum(credits),0) Value from trx_lines tl,trx_header h &#xD;&#xA;where tl.trxid=h.trxid and h.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and h.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA; and (tl.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all &#xD;&#xA;&#xD;&#xA;select 'Bonus added at POS',isnull(sum(bonus),0) from trx_lines tl,trx_header h &#xD;&#xA;where tl.trxid=h.trxid and h.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and h.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (tl.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all &#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select 'Comp added at POS',isnull(sum(creditplus),0) creditplus from CardCreditPlus  cp &#xD;&#xA;where CreditPlusType in('A','G','B') &#xD;&#xA;and cp.CreationDate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and CreationDate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Value added at Kiosk',isnull(sum(credits),0) from trx_lines tl,trx_header h,POSMachines pm,POSTypes  pt&#xD;&#xA;&#x9;&#x9;&#x9;where  tl.trxid=h.trxid &#xD;&#xA;&#x9;&#x9;&#x9;and h.pos_machine=pm.POSName&#xD;&#xA;&#x9;&#x9;&#x9;and pm.POSTypeId=pt.POSTypeId&#xD;&#xA;&#x9;&#x9;&#x9;and (h.pos_machine like '%Kiosk%' or  h.pos_machine like '%FSK%')&#xD;&#xA;            and h.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and h.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;&#x9;&#x9;&#x9;and (tl.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Value used at POS',isnull(sum(amount),0) from TransactionView t &#xD;&#xA;where t.trxdate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and t.trxdate&lt;dbo.ConvertToServerTime(@toDate,@offSet) and GameCardRatio=1&#xD;&#xA;and (t.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Game Play',isnull(sum(credits+bonus),0) from gameplay g &#xD;&#xA;where g.play_date&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and g.play_date&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (g.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Outstanding Purchase' as a, isnull(sum(credits),0) Bal_Credits&#xD;&#xA;from(&#xD;&#xA;select c.card_id, c.card_number, c.face_value, issue_date, c.credits, c.bonus,  sum(quantity * price) trxAmount, sum(l.credits) TrxCredits, sum(l.bonus) TrxBonus, sum(l.courtesy) TrxCourtesy, sum(l.time) TrxTime &#xD;&#xA;from cards c, trx_lines l,trx_header h&#xD;&#xA;where issue_date &gt;= dbo.ConvertToServerTime(@fromDate,@offSet) and issue_date &lt; dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and c.card_id = l.card_id&#xD;&#xA;and l.TrxId=h.trxid&#xD;&#xA;and valid_flag = 'Y'&#xD;&#xA;and (l.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;group by c.card_id, c.card_number, c.face_value, issue_date, c.credits, c.bonus, c.courtesy, c.time) main&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Outstanding Bonus' as a,isnull(sum(bonus),0) bal_bonus&#xD;&#xA;from(&#xD;&#xA;select c.card_id, c.card_number, c.face_value, issue_date, c.credits, c.bonus, sum(quantity * price) trxAmount, sum(l.credits) TrxCredits, sum(l.bonus) TrxBonus, sum(l.courtesy) TrxCourtesy, sum(l.time) TrxTime &#xD;&#xA;from cards c, trx_lines l,trx_header h&#xD;&#xA;where issue_date &gt;= dbo.ConvertToServerTime(@fromDate,@offSet) and issue_date &lt; dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and c.card_id = l.card_id&#xD;&#xA;and l.TrxId=h.trxid&#xD;&#xA;and valid_flag = 'Y'&#xD;&#xA;and (l.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;group by c.card_id, c.card_number, c.face_value, issue_date, c.credits, c.bonus, c.courtesy, c.time) main&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;union all &#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select 'Outstanding Comp',isnull(sum(CreditPlusBalance),0) creditplus &#xD;&#xA;from CardCreditPlus  cp where CreditPlusType in('A','G','B') &#xD;&#xA;and cp.CreationDate&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and CreationDate&lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (cp.site_id in (@Site) or -1 in (@Site))" Name="dsIncredibleCredits">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="--declare @fromdate datetime = '2020-03-08 6:00'&#xD;&#xA;--declare @todate datetime = '2020-03-09 6:00';&#xD;&#xA;&#xD;&#xA;   &#xD;&#xA;;with Shift_user as&#xD;&#xA;(select  UserName, sum(isnull(system_Cash,0)+ABS(isnull(paid_out,0))) [Cash Counted],sum(isnull(paid_out,0)) [Cash Pulled],sum(isnull(System_Credit,0)) [Checks Counted],&#xD;&#xA;sum(isnull(Open_cash,0)+isnull(open_credit,0)) [Initial Drawer],sum(isnull(NetShift_cash,0)+isnull(netshift_credit,0)) [Total Deposit] ,sum(isnull(diff,0)) [Over Short]&#xD;&#xA;from(select shift_username [UserName],s.shift_action Shift_Type,&#xD;&#xA;( case when  s.shift_action='open' then  s.shift_amount else 0 end)[Open_cash],&#xD;&#xA;( case when  s.shift_action='open' then  s.ChequeAmount+s.CouponAmount else 0 end)[Open_Credit],&#xD;&#xA;s.actual_amount [NetShift_cash],s.ActualChequeAmount+s.ActualCouponAmount [NetShift_Credit],&#xD;&#xA;s.actual_amount + lag (( case when  s.shift_action='open' then  s.shift_amount else 0 end),1) OVER (ORDER BY shift_username,s.shift_time) AS [system_Cash],(sf.shift_amount) paid_out,&#xD;&#xA;s.ActualChequeAmount +s.ActualCouponAmount+lag (( case when  s.shift_action='open' then  s.ChequeAmount+s.CouponAmount else 0 end),1) OVER (ORDER BY shift_username,s.shift_time) AS [System_Credit],&#xD;&#xA;s.actual_amount + lag (( case when  s.shift_action='open' then  s.shift_amount else 0 end),1) OVER (ORDER BY shift_username,s.shift_time)-( case when s.shift_action='close' then  s.shift_amount else 0 end)+&#xD;&#xA;s.ActualChequeAmount+s.ActualCouponAmount+lag (( case when  s.shift_action='open' then  s.ChequeAmount+s.CouponAmount else 0 end),1) OVER (ORDER BY shift_username,s.shift_time)-(case when s.shift_action='close' then  s.ChequeAmount+s.CouponAmount else 0 end) diff&#xD;&#xA;from shift s left join shiftlog sf on s.shift_key=sf.shift_key&#xD;&#xA;where s.shift_time&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and s.shift_time &lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (s.site_id in (@Site) or -1 in (@Site))) shl&#xD;&#xA;group by UserName)&#xD;&#xA;&#xD;&#xA;,shift_CC as (&#xD;&#xA;SELECT  username,&#xD;&#xA; [AMEX],[Mastercard],[Discover],[Visa],[Tips] from (select u.username,&#xD;&#xA;  (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)   paymentmode,&#xD;&#xA;  sum(isnull(tp.amount,0)) total_amount&#xD;&#xA;  from PaymentModes pm left join trxpayments tp  on tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u,site s&#xD;&#xA; where  tp.TrxId = th.trxid&#xD;&#xA;   and tp.PaymentDate &gt;=dbo.ConvertToServerTime(@fromDate,@offSet)  and tp.PaymentDate &lt;dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA; and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA; and (pm.isCreditCard='y')&#xD;&#xA; and username!='External POS'&#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; group by username ,(case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData  = 'Unknown' then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)  &#xD;&#xA;having sum(tp.amount) &lt;&gt; 0&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select username,'Tips',isnull(sum(tp.TipAmount),0) from PaymentModes pm left join trxpayments tp  on tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;  trx_header th,&#xD;&#xA;  users u,site s&#xD;&#xA; where  tp.TrxId = th.trxid&#xD;&#xA;   and tp.PaymentDate &gt;=dbo.ConvertToServerTime(@fromDate,@offSet)  and tp.PaymentDate &lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA; and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA; and username!='External POS'&#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; group by username &#xD;&#xA;) x &#xD;&#xA;            pivot &#xD;&#xA;            (&#xD;&#xA;                 max(total_amount)&#xD;&#xA;                for paymentmode in ([AMEX],[Mastercard],[Discover],[Visa],[Tips])&#xD;&#xA;) p) &#xD;&#xA;&#x9;&#x9;&#x9;&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;&#x9;select  1 orderid,isnull(su.UserName,sc.username) Username,isnull([Cash Counted],0) [Cash Counted],isnull([Cash Pulled],0) [Cash Pulled],isnull([Checks Counted],0) [Checks Counted],&#xD;&#xA;&#x9;&#x9;&#x9;isnull([Initial Drawer],0) [Initial Drawer] ,isnull([Total Deposit],0) [Total Deposit],isnull([Over Short],0) [Over Short],isnull([AMEX],0) [AMEX] ,isnull([Mastercard],0) [Mastercard],isnull([Discover],0) [Discover],isnull([Visa],0) [Visa],isnull([Tips],0) [Tips] &#xD;&#xA;&#x9;&#x9;&#x9;from Shift_user su&#xD;&#xA;&#x9;&#x9;&#x9;full  join shift_CC sc&#x9;on su.username=sc.username&#xD;&#xA;&#x9;&#x9;&#x9;union all&#xD;&#xA;&#x9;&#x9;&#x9;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;&#x9;select 2 orderid,posname ,0,0,0,0,[cash],0,isnull([AMEX],0) [AMEX],isnull([Mastercard],0) [Mastercard],isnull([Mastercard],0) [Discover],isnull([Visa],0) [Visa],isnull([Tips],0) [Tips] from (select p.POSName,&#xD;&#xA; (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)   paymentmode&#xD;&#xA;   , sum(isnull(tp.amount,0)) amount&#xD;&#xA;  &#xD;&#xA;  from PaymentModes pm left join trxpayments tp  on tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;  trx_header th,POSMachines p,POSTypes  pt,&#xD;&#xA;  users u,site s&#xD;&#xA; where  tp.TrxId = th.trxid&#xD;&#xA;   and tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and th.pos_machine=p.POSName&#xD;&#xA;   and p.POSTypeId=pt.POSTypeId&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA; and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA; and pt.POSTypeName like '%Kiosk%'&#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; &#xD;&#xA; group by p.POSName,(case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData  = 'Unknown' then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)  &#xD;&#xA;having sum(tp.amount) &lt;&gt; 0&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select p.POSName,&#xD;&#xA; 'TIPS'  , sum(isnull(tp.TipAmount,0)) amount&#xD;&#xA;  &#xD;&#xA;  from PaymentModes pm left join trxpayments tp  on tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;  trx_header th,POSMachines p,POSTypes  pt,&#xD;&#xA;  users u,site s&#xD;&#xA; where  tp.TrxId = th.trxid&#xD;&#xA;   and tp.PaymentDate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and th.pos_machine=p.POSName&#xD;&#xA;   and p.POSTypeId=pt.POSTypeId&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;and (tp.site_id=s.site_id or tp.site_id is null)&#xD;&#xA; and th.status not in('CANCELLED','SYSTEMABANDONED')&#xD;&#xA; and pt.POSTypeName like '%Kiosk%'&#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; group by p.POSName,(case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData  = 'Unknown' then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)  &#xD;&#xA;having sum(tp.amount) &lt;&gt; 0&#xD;&#xA;&#xD;&#xA;) x &#xD;&#xA;            pivot &#xD;&#xA;            (&#xD;&#xA;                 max(amount)&#xD;&#xA;                for paymentmode in ([cash],[AMEX],[Mastercard],[Discover],[Visa],[Tips])&#xD;&#xA;) p&#xD;&#xA;order by  orderid,Username" Name="Drawer Deposit">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Gametime" SelectCommand="--declare @fromdate datetime='2019-04-15'&#xD;&#xA;--declare @todate datetime='2019-05-16'&#xD;&#xA;&#xD;&#xA;select category,Major_Group_Sales,sum(Gross_Sales) Gross_Sales,sum(Item_Discounts)Item_Discounts,sum((Gross_Sales-Item_Discounts)) Sales_Less_Item_Disc,sum([%sales])[%sales],&#xD;&#xA;      sum(Taxable_Net_Amount) Taxable_Net_Amount,sum(Tax_Exempt_Net_Amount)Tax_Exempt_Net_Amount,sum(Tax_Exempt_Net_Amount)ZeroTax_Net_Amount,sum(tax)tax,&#xD;&#xA;&#x9;  sum((Taxable_Net_Amount+Tax_Exempt_Net_Amount+ZeroTax_Net_Amount+tax)) total_amount,&#xD;&#xA;&#x9;  sum(food_split) food_split,sum(game_split) game_split,sum(event_bar_split) event_bar_split,sum(retail_split) retail_split,sum([Number of Transactions]) [Number of Transactions]&#xD;&#xA;from (&#xD;&#xA;select 'Regular Transactions' category,Major_Group_Sales,&#xD;&#xA;&#x9;   convert(decimal(18,8),(Gross_Sales)) Gross_Sales,&#xD;&#xA;&#x9;   convert(decimal(18,8), (Item_Discounts)) Item_Discounts,&#xD;&#xA;       convert(decimal(18,8),(100*((Gross_Sales-Item_Discounts)/(case when (sum(Gross_Sales-Item_Discounts) over ())=0 then 1 else (sum(Gross_Sales-Item_Discounts) over ()) end)))) [%Sales],&#xD;&#xA;&#x9;   convert(decimal(18,8),Net_Sales-Net_Discount) Taxable_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8),Net_Sales_Exempt-Net_Discount_Exempt) Tax_Exempt_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8),Net_Sales_ZeroTax-Net_Discount_ZeroTax)  ZeroTax_Net_Amount,&#xD;&#xA;&#x9;   convert(decimal(18,8),(Tax-Tax_Discount)) Tax,&#xD;&#xA;&#x9;   food_split,game_split,event_bar_split,retail_split,[Number of Transactions]&#xD;&#xA;  from (&#xD;&#xA;&#x9;&#x9;select Major_Group_Sales,count(distinct trxid) [Number of Transactions],&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(v.net_amount)) Gross_Sales,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(isnull(isnull((v.discountpercentage*v.net_amount/100),0),0))) Item_Discounts,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) &lt;&gt; 0 then v.net_amount else 0 end)) Net_Sales,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) &lt;&gt; 0 then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is not null then v.net_amount else 0 end)) Net_Sales_Exempt,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is not null then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount_Exempt,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is null then v.net_amount else 0 end)) Net_Sales_ZeroTax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(case when isnull(v.tax,0) = 0 and v.TrxProfileId is null then isnull(isnull((v.discountpercentage*v.net_amount/100),0),0) else 0 end)) Net_Discount_ZeroTax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(v.tax)) Tax,&#xD;&#xA;&#x9;&#x9;&#x9;   convert(decimal(18,8),sum(isnull(isnull((v.discountpercentage*v.tax/100),0),0))) Tax_Discount,&#xD;&#xA;&#x9;&#x9;&#x9;   sum(food_split*(1-(isnull(DiscountPercentage,0)/100))) food_split,&#xD;&#xA;&#x9;&#x9;&#x9;   sum(game_split*(1-(isnull(DiscountPercentage,0)/100))) game_split,&#xD;&#xA;&#x9;&#x9;&#x9;   sum(event_bar_split*(1-(isnull(DiscountPercentage,0)/100))) event_bar_split,&#xD;&#xA;&#x9;&#x9;&#x9;   sum(retail_split*(1-(isnull(DiscountPercentage,0)/100))) retail_split&#xD;&#xA;  from (&#xD;&#xA;  select trxdate,v.trxid,v.lineid,tl.guid,v.product_name,isnull(c1.name,isnull(c3.name,isnull(c.name,isnull(c2.name,p.product_name)))) major_group_sales,v.net_amount,v.tax,tl.trxprofileid,td.discountpercentage,&#xD;&#xA;&#x9;&#x9;&#x9;   isnull(convert(decimal(18,2),cdv.ValueChar),0) food_split,isnull(convert(decimal(18,2),cdv_r.ValueChar),0) retail_split,isnull(convert(decimal(18,2),cdv_e.ValueChar),0) event_bar_split,&#xD;&#xA;       case when cdv.valuechar is not null or cdv_r.valuechar is not null then (v.net_amount-isnull(convert(decimal(18,2),cdv.valuechar),0)-isnull(convert(decimal(18,2),cdv_r.ValueChar),0) -isnull(convert(decimal(18,2),cdv_e.ValueChar),0)) else 0  end game_split&#x9;&#x9;&#x9;   &#xD;&#xA;          from TransactionView v left outer join trxdiscounts td on td.trxid = v.trxid and td.LineId=v.lineid,&#xD;&#xA;&#x9;&#x9;&#x9;   products p left outer join category c on p.CategoryId = c.CategoryId&#xD;&#xA;&#x9;&#x9;&#x9;              left outer join category c1 on c1.categoryid = c.ParentCategoryId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  left outer join CustomDataView cdv on cdv.CustomDataSetId=p.CustomDataSetId and cdv.name='Food Price Split'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  left outer join CustomDataView cdv_e on cdv_e.CustomDataSetId=p.CustomDataSetId and cdv_e.name='vent Bar Split'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  left outer join CustomDataView cdv_r on cdv_r.CustomDataSetId=p.CustomDataSetId and cdv_r.name='Retail Split',&#xD;&#xA;&#x9;&#x9;       trx_lines tl left outer join trx_lines tl1 on tl1.trxid = tl.trxid and tl1.LineId = tl.ParentLineId &#xD;&#xA;&#x9;&#x9;&#x9;                left outer join products p1 on p1.product_id=tl1.product_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left outer join category c2 on c2.CategoryId=p1.CategoryId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left outer join Category c3 on c3.CategoryId=c2.ParentCategoryId&#xD;&#xA;&#x9;&#x9; where v.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;&#x9;&#x9;  -- and v.site_id = s.site_id&#xD;&#xA;&#x9;&#x9;  and (v.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#x9;&#x9;   and v.product_id = p.product_id&#xD;&#xA;&#x9;&#x9;   and v.amount &lt;&gt; 0&#xD;&#xA;&#x9;&#x9;   and tl.trxid = v.trxid&#xD;&#xA;--&#x9;&#x9;   and v.trxid = 62531&#xD;&#xA;&#x9;&#x9;   and tl.LineId = v.lineid&#xD;&#xA;and v.status NOT IN ('OPEN','RESERVED','BOOKING','pending') )v&#xD;&#xA;&#x9;&#x9; group by major_group_sales&#xD;&#xA;        ) b ) c&#xD;&#xA;group by category,Major_Group_Sales&#xD;&#xA;union all &#xD;&#xA;select 'Open Transactions' category,'-' Major_Group_Sales,sum(tp.amount) Gross_Sales,0 Item_Discounts,sum(amount) Sales_Less_Item_Disc,&#xD;&#xA;       100 [%Sales],&#xD;&#xA;&#x9;   sum(amount) Net_Amount,0 net_amount_tax_exempt,0 net_amount_zerotax,&#xD;&#xA;&#x9;   NULL Tax,&#xD;&#xA;&#x9;   sum(amount) total_amount,NULL,NULL,NULL,NULL, count(distinct(v.trxid)) [Number of Transactions]&#xD;&#xA;  from trx_header v left join TrxPayments tp on tp.trxid = v.trxid&#xD;&#xA;where v.trxdate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;--and v.trxid = 31997&#xD;&#xA;and (v.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;--and s.site_id=v.site_id&#xD;&#xA;--and v.trxid = 62531&#xD;&#xA;and v.status IN ('OPEN','pending')&#xD;&#xA;--group by s.site_name&#xD;&#xA; order by 1 desc,6 desc" Name="Category">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="--declare @fromdate datetime = '2019-12-10'&#xD;&#xA;--declare @todate datetime ='2019-12-11' &#xD;&#xA;&#xD;&#xA;SELECT t.pos_machine 'Terminal Name',&#xD;&#xA;&#x9;&#x9;cast(isnull(sum(t.amount * (1 - isnull(td.DiscountPercentage,0)/100)) , 0) as float) /count(distinct t.trxid) 'Average Amount of Sale',&#xD;&#xA;&#x9;&#x9;count(distinct t.trxid) 'Total Orders'&#xD;&#xA;  FROM TransactionView t&#xD;&#xA;&#x9;   LEFT Outer JOin TrxDiscounts td on t.trxid = td.trxid and t.lineId = td.LineId, &#xD;&#xA;&#x9;   products p&#xD;&#xA; WHERE t.TRXDATE BETWEEN dbo.ConvertToServerTime(@fromDate,@offSet) AND dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   AND t.STATUS = 'CLOSED'&#xD;&#xA;   AND t.product_id = p.product_id&#xD;&#xA;   and (t.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;  gROUP BY t.pos_machine" Name="AvGSales">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FROMDATE">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Gametime" SelectCommand="select 'Cash Tips' 'Tips Type',sum(l.tipvalue) Tip_Amount&#xD;&#xA;  from site s,Attendance a  &#xD;&#xA;       left outer join AttendanceLog l on l.AttendanceId = a.AttendanceId                           &#xD;&#xA;&#x9;   where (s.site_id = a.site_id or a.site_id IS NULL)&#xD;&#xA;and l.isactive = 'Y'            &#xD;&#xA;  and a.StartDate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (s.site_id in (@Site) or -1 in (@Site))  &#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 'Credit Card Tips',sum(isnull(tp.tipamount,0))&#xD;&#xA;&#x9;&#x9;   from trxpayments tp,trx_header th&#xD;&#xA;&#x9;&#x9;  where tp.paymentdate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet) &#xD;&#xA;                            and tp.trxid = th.trxid &#xD;&#xA;and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;&#x9;&#x9;   " Name="Tips">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="--declare @fromdate datetime = '2020-01-01 6:00'&#xD;&#xA;--declare @todate datetime = '2020-01-02 6:00';&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;;with Shift_user as&#xD;&#xA;(select 1 Sortid, 'Cash Collection' as 'Type', sum(amount) Amount from (&#xD;&#xA;select  Convert(varchar, dateadd(hour, -6, trxdate), 102) TransactionDate,&#xD;&#xA;u.username+' '+u.EmpLastName username,u.EmpNumber,&#xD;&#xA;       (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' &#xD;&#xA;then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end) paymentmode,tp.PosMachine,&#xD;&#xA;sum(tp.amount) amount,sum(tp.tipamount) tipamount&#xD;&#xA;  from trxpayments tp  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;&#x9;   trx_header th,&#xD;&#xA;&#x9;   users u&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid&#xD;&#xA;   and tp.paymentdate between dbo.ConvertToServerTime(@fromDate,@offSet)  &#xD;&#xA;   and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; group by Convert(varchar, dateadd(hour, -6, trxdate), 102),tp.PosMachine,u.EmpNumber,u.username+' '+u.EmpLastName, &#xD;&#xA; (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' &#xD;&#xA;then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)&#xD;&#xA;having sum(tp.amount) &lt;&gt; 0) a where a.paymentmode = 'Cash' and PosMachine not in ('Kiosk1', 'Kiosk2') and PosMachine in ('POS6','POS7','POS8','POS9')&#xD;&#xA;&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 4 ,'Paid_Out',isnull(sum(sf.shift_amount),0) paid_out&#xD;&#xA;from shift s left join shiftlog sf on s.shift_key=sf.shift_key and sf.shift_action='Paid Out'&#xD;&#xA;where s.shift_time&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and s.shift_time &lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (s.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 3,'Paid_In',isnull(sum(sf1.shift_amount),0) paid_In&#xD;&#xA;from shift s &#xD;&#xA;left join shiftlog sf1 on s.shift_key=sf1.shift_key and sf1.shift_action='Paid In'&#xD;&#xA;where s.shift_time&gt;=dbo.ConvertToServerTime(@fromDate,@offSet) and s.shift_time &lt;dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;and (s.site_id in (@Site) or -1 in (@Site))&#xD;&#xA;union all&#xD;&#xA;&#xD;&#xA;select 2,'Credit Card Tips' as 'Category', sum(tipamount) Amount from (&#xD;&#xA;select  Convert(varchar, dateadd(hour, -6, trxdate), 102) TransactionDate,&#xD;&#xA;u.username+' '+u.EmpLastName username,u.EmpNumber,&#xD;&#xA;       (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' &#xD;&#xA;then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end) paymentmode,tp.PosMachine,&#xD;&#xA;sum(tp.amount) amount,sum(tp.tipamount) tipamount&#xD;&#xA;  from trxpayments tp  left outer join CCTransactionsPGW ccpgw on ccpgw.ResponseID=tp.CCResponseId,&#xD;&#xA;       PaymentModes pm,&#xD;&#xA;&#x9;   trx_header th,&#xD;&#xA;&#x9;   users u&#xD;&#xA; where tp.PaymentModeId = pm.PaymentModeId&#xD;&#xA;   and tp.TrxId = th.trxid&#xD;&#xA;   and tp.paymentdate between dbo.ConvertToServerTime(@fromDate,@offSet)  and dbo.ConvertToServerTime(@toDate,@offSet)&#xD;&#xA;   and u.user_id = th.user_id&#xD;&#xA;   and (tp.site_id in (@Site) or -1 in (@Site))&#xD;&#xA; group by Convert(varchar, dateadd(hour, -6, trxdate), 102),tp.PosMachine,u.EmpNumber,u.username+' '+u.EmpLastName, &#xD;&#xA;         (case when pm.isCreditCard='Y' then (case when ccpgw.UserTraceData='' or ccpgw.UserTraceData is null or ccpgw.UserTraceData ='Unknown' &#xD;&#xA;then isnull(tp.CreditCardName,pm.paymentmode) else ccpgw.usertracedata end )else pm.PaymentMode end)&#xD;&#xA;having sum(tp.amount) &lt;&gt; 0) a where PosMachine not in ('Kiosk1', 'Kiosk2') and PosMachine in ('POS6','POS7','POS8','POS9')&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;select *  from (select * from  Shift_user&#xD;&#xA;union all&#xD;&#xA;select 5 sortid,'Cash Deposit to Safe', sum(case when type in('Cash Collection','Paid_In') then Amount else -1*Amount end )&#xD;&#xA;from shift_user) A&#xD;&#xA;order by Sortid&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" Name="CashTosafe">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offSet">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="8.90000025431315in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsSales" Width="4.34372785636738in" Height="0.400000005960464in" Left="0in" Top="0.293828884760539in" Name="crosstab3" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.35415393851243in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Invoice" Name="textBox29" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.98957359790802in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.amount" Format="{0:N2}" Name="textBox30" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.35415393851243in" />
+              <Column Width="1.98957404730812in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="invoice">
+              <ReportItem>
+                <TextBox Width="2.35415393851243in" Height="0.200000002980232in" Left="0.00835394859313965in" Top="0.19999997317791in" Value="=MessagesFunctions.getMessage('Income')" Name="Microsoft Himalaya" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="amount">
+              <ReportItem>
+                <TextBox Width="1.98957359790802in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Amount')" Name="textBox15" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737802in" Height="0.200000002980232in" Left="0in" Top="0.09375in" Value="=MessagesFunctions.getMessage('Income')" Name="textBox8">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsCustomerDeposit" Width="4.32916549215472in" Height="0.400000005960464in" Left="0in" Top="1.10007882118225in" Name="crosstab4" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.35208349018495in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Deposit" Name="textBox33" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.97708165645599in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Amount" Format="{0:N2}" Name="textBox34" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.35208349018495in" />
+              <Column Width="1.97708200196977in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="deposit">
+              <ReportItem>
+                <TextBox Width="2.35208349018495in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Deposit')" Name="textBox31" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="amount1">
+              <ReportItem>
+                <TextBox Width="1.97708165645599in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Amount')" Name="textBox32" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737802in" Height="0.200000002980232in" Left="0in" Top="0.899999936421712in" Value="=MessagesFunctions.getMessage('Customer Deposit')" Name="textBox35">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="AccountsReceivable" Width="4.32710312061848in" Height="0.400000035762787in" Left="0in" Top="2.00833320617676in" Name="crosstab6" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.06980213333575in" Height="0.200000017881393in" Left="0in" Top="0in" Value="= Fields.amount" Format="{0:N2}" Name="textBox38" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.06980200437803in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000041723254in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.25730109214783in" Height="0.200000017881393in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Account_Receivables')" Name="textBox37" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="account_Receivables">
+              <ChildGroups>
+                <TableGroup Name="group2">
+                  <ReportItem>
+                    <TextBox Width="2.25730109214783in" Height="0.200000017881393in" Left="0in" Top="0in" Value="= Fields.Account_Receivables" Name="textBox26" StyleName="Normal.TableGroup">
+                      <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                        <Font Name="Arial Unicode MS" Size="8pt" />
+                        <BorderStyle Default="Solid" />
+                        <BorderColor Default="LightGray" />
+                        <BorderWidth Default="1px" />
+                        <Padding Top="2pt" Bottom="2pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="detail">
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                  </ChildGroups>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.Account_Receivables" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.Account_Receivables" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="amount2">
+              <ReportItem>
+                <TextBox Width="2.06980213333575in" Height="0.200000017881393in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Amount')" Name="textBox21" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737801in" Height="0.200000002980232in" Left="0in" Top="1.79999987284342in" Value="=MessagesFunctions.getMessage('Accounts Receivable')" Name="textBox41">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsIncredibleCredits" Width="4.29791584599204in" Height="0.400000005960464in" Left="0in" Top="2.90007909138997in" Name="crosstab1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.24791622161865in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Credit" Name="textBox3" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.04999953740546in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Value" Format="{0:N2}" Name="textBox4" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.24791630858658in" />
+              <Column Width="2.04999953740546in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="incredibleCredit">
+              <ReportItem>
+                <TextBox Width="2.24791622161865in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Game card credits')" Name="textBox1" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="value">
+              <ReportItem>
+                <TextBox Width="2.04999953740546in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Value')" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderStyle Default="None" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737801in" Height="0.200000002980232in" Left="0in" Top="2.70000012715658in" Value="=MessagesFunctions.getMessage('Game Card details')" Name="textBox5">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="Drawer Deposit" Width="9.81874886029011in" Height="0.600000077485884in" Left="0in" Top="3.80000019073486in" Name="crosstab8" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.893749150315377in" Height="0.200000031789093in" Left="0in" Top="0in" Value="= Fields.[Cash Counted]" Format="{0:N2}" Name="textBox63" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.852083415428149in" Height="0.200000019868166in" Left="0in" Top="0in" Value="= Fields.[Cash Pulled]" Format="{0:N2}" Name="textBox64" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416532333591in" Height="0.200000025828631in" Left="0in" Top="0in" Value="= Fields.[Checks Counted]" Format="{0:N2}" Name="textBox65" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416356026412in" Height="0.200000031789097in" Left="0in" Top="0in" Value="= Fields.[Initial Drawer]" Format="{0:N2}" Name="textBox66" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789584067436614in" Height="0.200000031789096in" Left="0in" Top="0in" Value="= Fields.[Total Deposit]" Format="{0:N2}" Name="textBox67" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.831250691845918in" Height="0.20000002582863in" Left="0in" Top="0in" Value="= Fields.[Over Short]" Format="{0:N2}" Name="textBox68" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416074126058in" Height="0.200000025828635in" Left="0in" Top="0in" Value="= Fields.AMEX" Format="{0:N2}" Name="textBox69" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832682457867in" Height="0.200000019868165in" Left="0in" Top="0in" Value="= Fields.Mastercard" Format="{0:N2}" Name="textBox70" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832291423521in" Height="0.20000002582863in" Left="0in" Top="0in" Value="= Fields.Visa" Format="{0:N2}" Name="textBox71" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.695833674794842in" Height="0.200000025828629in" Left="0in" Top="0in" Value="= Fields.Discover" Format="{0:N2}" Name="textBox72" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.768750981625184in" Height="0.200000031789094in" Left="0in" Top="0in" Value="= Fields.Tips" Format="{0:N2}" Name="textBox73" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.893749150315377in" Height="0.200000031789093in" Left="0in" Top="0in" Value="= Sum(Fields.[Cash Counted])" Format="{0:N2}" Name="textBox85" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.852083415428149in" Height="0.200000019868166in" Left="0in" Top="0in" Value="= Sum(Fields.[Cash Pulled])" Format="{0:N2}" Name="textBox86" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416532333591in" Height="0.200000025828631in" Left="0in" Top="0in" Value="= Sum(Fields.[Checks Counted])" Format="{0:N2}" Name="textBox87" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416356026412in" Height="0.200000031789097in" Left="0in" Top="0in" Value="= Sum(Fields.[Initial Drawer])" Format="{0:N2}" Name="textBox88" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789584067436614in" Height="0.200000031789096in" Left="0in" Top="0in" Value="= Sum(Fields.[Total Deposit])" Format="{0:N2}" Name="textBox89" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.831250691845918in" Height="0.20000002582863in" Left="0in" Top="0in" Value="= Sum(Fields.[Over Short])" Format="{0:N2}" Name="textBox90" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.810416074126058in" Height="0.200000025828635in" Left="0in" Top="0in" Value="= Sum(Fields.AMEX)" Format="{0:N2}" Name="textBox91" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832682457867in" Height="0.200000019868165in" Left="0in" Top="0in" Value="= Sum(Fields.Mastercard)" Format="{0:N2}" Name="textBox92" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832291423521in" Height="0.20000002582863in" Left="0in" Top="0in" Value="= Sum(Fields.Visa)" Format="{0:N2}" Name="textBox93" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.695833674794842in" Height="0.200000025828629in" Left="0in" Top="0in" Value="= Sum(Fields.Discover)" Format="{0:N2}" Name="textBox94" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.768750981625184in" Height="0.200000031789094in" Left="0in" Top="0in" Value="= Sum(Fields.Tips)" Format="{0:N2}" Name="textBox95" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="0.893749150315377in" />
+              <Column Width="0.852083503781871in" />
+              <Column Width="0.81041654045153in" />
+              <Column Width="0.81041639414077in" />
+              <Column Width="0.789584082961676in" />
+              <Column Width="0.831250534204359in" />
+              <Column Width="0.810416028363872in" />
+              <Column Width="0.820832696041077in" />
+              <Column Width="0.820832183953419in" />
+              <Column Width="0.695833561779167in" />
+              <Column Width="0.768750967073404in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000031789093in" />
+              <Row Height="0.200000031789093in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.914582986012759in" Height="0.200000019868167in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Username')" Name="textBox62" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="username">
+              <ChildGroups>
+                <TableGroup Name="group4">
+                  <ReportItem>
+                    <TextBox Width="0.914582986012759in" Height="0.200000019868167in" Left="0in" Top="0in" Value="= Fields.Username" Name="textBox60" StyleName="Normal.TableGroup">
+                      <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                        <Font Name="Arial Unicode MS" Size="8pt" />
+                        <BorderStyle Default="Solid" />
+                        <BorderColor Default="LightGray" />
+                        <BorderWidth Default="1px" />
+                        <Padding Top="2pt" Bottom="2pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="detail">
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                  </ChildGroups>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.Username" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.Username" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+            <TableGroup Name="total2">
+              <ReportItem>
+                <TextBox Width="0.914582986012759in" Height="0.200000019868167in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox74" StyleName="Civic.GrandTotal">
+                  <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="cashCounted">
+              <ReportItem>
+                <TextBox Width="0.893749150315377in" Height="0.200000031789093in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash Counted')" Name="textBox39" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="cashPulled">
+              <ReportItem>
+                <TextBox Width="0.852083415428149in" Height="0.200000019868166in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash Pulled')" Name="textBox40" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="checksCounted">
+              <ReportItem>
+                <TextBox Width="0.810416532333591in" Height="0.200000025828631in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Checks Counted')" Name="textBox47" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="initialDrawer">
+              <ReportItem>
+                <TextBox Width="0.810416356026412in" Height="0.200000031789097in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Initial Drawer')" Name="textBox52" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="totalDeposit">
+              <ReportItem>
+                <TextBox Width="0.789584067436614in" Height="0.200000031789096in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Deposit')" Name="textBox53" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="overShort">
+              <ReportItem>
+                <TextBox Width="0.831250691845918in" Height="0.20000002582863in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Over Short')" Name="textBox54" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="aMEX">
+              <ReportItem>
+                <TextBox Width="0.810416074126058in" Height="0.200000025828635in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('AMEX')" Name="textBox55" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="mastercard">
+              <ReportItem>
+                <TextBox Width="0.820832682457867in" Height="0.200000019868165in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Mastercard')" Name="textBox56" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="visa">
+              <ReportItem>
+                <TextBox Width="0.820832291423521in" Height="0.20000002582863in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Visa')" Name="textBox57" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="discover">
+              <ReportItem>
+                <TextBox Width="0.695833674794842in" Height="0.200000025828629in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Discover')" Name="textBox58" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="tips">
+              <ReportItem>
+                <TextBox Width="0.768750981625184in" Height="0.200000031789094in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tips')" Name="textBox59" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737801in" Height="0.200000002980232in" Left="0in" Top="3.60000006357829in" Value="=MessagesFunctions.getMessage('Drawer  Deposits')" Name="textBox96">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.81873893737801in" Height="0.209999993443489in" Left="0in" Top="4.68125009536743in" Value="=MessagesFunctions.getMessage('Category Sales')" Name="textBox17">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="Category" Width="9.80832176958805in" Height="0.600000056771277in" Left="0in" Top="4.90000025431315in" Name="crosstab9" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.85208274370354in" Height="0.200000024884229in" Left="0in" Top="0in" Value="= Fields.Gross_Sales" Format="{0:N2}" Name="textBox106" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789582517996465in" Height="0.200000018923763in" Left="0in" Top="0in" Value="= Fields.Item_Discounts" Format="{0:N2}" Name="textBox107" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.831249206760833in" Height="0.200000024884228in" Left="0in" Top="0in" Value="= Fields.Sales_Less_Item_Disc" Format="{0:N2}" Name="textBox108" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832488163129in" Height="0.200000018923762in" Left="0in" Top="0in" Value="= Fields.[%sales]" Format="{0:N2}" Name="textBox109" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.799998310084907in" Height="0.200000030844693in" Left="0in" Top="0in" Value="= Fields.Taxable_Net_Amount" Format="{0:N2}" Name="textBox110" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.779166568936616in" Height="0.200000018923761in" Left="0in" Top="0in" Value="= Fields.Tax_Exempt_Net_Amount" Format="{0:N2}" Name="textBox111" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.78958144144494in" Height="0.200000030844691in" Left="0in" Top="0in" Value="= Fields.ZeroTax_Net_Amount" Format="{0:N2}" Name="textBox112" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.70624869093666in" Height="0.200000024884226in" Left="0in" Top="0in" Value="= Fields.tax" Format="{0:N2}" Name="textBox113" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.727081583381779in" Height="0.20000001892376in" Left="0in" Top="0in" Value="= Fields.total_amount" Format="{0:N2}" Name="textBox114" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" Bold="False" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.77916560462788in" Height="0.200000024884224in" Left="0in" Top="0in" Value="= Fields.[Number of Transactions]" Name="textBox119" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.85208274370354in" Height="0.200000024884229in" Left="0in" Top="0in" Value="= Sum(Fields.Gross_Sales)" Format="{0:N2}" Name="textBox148" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789582517996465in" Height="0.200000018923763in" Left="0in" Top="0in" Value="= Sum(Fields.Item_Discounts)" Format="{0:N2}" Name="textBox149" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.831249206760833in" Height="0.200000024884228in" Left="0in" Top="0in" Value="= Sum(Fields.Sales_Less_Item_Disc)" Format="{0:N2}" Name="textBox150" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.820832488163129in" Height="0.200000018923762in" Left="0in" Top="0in" Value="= Sum(Fields.[%sales])" Format="{0:N2}" Name="textBox151" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.799998310084907in" Height="0.200000030844693in" Left="0in" Top="0in" Value="= Sum(Fields.Taxable_Net_Amount)" Format="{0:N2}" Name="textBox152" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.779166568936616in" Height="0.200000018923761in" Left="0in" Top="0in" Value="= Sum(Fields.Tax_Exempt_Net_Amount)" Format="{0:N2}" Name="textBox153" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.78958144144494in" Height="0.200000030844691in" Left="0in" Top="0in" Value="= Sum(Fields.ZeroTax_Net_Amount)" Format="{0:N2}" Name="textBox154" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.70624869093666in" Height="0.200000024884226in" Left="0in" Top="0in" Value="= Sum(Fields.tax)" Format="{0:N2}" Name="textBox156" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.727081583381779in" Height="0.20000001892376in" Left="0in" Top="0in" Value="= Sum(Fields.total_amount)" Format="{0:N2}" Name="textBox157" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.77916560462788in" Height="0.200000024884224in" Left="0in" Top="0in" Value="= Sum(Fields.[Number of Transactions])" Name="textBox162" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="0.852082598648347in" />
+              <Column Width="0.789582391137067in" />
+              <Column Width="0.831249098707665in" />
+              <Column Width="0.820832312198478in" />
+              <Column Width="0.79999822763626in" />
+              <Column Width="0.779166627715566in" />
+              <Column Width="0.789581514204765in" />
+              <Column Width="0.706248683685104in" />
+              <Column Width="0.72708152592656in" />
+              <Column Width="0.77916560462788in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000024884224in" />
+              <Row Height="0.200000024884224in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.997916914813487in" Height="0.200000024884225in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Category')" Name="textBox104" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.935416344886933in" Height="0.200000018923764in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Major Group Sales')" Name="textBox105" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="category1">
+              <ChildGroups>
+                <TableGroup Name="group5">
+                  <ReportItem>
+                    <TextBox Width="0.997916914813487in" Height="0.200000024884225in" Left="0in" Top="0in" Value="= Fields.category" Name="textBox100" StyleName="Normal.TableGroup">
+                      <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                        <Font Name="Arial Unicode MS" Size="8pt" />
+                        <BorderStyle Default="Solid" />
+                        <BorderColor Default="LightGray" />
+                        <BorderWidth Default="1px" />
+                        <Padding Top="2pt" Bottom="2pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="major_Group_Sales">
+                      <ChildGroups>
+                        <TableGroup Name="group6">
+                          <ReportItem>
+                            <TextBox Width="0.935416344886933in" Height="0.200000018923764in" Left="0in" Top="0in" Value="= Fields.Major_Group_Sales" Name="textBox101" StyleName="Normal.TableGroup">
+                              <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                                <Font Name="Arial Unicode MS" Size="8pt" />
+                                <BorderStyle Default="Solid" />
+                                <BorderColor Default="LightGray" />
+                                <BorderWidth Default="1px" />
+                                <Padding Top="2pt" Bottom="2pt" />
+                              </Style>
+                            </TextBox>
+                          </ReportItem>
+                          <ChildGroups>
+                            <TableGroup Name="detail">
+                              <Groupings>
+                                <Grouping />
+                              </Groupings>
+                            </TableGroup>
+                          </ChildGroups>
+                        </TableGroup>
+                      </ChildGroups>
+                      <Groupings>
+                        <Grouping Expression="= Fields.Major_Group_Sales" />
+                      </Groupings>
+                      <Sortings>
+                        <Sorting Expression="= Fields.Major_Group_Sales" Direction="Asc" />
+                      </Sortings>
+                    </TableGroup>
+                  </ChildGroups>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.category" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.category" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+            <TableGroup Name="total5">
+              <ReportItem>
+                <TextBox Width="1.93333324015593in" Height="0.200000024884225in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox102" StyleName="Civic.GrandTotal">
+                  <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="gross_Sales">
+              <ReportItem>
+                <TextBox Width="0.85208274370354in" Height="0.200000024884229in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Sales')" Name="textBox61" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="item_Discounts">
+              <ReportItem>
+                <TextBox Width="0.789582517996465in" Height="0.200000018923763in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Item Discounts')" Name="textBox75" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="sales_Less_Item_Disc">
+              <ReportItem>
+                <TextBox Width="0.831249206760833in" Height="0.200000024884228in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Sales Less Item Disc')" Name="textBox76" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="sales1">
+              <ReportItem>
+                <TextBox Width="0.820832488163129in" Height="0.200000018923762in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Sales')" Name="textBox77" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="taxable_Net_Amount">
+              <ReportItem>
+                <TextBox Width="0.799998310084907in" Height="0.200000030844693in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Taxable Net Amount')" Name="textBox78" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="tax_Exempt_Net_Amount">
+              <ReportItem>
+                <TextBox Width="0.779166568936616in" Height="0.200000018923761in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tax Exempt Net Amount')" Name="textBox79" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="zeroTax_Net_Amount">
+              <ReportItem>
+                <TextBox Width="0.78958144144494in" Height="0.200000030844691in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Zero Tax Net Amount')" Name="textBox80" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="tax">
+              <ReportItem>
+                <TextBox Width="0.70624869093666in" Height="0.200000024884226in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tax')" Name="textBox81" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="total_amount">
+              <ReportItem>
+                <TextBox Width="0.727081583381779in" Height="0.20000001892376in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Amount')" Name="textBox82" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="numberofTransactions">
+              <ReportItem>
+                <TextBox Width="0.77916560462788in" Height="0.200000024884224in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Number of Transactions')" Name="textBox99" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.79790560404471in" Height="0.209999993443489in" Left="0.0208333333333333in" Top="5.79166666666667in" Value="=MessagesFunctions.getMessage('Terminal Activity')" Name="textBox10">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="AvGSales" Width="6.21458120179448in" Height="0.608333356926798in" Left="0in" Top="6.00174522399902in" Name="crosstab5" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.10277733983114in" Height="0.202777779599019in" Left="0in" Top="0in" Value="= Fields.[Average Amount of Sale]" Format="{0:N2}" Name="textBox23" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.90485987643423in" Height="0.202777785642267in" Left="0in" Top="0in" Value="= Fields.[Total Orders]" Format="{0:N0}" Name="textBox24" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.10277733983114in" Height="0.202777779599019in" Left="0in" Top="0in" Value="= Sum(Fields.[Average Amount of Sale])" Format="{0:N2}" Name="textBox27" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.90485987643423in" Height="0.202777785642267in" Left="0in" Top="0in" Value="= Sum(Fields.[Total Orders])" Format="{0:N0}" Name="textBox28" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.10277725034421in" />
+              <Column Width="1.90485962996252in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.202777791685515in" />
+              <Row Height="0.202777791685515in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.20694432148775in" Height="0.202777791685515in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Terminal Name')" Name="textBox22" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="terminalName">
+              <ChildGroups>
+                <TableGroup Name="group1">
+                  <ReportItem>
+                    <TextBox Width="2.20694432148775in" Height="0.202777791685515in" Left="0in" Top="0in" Value="= Fields.[Terminal Name]" Name="textBox19" StyleName="Normal.TableGroup">
+                      <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                        <Font Name="Arial Unicode MS" Size="8pt" />
+                        <BorderStyle Default="Solid" />
+                        <BorderColor Default="LightGray" />
+                        <BorderWidth Default="1px" />
+                        <Padding Top="2pt" Bottom="2pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="detail">
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                  </ChildGroups>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.[Terminal Name]" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.[Terminal Name]" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+            <TableGroup Name="total1">
+              <ReportItem>
+                <TextBox Width="2.20694432148775in" Height="0.202777791685515in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox25" StyleName="Civic.GrandTotal">
+                  <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="averageAmountofSale">
+              <ReportItem>
+                <TextBox Width="2.10277733983114in" Height="0.202777779599019in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Average Amount of Sale')" Name="textBox14" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="totalOrders">
+              <ReportItem>
+                <TextBox Width="1.90485987643423in" Height="0.202777785642267in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Orders')" Name="textBox18" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.79790560404461in" Height="0.209999993443489in" Left="0.0208333333333333in" Top="6.89166704813639in" Value="=MessagesFunctions.getMessage('Tips')" Name="textBox36">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="Tips" Width="4.31833025320903in" Height="0.608333266278082in" Left="0in" Top="7.10174560546875in" Name="crosstab7" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.11228995534676in" Height="0.202777761469275in" Left="0in" Top="0in" Value="= Fields.Tip_Amount" Format="{0:N2}" Name="textBox49" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.11228995534676in" Height="0.202777761469275in" Left="0in" Top="0in" Value="= Sum(Fields.Tip_Amount)" Format="{0:N2}" Name="textBox51" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderStyle Default="Solid" />
+                      <BorderColor Default="LightGray" />
+                      <BorderWidth Default="1px" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.11228995534676in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.202777761469275in" />
+              <Row Height="0.202777761469275in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.20604016334803in" Height="0.202777767512527in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tips Type')" Name="textBox48" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="tipsType">
+              <ChildGroups>
+                <TableGroup Name="group3">
+                  <ReportItem>
+                    <TextBox Width="2.20604016334803in" Height="0.202777767512527in" Left="0in" Top="0in" Value="= Fields.[Tips Type]" Name="textBox46" StyleName="Normal.TableGroup">
+                      <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                        <Font Name="Arial Unicode MS" Size="8pt" />
+                        <BorderStyle Default="Solid" />
+                        <BorderColor Default="LightGray" />
+                        <BorderWidth Default="1px" />
+                        <Padding Top="2pt" Bottom="2pt" />
+                      </Style>
+                    </TextBox>
+                  </ReportItem>
+                  <ChildGroups>
+                    <TableGroup Name="detail">
+                      <Groupings>
+                        <Grouping />
+                      </Groupings>
+                    </TableGroup>
+                  </ChildGroups>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.[Tips Type]" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.[Tips Type]" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+            <TableGroup Name="total3">
+              <ReportItem>
+                <TextBox Width="2.20604016334803in" Height="0.202777767512527in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox50" StyleName="Civic.GrandTotal">
+                  <Style BackgroundColor="White" Color="Black" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="tip_Amount">
+              <ReportItem>
+                <TextBox Width="2.11228995534676in" Height="0.202777761469275in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Tip_Amount')" Name="textBox42" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="9.81873893737801in" Height="0.209999993443489in" Left="0in" Top="7.98992156982422in" Value="=MessagesFunctions.getMessage('Cash Deposit to Safe')" Name="textBox7">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="CashTosafe" Width="4.30833301730265in" Height="0.400000005960464in" Left="0in" Top="8.20000012715658in" Name="crosstab10" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.10208288186033in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Amount" Format="{0:N2}" Name="textBox120" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.10208288186033in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000002980232in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.20625006549652in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Deposit')" Name="textBox103" StyleName="Normal.TableHeader">
+                    <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="type1">
+              <ReportItem>
+                <TextBox Width="2.20625006549652in" Height="0.200000002980232in" Left="0in" Top="0in" Value="= Fields.Type" Name="textBox121" StyleName="Normal.TableGroup">
+                  <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8pt" />
+                    <BorderStyle Default="Solid" />
+                    <BorderColor Default="LightGray" />
+                    <BorderWidth Default="1px" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+              <ChildGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.Sortid" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.Sortid" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="amount4">
+              <ReportItem>
+                <TextBox Width="2.10208288186033in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Amount')" Name="textBox11" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Sortings>
+            <Sorting Expression="= Fields.Sortid" Direction="Asc" />
+          </Sortings>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000063578288in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000190734863in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="4.40000089009603in" Height="0.300000190734863in" Left="4.9833304087321in" Top="0.100000381469727in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.700000047683716in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="9.80832163492839in" Height="0.299960672855377in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('End Of Day Report')" Name="textBox6">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.80832163492844in" Height="0.199921324849129in" Left="0in" Top="0.300000031789144in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox13">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="9.80832163492844in" Height="0.200000002980232in" Left="0in" Top="0.5in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox20">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" />
+    <ReportParameter Name="fromdate" Type="DateTime" Text="From Date" AllowBlank="False" />
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" />
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Sites" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

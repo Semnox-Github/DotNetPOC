@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.GenericDisplayItemsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}"
+                                   Command="{Binding DataContext.LoadedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource {x:Type local:CustomScrollViewer}}"
+               TargetType="{x:Type local:CustomScrollViewer}"
+               x:Key="MultiScreenScrollViewer">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                             Value="True">
+                    <Setter Property="Size"
+                            Value="XSmall" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <ItemsPanelTemplate x:Key="SearchProductItemsPanelTemplate">
+            <VirtualizingStackPanel IsVirtualizing="True"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal"
+                                    VirtualizationMode="Recycling"/>
+        </ItemsPanelTemplate>
+
+        <ItemsPanelTemplate x:Key="ProductItemsPanelTemplate">
+            <VirtualizingStackPanel IsVirtualizing="True"
+                                    VerticalAlignment="Top"
+                                    VirtualizationMode="Recycling"/>
+        </ItemsPanelTemplate>
+
+        <Style x:Key="SearchAreaItemsControlStyle"
+               TargetType="{x:Type ItemsControl}">
+            <Setter Property="ItemsPanel"
+                    Value="{StaticResource ProductItemsPanelTemplate}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ItemsControl}">
+                        <local:CustomScrollViewer x:Name="scvItems"
+                                                  CanContentScroll="True" 
+                                                  VerticalScrollBarVisibility="Visible"
+                                                  HorizontalScrollBarVisibility="Disabled"
+                                                  Style="{StaticResource MultiScreenScrollViewer}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SizeChanged">
+                                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType=local:CustomScrollViewer}}"
+                                                           Command="{Binding DataContext.SizeChangedCommand, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType=local:CustomScrollViewer}}"
+                                                           Command="{Binding DataContext.SizeChangedCommand, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ItemsPresenter/>
+                        </local:CustomScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid x:Name="MainGrid">
+        <ItemsControl x:Name="ContentAreaItemsControl"
+                      Grid.Column="0"
+                      ItemsSource="{Binding CurrentDisplayItemModels, IsAsync=True}"
+                      Style="{StaticResource SearchAreaItemsControlStyle}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl x:Name="ItemsControl"
+                                  ItemsSource="{Binding IsAsync=True}"
+                                  ItemsPanel="{StaticResource SearchProductItemsPanelTemplate}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:GenericDisplayItemControl Heading="{Binding Heading, IsAsync=True}"
+                                                                 ItemsSource="{Binding ItemsSource, IsAsync=True}"
+                                                                 ButtonType="{Binding ButtonType, IsAsync=True}"
+                                                                 IsEnabled="{Binding IsEnabled, IsAsync=True}"
+                                                                 Margin="0,0,8,8"
+                                                                 Width="190">
+                                    <local:GenericDisplayItemControl.Style>
+                                        <Style BasedOn="{StaticResource {x:Type local:GenericDisplayItemControl}}"
+                                       TargetType="{x:Type local:GenericDisplayItemControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DataContext.MultiScreenItemBackground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}"
+                                                     Value="Grey">
+                                                    <Setter Property="Background"
+                                                    Value="{StaticResource Grid.Background}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DataContext.MultiScreenItemBackground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}"
+                                                     Value="White">
+                                                    <Setter Property="Background"
+                                                    Value="{StaticResource Control.BackGround}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:GenericDisplayItemControl.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="ItemClicked">
+                                            <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.ItemClickedCommand, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="OfferOrInfoClicked">
+                                            <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.ItemOfferOrInfoClickedCommand,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:GenericDisplayItemsUserControl}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </local:GenericDisplayItemControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Semnox.Parafait.POSUI.StaticMenu.ProductMenuUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Semnox.Parafait.POSUI.StaticMenu"
+             xmlns:commonui="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <commonui:NavigationUserControl Grid.Row="0" DataContext="{Binding NavigationTagsVM}" Margin="20,0,0,10">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="NavigationTagClicked">
+                    <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}"
+                                   Command="{Binding Path=DataContext.NavigationTagClickCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </commonui:NavigationUserControl>
+        <local:ProductMenuPanelView Grid.Row="1" DataContext="{Binding Path=DataContext.CurrentProductMenuPanelVM, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}"
+                                    PanelContentClick="{Binding Path=DataContext.PanelContentClickCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}" 
+                                    PanelContentInfoClick="{Binding Path=DataContext.PanelContentInfoClickCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ProductMenuUserControl}}}">
+            
+        </local:ProductMenuPanelView >
+    </Grid>
+</UserControl>

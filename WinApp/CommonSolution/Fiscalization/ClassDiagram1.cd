@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Semnox.Parafait.Fiscalization.ParafaitFiscalization">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <Members>
+      <Method Name="GetAllErrorFolderPath" Hidden="true" />
+      <Method Name="GetAllSentFolderPath" Hidden="true" />
+      <Method Name="GetCutOffDateForPurge" Hidden="true" />
+      <Method Name="GetDiscountedLineAmount" Hidden="true" />
+      <Method Name="GetDiscountedLinePrice" Hidden="true" />
+      <Method Name="GetDiscountedLineTaxAmount" Hidden="true" />
+      <Method Name="GetMoveFolderPath" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAEUACQAAgAAAChIACAAABAEyAUAAAAwIAAQDSAI=</HashCode>
+      <FileName>ParafaitFiscalization .cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Semnox.Parafait.Fiscalization.FiscalizationFactory">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAQAAAACAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FiscalizationFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Semnox.Parafait.Fiscalization.EcuadorFiscalization">
+    <Position X="7" Y="1" Width="2.5" />
+    <Members>
+      <Method Name="BuildCreditNoteHeadervalues" Hidden="true" />
+      <Method Name="BuildHeaderSection" Hidden="true" />
+      <Method Name="BuildInvoiceAttributes" Hidden="true" />
+      <Method Name="BuildInvoiceCustomerLineSection" Hidden="true" />
+      <Method Name="BuildInvoiceDetailsSection" Hidden="true" />
+      <Method Name="BuildInvoiceHeadervalues" Hidden="true" />
+      <Method Name="BuildInvoiceProductSection" Hidden="true" />
+      <Method Name="BuildInvoiceVendorLineSection" Hidden="true" />
+      <Method Name="BuildProfileDTO" Hidden="true" />
+      <Method Name="GetAuthenticationKey" Hidden="true" />
+      <Method Name="GetDiscountAmount" Hidden="true" />
+      <Method Name="GetDiscountedTotalAmount" Hidden="true" />
+      <Method Name="GetDiscountedTotalPreTaxAmount" Hidden="true" />
+      <Method Name="GetDiscountedTotalTaxAmount" Hidden="true" />
+      <Method Name="GetEligibleInvoiceRecords" Hidden="true" />
+      <Method Name="GetexternalSystemReference" Hidden="true" />
+      <Method Name="GetInvoiceType" Hidden="true" />
+      <Method Name="GetLookupValueDescription" Hidden="true" />
+      <Method Name="GetOutFolderPathInfo" Hidden="true" />
+      <Method Name="GetPosAPIToken" Hidden="true" />
+      <Method Name="GetPostURLForInvoice" Hidden="true" />
+      <Method Name="GetTransactionDTO" Hidden="true" />
+      <Method Name="GetTransactionDTOfromRequest" Hidden="true" />
+      <Method Name="LoadTemplateData" Hidden="true" />
+      <Method Name="LogError" Hidden="true" />
+      <Method Name="MoveFiles" Hidden="true" />
+      <Method Name="PostJson" Hidden="true" />
+      <Method Name="SetInvoiceTemplates" Hidden="true" />
+      <Method Name="SetInvoiceTypeAttributes" Hidden="true" />
+      <Method Name="SetLookUpValueList" Hidden="true" />
+      <Method Name="TruncateDecimal" Hidden="true" />
+      <Method Name="UpdateExternalSystemReference" Hidden="true" />
+      <Method Name="ValidateTransactionData" Hidden="true" />
+      <Method Name="VerifyFileForUpdates" Hidden="true" />
+      <Method Name="VerifyFolderPath" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>kUxMJ8HoMkEdyRgVLxq3CZJBMJkArrEElKgS5A8K4lo=</HashCode>
+      <FileName>Ecuador\EcuadorFiscalization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Semnox.Parafait.Fiscalization.PeruFiscalization">
+    <Position X="10" Y="0.5" Width="2.5" />
+    <Members>
+      <Method Name="BuildCreditNoteHeadervalues" Hidden="true" />
+      <Method Name="BuildCreditNoteLegalMonetaryValues" Hidden="true" />
+      <Method Name="BuildCreditNoteLineSection" Hidden="true" />
+      <Method Name="BuildCreditNoteTaxTotalValues" Hidden="true" />
+      <Method Name="BuildHeaderSection" Hidden="true" />
+      <Method Name="BuildInvoiceHeadervalues" Hidden="true" />
+      <Method Name="BuildInvoiceLegalMonetaryValues" Hidden="true" />
+      <Method Name="BuildInvoiceLineSection" Hidden="true" />
+      <Method Name="BuildInvoiceTaxTotalSubTotalValues" Hidden="true" />
+      <Method Name="BuildInvoiceTaxTotalValues" Hidden="true" />
+      <Method Name="BuildLineDiscountTotalValues" Hidden="true" />
+      <Method Name="BuildLineDiscountValues" Hidden="true" />
+      <Method Name="BuildPeruAttributes" Hidden="true" />
+      <Method Name="BuildProfileDTO" Hidden="true" />
+      <Method Name="BuildTaxAndLegalSummaryDetailSection" Hidden="true" />
+      <Method Name="CalculateTaxDetails" Hidden="true" />
+      <Method Name="GeneratePeruAttributesList" Hidden="true" />
+      <Method Name="GetEligibleInvoiceRecords" Hidden="true" />
+      <Method Name="GetEligibleOverrideOptions" Hidden="true" />
+      <Method Name="GetIDString" Hidden="true" />
+      <Method Name="GetInvoiceType" Hidden="true" />
+      <Method Name="GetLineDiscountAmount" Hidden="true" />
+      <Method Name="GetLinePrice" Hidden="true" />
+      <Method Name="GetLookupValueDescription" Hidden="true" />
+      <Method Name="GetOriginalTrx" Hidden="true" />
+      <Method Name="GetOutFolderPathInfo" Hidden="true" />
+      <Method Name="GetPeruAuthenticationKey" Hidden="true" />
+      <Method Name="GetPostURLForInvoice" Hidden="true" />
+      <Method Name="GetPostURLForToken" Hidden="true" />
+      <Method Name="GetTransactionDTO" Hidden="true" />
+      <Method Name="GetTransactionDTOfromRequest" Hidden="true" />
+      <Method Name="GetTrxLineCount" Hidden="true" />
+      <Method Name="GetUserName" Hidden="true" />
+      <Method Name="GetUserPassword" Hidden="true" />
+      <Method Name="LoadTemplateData" Hidden="true" />
+      <Method Name="LogError" Hidden="true" />
+      <Method Name="MapPeruAttributes" Hidden="true" />
+      <Method Name="MovePostedFiles" Hidden="true" />
+      <Method Name="PostFiles" Hidden="true" />
+      <Method Name="PostXML" Hidden="true" />
+      <Method Name="SetCreditNoteTemplates" Hidden="true" />
+      <Method Name="SetInvoiceTemplates" Hidden="true" />
+      <Method Name="SetInvoiceTypeAttributes" Hidden="true" />
+      <Method Name="SetLookUpValueList" Hidden="true" />
+      <Method Name="setMoveFolderPath" Hidden="true" />
+      <Method Name="UpdateExternalSystemReference" Hidden="true" />
+      <Method Name="ValidateTransactionData" Hidden="true" />
+      <Method Name="VerifyFileForUpdates" Hidden="true" />
+      <Method Name="VerifyFolderPath" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>uBR+Dclz9LFe4ZEX7xq1eY3yMrtyqe8icDA05t8q600=</HashCode>
+      <FileName>Peru\PeruFiscalization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Semnox.Parafait.Fiscalization.ParafaitFiscalizationNames">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAgAAAEAAEAAAA=</HashCode>
+      <FileName>FiscalizationFactory.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

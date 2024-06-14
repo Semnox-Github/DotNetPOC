@@ -1,0 +1,44 @@
+﻿[
+  {
+    "ProductCalendarId": 23,
+    "Product_Id": 1360,
+    "Day": "3",
+    "Date": "2019-02-09T00:00:00",
+    "FromTime": 6.3,
+    "ToTime": 9.3,
+    "ShowHide": "Y",
+    "Site_id": 1010,
+    "Guid": "194cf9b2-9d96-447a-a012-12f414451442",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+    {
+      "ProductCalendarId": 24,
+      "Product_Id": 1360,
+      "Day": "6",
+      "Date": "2019-02-09T00:00:00",
+      "FromTime": 6.3,
+      "ToTime": 9.3,
+      "ShowHide": "Y",
+      "Site_id": 1010,
+      "Guid": "3cbbd0d8-0dd8-4999-a0ae-12909964b9df",
+      "SynchStatus": false,
+      "MasterEntityId": -1,
+      "IsChanged": false
+    },
+    {
+      "ProductCalendarId": 26,
+      "Product_Id": 1360,
+      "Day": "1022",
+      "Date": "2020-01-09T00:00:00",
+      "FromTime": 2.0,
+      "ToTime": 5.45,
+      "ShowHide": "N",
+      "Site_id": 1010,
+      "Guid": "319f9f9c-59b1-472c-8594-23c43d4ab0cd",
+      "SynchStatus": false,
+      "MasterEntityId": -1,
+      "IsChanged": false
+    }
+  ]

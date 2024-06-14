@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{667EAB12-6C89-48ED-9FCB-934697CC2779}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Core.Utilities</RootNamespace>
+    <AssemblyName>Utilities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\..\..\..\OTS\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\SourceCode\Software\OTS\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationRequestLogDetailBL.cs" />
+    <Compile Include="ApplicationRequestLogDetailDataHandler.cs" />
+    <Compile Include="ApplicationRequestLogDetailDTO.cs" />
+    <Compile Include="ApplicationRequestLogDataHandler.cs" />
+    <Compile Include="ApplicationRequestLogBL.cs" />
+    <Compile Include="ApplicationRequestLogDTO.cs" />
+    <Compile Include="BaseContainer.cs" />
+    <Compile Include="ByteArray.cs" />
+    <Compile Include="CardType.cs" />
+    <Compile Include="CommonLookupDTO.cs" />
+    <Compile Include="CommonStaticClass.cs" />
+    <Compile Include="CoreKeyValueStruct.cs" />
+    <Compile Include="DataAccessHandler.cs" />
+    <Compile Include="DataRefreshFrequency.cs" />
+    <Compile Include="DBUtils.cs" />
+    <Compile Include="DeviceClass.cs" />
+    <Compile Include="DeviceDefinition.cs" />
+    <Compile Include="Devices.cs" />
+    <Compile Include="DeviceSubType.cs" />
+    <Compile Include="DeviceType.cs" />
+    <Compile Include="DtoListHash.cs" />
+    <Compile Include="Encryption.cs" />
+    <Compile Include="EncryptionAES.cs" />
+    <Compile Include="EntityCache.cs" />
+    <Compile Include="EntityCacheEvictionFrequency.cs" />
+    <Compile Include="EntityExpiredException.cs" />
+    <Compile Include="EntityNotFoundException.cs" />
+    <Compile Include="EventLog.cs" />
+    <Compile Include="ExecutionContext.cs" />
+    <Compile Include="ExternallyManagedUnitOfWork.cs" />
+    <Compile Include="ForeignKeyException.cs" />
+    <Compile Include="frmChooseSite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChooseSite.designer.cs">
+      <DependentUpon>frmChooseSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalKeyboardHook.cs" />
+    <Compile Include="ICacheableEntity.cs" />
+    <Compile Include="IEntityCacheData.cs" />
+    <Compile Include="ILookupContainerDataService.cs" />
+    <Compile Include="ILookupDataService.cs" />
+    <Compile Include="ILookupsUseCases.cs" />
+    <Compile Include="InvalidResponseException.cs" />
+    <Compile Include="ISystemOptionUseCases.cs" />
+    <Compile Include="IParafaitDefaultUseCases.cs" />
+    <Compile Include="IRemoteConnectionCheck.cs" />
+    <Compile Include="ITaskTypesUseCases.cs" />
+    <Compile Include="KeyManagement.cs" />
+    <Compile Include="KeyPads\AlphaNumericKeyPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeyPads\AlphaNumericKeyPad.designer.cs">
+      <DependentUpon>AlphaNumericKeyPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyPads\KeyPadResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KeyPadResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="KeyPads\Kiosk\frmNumberPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeyPads\Kiosk\frmNumberPad.Designer.cs">
+      <DependentUpon>frmNumberPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyPads\Kiosk\NumberPadForm.cs" />
+    <Compile Include="KeyPads\Kiosk\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="KeyPads\NumberPad.cs" />
+    <Compile Include="KeyPads\NumberPadForm.cs" />
+    <Compile Include="LocalLookupContainerDataService.cs" />
+    <Compile Include="LocalLookupDataService.cs" />
+    <Compile Include="LocalLookupsUseCases.cs" />
+    <Compile Include="LocalSystemOptionUseCases.cs" />
+    <Compile Include="LocalParafaitDefaultUseCases.cs" />
+    <Compile Include="LocalRemoteConnectionCheckDataService.cs" />
+    <Compile Include="LocalTaskTypesUseCases.cs" />
+    <Compile Include="LocalUseCases.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="LogManager.cs" />
+    <Compile Include="LookupsContainer.cs" />
+    <Compile Include="LookupsContainerDTO.cs" />
+    <Compile Include="LookupsContainerDTOCollection.cs" />
+    <Compile Include="LookupContainerFactory.cs" />
+    <Compile Include="LookupContainerList.cs" />
+    <Compile Include="LookupFactory.cs" />
+    <Compile Include="LookupParams.cs" />
+    <Compile Include="Lookups.cs" />
+    <Compile Include="LookupsDataHandler.cs" />
+    <Compile Include="LookupsDTO.cs" />
+    <Compile Include="LookupsUseCaseFactory.cs" />
+    <Compile Include="LookupValues.cs" />
+    <Compile Include="LookupValuesContainerDTO.cs" />
+    <Compile Include="LookupValuesDataHandler.cs" />
+    <Compile Include="LookupValuesDTO.cs" />
+    <Compile Include="MachineLog.cs" />
+    <Compile Include="MessageQueueUtils.cs" />
+    <Compile Include="MessageUtils.cs" />
+    <Compile Include="Messaging.cs" />
+    <Compile Include="MifareKeyContainerDTO.cs" />
+    <Compile Include="MinimimViewContainerRefreshWaitPeriod.cs" />
+    <Compile Include="NoSynchronizationContextScope.cs" />
+    <Compile Include="ParafaitApplicationException.cs" />
+    <Compile Include="ParafaitDBTransaction.cs" />
+    <Compile Include="ParafaitDefaultContainerDTO.cs" />
+    <Compile Include="ParafaitEntityCacheList.cs" />
+    <Compile Include="POSMachinesLicenseException.cs" />
+    <Compile Include="RemoteLookupsUseCases.cs" />
+    <Compile Include="RemoteSystemOptionUseCases.cs" />
+    <Compile Include="RemoteTaskTypesUseCases.cs" />
+    <Compile Include="ServerDateTime.cs" />
+    <Compile Include="Cache.cs" />
+    <Compile Include="SystemOptionUseCasesFactory.cs" />
+    <Compile Include="SystemOptionContainerList.cs" />
+    <Compile Include="SystemOptionContainerDTOCollection.cs" />
+    <Compile Include="ParafaitDefaultContainerDTOCollection.cs" />
+    <Compile Include="ParafaitDefaultContainerList.cs" />
+    <Compile Include="ParafaitDefaultsBL.cs" />
+    <Compile Include="ParafaitDefaultsDataHandler.cs" />
+    <Compile Include="ParafaitDefaultsDTO.cs" />
+    <Compile Include="ParafaitDefaultServerContainer.cs" />
+    <Compile Include="ParafaitDefaultUseCasesFactory.cs" />
+    <Compile Include="ParafaitEnvironment.cs" />
+    <Compile Include="ParafaitExecutableVersionNumberBL.cs" />
+    <Compile Include="ParafaitExecutableVersionNumberDataHandler.cs" />
+    <Compile Include="ParafaitExecutableVersionNumberDTO.cs" />
+    <Compile Include="ParafaitOptionValuesBL.cs" />
+    <Compile Include="ParafaitOptionValuesDataHandler.cs" />
+    <Compile Include="ParafaitOptionValuesDTO.cs" />
+    <Compile Include="ParafaitUtils.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RegexUtilities.cs" />
+    <Compile Include="RemoteConnectionCheckContainer.cs" />
+    <Compile Include="RemoteConnectionCheckService.cs" />
+    <Compile Include="RemoteUseCases.cs" />
+    <Compile Include="RemoteDataService.cs" />
+    <Compile Include="RemoteLookupContainerDataService.cs" />
+    <Compile Include="RemoteLookupDataService.cs" />
+    <Compile Include="RemoteParafaitDefaultUseCases.cs" />
+    <Compile Include="RSAEncryption.cs" />
+    <Compile Include="SecurityPolicyBL.cs" />
+    <Compile Include="SecurityPolicyDataHandler.cs" />
+    <Compile Include="SecurityPolicyDetailsBL.cs" />
+    <Compile Include="SecurityPolicyDetailsDataHandler.cs" />
+    <Compile Include="SecurityPolicyDetailsDTO.cs" />
+    <Compile Include="SecurityPolicyDTO.cs" />
+    <Compile Include="Security\Encryption.cs" />
+    <Compile Include="Security\frmChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Security\frmChangePassword.designer.cs">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Security\Security.cs" />
+    <Compile Include="Security\SecurityTokenBL.cs" />
+    <Compile Include="Security\SecurityTokenDTO.cs" />
+    <Compile Include="Security\SecurityTokenHandler.cs" />
+    <Compile Include="Security\TokenValidationHandler.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SystemOptionContainer.cs" />
+    <Compile Include="SystemOptionContainerDTO.cs" />
+    <Compile Include="SystemOptionsBL.cs" />
+    <Compile Include="SystemOptionsDataHandler.cs" />
+    <Compile Include="SystemOptionsDTO.cs" />
+    <Compile Include="TaskTypes.cs" />
+    <Compile Include="TaskTypesContainer.cs" />
+    <Compile Include="TaskTypesContainerDTO.cs" />
+    <Compile Include="TaskTypesContainerDTOCollection.cs" />
+    <Compile Include="TaskTypesContainerList.cs" />
+    <Compile Include="TaskTypesDataHandler.cs" />
+    <Compile Include="TaskTypesDTO.cs" />
+    <Compile Include="TaskTypesUseCaseFactory.cs" />
+    <Compile Include="TypeResolver.cs" />
+    <Compile Include="NetworkException.cs" />
+    <Compile Include="UnauthorizedException.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="ValidationError.cs" />
+    <Compile Include="ValidationException.cs" />
+    <Compile Include="ValueObject.cs" />
+    <Compile Include="VersionSynch.cs" />
+    <Compile Include="VirtualWindowsKeyboardController.cs" />
+    <Compile Include="VirtualKeyboardController.cs" />
+    <Compile Include="WebApiException.cs" />
+    <Compile Include="WebApiGetRequestParameterCollection.cs" />
+    <Compile Include="WebApiResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmChooseSite.resx">
+      <DependentUpon>frmChooseSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyPads\AlphaNumericKeyPad.resx">
+      <DependentUpon>AlphaNumericKeyPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyPads\KeyPadResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>KeyPadResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyPads\Kiosk\frmNumberPad.resx">
+      <DependentUpon>frmNumberPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyPads\Kiosk\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Security\frmChangePassword.resx">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KeyPads\Resources\0.png" />
+    <Content Include="KeyPads\Resources\0_pressed.png" />
+    <Content Include="KeyPads\Resources\1.png" />
+    <Content Include="KeyPads\Resources\1_pressed.png" />
+    <Content Include="KeyPads\Resources\2.png" />
+    <Content Include="KeyPads\Resources\2_pressed.png" />
+    <Content Include="KeyPads\Resources\3.png" />
+    <Content Include="KeyPads\Resources\3_pressed.png" />
+    <Content Include="KeyPads\Resources\4.png" />
+    <Content Include="KeyPads\Resources\4_pressed.png" />
+    <Content Include="KeyPads\Resources\5.png" />
+    <Content Include="KeyPads\Resources\5_pressed.png" />
+    <Content Include="KeyPads\Resources\6.png" />
+    <Content Include="KeyPads\Resources\6_pressed.png" />
+    <Content Include="KeyPads\Resources\7.png" />
+    <Content Include="KeyPads\Resources\7_pressed.png" />
+    <Content Include="KeyPads\Resources\8.png" />
+    <Content Include="KeyPads\Resources\8_pressed.png" />
+    <Content Include="KeyPads\Resources\9.png" />
+    <Content Include="KeyPads\Resources\9_pressed.png" />
+    <Content Include="KeyPads\Resources\back.png" />
+    <Content Include="KeyPads\Resources\back_pressed.png" />
+    <Content Include="KeyPads\Resources\bg_keypad.png" />
+    <Content Include="KeyPads\Resources\clear.png" />
+    <Content Include="KeyPads\Resources\clear_pressed.png" />
+    <Content Include="KeyPads\Resources\dot-pressed.png" />
+    <Content Include="KeyPads\Resources\dot.png" />
+    <Content Include="KeyPads\Resources\dot_pressed.png" />
+    <Content Include="KeyPads\Resources\entry-box.png" />
+    <Content Include="KeyPads\Resources\ok.png" />
+    <Content Include="KeyPads\Resources\ok_pressed.png" />
+    <None Include="Resources\0.png" />
+    <None Include="Resources\0_pressed.png" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\1_pressed.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\2_pressed.png" />
+    <None Include="Resources\3.png" />
+    <None Include="Resources\3_pressed.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\4_pressed.png" />
+    <None Include="Resources\5.png" />
+    <None Include="Resources\5_pressed.png" />
+    <None Include="Resources\6.png" />
+    <None Include="Resources\6_pressed.png" />
+    <None Include="Resources\7.png" />
+    <None Include="Resources\7_pressed.png" />
+    <None Include="Resources\8.png" />
+    <None Include="Resources\8_pressed.png" />
+    <None Include="Resources\9.png" />
+    <None Include="Resources\9_pressed.png" />
+    <Content Include="Resources\alphabetic-button-normal.png" />
+    <Content Include="Resources\Attach.jpg" />
+    <Content Include="Resources\back-normal.png" />
+    <Content Include="Resources\back-space-pressed.png" />
+    <None Include="Resources\back-space-pressed2.png" />
+    <Content Include="Resources\back-space-pressed1.png" />
+    <Content Include="Resources\back-space.png" />
+    <None Include="Resources\back-space2.png" />
+    <None Include="Resources\back.png" />
+    <Content Include="Resources\back-space1.png" />
+    <Content Include="Resources\backspace-button-normal.png" />
+    <None Include="Resources\back_pressed.png" />
+    <None Include="Resources\bg_keypad.png" />
+    <Content Include="Resources\button1-normal.png" />
+    <Content Include="Resources\button2-normal.png" />
+    <Content Include="Resources\button3-normal.png" />
+    <Content Include="Resources\button4-normal.png" />
+    <Content Include="Resources\button5-normal.png" />
+    <Content Include="Resources\Camera.png" />
+    <Content Include="Resources\camera_click.wav" />
+    <Content Include="Resources\cancel.gif" />
+    <Content Include="Resources\caps-button-normal.png" />
+    <Content Include="Resources\caps-button-pressed.png" />
+    <Content Include="Resources\caps-normal.png" />
+    <Content Include="Resources\caps-on.png" />
+    <Content Include="Resources\checked_checkbox4.png" />
+    <Content Include="Resources\CheckMark.png" />
+    <Content Include="Resources\CircularClose.png" />
+    <None Include="Resources\clear.png" />
+    <None Include="Resources\clear_pressed.png" />
+    <Content Include="Resources\close-button-pressed.png" />
+    <None Include="Resources\close-button-pressed2.png" />
+    <Content Include="Resources\close-button-pressed1.png" />
+    <Content Include="Resources\close-button.png" />
+    <Content Include="Resources\close-button1.png" />
+    <Content Include="Resources\close-button2-pressed.png" />
+    <None Include="Resources\close-button2-pressed2.png" />
+    <Content Include="Resources\close-button2-pressed1.png" />
+    <Content Include="Resources\close-button2.png" />
+    <None Include="Resources\close-button3.png" />
+    <None Include="Resources\close-button22.png" />
+    <Content Include="Resources\close-button21.png" />
+    <Content Include="Resources\Delete.png" />
+    <None Include="Resources\dot.png" />
+    <None Include="Resources\dot-pressed.png" />
+    <Content Include="Resources\Entry-box.png" />
+    <None Include="Resources\Entry-box2.png" />
+    <None Include="Resources\entry-box3.png" />
+    <Content Include="Resources\Entry-box1.png" />
+    <Resource Include="Resources\KB_Number_Button_Normal.png" />
+    <Resource Include="Resources\KB_Alphabet_Button_Normal.png" />
+    <Resource Include="Resources\KB_Close_Button_Normal.png" />
+    <Resource Include="Resources\KB_Delete_Button_Normal.png" />
+    <Resource Include="Resources\KB_OK_Button_Normal .png" />
+    <Resource Include="Resources\KB_Shift_Button_Normal.png" />
+    <Resource Include="Resources\KB_Shift_Button_Pressed.png" />
+    <Resource Include="Resources\KB_Space_Button_Normal_1 .png" />
+    <None Include="Resources\KB_Delete_Button_Normal1.png" />
+    <None Include="Resources\KB_Shift_Button_Normal1.png" />
+    <None Include="Resources\KB_Close_Button_Normal1.png" />
+    <None Include="Resources\KB_Shift_Button_Pressed1.png" />
+    <None Include="Resources\KB_Number_Button_Normal1.png" />
+    <None Include="Resources\KB_Alphabet_Button_Normal1.png" />
+    <None Include="Resources\KB_OK_Button_Normal 1.png" />
+    <None Include="Resources\KB_Space_Button_Normal_1 1.png" />
+    <Content Include="Resources\keyboard-bg.png" />
+    <None Include="Resources\keyboard.png" />
+    <Content Include="Resources\keypad-button1-pressed.png" />
+    <None Include="Resources\keypad-button1-pressed2.png" />
+    <Content Include="Resources\keypad-button1-pressed1.png" />
+    <Content Include="Resources\keypad-button1.png" />
+    <None Include="Resources\keypad-button12.png" />
+    <Content Include="Resources\keypad-button11.png" />
+    <Content Include="Resources\keypad-button2-pressed.png" />
+    <None Include="Resources\keypad-button2-pressed2.png" />
+    <Content Include="Resources\keypad-button2-pressed1.png" />
+    <Content Include="Resources\keypad-button2.png" />
+    <None Include="Resources\keypad-button22.png" />
+    <Content Include="Resources\keypad-button21.png" />
+    <Content Include="Resources\keypad-button3-pressed.png" />
+    <None Include="Resources\keypad-button3-pressed2.png" />
+    <Content Include="Resources\keypad-button3-pressed1.png" />
+    <Content Include="Resources\keypad-button3.png" />
+    <None Include="Resources\keypad-button32.png" />
+    <Content Include="Resources\keypad-button31.png" />
+    <Content Include="Resources\keypad-close-button-normal.png" />
+    <Content Include="Resources\keypad-close-button-small.png" />
+    <Content Include="Resources\Move.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\ok_pressed.png" />
+    <Content Include="Resources\numeric-button-normal.png" />
+    <Content Include="Resources\Player Green.png" />
+    <Content Include="Resources\PreLoader.GIF" />
+    <Content Include="Resources\pressed1.png" />
+    <Content Include="Resources\profile_picture_placeholder.png" />
+    <Content Include="Resources\shift-button-normal.png" />
+    <Content Include="Resources\spacebar-button-normal.png" />
+    <Content Include="Resources\Stop Red.png" />
+    <Content Include="Resources\undo-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ParafaitMessaging\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

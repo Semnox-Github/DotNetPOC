@@ -1,0 +1,32 @@
+﻿[
+  {
+    "DiscountId": 6,
+    "DiscountName": "loyaltydiscount1",
+    "AutomaticApply": "Y",
+    "DiscountPercentage": 40.0,
+    "DiscountAmount": null,
+    "MinimumSaleAmount": null,
+    "MinimumCredits": 300.0,
+    "ScheduleId": -1,
+    "TransactionProfileId": -1,
+    "DisplayInPOS": "N",
+    "IsActive": "Y",
+    "SortOrder": 0,
+    "ManagerApprovalRequired": "N",
+    "VariableDiscounts": "N",
+    "CouponMandatory": "N",
+    "RemarksMandatory": "N",
+    "InternetKey": null,
+    "DiscountType": "L",
+    "LastUpdatedDate": "2019-01-25T16:31:53.447",
+    "LastUpdatedBy": "semnox",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "32dd93f7-9844-47ad-a8c1-7303130ed1dc",
+    "IsChanged": false,
+    "DiscountedGamesDTOList": null,
+    "DiscountPurchaseCriteriaDTOList": null,
+    "DiscountedProductsDTOList": null
+  }
+]

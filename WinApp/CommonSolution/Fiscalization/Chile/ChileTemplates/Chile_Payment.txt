@@ -1,0 +1,5 @@
+    {
+      "GLOSASTI": @Method,
+      "VALSUBTOTSTI": @PaidAmt
+    }
+  

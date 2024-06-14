@@ -1,0 +1,2082 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{450E4346-805D-47B4-A265-60827F5A26DA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parafait_POS</RootNamespace>
+    <AssemblyName>Parafait POS</AssemblyName>
+    <ApplicationIcon>pos.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>http://localhost/Parafait POS/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Video, Version=2.2.4.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.4.1, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="AxDPSEFTXLib">
+      <HintPath>..\..\..\..\..\..\..\OTS\AxDPSEFTXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.GrFingerXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.GrFingerXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="BarcodeLib, Version=1.0.0.23, Culture=neutral, PublicKeyToken=5eb605bede49d0d5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Florentis.InteropFlSigCapt, Version=3.0.4.0, Culture=neutral, PublicKeyToken=9fbfea2d6fdc8a6c, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Florentis.InteropFlSigCapt.dll</HintPath>
+    </Reference>
+    <Reference Include="Florentis.InteropFlSigCOM, Version=3.0.4.0, Culture=neutral, PublicKeyToken=9fbfea2d6fdc8a6c, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Florentis.InteropFlSigCOM.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.GrFingerXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.GrFingerXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.4.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=10.0.4504.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\OTS\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.664.37, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.664.37, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.ReportViewer.WinForms, Version=11.0.17.406, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\OTS\Telerik.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls, Version=2017.2.613.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.WinControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.PdfViewer, Version=2017.2.613.20, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Telerik.WinControls.PdfViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attraction\AttractionSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attraction\AttractionSchedule.Designer.cs">
+      <DependentUpon>AttractionSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attraction\frmSearchBookings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attraction\frmSearchBookings.Designer.cs">
+      <DependentUpon>frmSearchBookings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attraction\usrCtrlAttractionScheduleDetails.cs" />
+    <Compile Include="Attraction\usrCtrlAttractionScheduleDetails.Designer.cs">
+      <DependentUpon>usrCtrlAttractionScheduleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\frmConfigCards.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\frmConfigCards.Designer.cs">
+      <DependentUpon>frmConfigCards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\frmDeactivateCards.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\frmDeactivateCards.Designer.cs">
+      <DependentUpon>frmDeactivateCards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\frmTechCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\frmTechCard.designer.cs">
+      <DependentUpon>frmTechCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardValidation\frmValidateCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardValidation\frmValidateCard.designer.cs">
+      <DependentUpon>frmValidateCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardValidation\ValidateCardDataContol.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CardValidation\ValidateCardDataContol.Designer.cs">
+      <DependentUpon>ValidateCardDataContol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckIn-Out\CheckInPauseLogUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckIn-Out\CheckInPauseLogUI.Designer.cs">
+      <DependentUpon>CheckInPauseLogUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\BarCodeReader.cs" />
+    <Compile Include="Common\CardReader.cs" />
+    <Compile Include="Common\clsPrintCardActivity.cs" />
+    <Compile Include="Common\Devices.cs" />
+    <Compile Include="Common\frmParafaitMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\frmParafaitMessageBox.Designer.cs">
+      <DependentUpon>frmParafaitMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attraction\frmChangeBookingQuantity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attraction\frmChangeBookingQuantity.Designer.cs">
+      <DependentUpon>frmChangeBookingQuantity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Games\frmAddMachine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Games\frmEditMachine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Games\frmEditMachineConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Games\frmEditMachineLimited.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Games\frmGameManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Games\frmGameManagement.Designer.cs">
+      <DependentUpon>frmGameManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LegacyCards\ClubSpeedCardSystem\ClubSpeedCardSystem.cs" />
+    <Compile Include="LegacyCards\ExternalCardSystem.cs" />
+    <Compile Include="LegacyCards\ExternalCardSystemFactory.cs" />
+    <Compile Include="LegacyCards\frmLegacyCardToParafait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LegacyCards\frmLegacyCardToParafait.designer.cs">
+      <DependentUpon>frmLegacyCardToParafait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LegacyCards\frmLegacyEntitlements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LegacyCards\frmLegacyEntitlements.Designer.cs">
+      <DependentUpon>frmLegacyEntitlements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LegacyCards\LegacyCardBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusConsumptionBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusConsumptionDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusConsumptionDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardCreditPlusDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardDiscountsBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardDiscountsDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardDiscountsDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardGameExtendedBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardGameExtendedDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardGameExtendedDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardGamesBL.cs" />
+    <Compile Include="LegacyCards\LegacyCardGamesDataHandler.cs" />
+    <Compile Include="LegacyCards\LegacyCardGamesDTO.cs" />
+    <Compile Include="LegacyCards\LegacyCardSummaryDTO.cs" />
+    <Compile Include="LegacyCards\UnisCardSystem\UnisCardSystem.cs" />
+    <Compile Include="LegacyTicketTransfer\frmTransferLegacyTickets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LegacyTicketTransfer\frmTransferLegacyTickets.designer.cs">
+      <DependentUpon>frmTransferLegacyTickets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frmFPEnrollDeactive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmFPEnrollDeactive.Designer.cs">
+      <DependentUpon>frmFPEnrollDeactive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frmPOSFingerPrintLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmPOSFingerPrintLogin.Designer.cs">
+      <DependentUpon>frmPOSFingerPrintLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frmReloginUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmReloginUser.Designer.cs">
+      <DependentUpon>frmReloginUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Authenticate.cs" />
+    <Compile Include="Common\CardInfoBarChart.cs" />
+    <Compile Include="CheckIn-Out\frmCheckOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckIn-Out\frmCheckOut.designer.cs">
+      <DependentUpon>frmCheckOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckIn-Out\frmCheckIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckIn-Out\frmCheckIn.Designer.cs">
+      <DependentUpon>frmCheckIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckIn-Out\frmTables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckIn-Out\frmTables.Designer.cs">
+      <DependentUpon>frmTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frmAddCashCardToShift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmAddCashCardToShift.designer.cs">
+      <DependentUpon>frmAddCashCardToShift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frmAttendanceRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmAttendanceRoles.Designer.cs">
+      <DependentUpon>frmAttendanceRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\CCGatewayUtils.cs" />
+    <Compile Include="OnlineFunctions\frmChooseItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OnlineFunctions\frmChooseItem.Designer.cs">
+      <DependentUpon>frmChooseItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineFunctions\ExecuteOnlineTransactionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OnlineFunctions\ExecuteOnlineTransactionView.Designer.cs">
+      <DependentUpon>ExecuteOnlineTransactionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\frmCancelTrxCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\frmCancelTrxCard.Designer.cs">
+      <DependentUpon>frmCancelTrxCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\frmParentChildCards.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\frmParentChildCards.Designer.cs">
+      <DependentUpon>frmParentChildCards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineFunctions\frmRescheduleTrx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OnlineFunctions\frmRescheduleTrx.designer.cs">
+      <DependentUpon>frmRescheduleTrx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineFunctions\ItemPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnlineFunctions\ItemPanel.Designer.cs">
+      <DependentUpon>ItemPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineFunctions\RescheduleTransaction.cs" />
+    <Compile Include="Order\OrderEventHandler.cs" />
+    <Compile Include="Order\OrderListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Order\OrderListView.Designer.cs">
+      <DependentUpon>OrderListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\OrderSelectedEventArgs.cs" />
+    <Compile Include="Order\OrderDetailsListView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Order\OrderDetailsListView.Designer.cs">
+      <DependentUpon>OrderDetailsListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\OrderSplitView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Order\OrderSplitView.Designer.cs">
+      <DependentUpon>OrderSplitView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\SplitView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Order\SplitView.Designer.cs">
+      <DependentUpon>SplitView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order\TableLayoutButton.cs" />
+    <Compile Include="Payment\clsSplitPayment.cs" />
+    <Compile Include="Payment\frmSplitPayments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\frmSplitPayments.Designer.cs">
+      <DependentUpon>frmSplitPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Payment\frmVerifyPaymentModeOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\frmVerifyPaymentModeOTP.Designer.cs">
+      <DependentUpon>frmVerifyPaymentModeOTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Payment\frmTender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\frmTender.Designer.cs">
+      <DependentUpon>frmTender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Payment\PaymentDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\PaymentDetails.Designer.cs">
+      <DependentUpon>PaymentDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\CreditPlusDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\CreditPlusDetails.Designer.cs">
+      <DependentUpon>CreditPlusDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\CustomerLookup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\CustomerLookup.Designer.cs">
+      <DependentUpon>CustomerLookup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Attraction\AttractionSeatBooking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attraction\AttractionSeatBooking.Designer.cs">
+      <DependentUpon>AttractionSeatBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Payment\SettlePendingPaymentsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\SettlePendingPaymentsUI.designer.cs">
+      <DependentUpon>SettlePendingPaymentsUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\CustomerRegistrationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\CustomerRegistrationUI.Designer.cs">
+      <DependentUpon>CustomerRegistrationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmCardActivityZoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmCardActivityZoom.Designer.cs">
+      <DependentUpon>frmCardActivityZoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmChooseTrxProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmChooseTrxProfile.Designer.cs">
+      <DependentUpon>frmChooseTrxProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmMembershipDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmMembershipDetails.Designer.cs">
+      <DependentUpon>frmMembershipDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmProductList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmProductList.Designer.cs">
+      <DependentUpon>frmProductList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\GenericDataEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\GenericDataEntry.Designer.cs">
+      <DependentUpon>GenericDataEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\InvUtils.cs" />
+    <Compile Include="POS\frmRentalReturn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmRentalReturn.designer.cs">
+      <DependentUpon>frmRentalReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmSelectPOSPrinterOverrideRules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmSelectPOSPrinterOverrideRules.Designer.cs">
+      <DependentUpon>frmSelectPOSPrinterOverrideRules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmStatus.designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmFindStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmFindStaff.Designer.cs">
+      <DependentUpon>frmFindStaff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmWaiverCashierWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmWaiverCashierWindow.designer.cs">
+      <DependentUpon>frmWaiverCashierWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmWaiverSignature_DTH1152.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmWaiverSignature_DTH1152.Designer.cs">
+      <DependentUpon>frmWaiverSignature_DTH1152.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmWaiverSignature_DTU1031.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmWaiverSignature_DTU1031.designer.cs">
+      <DependentUpon>frmWaiverSignature_DTU1031.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\frmWaiverWelcome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\frmWaiverWelcome.designer.cs">
+      <DependentUpon>frmWaiverWelcome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\TransactionWaiverList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\TransactionWaiverList.Designer.cs">
+      <DependentUpon>TransactionWaiverList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product\ProductsAvailabilityUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Product\ProductsAvailabilityUI.Designer.cs">
+      <DependentUpon>ProductsAvailabilityUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\clsRedemption.cs" />
+    <Compile Include="Redemption\frmCapillaryRedemption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmCapillaryRedemption.designer.cs">
+      <DependentUpon>frmCapillaryRedemption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmEditRedemption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmEditRedemption.designer.cs">
+      <DependentUpon>frmEditRedemption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmLoginCheckDecommision.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmLoginCheckDecommision.Designer.cs">
+      <DependentUpon>frmLoginCheckDecommision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionAdmin.Designer.cs">
+      <DependentUpon>frmRedemptionAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\KOTPrintProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\KOTPrintProducts.Designer.cs">
+      <DependentUpon>KOTPrintProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\MasterCardManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\MasterCardManagement.Designer.cs">
+      <DependentUpon>MasterCardManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\OrderHeaderDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\OrderHeaderDetails.designer.cs">
+      <DependentUpon>OrderHeaderDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PoleDisplay.cs" />
+    <Compile Include="Common\FingerPrint.cs" />
+    <Compile Include="Login\FingerPrintLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\FingerPrintLogin.Designer.cs">
+      <DependentUpon>FingerPrintLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\POS_Bookings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionCurrency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionCurrency.Designer.cs">
+      <DependentUpon>frmRedemptionCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionScreenBanner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmRedemptionScreenBanner.Designer.cs">
+      <DependentUpon>frmRedemptionScreenBanner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmReprintTicketReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmReprintTicketReceipt.Designer.cs">
+      <DependentUpon>frmReprintTicketReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmScanAndRedeem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmScanAndRedeem.Designer.cs">
+      <DependentUpon>frmScanAndRedeem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmScanAndRedeemMDI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmScanAndRedeemMDI.Designer.cs">
+      <DependentUpon>frmScanAndRedeemMDI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frmSuspendedRedemptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frmSuspendedRedemptions.Designer.cs">
+      <DependentUpon>frmSuspendedRedemptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\frm_RedeemGifts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frm_RedeemGifts.Designer.cs">
+      <DependentUpon>frm_RedeemGifts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\frm_shift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frm_shift.designer.cs">
+      <DependentUpon>frm_shift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\POSStatic.cs" />
+    <Compile Include="Common\POSUtils.cs" />
+    <Compile Include="POS\POS_CardDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\POS_Customer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\POS_InitUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\POS_Orders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\POS_Tasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\frm_TurnInGift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Redemption\PrintRedemptionReceipt.cs" />
+    <Compile Include="POS\ProductLookup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\ProductLookup.Designer.cs">
+      <DependentUpon>ProductLookup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckIn-Out\TableManagement.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Redemption\RedemptionAuthentication.cs" />
+    <Compile Include="Reservation\frmBasicReservationInputs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmBasicReservationInputs.Designer.cs">
+      <DependentUpon>frmBasicReservationInputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmBookingAttendees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmBookingAttendees.Designer.cs">
+      <DependentUpon>frmBookingAttendees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmBookingCheckList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmBookingCheckList.Designer.cs">
+      <DependentUpon>frmBookingCheckList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmSameCardOnMultipleLines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmSameCardOnMultipleLines.Designer.cs">
+      <DependentUpon>frmSameCardOnMultipleLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmBookingPackageDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmBookingPackageDetails.Designer.cs">
+      <DependentUpon>frmBookingPackageDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmInputCards.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmInputCards.Designer.cs">
+      <DependentUpon>frmInputCards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmInputPhysicalCards.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmInputPhysicalCards.Designer.cs">
+      <DependentUpon>frmInputPhysicalCards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmProductTrxLineDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmProductTrxLineDetails.Designer.cs">
+      <DependentUpon>frmProductTrxLineDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmRescheduleReservationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmRescheduleReservationUI.Designer.cs">
+      <DependentUpon>frmRescheduleReservationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmRescheduleSummaryUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmRescheduleSummaryUI.Designer.cs">
+      <DependentUpon>frmRescheduleSummaryUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmReservationCancellationCharge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmReservationCancellationCharge.Designer.cs">
+      <DependentUpon>frmReservationCancellationCharge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmReservationSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmReservationSearch.Designer.cs">
+      <DependentUpon>frmReservationSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\frmReservationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservation\frmReservationUI.Designer.cs">
+      <DependentUpon>frmReservationUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\ParafaitDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParafaitDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\usrCtrlProductDetails .cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reservation\usrCtrlProductDetails .Designer.cs">
+      <DependentUpon>usrCtrlProductDetails .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation\usrCtrlProductTrxLineDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Reservation\usrCtrlProductTrxLineDetails.Designer.cs">
+      <DependentUpon>usrCtrlProductTrxLineDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesReturn\frmMoreProductDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesReturn\frmMoreProductDetails.Designer.cs">
+      <DependentUpon>frmMoreProductDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesReturn\frmSalesReturn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesReturn\frmSalesReturn.Designer.cs">
+      <DependentUpon>frmSalesReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesReturn\frmSKUSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesReturn\frmSKUSearch.Designer.cs">
+      <DependentUpon>frmSKUSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POS\POS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POS\POS.Designer.cs">
+      <DependentUpon>POS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subscription\frmCustomerSubscription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmCustomerSubscription.Designer.cs">
+      <DependentUpon>frmCustomerSubscription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmOverridePrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmOverridePrice.Designer.cs">
+      <DependentUpon>frmOverridePrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionDetails.Designer.cs">
+      <DependentUpon>frmSubscriptionDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionHistoryView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionHistoryView.Designer.cs">
+      <DependentUpon>frmSubscriptionHistoryView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionInput.Designer.cs">
+      <DependentUpon>frmSubscriptionInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionStaffView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmSubscriptionStaffView.Designer.cs">
+      <DependentUpon>frmSubscriptionStaffView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\frmUnPauseSubscription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscription\frmUnPauseSubscription.Designer.cs">
+      <DependentUpon>frmUnPauseSubscription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription\SubscriptionUIHelper.cs" />
+    <Compile Include="Subscription\usrCtlSubscriptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Subscription\usrCtlSubscriptions.Designer.cs">
+      <DependentUpon>usrCtlSubscriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\FormCardTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\FormCardTasks.designer.cs">
+      <DependentUpon>FormCardTasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\frmFiscalReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\frmFiscalReports.Designer.cs">
+      <DependentUpon>frmFiscalReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\frmMonthlyReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\frmMonthlyReport.Designer.cs">
+      <DependentUpon>frmMonthlyReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\FrmTaxValues.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\FrmTaxValues.Designer.cs">
+      <DependentUpon>FrmTaxValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\frmTransactionLookupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\frmTransactionLookupUI.Designer.cs">
+      <DependentUpon>frmTransactionLookupUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\frmVerifyTaskOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\frmVerifyTaskOTP.designer.cs">
+      <DependentUpon>frmVerifyTaskOTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\SendTransactionReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\SendTransactionReceipt.designer.cs">
+      <DependentUpon>SendTransactionReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\ViewTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\ViewTasks.Designer.cs">
+      <DependentUpon>ViewTasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\frmXRef.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\frmXRef.designer.cs">
+      <DependentUpon>frmXRef.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\frmCustomerWaiverUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Waivers\frmCustomerWaiverUI.Designer.cs">
+      <DependentUpon>frmCustomerWaiverUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\frmMapWaiversToTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Waivers\frmMapWaiversToTransaction.Designer.cs">
+      <DependentUpon>frmMapWaiversToTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\frmViewWaiverUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Waivers\frmViewWaiverUI.Designer.cs">
+      <DependentUpon>frmViewWaiverUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\usrCtlCustomer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Waivers\usrCtlCustomer.Designer.cs">
+      <DependentUpon>usrCtlCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Waivers\usrCtlWaiverSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Waivers\usrCtlWaiverSet.Designer.cs">
+      <DependentUpon>usrCtlWaiverSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ParafaitWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Attraction\AttractionSchedule.resx">
+      <DependentUpon>AttractionSchedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attraction\frmSearchBookings.resx">
+      <DependentUpon>frmSearchBookings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attraction\usrCtrlAttractionScheduleDetails.resx">
+      <DependentUpon>usrCtrlAttractionScheduleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\frmConfigCards.resx">
+      <DependentUpon>frmConfigCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\frmDeactivateCards.resx">
+      <DependentUpon>frmDeactivateCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\frmTechCard.resx">
+      <DependentUpon>frmTechCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardValidation\frmValidateCard.resx">
+      <DependentUpon>frmValidateCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckIn-Out\CheckInPauseLogUI.resx">
+      <DependentUpon>CheckInPauseLogUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\frmParafaitMessageBox.resx">
+      <DependentUpon>frmParafaitMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attraction\AttractionSeatBooking.resx">
+      <DependentUpon>AttractionSeatBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Attraction\frmChangeBookingQuantity.resx">
+      <DependentUpon>frmChangeBookingQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckIn-Out\frmCheckOut.resx">
+      <DependentUpon>frmCheckOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckIn-Out\frmTables.resx">
+      <DependentUpon>frmTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Games\frmGameManagement.resx">
+      <DependentUpon>frmGameManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LegacyCards\frmLegacyCardToParafait.resx">
+      <DependentUpon>frmLegacyCardToParafait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LegacyCards\frmLegacyEntitlements.resx">
+      <DependentUpon>frmLegacyEntitlements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LegacyTicketTransfer\frmTransferLegacyTickets.resx">
+      <DependentUpon>frmTransferLegacyTickets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmAddCashCardToShift.resx">
+      <DependentUpon>frmAddCashCardToShift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmAttendanceRoles.resx">
+      <DependentUpon>frmAttendanceRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmFPEnrollDeactive.resx">
+      <DependentUpon>frmFPEnrollDeactive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmPOSFingerPrintLogin.resx">
+      <DependentUpon>frmPOSFingerPrintLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmReloginUser.resx">
+      <DependentUpon>frmReloginUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineFunctions\frmChooseItem.resx">
+      <DependentUpon>frmChooseItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineFunctions\ExecuteOnlineTransactionView.resx">
+      <DependentUpon>ExecuteOnlineTransactionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\frmCancelTrxCard.resx">
+      <DependentUpon>frmCancelTrxCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\frmParentChildCards.resx">
+      <DependentUpon>frmParentChildCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineFunctions\frmRescheduleTrx.resx">
+      <DependentUpon>frmRescheduleTrx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineFunctions\ItemPanel.resx">
+      <DependentUpon>ItemPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\OrderListView.resx">
+      <DependentUpon>OrderListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\OrderDetailsListView.resx">
+      <DependentUpon>OrderDetailsListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\OrderSplitView.resx">
+      <DependentUpon>OrderSplitView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Order\SplitView.resx">
+      <DependentUpon>SplitView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\frmSplitPayments.resx">
+      <DependentUpon>frmSplitPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\frmVerifyPaymentModeOTP.resx">
+      <DependentUpon>frmVerifyPaymentModeOTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\frmTender.resx">
+      <DependentUpon>frmTender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\PaymentDetails.resx">
+      <DependentUpon>PaymentDetails.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\CreditPlusDetails.resx">
+      <DependentUpon>CreditPlusDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\CustomerLookup.resx">
+      <DependentUpon>CustomerLookup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\FingerPrintLogin.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FingerPrintLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\SettlePendingPaymentsUI.resx">
+      <DependentUpon>SettlePendingPaymentsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\CustomerRegistrationUI.resx">
+      <DependentUpon>CustomerRegistrationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmCardActivityZoom.resx">
+      <DependentUpon>frmCardActivityZoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmChooseTrxProfile.resx">
+      <DependentUpon>frmChooseTrxProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmMembershipDetails.resx">
+      <DependentUpon>frmMembershipDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmRentalReturn.resx">
+      <DependentUpon>frmRentalReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmSelectPOSPrinterOverrideRules.resx">
+      <DependentUpon>frmSelectPOSPrinterOverrideRules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmFindStaff.resx">
+      <DependentUpon>frmFindStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmWaiverCashierWindow.resx">
+      <DependentUpon>frmWaiverCashierWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmWaiverSignature_DTH1152.resx">
+      <DependentUpon>frmWaiverSignature_DTH1152.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmWaiverSignature_DTU1031.resx">
+      <DependentUpon>frmWaiverSignature_DTU1031.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmWaiverWelcome.resx">
+      <DependentUpon>frmWaiverWelcome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\TransactionWaiverList.resx">
+      <DependentUpon>TransactionWaiverList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Product\ProductsAvailabilityUI.resx">
+      <DependentUpon>ProductsAvailabilityUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmCapillaryRedemption.resx">
+      <DependentUpon>frmCapillaryRedemption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmEditRedemption.resx">
+      <DependentUpon>frmEditRedemption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmLoginCheckDecommision.resx">
+      <DependentUpon>frmLoginCheckDecommision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmRedemptionAdmin.resx">
+      <DependentUpon>frmRedemptionAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmRedemptionCurrency.resx">
+      <DependentUpon>frmRedemptionCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmRedemptionScreenBanner.resx">
+      <DependentUpon>frmRedemptionScreenBanner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmReprintTicketReceipt.resx">
+      <DependentUpon>frmReprintTicketReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmScanAndRedeem.resx">
+      <DependentUpon>frmScanAndRedeem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmScanAndRedeemMDI.resx">
+      <DependentUpon>frmScanAndRedeemMDI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frmSuspendedRedemptions.resx">
+      <DependentUpon>frmSuspendedRedemptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmBasicReservationInputs.resx">
+      <DependentUpon>frmBasicReservationInputs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmBookingCheckList.resx">
+      <DependentUpon>frmBookingCheckList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmSameCardOnMultipleLines.resx">
+      <DependentUpon>frmSameCardOnMultipleLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmBookingPackageDetails.resx">
+      <DependentUpon>frmBookingPackageDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmInputCards.resx">
+      <DependentUpon>frmInputCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmProductTrxLineDetails.resx">
+      <DependentUpon>frmProductTrxLineDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmRescheduleReservationUI.resx">
+      <DependentUpon>frmRescheduleReservationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmRescheduleSummaryUI.resx">
+      <DependentUpon>frmRescheduleSummaryUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmReservationCancellationCharge.resx">
+      <DependentUpon>frmReservationCancellationCharge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmReservationUI.resx">
+      <DependentUpon>frmReservationUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\usrCtrlProductDetails .resx">
+      <DependentUpon>usrCtrlProductDetails .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\usrCtrlProductTrxLineDetails.resx">
+      <DependentUpon>usrCtrlProductTrxLineDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesReturn\frmMoreProductDetails.resx">
+      <DependentUpon>frmMoreProductDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesReturn\frmSalesReturn.resx">
+      <DependentUpon>frmSalesReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesReturn\frmSKUSearch.resx">
+      <DependentUpon>frmSKUSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckIn-Out\frmCheckIn.resx">
+      <DependentUpon>frmCheckIn.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\frmProductList.resx">
+      <DependentUpon>frmProductList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Redemption\frm_RedeemGifts.resx">
+      <DependentUpon>frm_RedeemGifts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frm_shift.resx">
+      <DependentUpon>frm_shift.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frm_shift.zh-TW.resx">
+      <DependentUpon>frm_shift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\GenericDataEntry.resx">
+      <DependentUpon>GenericDataEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\KOTPrintProducts.resx">
+      <DependentUpon>KOTPrintProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\MasterCardManagement.resx">
+      <DependentUpon>MasterCardManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\OrderHeaderDetails.resx">
+      <DependentUpon>OrderHeaderDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\POS.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>POS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POS\ProductLookup.resx">
+      <DependentUpon>ProductLookup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmBookingAttendees.resx">
+      <DependentUpon>frmBookingAttendees.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmInputPhysicalCards.resx">
+      <DependentUpon>frmInputPhysicalCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservation\frmReservationSearch.resx">
+      <DependentUpon>frmReservationSearch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Common\Util.cs" />
+    <EmbeddedResource Include="Subscription\frmCustomerSubscription.resx">
+      <DependentUpon>frmCustomerSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmOverridePrice.resx">
+      <DependentUpon>frmOverridePrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmSubscriptionDetails.resx">
+      <DependentUpon>frmSubscriptionDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmSubscriptionHistoryView.resx">
+      <DependentUpon>frmSubscriptionHistoryView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmSubscriptionInput.resx">
+      <DependentUpon>frmSubscriptionInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmSubscriptionStaffView.resx">
+      <DependentUpon>frmSubscriptionStaffView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\frmUnPauseSubscription.resx">
+      <DependentUpon>frmUnPauseSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscription\usrCtlSubscriptions.resx">
+      <DependentUpon>usrCtlSubscriptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\FormCardTasks.resx">
+      <DependentUpon>FormCardTasks.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\frmFiscalReports.resx">
+      <DependentUpon>frmFiscalReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\frmMonthlyReport.resx">
+      <DependentUpon>frmMonthlyReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\FrmTaxValues.resx">
+      <DependentUpon>FrmTaxValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\frmTransactionLookupUI.resx">
+      <DependentUpon>frmTransactionLookupUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\frmVerifyTaskOTP.resx">
+      <DependentUpon>frmVerifyTaskOTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\SendTransactionReceipt.resx">
+      <DependentUpon>SendTransactionReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\ViewTasks.resx">
+      <DependentUpon>ViewTasks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\frmXRef.resx">
+      <DependentUpon>frmXRef.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Waivers\frmCustomerWaiverUI.resx">
+      <DependentUpon>frmCustomerWaiverUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Waivers\frmMapWaiversToTransaction.resx">
+      <DependentUpon>frmMapWaiversToTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Waivers\frmViewWaiverUI.resx">
+      <DependentUpon>frmViewWaiverUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Waivers\usrCtlCustomer.resx">
+      <DependentUpon>usrCtlCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Waivers\usrCtlWaiverSet.resx">
+      <DependentUpon>usrCtlWaiverSet.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="New Order Notify.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="parafait icon.ico" />
+    <Content Include="pos.ico" />
+    <None Include="LegacyCardCreditPlusDTO.datasource" />
+    <None Include="LegacyCardDiscountsDTO.datasource" />
+    <None Include="LegacyCardGamesDTO.datasource" />
+    <None Include="Resources\WhiteBox400x400.png" />
+    <None Include="Resources\WarningTriangleIcon.png" />
+    <None Include="Resources\XLS_Icon.jpg" />
+    <None Include="Resources\yellowGradient.png" />
+    <None Include="Resources\whiteBackground.png" />
+    <None Include="ParafaitPOSLoggerSetting.config" />
+    <None Include="Parafait_POS.Redemption.clsRedemption+clsRedemptionCurrency.datasource" />
+    <None Include="RemoteShiftAssignment.datasource" />
+    <None Include="Resources\R_black_normal.png" />
+    <None Include="Resources\R_black_pressed.png" />
+    <None Include="Resources\WaiverWelcomeScreen.jpg" />
+    <None Include="Resources\Semnox_Logo.png" />
+    <None Include="Resources\Uncheck.PNG" />
+    <None Include="Resources\Checked.PNG" />
+    <None Include="Resources\Black_Image.png" />
+    <None Include="Resources\parafait-icon.png" />
+    <None Include="Resources\ParafaitMessageBox.png" />
+    <None Include="Resources\ParafaitIcon.png" />
+    <None Include="Resources\Green.png" />
+    <None Include="Resources\Red.png" />
+    <None Include="Resources\Add_Btn_Normal.png" />
+    <None Include="Resources\Add_Btn_Pressed.png" />
+    <None Include="Resources\Black_76x76.png" />
+    <None Include="Resources\CheckedNew.png" />
+    <None Include="Resources\BlankBlack.JPG" />
+    <None Include="Resources\Backward_Btn.png" />
+    <None Include="Resources\Backward_Btn_Hover.png" />
+    <None Include="Resources\Delete_Icon.png" />
+    <None Include="Resources\Delete_Icon_Hover.png" />
+    <None Include="Resources\Delete_Icon_Normal.png" />
+    <None Include="Resources\darkpinkGradient.png" />
+    <None Include="Resources\AddRedemptionUser.png" />
+    <None Include="Resources\AddRedemptionUserPressed.png" />
+    <None Include="Resources\CollapseArrow.png" />
+    <None Include="Resources\CollapseArrowHover.png" />
+    <None Include="Resources\ActiveCreditCard.png" />
+    <None Include="Resources\CancelSubscriptionCycleActive.png" />
+    <None Include="Resources\CancelSubscriptionCycleGrayed.png" />
+    <None Include="Resources\ClearSearchBtn.png" />
+    <None Include="Resources\BlueToggleOff.png" />
+    <None Include="Resources\BlueToggleOn.png" />
+    <None Include="Resources\Channel.png" />
+    <None Include="Resources\ContactName.png" />
+    <Content Include="Resources\DisplayDeviceLogo.jpg" />
+    <None Include="Resources\Product Search_Btn_Normal.png" />
+    <None Include="Resources\Product Search_Btn_Pressed.png" />
+    <None Include="Resources\Search_Btn_Normal.png" />
+    <None Include="Resources\Search_Btn_Pressed.png" />
+    <None Include="Resources\More Options_Btn_Normal.png" />
+    <None Include="Resources\More Options_Btn_Pressed.png" />
+    <None Include="Resources\DollarToTicket_normal.png" />
+    <None Include="Resources\DollarToTicket_Pressed.png" />
+    <None Include="Resources\OnlineLock.png" />
+    <None Include="Resources\orangeBatteryLow 76x76.png" />
+    <None Include="Resources\POS_Task Btn_Drop Down_Normal.png" />
+    <None Include="Resources\POS_TaskBtn_Normal.png" />
+    <None Include="Resources\POS_Task Btn_Normal6.png" />
+    <None Include="Resources\POS_Task Btn_Drop Down_Normal1.png" />
+    <None Include="Resources\SemnoxParafaitLogos.png" />
+    <None Include="Resources\LanStatusImage.png" />
+    <None Include="Resources\Offline.png" />
+    <None Include="Resources\LoadTicket_Normal1.png" />
+    <None Include="Resources\LoadTicket_Pressed1.png" />
+    <None Include="Resources\FlagReceipt_Pressed.png" />
+    <None Include="Resources\FlagReceipt_Normal.png" />
+    <None Include="Resources\Inventory Location_Normal.png" />
+    <None Include="Resources\Inventory Location_Pressed.png" />
+    <None Include="Resources\Time to Points_Pressed.png" />
+    <None Include="Resources\Time to Points_Normal.png" />
+    <None Include="Resources\keypadGrey.png" />
+    <None Include="Resources\UncheckedNew.png" />
+    <None Include="Resources\Edit_Icon_Hover.png" />
+    <None Include="Resources\Edit_Icon_Normal.png" />
+    <None Include="Resources\ExpandArrow.png" />
+    <None Include="Resources\ExpandArrowHover.png" />
+    <None Include="Resources\ExpiredCreditCard.png" />
+    <None Include="Resources\EmailIcon.png" />
+    <Content Include="Resources\Forward_Btn.png" />
+    <None Include="Resources\Forward_Btn_Hover.png" />
+    <None Include="Resources\Magnify_Icon_Hover.png" />
+    <None Include="Resources\Magnify_Icon_Normal.png" />
+    <None Include="Resources\GreenTick.png" />
+    <None Include="Resources\lavenderGradient.png" />
+    <None Include="Resources\LightBlueBtn648X83_Normal.png" />
+    <None Include="Resources\LightBlueBtn648X83_Pressed.png" />
+    <Content Include="Resources\HoldEntitlement.png" />
+    <Content Include="Resources\HoldEntitlementPressed.png" />
+    <Content Include="Resources\Minus_Btn.png" />
+    <None Include="Resources\Minus_Btn_Hover.png" />
+    <None Include="Resources\PhoneIcon.png" />
+    <Content Include="Resources\Plus_Btn.png" />
+    <None Include="Resources\Plus_Btn_Hover.png" />
+    <None Include="Resources\ProductDetails_Normal.png" />
+    <None Include="Resources\ProductDetails_Pressed.png" />
+    <None Include="Resources\RefundCard_Normal.png" />
+    <None Include="Resources\RefundCard_Pressed.png" />
+    <None Include="Resources\R_Backward_Btn.png" />
+    <None Include="Resources\R_Backward_Btn_Hover.png" />
+    <None Include="Resources\R_Forward_Btn.png" />
+    <None Include="Resources\R_Forward_Btn_Hover.png" />
+    <None Include="Resources\R_Decrease_Qty_Normal.png" />
+    <None Include="Resources\R_Increase_Qty_Normal.png" />
+    <None Include="Resources\R_Increase_Qty_Hover.png" />
+    <None Include="Resources\R_Decrease_Qty_Hover.png" />
+    <None Include="Resources\R_Remove_Btn_Normal.png" />
+    <None Include="Resources\R_Remove_Btn_Hover.png" />
+    <None Include="Resources\Seat_Icon_Hover.png" />
+    <None Include="Resources\Seat_Icon_Normal.png" />
+    <None Include="Resources\RedCross.png" />
+    <None Include="Resources\turquoiseGradient.png" />
+    <None Include="Resources\RescheduleReservation.png" />
+    <None Include="Resources\RescheduleReservationBlankImage.png" />
+    <None Include="Resources\SendPaymentLink.png" />
+    <None Include="Resources\SendPaymentLinkPressed.png" />
+    <None Include="Resources\Processing_Icon.gif" />
+    <None Include="Resources\Reschedule_Icon_Hover.png" />
+    <None Include="Resources\Reschedule_Icon_Normal.png" />
+    <None Include="Resources\ResumeGrayed.jpg" />
+    <None Include="Resources\ResumeActive.jpg" />
+    <None Include="Resources\PostponeGrayed.jpg" />
+    <None Include="Resources\PostponeActive.jpg" />
+    <None Include="Resources\PostponeSubscriptionCycleActive.png" />
+    <None Include="Resources\PostponeSubscriptionCycleGrayed.png" />
+    <None Include="Resources\ResumeBillingActive.png" />
+    <None Include="Resources\ResumeBillingGrayed.png" />
+    <None Include="Resources\Virtual_loyalty_points.png" />
+    <None Include="Resources\SearchBtn.png" />
+    <None Include="Resources\ToggleOn.png" />
+    <None Include="Resources\ToggleOff.png" />
+    <None Include="Resources\RelatedCustomerIcon.png" />
+    <None Include="Resources\SmallClearSearchBtn.png" />
+    <None Include="Resources\SmallSearchBtn.png" />
+    <Content Include="Resources\VoucherProduct.png" />
+    <None Include="Resources\Value-add-box.png" />
+    <None Include="Resources\credit-debit-button.png" />
+    <None Include="Resources\ValidBeep.wav" />
+    <None Include="Resources\InvalidBeep.wav" />
+    <None Include="Resources\Semnox Medium.png" />
+    <None Include="Resources\RoyalBlueBox.png" />
+    <None Include="Resources\TurnInPressed.png" />
+    <None Include="Resources\TurnInNormal.png" />
+    <None Include="Resources\AddTicketPressed.png" />
+    <None Include="Resources\AddTicketNormal.png" />
+    <None Include="Resources\pinkGradient.png" />
+    <None Include="Resources\greenGradient.png" />
+    <None Include="Resources\brownGradient.png" />
+    <None Include="Resources\blueGradient.png" />
+    <None Include="Resources\ScanTicketPressed.png" />
+    <None Include="Resources\ScanGiftPreseed.png" />
+    <None Include="Resources\ScanTicket.png" />
+    <None Include="Resources\ScanGift.png" />
+    <None Include="Resources\IDProof.png" />
+    <None Include="Resources\ParentChildLink1.png" />
+    <None Include="Resources\ParentChildLink.png" />
+    <None Include="Resources\parentChildLink1.jpg" />
+    <None Include="Resources\parentChildLink.jpg" />
+    <None Include="Resources\transfer balance_normal.png" />
+    <None Include="Resources\transfer balance_pressed.png" />
+    <None Include="Resources\AlertPanelTop.png" />
+    <None Include="Resources\AlertPanelBottom.png" />
+    <None Include="Resources\AlertPanelMiddle.png" />
+    <None Include="Resources\DiplayGroupButton.png" />
+    <None Include="Resources\refund card task_pressed.png" />
+    <None Include="Resources\refund card task_normal.png" />
+    <None Include="Resources\Semnox Small.png" />
+    <None Include="Resources\message-alert-box.png" />
+    <None Include="Resources\printer.gif" />
+    <None Include="Resources\reset_button_pressed.png" />
+    <None Include="Resources\re-connect_button_pressed.png" />
+    <None Include="Resources\change-color_button-pressed.png" />
+    <None Include="Resources\change_password_pressed.png" />
+    <None Include="Resources\ParafaitLogoLogin.png" />
+    <None Include="Resources\ParaafitLogoLogin.png" />
+    <None Include="Resources\username icon.png" />
+    <None Include="Resources\password-icon.png" />
+    <None Include="Resources\password-button.png" />
+    <None Include="Resources\parafait_logo.png" />
+    <None Include="Resources\login-button_pressed.png" />
+    <None Include="Resources\login-button_normal.png" />
+    <None Include="Resources\login_bg.png" />
+    <None Include="Resources\box3.png" />
+    <None Include="Resources\box1.png" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\button_pressed.png" />
+    <None Include="Resources\button_normal.png" />
+    <None Include="Resources\bg2.png" />
+    <None Include="Resources\bg.png" />
+    <None Include="Resources\ProductPressed.png" />
+    <None Include="Resources\PrintTrxPressed.png" />
+    <None Include="Resources\PaymentPressed.png" />
+    <None Include="Resources\OrderSuspendPressed.png" />
+    <None Include="Resources\OrderSavePressed.png" />
+    <None Include="Resources\NewTrxPressed.png" />
+    <None Include="Resources\CompleteTrxPressed.png" />
+    <None Include="Resources\ClearTrxPressed.png" />
+    <None Include="Resources\CancelLinePressed.png" />
+    <None Include="Resources\dot-pressed.png" />
+    <None Include="Resources\dot.png" />
+    <None Include="Resources\RedeemTicketsPressed.png" />
+    <None Include="Resources\RedeemTickets.png" />
+    <None Include="Resources\ok_pressed.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\keypad-buttons.png" />
+    <None Include="Resources\entry-box.png" />
+    <None Include="Resources\dot_pressed.png" />
+    <None Include="Resources\clear_pressed.png" />
+    <None Include="Resources\clear.png" />
+    <None Include="Resources\bg_keypad.png" />
+    <None Include="Resources\back_pressed.png" />
+    <None Include="Resources\back.png" />
+    <None Include="Resources\9_pressed.png" />
+    <None Include="Resources\9.png" />
+    <None Include="Resources\8_pressed.png" />
+    <None Include="Resources\8.png" />
+    <None Include="Resources\7_pressed.png" />
+    <None Include="Resources\7.png" />
+    <None Include="Resources\6_pressed.png" />
+    <None Include="Resources\6.png" />
+    <None Include="Resources\5_pressed.png" />
+    <None Include="Resources\5.png" />
+    <None Include="Resources\4_pressed.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\3_pressed.png" />
+    <None Include="Resources\3.png" />
+    <None Include="Resources\2_pressed.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\1_pressed.png" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\0_pressed.png" />
+    <None Include="Resources\0.png" />
+    <None Include="Resources\payment-buttonRound.png" />
+    <None Include="Resources\AlertRectangle.png" />
+    <None Include="Resources\camera-icon-normal.png" />
+    <None Include="Resources\pressed2.png" />
+    <None Include="Resources\pressed1.png" />
+    <None Include="Resources\normal2.png" />
+    <None Include="Resources\normal1.png" />
+    <None Include="Resources\customer_button_pressed.png" />
+    <None Include="Resources\customer_button_normal.png" />
+    <None Include="Resources\264x100-rectangle.png" />
+    <None Include="Resources\OrderSave.png" />
+    <None Include="Resources\logout.png" />
+    <None Include="Resources\launch.png" />
+    <None Include="Resources\keypad.png" />
+    <None Include="Resources\tasks.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\NewTrx.png" />
+    <None Include="Resources\CancelLine.png" />
+    <None Include="Resources\PrintTrx.png" />
+    <None Include="Resources\OrderSuspend.png" />
+    <None Include="Resources\ClearTrx.png" />
+    <None Include="Resources\Payment.png" />
+    <None Include="Resources\CompleteTrx.png" />
+    <None Include="Resources\yellow 76x76.png" />
+    <None Include="Resources\yellow 46x46.png" />
+    <None Include="Resources\red 76x76.png" />
+    <None Include="Resources\red 46x46.png" />
+    <None Include="Resources\orange 76x76.png" />
+    <None Include="Resources\orange 46x46.png" />
+    <None Include="Resources\green 76x76.png" />
+    <None Include="Resources\green 46x46.png" />
+    <None Include="Resources\orange-box.png" />
+    <None Include="Resources\yellow-box.png" />
+    <None Include="Resources\red-box.png" />
+    <None Include="Resources\green-box.png" />
+    <None Include="Resources\ComboProduct.png" />
+    <None Include="Resources\CheckInCheckOut.png" />
+    <None Include="Resources\VariableRecharge.png" />
+    <None Include="Resources\Attraction.png" />
+    <None Include="Resources\ManualProduct.png" />
+    <None Include="Resources\GameTime.png" />
+    <None Include="Resources\NewCard.png" />
+    <None Include="Resources\CardSale.png" />
+    <None Include="Resources\Recharge.png" />
+    <None Include="Resources\right-arrow_pressed.png" />
+    <None Include="Resources\left-arrow_pressed.png" />
+    <None Include="Resources\right-arrow_normal.png" />
+    <None Include="Resources\left-arrow_normal.png" />
+    <None Include="Resources\option-button_pressed.png" />
+    <None Include="Resources\option-button_normal.png" />
+    <None Include="Resources\refund-button-pressed.png" />
+    <None Include="Resources\refund-button-normal.png" />
+    <None Include="Resources\re-connect_button.png" />
+    <None Include="Resources\reset_button.png" />
+    <None Include="Resources\change-color_button.png" />
+    <None Include="Resources\ChangePassword.png" />
+    <None Include="Resources\redeem.png" />
+    <None Include="Resources\discount-button.png" />
+    <None Include="Resources\TransferCardPressed.png" />
+    <None Include="Resources\SpecialPricingPressed.png" />
+    <None Include="Resources\RedeemLoyaltyPressed.png" />
+    <None Include="Resources\RealETicketPressed.png" />
+    <None Include="Resources\LoadTicketsPressed.png" />
+    <None Include="Resources\LoadMultiplePressed.png" />
+    <None Include="Resources\LoadBonusPressed.png" />
+    <None Include="Resources\ExchangeTokenForCreditPressed.png" />
+    <None Include="Resources\ExchangeCreditForTokenPressed.png" />
+    <None Include="Resources\ConsolidatePressed.png" />
+    <None Include="Resources\ApplyDiscountPressed.png" />
+    <None Include="Resources\SpecialPricing.png" />
+    <None Include="Resources\RedeemLoyalty.png" />
+    <None Include="Resources\ApplyDiscount.png" />
+    <None Include="Resources\LoadBonus.png" />
+    <None Include="Resources\RealETicket.png" />
+    <None Include="Resources\LoadMultiple.png" />
+    <None Include="Resources\Consolidate.png" />
+    <None Include="Resources\LoadTickets.png" />
+    <None Include="Resources\ExchangeCreditForToken.png" />
+    <None Include="Resources\ExchangeTokenForCredit.png" />
+    <None Include="Resources\TransferCard.png" />
+    <None Include="Resources\Right Arrow Green.png" />
+    <None Include="Reservation\ParafaitDataSet.xsc">
+      <DependentUpon>ParafaitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Reservation\ParafaitDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>ParafaitDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reservation\ParafaitDataSet.xss">
+      <DependentUpon>ParafaitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\Logoff.png" />
+    <None Include="Resources\OtherApps.png" />
+    <None Include="Resources\keyboard.png" />
+    <None Include="Resources\check-out.png" />
+    <None Include="Resources\Children.jpg" />
+    <None Include="Resources\RedSeat.jpg" />
+    <None Include="Resources\AvailableSeat.jpg" />
+    <None Include="Resources\DisabledSeat.jpg" />
+    <None Include="Resources\Blank.JPG" />
+    <None Include="Resources\accessibility.gif" />
+    <None Include="Resources\GreenSeat.jpg" />
+    <None Include="Semnox.Core.Location.LocationDTO.datasource" />
+    <None Include="Semnox.Core.Utilities.LookupValuesDTO.datasource" />
+    <None Include="Semnox.Parafait.Customer.Waivers.CustomerSignedWaiverDTO.datasource" />
+    <None Include="Semnox.Parafait.Inventory.InventoryDTO.datasource" />
+    <None Include="Semnox.Parafait.ITransaction.TransactionLineDTO.datasource" />
+    <None Include="Semnox.Parafait.Redemption.TicketReceiptDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.BookingAttendeeDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.BookingCheckListDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.CheckInPauseLogDTO.datasource" />
+    <None Include="Semnox.Parafait.Maintenance.UserJobItemsDTO.datasource" />
+    <None Include="Semnox.Parafait.Product.ProductsDTO.datasource" />
+    <None Include="Semnox.Parafait.Product.ScheduleDetailsDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.CustomerCreditCardsDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.OrderHeaderDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.ReservationDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.SubscriptionBillingScheduleDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.SubscriptionBillingScheduleHistoryDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.SubscriptionHeaderDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.SubscriptionHeaderHistoryDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.TransactionDTO.datasource" />
+    <None Include="Semnox.Parafait.Transaction.TransactionReservationScheduleDTO.datasource" />
+    <None Include="Semnox.Parafait.Waiver.WaiversDTO.datasource" />
+    <None Include="Web References\ParafaitWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ParafaitWS\service.disco" />
+    <None Include="Resources\OK.gif" />
+    <None Include="Resources\addcard.gif" />
+    <None Include="Resources\full-screen-icon.png" />
+    <None Include="Resources\YellowgreenMenuButton.jpg" />
+    <None Include="Resources\darkGreenMenuButton.jpg" />
+    <None Include="Resources\paraLogo.png" />
+    <None Include="Resources\refundButton.jpg" />
+    <None Include="Resources\redemption.ico" />
+    <None Include="Resources\camera_click.wav" />
+    <None Include="Resources\Parafait icon.ico" />
+    <None Include="Resources\LoginLogo.png" />
+    <None Include="Resources\Parafait-logo.png" />
+    <None Include="Resources\pos.ico" />
+    <None Include="Resources\sync.jpg" />
+    <None Include="Resources\save.gif" />
+    <None Include="Resources\clear.gif" />
+    <None Include="Resources\cancel.gif" />
+    <None Include="Resources\ordercancel.png" />
+    <None Include="Resources\removegift.gif" />
+    <None Include="Resources\deletecard.gif" />
+    <None Include="Resources\search.gif" />
+    <None Include="Resources\parsmallest.png" />
+    <None Include="Resources\DefaultImage.png" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\parlogo.png" />
+    <None Include="Web References\ParafaitWS\service.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://user/parafaitcentral/parafaitws/service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ParafaitWS\</RelPath>
+      <UpdateFromURL>http://user/parafaitcentral/parafaitws/service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Parafait_POS_ParafaitWS_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonSolution\AccountsUI\AccountsUI.csproj">
+      <Project>{6C58D4F0-B831-42F6-A819-17699A258D18}</Project>
+      <Name>AccountsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Achievements\Achievements.csproj">
+      <Project>{cac2d3c5-da16-4605-baf1-10e981903547}</Project>
+      <Name>Achievements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Authentication\Authentication.csproj">
+      <Project>{800edadc-f5a6-4a74-94ec-1267a91065d1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Booking\Booking.csproj">
+      <Project>{77771DFD-58F0-4A77-A46F-BC752075E760}</Project>
+      <Name>Booking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\CardCoreDTO\CardCoreDTO.csproj">
+      <Project>{d7b2505f-76db-46fe-a58b-2386268fd5ff}</Project>
+      <Name>CardCoreDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\CardCore\CardCore.csproj">
+      <Project>{e1bd4cc7-8efc-4565-a533-39802828d243}</Project>
+      <Name>CardCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\CashdrawersUI\CashdrawersUI.csproj">
+      <Project>{1191e389-4545-4dfd-b9e2-52ade918388a}</Project>
+      <Name>CashdrawersUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Category\Category.csproj">
+      <Project>{1B64EC1E-F381-485B-8C69-A07F80A27775}</Project>
+      <Name>Category</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\CommonUI\CommonUI.csproj">
+      <Project>{48630ece-833d-4683-8cc6-24c4a7cb2941}</Project>
+      <Name>CommonUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Currency\Currency.csproj">
+      <Project>{d85e4f46-b1db-4319-b8c8-9aaf5a81a5f3}</Project>
+      <Name>Currency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\CustomerUI\CustomerUI.csproj">
+      <Project>{71fb9db9-bfc5-4968-8d82-654110408b92}</Project>
+      <Name>CustomerUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\DeliveryIntegration\DeliveryIntegration.csproj">
+      <Project>{5ba13e6a-641c-4c51-9c15-256003f0e063}</Project>
+      <Name>DeliveryIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\DeliveryUI\DeliveryUI.csproj">
+      <Project>{66309612-233d-42bd-aec1-bed019a860e6}</Project>
+      <Name>DeliveryUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\DigitalSignage\DigitalSignage.csproj">
+      <Project>{CA9E1908-ED0E-4F91-ACE2-7ED7FC3C8D6C}</Project>
+      <Name>DigitalSignage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\DiscountSetup\DiscountSetup.csproj">
+      <Project>{17D20D1F-15A3-4FA5-834F-4BC652AB4250}</Project>
+      <Name>DiscountSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Discounts\Discounts.csproj">
+      <Project>{f0fde99a-725f-45c2-9cd8-b7961088ea2c}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Fiscalization\Fiscalization.csproj">
+      <Project>{446ec140-1049-459f-aae3-96fc211d1928}</Project>
+      <Name>Fiscalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\GamesUI\GamesUI.csproj">
+      <Project>{ba788c86-f94a-4a93-b05e-75dc12d0a4b3}</Project>
+      <Name>GamesUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\InventoryUI\InventoryUI.csproj">
+      <Project>{08FE90EE-280B-416A-B0BE-CA36174AD22B}</Project>
+      <Name>InventoryUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Inventory\Inventory.csproj">
+      <Project>{af244e4d-b6f8-4fb7-979d-3e82236fe4ad}</Project>
+      <Name>Inventory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\ITransaction\ITransaction.csproj">
+      <Project>{f23f4b8c-4c62-49bd-b9cf-cdd278e14c5f}</Project>
+      <Name>ITransaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Lockers\Lockers.csproj">
+      <Project>{3b914ee9-767a-458e-83c3-6e434556a1a9}</Project>
+      <Name>Lockers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Maintenance\Maintenance.csproj">
+      <Project>{ee8e47b7-ba5d-49e1-8000-c8388c8f3b12}</Project>
+      <Name>Maintenance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\MorphoFingerPrintReader\MorphoFingerPrintReader.csproj">
+      <Project>{098d737d-4707-4a22-a63a-03bee9365523}</Project>
+      <Name>MorphoFingerPrintReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\POS\POS.csproj">
+      <Project>{edd835a5-1862-4aed-b3f0-1c134b40fdb4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\PrintUI\PrintUI.csproj">
+      <Project>{27903137-F143-4CFB-9ACD-F5EB8A581A1A}</Project>
+      <Name>PrintUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\RedemptionUI\RedemptionUI.csproj">
+      <Project>{d897be62-811b-49e0-a7d4-c768c8ac95ab}</Project>
+      <Name>RedemptionUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Redemption\RedemptionUtils.csproj">
+      <Project>{1a20e3de-4198-46c4-8c5b-0ac1fcb727a1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Reports\Reports.csproj">
+      <Project>{41A713DA-1CA8-4C0B-86ED-FA33580248D9}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\ServerCore\ServerCore.csproj">
+      <Project>{7bb265ba-7fee-47c3-8e7e-11021f49a085}</Project>
+      <Name>ServerCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\TableAttributeDetailsUtils\TableAttributeDetailsUtils.csproj">
+      <Project>{aeb18543-ea36-40e4-b956-9b6def17209a}</Project>
+      <Name>TableAttributeDetailsUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\TableAttributeSetupUI\TableAttributeSetupUI.csproj">
+      <Project>{acb8e96d-21a4-45d7-8e66-b2699b5389d9}</Project>
+      <Name>TableAttributeSetupUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\TableAttributeSetup\TableAttributeSetup.csproj">
+      <Project>{662f83d7-b7dd-4690-9d21-62188991cb29}</Project>
+      <Name>TableAttributeSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\TagsUI\TagsUI.csproj">
+      <Project>{973584d8-46b2-4567-9677-6ae0c1b91c24}</Project>
+      <Name>TagsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Tags\Tags.csproj">
+      <Project>{d682b493-8a01-45a2-a934-58f141923c0d}</Project>
+      <Name>Tags</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\ThirdParty\ThirdParty.csproj">
+      <Project>{45C69515-B9A7-44F3-882B-0B53548226F1}</Project>
+      <Name>ThirdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\TransactionUI\TransactionUI.csproj">
+      <Project>{88B4257F-C545-4EAF-8ADA-37F374F0A6FD}</Project>
+      <Name>TransactionUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\User\User.csproj">
+      <Project>{e30d3295-e230-44d2-880d-22bf5a349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\ViewContainer\ViewContainer.csproj">
+      <Project>{B73AF819-C0B5-4AA6-8C09-E8643F1437D1}</Project>
+      <Name>ViewContainer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CommonSolution\Waiver\Waiver.csproj">
+      <Project>{b4419625-2d92-4e3b-99b3-2df03a45cd59}</Project>
+      <Name>Waiver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ParafaitReports\ReportsUI\ReportsUI.csproj">
+      <Project>{6584616A-8358-42F2-9A40-3D6F78529A13}</Project>
+      <Name>ReportsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Parafait\Jobs\SubscriptionBillingProgram\SubscriptionBillingProgram\SubscriptionBillingProgram.csproj">
+      <Project>{51EA2B94-C95E-401E-8E28-9DC47D5C5E4C}</Project>
+      <Name>SubscriptionBillingProgram</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThirdParty\GoKart\ClubSpeed\ClubSpeed.csproj">
+      <Project>{7a6a72c3-7245-4866-994d-8c01f14e7ff1}</Project>
+      <Name>ClubSpeed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tools\LegacyTicketsMigration\LegacyTicketsMigration\LegacyTicketsMigration.csproj">
+      <Project>{2c0c1712-d4a1-43d5-af2b-c8f9dc089da7}</Project>
+      <Name>LegacyTicketsMigration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParafaitPOS\ParafaitPOS\ParafaitPOS.csproj">
+      <Project>{33350e7d-37a3-44aa-8e08-063a5f05f28a}</Project>
+      <Name>ParafaitPOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

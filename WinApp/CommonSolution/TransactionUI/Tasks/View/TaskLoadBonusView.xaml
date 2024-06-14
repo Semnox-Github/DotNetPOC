@@ -1,0 +1,127 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskLoadBonusView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accounts="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        mc:Ignorable="d"
+        Style="{StaticResource TaskWindowStyle}"
+        Title="TaskLoadBonusView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0"
+                    Padding="16"
+                    Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding NavigationClickCommand}"
+                            Style="{StaticResource TaskPopupBackButtonStyle}" />
+                    <UniformGrid Grid.Column="1"
+                                 Margin="16,0,0,0"
+                                 Rows="1">
+                        <common:CustomTextBlock x:Name="tbRedeem"
+                                                Text="{Binding ModuleName}"
+                                                Foreground="{StaticResource LeftPane.TextBlock.Foreground}"
+                                                FontWeight="{StaticResource FontWeight.Bold}"
+                                                TextSize="Medium"
+                                                VerticalAlignment="Center" />
+                    </UniformGrid>
+                </Grid>
+            </Border>
+            <accounts:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                             Margin="16,0,0,0"
+                                             Grid.Column="1"
+                                             DataContext="{Binding CardDetailsVM}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accounts:CardDetailsUserControl}}"
+                                               Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accounts:CardDetailsUserControl>
+        </Grid>
+        <Grid Grid.Row="1"
+              x:Name="MainGrid"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Width="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <common:CustomTextBlock x:Name="tbChooseBonusType"
+                                    Text="Choose Bonus Type (Non-Refundable)"
+                                    TextSize="Small"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStretch="{StaticResource FontStretch}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="0" />
+            <common:GenericToggleButtonsUserControl x:Name="ChooseBonusTypeToggleButton"
+                                                    DataContext="{Binding GenericToggleButtonsVM}"
+                                                    Grid.Row="1"
+                                                    Margin="0,10,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ToggleChecked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TaskLoadBonusView}}"
+                                               Command="{Binding DataContext.ToggleCheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="ToggleUnchecked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TaskLoadBonusView}}"
+                                               Command="{Binding DataContext.ToggleUncheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </common:GenericToggleButtonsUserControl>
+
+
+
+            <common:CustomTextBlock x:Name="tbBonusToLoadHeading"
+                                    Text="Bonus to Load"
+                                    TextSize="Small"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    FontStretch="{StaticResource FontStretch}"
+                                    Foreground="{StaticResource Control.Heading.ForeGround}"
+                                    Grid.Row="2" />
+            <common:CustomTextBox x:Name="txtBonusToLoad"
+                                  Text="{Binding BonusToLoad}"
+                                  IsReadOnly="{Binding BonusToLoadReadOnly}"
+                                  DefaultValue="Enter Bonus"
+                                  ValidationType="DecimalOnly"
+                                  Grid.Row="3"
+                                  TextAlignment="Center"
+                                  Size="Medium"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  FontStretch="{StaticResource FontStretch}"
+                                  Foreground="{StaticResource Control.Heading.ForeGround}"
+                                  Padding="0,10,0,10"
+                                  NumberKeyboardType="Both"/>
+        </Grid>
+    </Grid>
+</Window>

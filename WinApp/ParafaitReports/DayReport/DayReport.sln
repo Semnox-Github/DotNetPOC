@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayReport", "DayReport\DayReport.csproj", "{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "..\..\CommonSolution\Communication\Communication.csproj", "{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\CommonSolution\Logging\Logging.csproj", "{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\..\CommonSolution\Utilities\Utilities.csproj", "{667EAB12-6C89-48ED-9FCB-934697CC2779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Site", "..\..\CommonSolution\Site\Site.csproj", "{B0419249-F9F6-425F-9B56-13D2E12F319F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Debug|x86.ActiveCfg = Debug|x86
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Debug|x86.Build.0 = Debug|x86
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Release|Any CPU.ActiveCfg = Release|x86
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Release|x86.ActiveCfg = Release|x86
+		{2EED0ABD-FE3C-4AC7-AB70-14095A79389E}.Release|x86.Build.0 = Release|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|x86.ActiveCfg = Debug|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Debug|x86.Build.0 = Debug|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|x86.ActiveCfg = Release|x86
+		{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}.Release|x86.Build.0 = Release|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|x86.ActiveCfg = Debug|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Debug|x86.Build.0 = Debug|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|x86.ActiveCfg = Release|x86
+		{1A1BAC8C-A16A-433C-8856-2EC4047D31FB}.Release|x86.Build.0 = Release|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|x86.ActiveCfg = Debug|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Debug|x86.Build.0 = Debug|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|x86.ActiveCfg = Release|x86
+		{667EAB12-6C89-48ED-9FCB-934697CC2779}.Release|x86.Build.0 = Release|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|x86.ActiveCfg = Debug|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Debug|x86.Build.0 = Debug|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|x86.ActiveCfg = Release|x86
+		{B0419249-F9F6-425F-9B56-13D2E12F319F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB4A51C2-D9B3-41AE-9E58-63C73D3D2417}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.20.201:8080/tfs/semnox
+		SccProjectUniqueName0 = ..\\..\\CommonSolution\\Communication\\Communication.csproj
+		SccProjectName0 = ../../CommonSolution/Communication
+		SccAuxPath0 = http://192.168.20.201:8080/tfs/semnox
+		SccLocalPath0 = ..\\..\\CommonSolution\\Communication
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = ..\\..\\CommonSolution\\Logging\\Logging.csproj
+		SccProjectName1 = ../../CommonSolution/Logging
+		SccAuxPath1 = http://192.168.20.201:8080/tfs/semnox
+		SccLocalPath1 = ..\\..\\CommonSolution\\Logging
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = ..\\..\\CommonSolution\\Utilities\\Utilities.csproj
+		SccProjectName2 = ../../CommonSolution/Utilities
+		SccAuxPath2 = http://192.168.20.201:8080/tfs/semnox
+		SccLocalPath2 = ..\\..\\CommonSolution\\Utilities
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = ..\\..\\CommonSolution\\Site\\Site.csproj
+		SccProjectName3 = ../../CommonSolution/Site
+		SccAuxPath3 = http://192.168.20.201:8080/tfs/semnox
+		SccLocalPath3 = ..\\..\\CommonSolution\\Site
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal

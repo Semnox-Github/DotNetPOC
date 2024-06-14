@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.PaginationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="CommonButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Width"
+                    Value="{StaticResource Pagination.Button.Width}"/>
+            <Setter Property="Height"
+                    Value="{Binding Width, RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="CommandParameter"
+                    Value="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+            <Setter Property="Command"
+                    Value="{Binding ActionsCommand}"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Control.BorderBrush.Focused}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Foreground"
+                            Value="{StaticResource Control.BorderBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LastButtonStyle"               
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonStyle}">
+            <Setter Property="IsEnabled"
+                    Value="{Binding LastEnabled}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent"
+                                Padding="8">
+                            <Path Stretch="Uniform"
+                                  Fill="{TemplateBinding Foreground}"
+                                  Data="M9.132 0c-.181 0-.354.027-.516.081-.166.056-.318.14-.456.25a1.163 1.163 0 0 0-.458.926c0 .263.083.504.257.722l.094.106.107.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.164.676.459.914.275.222.61.332.986.332.26 0 .5-.053.73-.168l.136-.077.12-.087 13.263-10.693.108-.1a1.125 1.125 0 0 0 .072-1.508l-.094-.106-.107-.096L10.079.313 9.955.227A1.656 1.656 0 0 0 9.132 0zM1.43 0c-.181 0-.354.027-.516.081-.166.056-.319.14-.456.25A1.163 1.163 0 0 0 0 1.258c0 .263.083.504.256.722l.094.106.108.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.163.676.459.914.274.222.61.332.985.332.26 0 .501-.053.73-.168l.137-.077.12-.087L15.86 12.975l.107-.1a1.125 1.125 0 0 0 .073-1.508l-.094-.106-.107-.096L2.377.313 2.253.227A1.656 1.656 0 0 0 1.43 0z"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FirstButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonStyle}">
+            <Setter Property="IsEnabled"
+                    Value="{Binding FirstEnabled}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent"
+                                Padding="8">
+                            <Path Stretch="Uniform"
+                                  Fill="{TemplateBinding Foreground}"
+                                  Data="M14.868 0c.181 0 .354.027.516.081.166.056.318.14.456.25.296.24.458.559.458.926 0 .263-.083.504-.257.722l-.094.106-.107.097L3.564 12.08l12.13 9.78.107.098c.215.222.33.495.33.797 0 .361-.164.676-.459.914-.275.222-.61.332-.986.332-.26 0-.5-.053-.73-.168l-.136-.077-.12-.087L.438 12.975l-.108-.1C.115 12.656 0 12.382 0 12.08c0-.259.084-.497.257-.712l.094-.106.107-.096L13.921.313l.124-.086c.103-.063.213-.113.332-.15.165-.05.33-.077.49-.077zm7.702 0c.181 0 .354.027.516.081.166.056.319.14.456.25.296.24.458.559.458.926 0 .263-.083.504-.256.722l-.094.106-.108.097-12.276 9.897 12.13 9.78.107.098c.215.222.33.495.33.797 0 .361-.163.676-.459.914-.274.222-.61.332-.985.332-.26 0-.501-.053-.73-.168l-.137-.077-.12-.087L8.14 12.975l-.107-.1c-.215-.22-.33-.494-.33-.796 0-.259.084-.497.257-.712l.094-.106.107-.096L21.623.313l.124-.086c.103-.063.214-.113.332-.15.165-.05.33-.077.491-.077z"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrevButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonStyle}">
+            <Setter Property="IsEnabled"
+                    Value="{Binding PrevEnabled}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent"
+                                Padding="8">
+                            <Path Stretch="Uniform"
+                                  Fill="{TemplateBinding Foreground}"
+                                  Data="M16.667 24L19 21.6 9.74 12 19 2.4 16.667 0 5 12z"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NextButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource CommonButtonStyle}">
+            <Setter Property="IsEnabled"
+                    Value="{Binding NextEnabled}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent"
+                                Padding="8">
+                            <Path Stretch="Uniform"
+                                  Fill="{TemplateBinding Foreground}"
+                                  Data="M16.667 24L19 21.6 9.74 12 19 2.4 16.667 0 5 12z"
+                                  RenderTransformOrigin=".5,.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="180"/>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:PaginationUserControl}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="PaginationActionGrid"
+              Grid.Column="0"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnFirst"
+                    Grid.Column="0"
+                    Style="{StaticResource FirstButtonStyle}"/>
+            <Button x:Name="btnPrev"
+                    Grid.Column="1"
+                    Style="{StaticResource PrevButtonStyle}"/>
+            <Grid Grid.Column="2"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <local:CustomTextBox x:Name="tbxPageNumber"
+                                     Grid.Column="0"
+                                     Size="XSmall"
+                                     Text="{Binding PageNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxLength="{Binding MaxPageNumberLength}"
+                                     ValidationType="NumberOnly"
+                                     ErrorTextVisible="False"
+                                     FontWeight="{StaticResource FontWeight.Bold}"
+                                     VerticalAlignment="Center"/>
+                <local:CustomTextBlock x:Name="tbOf"
+                                       Text=" Of "
+                                       Grid.Column="1"
+                                       FontWeight="{StaticResource FontWeight.Bold}"
+                                       VerticalAlignment="Center"/>
+                <local:CustomTextBlock x:Name="tbPageCount"
+                                       Text="{Binding PageCount}"
+                                       Grid.Column="2"
+                                       FontWeight="{StaticResource FontWeight.Bold}"
+                                       VerticalAlignment="Center"/>
+            </Grid>
+            <Button x:Name="btnNext"
+                    Grid.Column="3"
+                    Style="{StaticResource NextButtonStyle}"/>
+            <Button x:Name="btnLast"
+                    Grid.Column="4"
+                    Style="{StaticResource LastButtonStyle}"/>
+        </Grid>
+        <Grid x:Name="PageNumberGrid"
+              Grid.Column="1"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <local:CustomTextBox x:Name="tbxPageSize"
+                                 MaxWidth="72"
+                                 Grid.Column="0"
+                                 Size="XSmall"
+                                 MaxLength="{Binding MaxPageSizeLength}"
+                                 Text="{Binding PageSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 ValidationType="NumberOnly"
+                                 ErrorTextVisible="False"
+                                 FontWeight="{StaticResource FontWeight.Bold}"
+                                 VerticalAlignment="Center"/>
+            <local:CustomTextBlock x:Name="tbPerPage"
+                                   Text=" per page "
+                                   Grid.Column="1"
+                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                   VerticalAlignment="Center"/>
+            <local:CustomActionButton x:Name="btnApply"
+                                      Grid.Column="2"
+                                      Padding="16,0"
+                                      Content="GO"
+                                      IsEnabled="{Binding ApplyEnabled}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                      Command="{Binding ActionsCommand}"
+                                      Height="{StaticResource Pagination.Button.Width}"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.ComboGroupUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:IndexConverter x:Key="IndexConverter"></local:IndexConverter>
+        <local:SelectedItemConverter x:Key="SelectedItemConverter"></local:SelectedItemConverter>
+    </UserControl.Resources>
+
+    <Border x:Name="ComboBoxGroupBackgroundBorder"
+            Background="{StaticResource Control.ComboBackground}"
+            CornerRadius="{StaticResource CornerRadius}"
+            BorderThickness="{StaticResource BorderThickness}"
+            BorderBrush="{StaticResource Control.BorderBrush}"
+            Style="{StaticResource ContentAreaBorderShadowStyle}">
+        <ItemsControl x:Name="ComboBoxGroupItemsControl"
+                      ItemsSource="{Binding ComboList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid x:Name="ComboBoxGroupUniformGrid"
+                                 Columns="{Binding ComboList.Count}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:Name="ComboBoxGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ComboBoxRow"
+                                              Width="9*" />
+                            <ColumnDefinition x:Name="ComboBoxSeparatorRow"
+                                              Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <local:CustomComboBox x:Name="cmb"
+                                              Grid.Column="0"
+                                              Heading="{Binding Header}"
+                                              EditableItemsSource="{Binding Items}"
+                                              SelectedItem="{Binding SelectedItem}"
+                                              IsReadOnly="{Binding IsReadOnly}"
+                                              IsEditable="{Binding IsEditable}"
+                                              IsEnabled="{Binding IsEnabled}"
+                                              ErrorTextVisible="False"
+                                              Background="Transparent"
+                                              HideBackground="True">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding DataContext.SelectedItemCommand, ElementName=ComboBoxGroupItemsControl}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource SelectedItemConverter}">
+                                                <Binding RelativeSource="{RelativeSource AncestorType= local:ComboGroupUserControl, Mode=FindAncestor}" />
+                                                <Binding></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:CustomComboBox>
+                        <Rectangle x:Name="cmbRectangle"
+                                   Grid.Column="1"
+                                   Margin="0,16,0,16"
+                                   VerticalAlignment="Stretch"
+                                   Stroke="{StaticResource Control.BorderBrush}"
+                                   Width="1" />
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Converter="{StaticResource IndexConverter}">
+                                    <Binding Path="DataContext"
+                                             RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}"></Binding>
+                                    <Binding></Binding>
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <DataTrigger.Setters>
+                                <Setter Property="Grid.ColumnSpan"
+                                        TargetName="cmb"
+                                        Value="2" />
+                                <Setter Property="Visibility"
+                                        TargetName="cmbRectangle"
+                                        Value="Collapsed" />
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Border>
+</UserControl>

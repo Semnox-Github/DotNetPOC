@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="10.0000394185384in" Name="TechCard" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select t.site_name, type,  isnull(cash,0) cash, isnull(credit_card,0) credit_card,isnull(game_card,0) game_card,isnull(gross_total,0)  gross_total  from site t left outer join ( &#xD;&#xA;                             select site_name, 'Transaction' as Type, &#xD;&#xA;                             isnull(sum(Amount * CashRatio), 0) cash, &#xD;&#xA;                             isnull(sum(Amount * CreditCardRatio), 0) credit_card, &#xD;&#xA;                             isnull(sum(Amount * GameCardRatio), 0) Game_card, &#xD;&#xA;                             isnull(sum(Amount * CashRatio + Amount * CreditCardRatio), 0) Gross_total &#xD;&#xA;                             from TransactionView v right outer join site s on (v.site_id = s.site_id  or v.site_id is null)&#xD;&#xA;                             where trxdate &gt;= Dateadd(mi, @offset,@fromdate) and trxdate &lt; Dateadd(mi, @offset,@todate) and (v.site_id in (@site) or  -1 IN ( @site))  group by site_name &#xD;&#xA;&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;     union all&#xD;&#xA;                             &#xD;&#xA;                           &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xD;&#xA;                             select site_name, 'Game Play' as type , 0 cash, 0 credit_card, isnull(sum(credits+courtesy+bonus+time), 0) game_card, 0 gross_total&#xD;&#xA;                             from GameMetricView v right outer join site s on (v.site_id = s.site_id  or v.site_id is null) &#xD;&#xA;                             where play_date &gt;= Dateadd(mi, @offset,@fromdate) and play_date &lt; Dateadd(mi, @offset,@todate) and (v.site_id in (@site) or -1 IN ( @site)) group by site_name   ) v1 &#xD;&#xA;                             on v1.site_name = t.site_name &#xD;&#xA;                             where t.site_name &lt;&gt; 'master' &#xD;&#xA;                             and (t.site_id in (@site) or -1 IN ( @site)) order by 1, 2 desc  &#xD;&#xA;&#xD;&#xA;" Name="dsTrxCollection">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offset">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="4.00000031789144in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsTrxCollection" Width="10in" Height="0.4in" Left="0.00003941853841146in" Top="0.300000031789144in" Name="crosstab2" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox19" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.type" Name="textBox20" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.cash" Name="textBox21" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.66666656732559in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.credit_card" Name="textBox22" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.game_card" Name="textBox23" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.gross_total" Name="textBox24" StyleName="Normal.TableBody">
+                    <Style>
+                      <Font Name="Arial Unicode MS" Size="12pt" />
+                      <BorderColor Default="LightGray" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.6666667163372in" />
+              <Column Width="1.6666667163372in" />
+              <Column Width="1.6666667163372in" />
+              <Column Width="1.66666656732559in" />
+              <Column Width="1.6666667163372in" />
+              <Column Width="1.6666667163372in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style LineColor="LightGray">
+            <Font Name="Arial Unicode MS" Size="12pt" />
+            <BorderColor Default="Gray" />
+            <BorderWidth Default="1px" />
+            <Padding Left="0in" Right="0in" Top="0in" Bottom="0in" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_name1">
+              <ReportItem>
+                <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox13" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="type1">
+              <ReportItem>
+                <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Type')" Name="textBox14" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="cash1">
+              <ReportItem>
+                <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Cash')" Name="textBox15" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="credit_card1">
+              <ReportItem>
+                <TextBox Width="1.66666656732559in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Credit Card')" Name="textBox16" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="game_card1">
+              <ReportItem>
+                <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Game Card')" Name="textBox17" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="gross_total1">
+              <ReportItem>
+                <TextBox Width="1.6666667163372in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Total')" Name="textBox18" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue">
+                    <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <ReportHeaderSection Height="0.400000015894572in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="10in" Height="0.2in" Left="0.00003941853841146in" Top="0in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox232">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="10in" Height="0.2in" Left="0.00003941853841146in" Top="0.20007864634196in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox46">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Legal" Landscape="True" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Solstice.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="58, 29, 20">
+        <Font Name="Gill Sans MT" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="79, 39, 28" Color="231, 222, 201" VerticalAlign="Middle">
+        <Font Name="Gill Sans MT" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Solstice.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays(CDbl(-1)).AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Today().AddDays().AddHours(CDbl(6))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String>=AllValues(Fields.Id)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="cardNumber" Mergeable="False" Text="Card Number" MultiValue="True" AllowNull="True">
+      <AvailableValues DisplayMember="= Fields.card_number_label" ValueMember="= Fields.card_number" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="SelectedCards" Mergeable="False" Text="SelectedCards" MultiValue="True" AllowNull="True" />
+    <ReportParameter Name="LangID" Type="Integer" Text="LangID">
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

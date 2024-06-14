@@ -1,0 +1,291 @@
+﻿<Window x:Class="Semnox.Parafait.CommonUI.GenericScanPopupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="GenericScanPopup"
+        Style="{StaticResource PopupWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType = {x:Type local:GenericScanPopupView}}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border x:Name="HeadingBorder"
+                Grid.Row="0"
+                BorderThickness="0,0,0,2"
+                BorderBrush="{StaticResource Control.BorderBrush}">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="True">
+                            <Setter Property="Padding"
+                                    Value="0,12" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="False">
+                            <Setter Property="Padding"
+                                    Value="0,24" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <local:CustomTextBlock x:Name="tbHeader"
+                                   Text="{Binding Title}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   TextSize="Medium"
+                                   FontWeight="{StaticResource FontWeight.Bold}" />
+        </Border>
+        <Grid x:Name="imageGrid"
+              Grid.Row="1"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Visibility="{Binding ScanTicketVisibility}">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="6" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="False">
+                            <Setter Property="Margin"
+                                    Value="16" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel Orientation="Horizontal">
+                <ContentControl Content="{Binding}">
+
+                    <ContentControl.Style>
+                        <Style TargetType="{x:Type ContentControl}">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel>
+                                                <StackPanel.Style>
+                                                    <Style TargetType="{x:Type StackPanel}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                         Value="True">
+                                                                <Setter Property="Width"
+                                                                        Value="80" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <Path x:Name="pathTicket"
+                                                      Data="M25.355 0c.818 0 1.472.573 1.636 1.39C27.727 5.81 31.409 9 35.909 9c4.5 0 8.182-3.19 8.836-7.61C44.91.574 45.564 0 46.382 0h5.89c3.6 0 6.546 2.945 6.546 6.545v58.91c0 3.6-2.945 6.545-6.545 6.545h-5.81c-.818 0-1.472-.573-1.636-1.39C44.091 66.19 40.41 63 35.91 63c-4.5 0-8.182 3.19-8.836 7.61-.164.817-.818 1.39-1.637 1.39h-5.89C15.945 72 13 69.055 13 65.455V6.545C13 2.945 15.945 0 19.545 0zm-1.228 3.273h-4.582c-1.8 0-3.272 1.472-3.272 3.272v14.728H23.8v3.272h-7.527v40.91c0 1.8 1.472 3.272 3.272 3.272h4.582c1.391-5.318 6.218-9 11.782-9s10.31 3.682 11.782 9h4.582c1.8 0 3.272-1.472 3.272-3.272v-40.91h-7.527v-3.272h7.527V6.545c0-1.8-1.472-3.272-3.272-3.272H47.69c-1.391 5.318-6.218 9-11.782 9s-10.309-3.682-11.782-9zM48.182 45v3.273H23.636V45h24.546zm-2.455-7.364v3.273H26.091v-3.273h19.636zm-3.19-16.363v3.272H29.2v-3.272h13.336z"
+                                                      Fill="{StaticResource Control.Heading.ForeGround}"
+                                                      Height="{Binding ElementName=ScannerPath,Path=ActualHeight}">
+                                                    <Path.Style>
+                                                        <Style TargetType="{x:Type Path}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                             Value="True">
+                                                                    <Setter Property="Stretch"
+                                                                            Value="Uniform" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                             Value="False">
+                                                                    <Setter Property="Stretch"
+                                                                            Value="UniformToFill" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Path.Style>
+                                                </Path>
+                                            </StackPanel>
+                                            <StackPanel Margin="16,0,0,0">
+                                                <StackPanel.Style>
+                                                    <Style TargetType="{x:Type StackPanel}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                         Value="True">
+                                                                <Setter Property="Width"
+                                                                        Value="100" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <Path Fill="{StaticResource Control.BorderBrush.Focused}"
+                                                      Data="M139.758 70.616l10.805 48.668 4.148 19.071c1.22 5.727-.006 10.874-3.211 14.94-3.36 4.261-8.416 6.705-13.876 6.705H96.253c-1.078-.083-1.974-.471-2.642-1.041-.72-.615-1.188-1.446-1.331-2.395l-7.602-50.186h-20.01c-1.098-.087-2.007-.489-2.679-1.076-.725-.634-1.185-1.489-1.307-2.458l-4.066-32.215H10.52c-1.14-.093-2.077-.526-2.756-1.152-.732-.675-1.176-1.58-1.249-2.595L2 4.264c.028-1.42.442-2.295 1.087-2.98C3.857.464 4.935 0 6.064 0h131.802c4.725.146 8.925 1.955 12.034 4.821 3.153 2.908 5.185 6.904 5.508 11.377l2.58 35.772c.177 5.277-1.53 9.747-4.669 13.093-3.992 3.936-8.709 5.736-13.56 5.553zm-74.94.013l3.495 27.678H82.67l-3.494-27.678H64.82zm66.622 0H87.495l12.314 81.3 38.365-.015c2.723-.153 5.22-1.443 6.914-3.59 1.808-2.294 2.435-5.233 1.716-8.056l-4.18-19.198L131.44 70.63zm15.805-54.311c-.285-2.332-1.438-4.393-3.118-5.872-1.68-1.48-3.886-2.377-6.28-2.377H10.434l3.93 54.49 126.587-.014c2.454-.131 4.712-1.176 6.402-2.973 1.808-1.923 2.702-4.43 2.513-7.051l-2.622-36.203z"
+                                                      Stretch="Uniform"
+                                                      x:Name="ScannerPath" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.ScanPopupType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                             Value="SCANGIFT">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <StackPanel>
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="{x:Type StackPanel}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Width"
+                                                                                Value="80" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
+                                                        <Path Fill="{StaticResource Control.BorderBrush.Focused}"
+                                                              Data="M80.463 0c6.779 0 13.557 1.698 19.666 5.093.245.136.489.274.73.415.168-.215.342-.426.523-.632 2.711-3.09 6.655-4.89 10.837-4.873 3.953.016 7.525 1.628 10.105 4.22 2.578 2.591 4.165 6.162 4.148 10.092.006 2.86-.852 5.58-2.373 7.861-1.17 1.754-2.73 3.248-4.59 4.348-.238.141-.48.275-.723.402.096.264.19.53.28.796 4.033 11.867 2.285 24.933-4.71 35.327h13.562c4.697 0 8.95 1.897 12.028 4.964 3.077 3.066 4.98 7.302 4.98 11.98 0 4.68-1.903 8.915-4.98 11.981-3.078 3.067-7.33 4.964-12.028 4.964h-9.355v14.54c4.76 1.808 8.716 4.989 11.483 8.987 2.914 4.21 4.509 9.327 4.336 14.702-.01 6.844-2.494 13.015-6.485 17.49-4.047 4.537-9.64 7.33-15.804 7.33-4.306-.025-8.484-1.392-11.957-3.89-.163-.117-.323-.236-.482-.357-.181.09-.363.178-.546.266-5.8 2.768-12.18 4.135-18.622 3.982-6.49.153-12.87-1.215-18.67-3.983-.182-.087-.364-.176-.545-.265-.159.121-.32.24-.482.357-3.472 2.498-7.651 3.865-11.962 3.89-6.158 0-11.75-2.793-15.798-7.33-3.991-4.475-6.475-10.647-6.483-17.46-.174-5.405 1.421-10.522 4.335-14.732 2.767-3.998 6.723-7.179 11.483-8.987v-14.54h-9.356c-4.697 0-8.95-1.897-12.028-4.964-3.077-3.066-4.98-7.301-4.98-11.98s1.903-8.915 4.98-11.98c3.079-3.068 7.331-4.965 12.028-4.965h13.558c-6.994-10.4-8.74-23.47-4.701-35.338.09-.267.184-.532.28-.795-.244-.127-.484-.26-.72-.401-1.844-1.099-3.423-2.601-4.613-4.403-2.171-3.29-2.799-7.145-2.059-10.72.741-3.574 2.85-6.867 6.153-9.031C44.209.196 48.08-.43 51.67.308c2.983.614 5.771 2.17 7.875 4.568.182.207.357.418.524.633.241-.141.485-.28.73-.416C66.908 1.698 73.686 0 80.463 0zm-.07 7.699c-8.075.037-16.173 3.015-22.607 8.956-2.902 2.733-5.293 5.976-7.048 9.565-3.079 6.264-4.003 13.154-2.907 19.752 1.084 6.523 4.143 12.76 9.16 17.927.923.698 1.474 1.783 1.491 2.966-.002 1.049-.43 1.998-1.12 2.686-.692.69-1.65 1.117-2.706 1.117H33.008c-2.583 0-4.921 1.043-6.614 2.73-1.694 1.688-2.741 4.02-2.741 6.596 0 2.575 1.047 4.907 2.741 6.595 1.693 1.687 4.031 2.73 6.614 2.73h13.185c1.057 0 2.014.427 2.707 1.118.691.689 1.12 1.64 1.12 2.692v17.242c5.686.334 10.822 3.053 14.607 7.296 3.998 4.482 6.483 10.668 6.483 17.495 0 .785-.036 1.565-.211 3.246-.055.46-.112.926-.411 2.492-.084.38-.183.82-.57 2.208-.113.365-.245.769-.74 2.121-.148.367-.314.742-.9 2.005-.166.336-.348.667-.794 1.448l-.108.19c-.264.46-.447.779-.593 1.024.374.15.75.293 1.128.43 3.999 1.445 8.251 2.14 12.603 2.044 4.32.098 8.614-.614 12.368-2.533.32-.164.637-.337.949-.517-.263-.415-.396-.648-.53-.885-.224-.393-.441-.777-1.075-2.108-.164-.362-.33-.736-.857-2.128-.126-.36-.259-.758-.664-2.17l-.034-.13c-.09-.354-.187-.809-.454-2.121-.074-.446-.132-.911-.292-2.276-.068-.773-.106-1.554-.106-2.34 0-6.827 2.485-13.013 6.484-17.495 3.785-4.243 8.92-6.962 14.607-7.296V93.129c0-1.051.428-2.003 1.12-2.692.692-.69 1.65-1.117 2.706-1.117h13.182c2.583 0 4.922-1.044 6.614-2.73 1.694-1.689 2.742-4.02 2.742-6.596 0-2.576-1.048-4.908-2.742-6.596-1.692-1.687-4.03-2.73-6.614-2.73h-21.647c-1.06.003-2.075-.436-2.799-1.21-.716-.766-1.054-1.75-1.02-2.72.035-.965.437-1.917 1.212-2.644 5.066-4.947 8.258-11.233 9.405-17.87 1.148-6.646.246-13.644-2.88-20.002-1.757-3.593-4.15-6.838-7.288-9.784-6.334-5.851-14.409-8.775-22.508-8.74zM48.819 117.955c-.37 0-.736.038-2.065.195-3.548.597-6.676 2.692-8.92 5.692-2.269 3.034-3.636 6.993-3.636 11.32 0 4.767 1.658 9.096 4.354 12.229 2.629 3.057 6.252 4.974 10.274 4.978 3.484-.041 6.81-1.445 9.311-3.964.411-.402.8-.826 1.251-1.38.328-.397.63-.809 1.115-1.546.238-.372.465-.76.893-1.563.19-.377.367-.768.73-1.633.15-.39.286-.8.566-1.7.117-.415.217-.845.417-1.78.082-.444.141-.907.254-1.822.053-.602.084-1.208.084-1.82 0-4.766-1.658-9.095-4.353-12.228-2.632-3.06-6.26-4.978-10.275-4.978zm63.12 0c-3.951.051-7.517 1.959-10.114 4.978-2.695 3.133-4.353 7.462-4.353 12.229 0 .624.033 1.244.148 2.294.052.454.112.916.305 1.872.092.43.193.857.466 1.778.128.403.266.81.612 1.668.167.393.345.783.753 1.571.209.387.429.771.87 1.45.287.42.59.833 1 1.339.36.438.753.865 1.187 1.3 2.459 2.48 5.794 3.892 9.3 3.935 4.01-.004 7.632-1.921 10.262-4.978 2.695-3.133 4.353-7.462 4.353-12.23 0-4.377-1.4-8.378-3.842-11.438-2.373-2.97-5.737-5.025-10.948-5.767zm-45.88-40.674l.159.073 14.751 7.39 14.752-7.376c.823-.411 1.8-.367 2.582.116.732.452 1.197 1.227 1.256 2.078l.006.183v15.94c.002.416-.094.828-.28 1.201-.63 1.26-2.125 1.801-3.405 1.262l-.159-.073-14.752-7.39-14.751 7.39c-.373.187-.785.283-1.202.28-1.41-.008-2.559-1.113-2.638-2.503l-.004-.168V79.745c-.002-.417.094-.829.28-1.202.63-1.26 2.125-1.8 3.405-1.262zm1.628 6.762v7.343l7.343-3.671-7.343-3.672zm26.565 0l-7.343 3.672 7.343 3.671v-7.343zM80.969 32.06c10.252 0 18.596 7.148 18.596 15.939 0 8.79-8.344 15.939-18.596 15.939-10.251 0-18.595-7.149-18.595-15.94 0-8.79 8.344-15.938 18.595-15.938zm0 5.313l.22.004c2.832.115 5.093 2.448 5.093 5.309 0 2.934-2.378 5.313-5.313 5.313-2.934 0-5.313-2.379-5.313-5.313 0-2.935 2.38-5.313 5.313-5.313-7.324 0-13.282 4.765-13.282 10.626 0 5.86 5.958 10.626 13.282 10.626s13.283-4.766 13.283-10.626c0-5.86-5.959-10.626-13.283-10.626zM70.343 24.09v5.313H65.03V24.09h5.313zm26.566 0v5.313h-5.313V24.09h5.313zM48.769 7.62c-1.847.007-3.515.76-4.72 1.97-1.207 1.212-1.949 2.882-1.942 4.724-.004 1.368.409 2.657 1.138 3.733.325.48.714.917 1.156 1.3.3.258.622.488.96.688.183-.308.369-.614.56-.917 1.97-3.139 4.36-5.997 7.104-8.494.267-.243.537-.482.81-.718-.261-.298-.549-.574-.86-.822-1.175-.94-2.655-1.47-4.207-1.464zm63.331 0c-1.528.005-2.987.533-4.15 1.462-.31.248-.598.524-.86.822.274.236.544.475.81.718 2.744 2.498 5.134 5.356 7.106 8.496.19.302.376.607.558.915.338-.199.66-.428.96-.686.444-.382.832-.82 1.158-1.3.73-1.077 1.141-2.367 1.137-3.725 0-1.855-.753-3.53-1.97-4.742-1.215-1.21-2.894-1.96-4.749-1.96z"
+                                                              Stretch="Uniform" />
+                                                    </StackPanel>
+                                                    <StackPanel Margin="16,0,0,0">
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="{x:Type StackPanel}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding DataContext.IsMultiScreenRowTwo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Width"
+                                                                                Value="100" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
+                                                        <Path Fill="{StaticResource Control.BorderBrush.Focused}"
+                                                              Data="M139.758 70.616l10.805 48.668 4.148 19.071c1.22 5.727-.006 10.874-3.211 14.94-3.36 4.261-8.416 6.705-13.876 6.705H96.253c-1.078-.083-1.974-.471-2.642-1.041-.72-.615-1.188-1.446-1.331-2.395l-7.602-50.186h-20.01c-1.098-.087-2.007-.489-2.679-1.076-.725-.634-1.185-1.489-1.307-2.458l-4.066-32.215H10.52c-1.14-.093-2.077-.526-2.756-1.152-.732-.675-1.176-1.58-1.249-2.595L2 4.264c.028-1.42.442-2.295 1.087-2.98C3.857.464 4.935 0 6.064 0h131.802c4.725.146 8.925 1.955 12.034 4.821 3.153 2.908 5.185 6.904 5.508 11.377l2.58 35.772c.177 5.277-1.53 9.747-4.669 13.093-3.992 3.936-8.709 5.736-13.56 5.553zm-74.94.013l3.495 27.678H82.67l-3.494-27.678H64.82zm66.622 0H87.495l12.314 81.3 38.365-.015c2.723-.153 5.22-1.443 6.914-3.59 1.808-2.294 2.435-5.233 1.716-8.056l-4.18-19.198L131.44 70.63zm15.805-54.311c-.285-2.332-1.438-4.393-3.118-5.872-1.68-1.48-3.886-2.377-6.28-2.377H10.434l3.93 54.49 126.587-.014c2.454-.131 4.712-1.176 6.402-2.973 1.808-1.923 2.702-4.43 2.513-7.051l-2.622-36.203z"
+                                                              Stretch="Uniform" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DataContext.ScanPopupType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:GenericScanPopupView}}"
+                                             Value="TAPCARD">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <Path x:Name="pathCard"
+                                                      Data="M91.361 0c7.352 0 13.333 5.981 13.333 13.333h0v25.733l25.576 31.963c4.038 5.05 6.306 11.357 6.42 17.81l.004.524v67.97c0 1.475-1.191 2.667-2.666 2.667h0-41.68c-16.717 0-30.32-13.603-30.32-30.32h0v-7.014h-24c-7.249 0-13.165-5.813-13.33-13.023l-.004-.31v-96C24.694 5.981 30.676 0 38.028 0h0zm13.333 47.609v41.333l9.942 10.562-3.885 3.656-35.838-38.08c-1.282-1.36-3.024-2.138-4.896-2.192-1.877-.01-3.653.627-5.013 1.912-2.72 2.722-2.893 6.805-.533 9.616h0l23.592 27.859c.407.482.631 1.096.631 1.725h0v9.227c-.002 12.522 7.875 23.885 19.603 28.277h0l-1.872 4.994c-10.768-4.032-18.777-13.058-21.774-23.831l-17.29-.001v7.014c0 13.64 10.988 24.762 24.574 24.983l.413.004h39.013V89.36c.003-5.432-1.864-10.76-5.259-15h0l-21.408-26.751zM38.028 5.333c-4.41 0-8 3.59-8 8h0v96c0 4.411 3.59 8 8 8h45.574c-.16-1.353-.24-2.723-.24-4.106h0v-8.251l-22.969-27.12c-4.157-4.955-3.85-12.128.707-16.699.026-.03.24-.232.27-.261 2.367-2.238 5.469-3.45 8.8-3.339 3.295.094 6.36 1.467 8.623 3.864h0l3.428 3.643.001-59.73zm49.527 65.398L99.36 83.274l.001-69.94c0-4.328-3.455-7.865-7.75-7.997l-.25-.004h-3.805v65.398z"
+                                                      Fill="{StaticResource Control.Heading.ForeGround}"
+                                                      Stretch="Uniform" />
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+
+            </StackPanel>
+        </Grid>
+        <local:CustomTextBlock x:Name="tbwaitingMessage"
+                               Grid.Row="2"
+                               Text="Waiting..."
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="{StaticResource FontWeight.Bold}">
+            <local:CustomTextBlock.Style>
+                <Style TargetType="{x:Type local:CustomTextBlock}"
+                       BasedOn="{StaticResource {x:Type local:CustomTextBlock}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="16,8" />
+                            <Setter Property="TextSize"
+                                    Value="Small" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="False">
+                            <Setter Property="Margin"
+                                    Value="16" />
+                            <Setter Property="TextSize"
+                                    Value="Medium" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:CustomTextBlock.Style>
+        </local:CustomTextBlock>
+        <Button HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                x:Name="btnClose"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                Command="{Binding CloseCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{StaticResource Action.Active.Background}"
+                                        x:Name="OutsideBorder">
+                                    <Path Stroke="{StaticResource Action.Active.Foreground}"
+                                          Data="M0,0 L1,1 M0,1 L1,0"
+                                          Stretch="Uniform"
+                                          StrokeThickness="2" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                 Value="False">
+                                        <Setter Property="CornerRadius"
+                                                TargetName="OutsideBorder"
+                                                Value="48" />
+                                        <Setter Property="Padding"
+                                                TargetName="OutsideBorder"
+                                                Value="12" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                                 Value="True">
+                                        <Setter Property="CornerRadius"
+                                                TargetName="OutsideBorder"
+                                                Value="36" />
+                                        <Setter Property="Padding"
+                                                TargetName="OutsideBorder"
+                                                Value="8" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="False">
+                            <Setter Property="Margin"
+                                    Value="0,-20,-20,0" />
+                            <Setter Property="Height"
+                                    Value="48" />
+                            <Setter Property="Width"
+                                    Value="48" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMultiScreenRowTwo}"
+                                     Value="True">
+                            <Setter Property="Margin"
+                                    Value="0,-20,-10,0" />
+                            <Setter Property="Height"
+                                    Value="36" />
+                            <Setter Property="Width"
+                                    Value="36" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Window>

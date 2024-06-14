@@ -1,0 +1,42 @@
+[
+  {
+    "TickerId": 0,
+    "Name": "Ticker 1",
+    "IsActive": true,
+    "TickerText": "Welcome ",
+    "TextColor": "Maroon",
+    "ScrollDirection": 43,
+    "Font": "French Script MT, 18pt, style=Bold, Italic",
+    "BackColor": "128, 255, 255",
+    "TickerSpeed": 2,
+    "CreatedBy": "semnox",
+    "CreationDate": "2018-09-26T17:21:39.397",
+    "LastUpdatedBy": "semnox",
+    "LastUpdateDate": "2018-09-26T17:21:39.397",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "58424f58-6cbb-488c-9ade-c3e12e50e9d1",
+    "IsChanged": false
+  },
+  {
+    "TickerId": 1,
+    "Name": "Ticker 2",
+    "IsActive": true,
+    "TickerText": "Testing",
+    "TextColor": "Silver",
+    "ScrollDirection": 38,
+    "Font": "",
+    "BackColor": "",
+    "TickerSpeed": null,
+    "CreatedBy": "semnox",
+    "CreationDate": "2018-12-26T17:42:55.99",
+    "LastUpdatedBy": "semnox",
+    "LastUpdateDate": "2018-12-26T17:42:55.99",
+    "SiteId": -1,
+    "MasterEntityId": -1,
+    "SynchStatus": false,
+    "Guid": "c96f25c5-00d8-42bb-a9b8-9c4b09bf16d3",
+    "IsChanged": false
+  }
+]

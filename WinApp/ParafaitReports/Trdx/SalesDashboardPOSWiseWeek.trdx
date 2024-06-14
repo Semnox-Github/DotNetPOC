@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="3.59999974568681in" Name="Redemption" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitTest" SelectCommand="select Company_Name from Company" Name="dsCompany" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait" SelectCommand="SELECT posmachineid,&#xD;&#xA;       posname            pos_machine,&#xD;&#xA;       Isnull(round(a.total, 2), 0) total&#xD;&#xA;FROM   posmachines pm&#xD;&#xA;       LEFT JOIN (SELECT site_id,&#xD;&#xA;                         pos_machine,&#xD;&#xA;                         Sum(( cashamount + creditcardamount&#xD;&#xA;                               + otherpaymentmodeamount )) total&#xD;&#xA;                  FROM   trx_header WITH (INDEX (trx_date))&#xD;&#xA;                  WHERE  trxdate &gt;= dateadd(hh, @businesshour,dateadd(wk, datediff(wk, 0, dbo.Converttoservertime(@pickDate, @offset)), 0)) - 7  AND TrxDate &lt; dateadd(hh, @businesshour,dateadd(wk, datediff(wk, 0, dbo.Converttoservertime(@pickDate, @offset)), 0)) &#xD;&#xA;                         AND status = 'CLOSED'&#xD;&#xA;                  GROUP  BY site_id,&#xD;&#xA;                            pos_machine) a&#xD;&#xA;              ON ( pm.posname = a.pos_machine )&#xD;&#xA;WHERE  (a.site_id IN ( @siteid ) or @siteid = -1)&#xD;&#xA;and Isnull(a.total, 0) &gt; 0" Name="dsCollV/sConPOS_Pday" ParameterValues="{&quot;@businesshour&quot;:&quot;6&quot;,&quot;@pickDate&quot;:&quot;20-mar-2018&quot;,&quot;@offset&quot;:&quot;0&quot;,&quot;@siteid&quot;:&quot;-1&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@businesshour">
+          <Value>
+            <String>= Parameters.businessStartTime.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@pickDate">
+          <Value>
+            <String>= Parameters.pickDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offset">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@siteid">
+          <Value>
+            <String>= Parameters.selectedSiteId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="ParafaitHQ" SelectCommand="&#xD;&#xA;SELECT posmachineid,&#xD;&#xA;       posname            pos_machine,&#xD;&#xA;       Isnull(round(a.total, 2), 0) total&#xD;&#xA;FROM   posmachines pm&#xD;&#xA;       LEFT JOIN (SELECT site_id,&#xD;&#xA;                         pos_machine,&#xD;&#xA;                         Sum(( cashamount + creditcardamount&#xD;&#xA;                               + otherpaymentmodeamount )) total&#xD;&#xA;                  FROM   trx_header WITH (INDEX (trx_date))&#xD;&#xA;                  WHERE  trxdate &gt;= dateadd(hh, @businesshour,dateadd(wk, datediff(wk, 0, dbo.Converttoservertime(@pickDate, @offset)), 0)) AND TrxDate &lt; dbo.Converttoservertime(DATEADD(day, 1, @pickDate), @offset)&#xD;&#xA;                         AND status = 'CLOSED'&#xD;&#xA;                  GROUP  BY site_id,&#xD;&#xA;                            pos_machine) a&#xD;&#xA;              ON ( pm.posname = a.pos_machine )&#xD;&#xA;WHERE  (a.site_id IN ( @siteid ) or @siteid = -1)&#xD;&#xA;and Isnull(a.total, 0) &gt; 0" Name="dsCollV/sConPOS_today`" ParameterValues="{&quot;@businesshour&quot;:&quot;6&quot;,&quot;@pickDate&quot;:&quot;16-mar-2018&quot;,&quot;@offset&quot;:&quot;0&quot;,&quot;@SiteId&quot;:&quot;-1&quot;}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@businesshour">
+          <Value>
+            <String>= Parameters.businessStartTime.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@pickDate">
+          <Value>
+            <String>= Parameters.pickDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@offset">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@SiteId">
+          <Value>
+            <String>= Parameters.selectedSiteId.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="6.40000104777018in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Graph DataSourceName="dsCollV/sConPOS_Pday" Width="9.14399909969965cm" Height="7.90000045418738cm" Left="0cm" Top="8.12800009689331cm" Name="graph1">
+          <PlotAreaStyle LineWidth="0cm" LineColor="LightGray" />
+          <Axes>
+            <GraphAxis Name="graphAxis1" Title="Total Collection">
+              <Style>
+                <Font Name="Arial Unicode MS" Bold="True" />
+              </Style>
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis2" LabelPlacement="None" Title="POS">
+              <Style>
+                <Font Name="Arial Unicode MS" Bold="True" />
+              </Style>
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis1" YAxis="graphAxis2" Name="cartesianCoordinateSystem1" />
+          </CoordinateSystems>
+          <Legend>
+            <Style Visible="False" LineWidth="0cm" LineColor="LightGray" />
+          </Legend>
+          <Style>
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="pos_machineGroup2">
+              <Groupings>
+                <Grouping Expression="= Fields.pos_machine" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.pos_machine" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="pos_machineGroup1">
+              <Groupings>
+                <Grouping Expression="= Fields.pos_machine" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.pos_machine" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem1" CategoryGroup="pos_machineGroup1" SeriesGroup="pos_machineGroup2" X="= (Fields.total)" ArrangeMode="Stacked" DataPointLabel="= Fields.pos_machine +&quot;(&quot; + (Fields.total) + &quot;)&quot;" Name="barSeries1">
+              <DataPointStyle Visible="True" LineWidth="0cm" />
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Arial Unicode MS" />
+              </DataPointLabelStyle>
+              <LegendItem Value="= Fields.pos_machine" />
+              <DataPointLabelConnectorStyle>
+                <Padding Top="2pt" Bottom="2pt" />
+              </DataPointLabelConnectorStyle>
+              <ToolTip Title="= Fields.pos_machine" Text="= (Fields.total)" />
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="Last Week" Position="TopCenter">
+              <Style LineWidth="0cm" LineColor="LightGray">
+                <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+        </Graph>
+        <Graph DataSourceName="dsCollV/sConPOS_today`" Width="9.14399909969967cm" Height="7.90000045418738cm" Left="0cm" Top="0cm" Name="graph2">
+          <PlotAreaStyle LineWidth="0cm" LineColor="LightGray" />
+          <Axes>
+            <GraphAxis Name="graphAxis3" Title="Total Collection">
+              <Style>
+                <Font Name="Arial Unicode MS" Bold="True" />
+              </Style>
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <NumericalScale />
+              </Scale>
+            </GraphAxis>
+            <GraphAxis Name="graphAxis4" LabelPlacement="None" Title="POS">
+              <Style>
+                <Font Name="Arial Unicode MS" Bold="True" />
+              </Style>
+              <MajorGridLineStyle LineWidth="1px" LineColor="LightGray" />
+              <MinorGridLineStyle Visible="False" LineWidth="1px" LineColor="LightGray" />
+              <Scale>
+                <CategoryScale />
+              </Scale>
+            </GraphAxis>
+          </Axes>
+          <CoordinateSystems>
+            <CartesianCoordinateSystem XAxis="graphAxis3" YAxis="graphAxis4" Name="cartesianCoordinateSystem2" />
+          </CoordinateSystems>
+          <Legend>
+            <Style Visible="False" LineWidth="0cm" LineColor="LightGray" />
+          </Legend>
+          <Style>
+            <Padding Left="10px" Right="10px" Top="10px" Bottom="10px" />
+          </Style>
+          <SeriesGroups>
+            <GraphGroup Name="pos_machineGroup3">
+              <Groupings>
+                <Grouping Expression="= Fields.pos_machine" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.pos_machine" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </SeriesGroups>
+          <CategoryGroups>
+            <GraphGroup Name="pos_machineGroup">
+              <Groupings>
+                <Grouping Expression="= Fields.pos_machine" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.pos_machine" Direction="Asc" />
+              </Sortings>
+            </GraphGroup>
+          </CategoryGroups>
+          <Series>
+            <BarSeries CoordinateSystem="cartesianCoordinateSystem2" CategoryGroup="pos_machineGroup" SeriesGroup="pos_machineGroup3" X="= (Fields.total)" ArrangeMode="Stacked" DataPointLabel="= Fields.pos_machine + &quot;(&quot; + (Fields.total) + &quot;)&quot;" Name="barSeries2">
+              <DataPointStyle Visible="True" LineWidth="0cm" />
+              <DataPointLabelStyle Visible="True">
+                <Font Name="Arial Unicode MS" />
+              </DataPointLabelStyle>
+              <LegendItem Value="= Fields.pos_machine" />
+              <DataPointLabelConnectorStyle>
+                <Padding Top="2pt" Bottom="2pt" />
+              </DataPointLabelConnectorStyle>
+              <ToolTip Title="= Fields.pos_machine" Text="= (Fields.total)" />
+            </BarSeries>
+          </Series>
+          <Titles>
+            <GraphTitle Text="This Week" Position="TopCenter">
+              <Style LineWidth="0cm" LineColor="LightGray">
+                <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+              </Style>
+            </GraphTitle>
+          </Titles>
+        </Graph>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.1in" Name="pageFooterSection1" />
+    <ReportHeaderSection Height="0.8in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="3.59999990463257in" Height="0.300000011920929in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('POS wise Weekly Collection')" Format="{0:f}" Name="textBox1">
+          <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="12pt" Bold="True" />
+            <BorderStyle Bottom="Solid" />
+            <BorderColor Bottom="255, 128, 64" />
+            <BorderWidth Bottom="2pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.59187960624695in" Height="0.200000077486038in" Left="0.00812021891276042in" Top="0.400000015894572in" Value="= Parameters.Company.Value" Format="{0:f}" Name="textBox9">
+          <Style BackgroundColor="White" Color="37, 64, 97" TextAlign="Center" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="11pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.59187960624695in" Height="0.199921235442162in" Left="0.00812021891276042in" Top="0.599999984105428in" Value="=MessagesFunctions.getMessage('Report as on') + ' ' + Parameters.pickDate.Value.ToString(&quot;dddd, dd-MMM-yyyy&quot;)" Name="textBox18">
+          <Style BackgroundColor="White" TextAlign="Center" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="fromdate" Type="DateTime" Mergeable="False" Text="From Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Parameters.fromdate.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" AutoRefresh="True">
+      <Value>
+        <String>= Parameters.todate.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>= Parameters.offset.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" AllowNull="True">
+      <Value>
+        <String>= Parameters.user.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="site" Mergeable="False" Text="Site" MultiValue="True" AllowBlank="False">
+      <Value>
+        <String>=AllValues(Parameters.site.Value)</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="type" Type="Integer" Mergeable="False" Text="Type" AllowBlank="False">
+      <Value>
+        <String>= Parameters.type.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False">
+      <Value>
+        <String>= Parameters.mode.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SiteName" Mergeable="False" Text="SiteName" AllowBlank="False">
+      <Value>
+        <String>= Parameters.SiteName.Value</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="Company" Text="Company">
+      <AvailableValues DataSourceName="dsCompany" DisplayMember="= Fields.Company_Name" ValueMember="= Fields.Company_Name" />
+      <Value>
+        <String>= Fields.Company_Name</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="AmountWithCurSymbolCellFormat" Text="AmountWithCurSymbolCellFormat" />
+    <ReportParameter Name="pickDate" Type="DateTime" Text="pickDate" />
+    <ReportParameter Name="businessStartTime" Text="businessStartTime" />
+    <ReportParameter Name="selectedSiteId" Type="Integer" Text="selectedSiteId" />
+  </ReportParameters>
+</Report>

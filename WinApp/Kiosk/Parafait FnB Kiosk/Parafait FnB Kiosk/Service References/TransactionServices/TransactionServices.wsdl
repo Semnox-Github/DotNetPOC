@@ -1,0 +1,2734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://semnox.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://semnox.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://semnox.com/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="PurchaseNewCardProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfPurchasedProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentModeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isGiftCard" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPurchasedProductStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PurchasedProductStruct" nillable="true" type="tns:PurchasedProductStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PurchasedProductStruct">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ProductStruct">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ProductQuantity" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="PurchaseLineId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxAmount" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="AttractionScheduleId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="VisitDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ProductStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayGroupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayGroup" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxPercentage" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ButtonColor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TextColor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayInPos" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Credits" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Courtesy" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Bonus" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardSale" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranslatedProductName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranslatedProductDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AutoGenerateCardNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsInvokeCustomerRegistration" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCardProduct" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxLine">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ProductStruct">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ProductQuantity" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ProductPurchasePrice" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ProductPurchaseTax" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ProductTotalAmount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductPurchasedCardNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ParentModifierProduct" type="tns:TrxLine" />
+              <s:element minOccurs="1" maxOccurs="1" name="ParentModifierSetId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TransactionDiscountsDTOList" type="tns:ArrayOfTransactionDiscountsDTO" />
+              <s:element minOccurs="1" maxOccurs="1" name="DBLineId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsLineValid" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTransactionDiscountsDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransactionDiscountsDTO" nillable="true" type="tns:TransactionDiscountsDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionDiscountsDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionDiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountPercentage" nillable="true" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountAmount" nillable="true" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApprovedBy" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountCouponsUsedDTO" type="tns:DiscountCouponsUsedDTO" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DiscountCouponsUsedDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CouponSetId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountCouponHeaderId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CouponNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="IsActive" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxLineWithModifier">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TrxLine">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ModifierSets" type="tns:ArrayOfTrxModifierSet" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrxModifierSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrxModifierSet" nillable="true" type="tns:TrxModifierSet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxModifierSet">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ModifierSet">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Modifiers" type="tns:ArrayOfTrxLine" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ModifierSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ModifierSetName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ModifierSetId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ModifierShowInPos" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MinSelectableModsCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MaxSelectableModsCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FreeModsCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrxLine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrxLine" nillable="true" type="tns:TrxLine" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxComboLine">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TrxLine">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ComboProducts" type="tns:ArrayOfTrxLineWithModifier" />
+              <s:element minOccurs="0" maxOccurs="1" name="ComboCategoryProducts" type="tns:ArrayOfTrxComboCategory" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrxLineWithModifier">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrxLineWithModifier" nillable="true" type="tns:TrxLineWithModifier" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrxComboCategory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrxComboCategory" nillable="true" type="tns:TrxComboCategory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxComboCategory">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ComboProductCategory">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SelectedQuantity" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryProducts" type="tns:ArrayOfTrxLineWithModifier" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ComboProductCategory">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ProductCategory">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PurchasableQuantity" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ProductCategory">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PurchaseNewCardProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseNewCardProductResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionPreTaxAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionTaxAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionFinalAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionRoundOffAmount" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PurchaseNewCardWithPOSMachine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfPurchasedProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentModeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isGiftCard" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="POSIdentifier" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseNewCardWithPOSMachineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseNewCardWithPOSMachineResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseTickets">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfPurchasedProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentModeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseTicketsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseTicketsResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseRechargeCardProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfPurchasedProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentModeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isGiftCard" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseRechargeCardProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseRechargeCardProductResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseRechargeCardWithPOSMachine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfPurchasedProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentModeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isGiftCard" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="POSIdentifier" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseRechargeCardWithPOSMachineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseRechargeCardWithPOSMachineResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelTicketResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="CancelPurchase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPurchaseResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PurchaseCardProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="productList" type="tns:ArrayOfLinkedPurchaseProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="saveTransaction" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentMode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentReference" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="purchaseDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLinkedPurchaseProductStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LinkedPurchaseProductStruct" nillable="true" type="tns:LinkedPurchaseProductStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LinkedPurchaseProductStruct">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PurchasedProductStruct">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="LinkLineId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="PurchaseCardProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseCardProductResult" type="tns:TransactionStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="posIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="loginId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderedProducts" type="tns:ArrayOfLinkedPurchaseProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="shouldCommit" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardExpDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="creditCardInvoiceNumber" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardPaymentReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderRemarks" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentModesId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveTransactionResult" type="tns:ArrayOfKeyValueStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfKeyValueStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="KeyValueStruct" nillable="true" type="tns:KeyValueStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="KeyValueStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SaveTransactionWithDebitPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="posIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="loginId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderedProducts" type="tns:ArrayOfLinkedPurchaseProductStruct" />
+            <s:element minOccurs="1" maxOccurs="1" name="shouldCommit" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardExpDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="creditCardInvoiceNumber" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardPaymentReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderRemarks" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentModesId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveTransactionWithDebitPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveTransactionWithDebitPaymentResult" type="tns:ArrayOfKeyValueStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveTrxPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderedProducts" type="tns:ArrayOfLinkedPurchaseProductStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionParams">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="TrxId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PosIdentifier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="UserId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="RoleId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShouldCommit" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="CreditCardName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="CreditCardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="CreditCardType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="CreditCardExpDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="CreditCardInvoiceNumber" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="CreditCardPaymentReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="TrxPaymentReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="PaymentReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="OrderRemarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="PaymentCardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="VisitDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="AutoPayDebitCard" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="PaymentModeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CloseTransaction" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApplyOffset" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="true" name="ForceIsCorporate" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApplySystemVisitDate" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="TrxLineId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountCouponCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="MembershipRewardsId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpireWithMembership" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ForMembershipOnly" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiverSigningMode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiverSignedDTOList" type="tns:ArrayOfWaiverSignedDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfWaiverSignedDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WaiverSignedDTO" nillable="true" type="tns:WaiverSignedDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WaiverSignedDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="WaiverSignedId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="WaiverSetDetailId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiverSignedFileName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SigneeName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SigneeEmail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsWaiverSigned" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdatedDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GUID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiverOriginalFileName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SaveTrxPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveTrxPaymentResult" type="tns:ArrayOfKeyValueStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PerformAlohaTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="posIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="loginId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="itemList" type="tns:ArrayOfParafaitAlohaInterfaceItem" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardExpDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="creditCardInvoiceNumber" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="creditCardPaymentReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderRemarks" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfParafaitAlohaInterfaceItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ParafaitAlohaInterfaceItem" nillable="true" type="tns:ParafaitAlohaInterfaceItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ParafaitAlohaInterfaceItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="ModCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ModifierList" type="tns:ArrayOfParafaitAlohaInterfaceItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PerformAlohaTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PerformAlohaTransactionResult" type="tns:ParafaitStatusNameValue" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ParafaitStatusNameValue">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="status" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="hResult" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="HResult" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTransactionDetailsById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="trxId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionDetailsByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionDetailsByIdResult" type="tns:ArrayOfPurchasedProductStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionLines">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="trxId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionLinesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionLinesResult" type="tns:ArrayOfPurchasedProductStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConfirmCardProductPurchase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PaymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="PaymentReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConfirmCardProductPurchaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ConfirmCardProductPurchaseResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PaymentAmount" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="PaymentReference" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DoPaymentResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SavePurchaseTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderedProducts" type="tns:ArrayOfLinkedPurchaseProductsStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLinkedPurchaseProductsStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LinkedPurchaseProductsStruct" nillable="true" type="tns:LinkedPurchaseProductsStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LinkedPurchaseProductsStruct">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PurchasedProductsStruct">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" default="-1" name="LinkLineId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TransactionGuid" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TrxLineId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PurchasedProductsStruct">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ProductsStruct">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ProductQuantity" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" default="-1" name="CardId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" default="-1" name="PurchaseLineId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxAmount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" default="-1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" default="-1" name="AttractionScheduleId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="VisitDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="AttractionBookingList" type="tns:ArrayOfAttractionBookingDTO" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ProductsStruct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayGroup" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxPercentage" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ButtonColor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TextColor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayInPos" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Credits" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Courtesy" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Bonus" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardSale" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranslatedProductName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranslatedProductDescription" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MinQuantity" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="0" name="MaxQuantity" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="QuantityPrompt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="0" name="FaceValue" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayGroupId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsInvokeCustomerRegistration" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="AutoGenerateCardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrxHeaderRemarksMandatory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrxRemarksMandatory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WebDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranslatedWebDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Barcode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsTaxInclusive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="WaiverSetId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAttractionBookingDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AttractionBookingDTO" nillable="true" type="tns:AttractionBookingDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AttractionBookingDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="BookingId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="AttractionScheduleId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="ScheduleTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="AttractionPlayId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="TrxId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="LineId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="BookedUnits" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="ExpiryDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="SiteId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FacilitySeatsDTOList" type="tns:ArrayOfFacilitySeatsDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfFacilitySeatsDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FacilitySeatsDTO" nillable="true" type="tns:FacilitySeatsDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FacilitySeatsDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="SeatId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="SeatName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="RowIndex" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="ColumnIndex" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" type="s1:char" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="FacilityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsAccessible" type="s1:char" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="Site_id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="BookedSeat" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SavePurchaseTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SavePurchaseTransactionResult" type="tns:ArrayOfTransactionKeyValueStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTransactionKeyValueStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransactionKeyValueStruct" nillable="true" type="tns:TransactionKeyValueStruct" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionKeyValueStruct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CancelPurchaseTransactionLine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="trxParams" type="tns:TransactionParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPurchaseTransactionLineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPurchaseTransactionLineResult" type="tns:TransactionStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsExecuted" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConfirmPurchaseTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConfirmPurchaseTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConfirmPurchaseTransactionResult" type="tns:TransactionStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPurchaseTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPurchaseTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPurchaseTransactionResult" type="tns:TransactionStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPurchaseTransactions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="purchasesListParams" type="tns:PurchasesListParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PurchasesListParams">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="" name="LoginId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="UserId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="TranscationId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="ReservationCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="FromDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="ToDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="TransactionType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowTransactionLines" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowAllTransaction" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowDiscountSummary" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPurchaseTransactionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPurchaseTransactionsResult" type="tns:ArrayOfTransactionDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTransactionDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransactionDetails" nillable="true" type="tns:TransactionDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionTotal" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionTax" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionGrandTotal" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionRoundOffAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransactionReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Products" type="tns:ArrayOfLinkedPurchasedProducts" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentMode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Original_System_Reference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransactionType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BookingId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReservationCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReservationDateTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditStatus" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BookingDetails" type="tns:clsBookingDetails" />
+          <s:element minOccurs="0" maxOccurs="1" name="BookingAttendeeDTOList" type="tns:ArrayOfBookingAttendeeDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransactionUserDTO" type="tns:TransactionUser" />
+          <s:element minOccurs="1" maxOccurs="1" name="AdvancePaid" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountSummary" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiverSignedSummary" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfLinkedPurchasedProducts">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LinkedPurchasedProducts" nillable="true" type="tns:LinkedPurchasedProducts" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LinkedPurchasedProducts">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PurchasedProducts">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="QuantityPrompt" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductLineIdentifier" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LinkedLineIdentifier" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="AttractionScheduleId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="AttractionBookingList" type="tns:ArrayOfAttractionBookingDTO" />
+              <s:element minOccurs="0" maxOccurs="1" name="RowGuid" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TransactionGuid" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PurchasedProducts">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Product">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TrxLineId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxAmount" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="TotalAmount" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="GrandTotal" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Product">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDisplayGroup" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="MinimumQuantity" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MaximumQuantity" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AvailableUnits" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="clsBookingDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="BookingId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BookingName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="bookingProductId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="reservationFromDateTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpiryTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="recurFlag" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="RecurFrequency" />
+          <s:element minOccurs="0" maxOccurs="1" name="RecurUntil" />
+          <s:element minOccurs="1" maxOccurs="1" name="Age" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Channel" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="facilityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="attractionScheduleId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExtraGuests" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerDTO" type="tns:CustomerDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="FacilityName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExternalSystemReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UniqueIdentifier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TaxCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Anniversary" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TeamUser" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="RightHanded" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhotoURL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdProofFileURL" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastLoginTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Designation" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataSetId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Channel" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Verified" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressDTOList" type="tns:ArrayOfAddressDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContactDTOList" type="tns:ArrayOfContactDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProfileDTO" type="tns:ProfileDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerVerificationDTO" type="tns:CustomerVerificationDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDataSetDTO" type="tns:CustomDataSetDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondaryPhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FBUserId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FBAccessToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TWAccessToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TWAccessSecret" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WeChatAccessToken" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerCuponsDT">
+            <s:complexType>
+              <s:sequence>
+                <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="CardCoreDTOList" type="tns:ArrayOfCardCoreDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerMembershipProgressionDTOList" type="tns:ArrayOfCustomerMembershipProgressionDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerMembershipRewardsLogDTOList" type="tns:ArrayOfCustomerMembershipRewardsLogDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAddressDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AddressDTO" nillable="true" type="tns:AddressDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AddressDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AddressType" type="tns:AddressType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StateId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CountryId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AddressType">
+        <s:restriction base="s:string">
+          <s:enumeration value="NONE" />
+          <s:enumeration value="WORK" />
+          <s:enumeration value="HOME" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfContactDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ContactDTO" nillable="true" type="tns:ContactDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ContactDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContactType" type="tns:ContactType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Attribute1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Attribute2" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ContactType">
+        <s:restriction base="s:string">
+          <s:enumeration value="NONE" />
+          <s:enumeration value="EMAIL" />
+          <s:enumeration value="PHONE" />
+          <s:enumeration value="FACEBOOK" />
+          <s:enumeration value="TWITTER" />
+          <s:enumeration value="WECHAT" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ProfileDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileType" type="tns:ProfileType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Anniversary" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhotoURL" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RightHanded" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="TeamUser" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="UniqueIdentifier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdProofFileURL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TaxCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Designation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastLoginTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContactDTOList" type="tns:ArrayOfContactDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressDTOList" type="tns:ArrayOfAddressDTO" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ProfileType">
+        <s:restriction base="s:string">
+          <s:enumeration value="NONE" />
+          <s:enumeration value="PERSON" />
+          <s:enumeration value="ORGANIZATION" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CustomerVerificationDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProfileId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="VerificationCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProfileDTO" type="tns:ProfileDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomDataSetDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataSetId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Dummy" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDataDTOList" type="tns:ArrayOfCustomDataDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCustomDataDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomDataDTO" nillable="true" type="tns:CustomDataDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomDataDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataSetId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomAttributeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ValueId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDataText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataNumber" nillable="true" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCardCoreDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CardCoreDTO" nillable="true" type="tns:CardCoreDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CardCoreDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="CardId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Card_number" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Issue_date" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Face_value" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Refund_flag" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Refund_amount" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Refund_date" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Valid_flag" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ticket_count" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Credits" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Courtesy" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Bonus" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Customer_id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Credits_played" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ticket_allowed" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Real_ticket_mode" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Vip_customer" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Start_time" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Last_played_time" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Technician_card" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Tech_games" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Timer_reset_card" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="Loyalty_points" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Upload_site_id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Upload_time" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DownloadBatchId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RefreshFromHQTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Last_update_time" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerFingerPrintDTO" type="tns:CustomerFingerPrintDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardCreditPlusBalanceDTO" type="tns:CardCreditPlusBalanceDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardIdentifier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryCard" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardCreditPlusDTOList" type="tns:ArrayOfCardCreditPlusDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardGamesDTOList" type="tns:ArrayOfCardGamesDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardDiscountsDTOList" type="tns:ArrayOfCardDiscountsDTO" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerFingerPrintDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Template" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ActiveFlag" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdatedDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SyncStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CardCreditPlusBalanceDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlusTickets" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlusBalance" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlusLoyaltyPoints" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlusRefundableBalance" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCardCreditPlusDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CardCreditPlusDTO" nillable="true" type="tns:CardCreditPlusDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CardCreditPlusDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CardCreditPlusId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlus" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditPlusType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Refundable" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditPlusBalance" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="PeriodFrom" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="PeriodTo" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TimeFrom" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TimeTo" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfDays" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Monday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tuesday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Wednesday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Thursday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Friday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Saturday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sunday" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MinimumSaleAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoyaltyRuleId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastupdatedDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtendOnReload" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PlayStartTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TicketAllowed" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ForMembershipOnly" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpireWithMembership" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipRewardsId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCardGamesDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CardGamesDTO" nillable="true" type="tns:CardGamesDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CardGamesDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CardGameId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GameId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="GameProfileId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Frequency" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastPlayedTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="BalanceGames" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxLineId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="EntitlementType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OptionalAttribute" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomDataSetId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TicketAllowed" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="FromDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Monday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tuesday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Wednesday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Thursday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Friday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Saturday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sunday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpireWithMembership" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipRewardsId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCardDiscountsDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CardDiscountsDTO" nillable="true" type="tns:CardDiscountsDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CardDiscountsDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CardDiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="InternetKey" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LineId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaskId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="IsActive" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpireWithMembership" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipRewardsId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCustomerMembershipProgressionDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerMembershipProgressionDTO" nillable="true" type="tns:CustomerMembershipProgressionDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerMembershipProgressionDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EffectiveDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EffectiveFromDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EffectiveToDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastRetentionDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdateDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCustomerMembershipRewardsLogDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerMembershipRewardsLogDTO" nillable="true" type="tns:CustomerMembershipRewardsLogDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerMembershipRewardsLogDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipRewardsLogId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MembershipRewardsId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RewardAttributeProductID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="RewardAttribute" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RewardAttributePercent" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="RewardFunction" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RewardFunctionPeriod" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitOfRewardFunctionPeriod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RewardFrequency" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitOfRewardFrequency" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpireWithMembership" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxLineId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardCreditPlusId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardDiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardGameId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdatedDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardCreditPlusTag" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBookingAttendeeDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BookingAttendeeDTO" nillable="true" type="tns:BookingAttendeeDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BookingAttendeeDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="BookingId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="Age" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SpecialRequest" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PartyInNameOf" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="0001-01-01T00:00:00" name="DateofBirth" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionUser">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MobileNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IsAgent" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Transaction">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="TrxId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tax" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PreTaxAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TotalAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RoundOffAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FinalAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NetAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrxPayment" type="tns:TrxPayment" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrxLines" type="tns:ArrayOfTrxLine" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountsSummaryDTOList" type="tns:ArrayOfDiscountsSummaryDTO" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderHeader" type="tns:OrderHeader" />
+          <s:element minOccurs="0" maxOccurs="1" name="TotalPaidAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrxPayments" type="tns:ArrayOfTrxPayment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrxPayment">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SelectedPaymentMode" type="tns:PaymentModeDTO" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditCardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NameOnCreditCard" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditCardName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditCardExpiry" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditCardAuthorization" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardEntitlementType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardCreditPlusId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CCResponseId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Memo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdatedUser" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentPaymentId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TenderedAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TipAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="SplitId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PosMachine" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CurrencyCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrencyRate" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="TentNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="InvoiceNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentCardNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CCTransactionsPGWDTO" type="tns:CCTransactionsPGWDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentModeDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentModeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentMode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCreditCard" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditCardSurchargePercentage" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Site_id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCash" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsDebitCard" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gateway" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ManagerApprovalRequired" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsRoundOff" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="POSAvailable" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayOrder" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="ImageFileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentGateway" type="tns:LookupValuesDTO" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsQRCode" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LookupValuesDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="LookupValueId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LookupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="LookupName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LookupValue" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SynchStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CCTransactionsPGWDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ResponseID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InvoiceNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TokenID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RecordNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DSIXReturnCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TextResponse" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AcctNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TranCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RefNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Purchase" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Authorize" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransactionDatetime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="AuthCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProcessData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseOrigin" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserTraceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaptureStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AcqRefData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipAmount" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MasterEntityId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsChanged" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDiscountsSummaryDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DiscountsSummaryDTO" nillable="true" type="tns:DiscountsSummaryDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DiscountsSummaryDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountPercentage" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="VariableDiscountAmount" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayChar" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalLineAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApprovedBy" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalNoOfLines" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OrderHeader">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CardId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TableNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WaiterName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderStatus" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TableId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrxId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="PosMachine" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrxPayment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrxPayment" nillable="true" type="tns:TrxPayment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPaymentModeDTO">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PaymentModeDTO" nillable="true" type="tns:PaymentModeDTO" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdatePurchaseTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePurchaseTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatePurchaseTransactionResult" type="tns:TransactionStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPaymentModeList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="paymentModeParams" type="tns:PaymentModeParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PaymentModeParams">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="PaymentModeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="PaymentMode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="-1" name="SiteId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" default="" name="PaymentChannel" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPaymentModeListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentModeListResult" type="tns:ArrayOfPaymentModeDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="number" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionReceipt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="trxId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="macAddress" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="height" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionReceiptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionReceiptResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrintTrxReceipt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="trxId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="macAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tabletPrinterMac" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="height" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrintTrxReceiptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PrintTrxReceiptResult" type="tns:ArrayOfTransactionKeyValueStruct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+            <s:element minOccurs="0" maxOccurs="1" name="transaction" type="tns:Transaction" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FetchTransactionResult" type="tns:Transaction" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveTrxWithDebitPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+            <s:element minOccurs="0" maxOccurs="1" name="transaction" type="tns:Transaction" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Transaction" type="tns:Transaction" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrintKotOrKDSFailed" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SaveTrxWithDebitPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveTrxWithDebitPaymentResult" type="tns:TransactionResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTrxObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionParams" type="tns:TransactionParams" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTrxObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FetchTrxObjectResult" type="tns:Transaction" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUpdatedWaiverSignedTranslatedDTOList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="langaugeId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="inWaiverSignedDTOList" type="tns:ArrayOfWaiverSignedDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUpdatedWaiverSignedTranslatedDTOListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUpdatedWaiverSignedTranslatedDTOListResult" type="tns:ArrayOfWaiverSignedDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductWaiversSigningDTO">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="siteId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="waiverSetId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductWaiversSigningDTOResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductWaiversSigningDTOResult" type="tns:ArrayOfWaiverSignedDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PurchaseNewCardProductSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseNewCardProduct" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseNewCardProductSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseNewCardProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseNewCardWithPOSMachineSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseNewCardWithPOSMachine" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseNewCardWithPOSMachineSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseNewCardWithPOSMachineResponse" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseTicketsSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseTickets" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseTicketsSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseTicketsResponse" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseRechargeCardProductSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseRechargeCardProduct" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseRechargeCardProductSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseRechargeCardProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseRechargeCardWithPOSMachineSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseRechargeCardWithPOSMachine" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseRechargeCardWithPOSMachineSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseRechargeCardWithPOSMachineResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelTicket" />
+  </wsdl:message>
+  <wsdl:message name="CancelTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPurchase" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseCardProductSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseCardProduct" />
+  </wsdl:message>
+  <wsdl:message name="PurchaseCardProductSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseCardProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveTransaction" />
+  </wsdl:message>
+  <wsdl:message name="SaveTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveTransactionWithDebitPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveTransactionWithDebitPayment" />
+  </wsdl:message>
+  <wsdl:message name="SaveTransactionWithDebitPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveTransactionWithDebitPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveTrxPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveTrxPayment" />
+  </wsdl:message>
+  <wsdl:message name="SaveTrxPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveTrxPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformAlohaTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:PerformAlohaTransaction" />
+  </wsdl:message>
+  <wsdl:message name="PerformAlohaTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:PerformAlohaTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionDetailsByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactionDetailsById" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionDetailsByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionDetailsByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionLinesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactionLines" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionLinesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionLinesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmCardProductPurchaseSoapIn">
+    <wsdl:part name="parameters" element="tns:ConfirmCardProductPurchase" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmCardProductPurchaseSoapOut">
+    <wsdl:part name="parameters" element="tns:ConfirmCardProductPurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:DoPayment" />
+  </wsdl:message>
+  <wsdl:message name="DoPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:DoPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SavePurchaseTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:SavePurchaseTransaction" />
+  </wsdl:message>
+  <wsdl:message name="SavePurchaseTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:SavePurchaseTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseTransactionLineSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPurchaseTransactionLine" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseTransactionLineSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPurchaseTransactionLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmPurchaseTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:ConfirmPurchaseTransaction" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmPurchaseTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:ConfirmPurchaseTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPurchaseTransaction" />
+  </wsdl:message>
+  <wsdl:message name="CancelPurchaseTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPurchaseTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPurchaseTransactionsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPurchaseTransactions" />
+  </wsdl:message>
+  <wsdl:message name="GetPurchaseTransactionsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPurchaseTransactionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePurchaseTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePurchaseTransaction" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePurchaseTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePurchaseTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentModeListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentModeList" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentModeListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentModeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionReceiptSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactionReceipt" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionReceiptSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionReceiptResponse" />
+  </wsdl:message>
+  <wsdl:message name="PrintTrxReceiptSoapIn">
+    <wsdl:part name="parameters" element="tns:PrintTrxReceipt" />
+  </wsdl:message>
+  <wsdl:message name="PrintTrxReceiptSoapOut">
+    <wsdl:part name="parameters" element="tns:PrintTrxReceiptResponse" />
+  </wsdl:message>
+  <wsdl:message name="FetchTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:FetchTransaction" />
+  </wsdl:message>
+  <wsdl:message name="FetchTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:FetchTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveTrxWithDebitPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveTrxWithDebitPayment" />
+  </wsdl:message>
+  <wsdl:message name="SaveTrxWithDebitPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveTrxWithDebitPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="FetchTrxObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:FetchTrxObject" />
+  </wsdl:message>
+  <wsdl:message name="FetchTrxObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:FetchTrxObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdatedWaiverSignedTranslatedDTOListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUpdatedWaiverSignedTranslatedDTOList" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdatedWaiverSignedTranslatedDTOListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUpdatedWaiverSignedTranslatedDTOListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductWaiversSigningDTOSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductWaiversSigningDTO" />
+  </wsdl:message>
+  <wsdl:message name="GetProductWaiversSigningDTOSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductWaiversSigningDTOResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TransactionServicesSoap">
+    <wsdl:operation name="PurchaseNewCardProduct">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase new card products</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseNewCardProductSoapIn" />
+      <wsdl:output message="tns:PurchaseNewCardProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseNewCardWithPOSMachine">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase new card products</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseNewCardWithPOSMachineSoapIn" />
+      <wsdl:output message="tns:PurchaseNewCardWithPOSMachineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseTickets">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase the ticketing products</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseTicketsSoapIn" />
+      <wsdl:output message="tns:PurchaseTicketsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardProduct">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase recharge card products</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseRechargeCardProductSoapIn" />
+      <wsdl:output message="tns:PurchaseRechargeCardProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardWithPOSMachine">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase recharge card products with POS identifier</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseRechargeCardWithPOSMachineSoapIn" />
+      <wsdl:output message="tns:PurchaseRechargeCardWithPOSMachineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelTicket">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cancel the ticket using the transaction id generated during the saving of ticket</wsdl:documentation>
+      <wsdl:input message="tns:CancelTicketSoapIn" />
+      <wsdl:output message="tns:CancelTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchase">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cancel the purchase using the transaction id generated during the saving of purchase</wsdl:documentation>
+      <wsdl:input message="tns:CancelPurchaseSoapIn" />
+      <wsdl:output message="tns:CancelPurchaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseCardProduct">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Purchase the card product - required when the recharge product is being purchased</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseCardProductSoapIn" />
+      <wsdl:output message="tns:PurchaseCardProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransaction">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generic method to create the transaction in the system</wsdl:documentation>
+      <wsdl:input message="tns:SaveTransactionSoapIn" />
+      <wsdl:output message="tns:SaveTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransactionWithDebitPayment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generic method to create the transaction in the system including payments</wsdl:documentation>
+      <wsdl:input message="tns:SaveTransactionWithDebitPaymentSoapIn" />
+      <wsdl:output message="tns:SaveTransactionWithDebitPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxPayment">
+      <wsdl:input message="tns:SaveTrxPaymentSoapIn" />
+      <wsdl:output message="tns:SaveTrxPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PerformAlohaTransaction">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Perform Aloha transaction</wsdl:documentation>
+      <wsdl:input message="tns:PerformAlohaTransactionSoapIn" />
+      <wsdl:output message="tns:PerformAlohaTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionDetailsById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the details of the transactions for a given trx id, excludes deposit products</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionDetailsByIdSoapIn" />
+      <wsdl:output message="tns:GetTransactionDetailsByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionLines">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the details of the transactions for a given trx id</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionLinesSoapIn" />
+      <wsdl:output message="tns:GetTransactionLinesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmCardProductPurchase">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Confirms the card purchase transaction</wsdl:documentation>
+      <wsdl:input message="tns:ConfirmCardProductPurchaseSoapIn" />
+      <wsdl:output message="tns:ConfirmCardProductPurchaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoPayment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Simple webservice to create a transaction with payment amount</wsdl:documentation>
+      <wsdl:input message="tns:DoPaymentSoapIn" />
+      <wsdl:output message="tns:DoPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePurchaseTransaction">
+      <wsdl:input message="tns:SavePurchaseTransactionSoapIn" />
+      <wsdl:output message="tns:SavePurchaseTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransactionLine">
+      <wsdl:input message="tns:CancelPurchaseTransactionLineSoapIn" />
+      <wsdl:output message="tns:CancelPurchaseTransactionLineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmPurchaseTransaction">
+      <wsdl:input message="tns:ConfirmPurchaseTransactionSoapIn" />
+      <wsdl:output message="tns:ConfirmPurchaseTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransaction">
+      <wsdl:input message="tns:CancelPurchaseTransactionSoapIn" />
+      <wsdl:output message="tns:CancelPurchaseTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchaseTransactions">
+      <wsdl:input message="tns:GetPurchaseTransactionsSoapIn" />
+      <wsdl:output message="tns:GetPurchaseTransactionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePurchaseTransaction">
+      <wsdl:input message="tns:UpdatePurchaseTransactionSoapIn" />
+      <wsdl:output message="tns:UpdatePurchaseTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentModeList">
+      <wsdl:input message="tns:GetPaymentModeListSoapIn" />
+      <wsdl:output message="tns:GetPaymentModeListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <wsdl:input message="tns:SendMessageSoapIn" />
+      <wsdl:output message="tns:SendMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionReceipt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Method to get the transaction receipt based on passed trxId, macAddress, width and height for receipt.</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionReceiptSoapIn" />
+      <wsdl:output message="tns:GetTransactionReceiptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintTrxReceipt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Method to get or print the transaction receipt based on passed trxId, macAddress, tabletPrinterMac, width and height for receipt.</wsdl:documentation>
+      <wsdl:input message="tns:PrintTrxReceiptSoapIn" />
+      <wsdl:output message="tns:PrintTrxReceiptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchTransaction">
+      <wsdl:input message="tns:FetchTransactionSoapIn" />
+      <wsdl:output message="tns:FetchTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxWithDebitPayment">
+      <wsdl:input message="tns:SaveTrxWithDebitPaymentSoapIn" />
+      <wsdl:output message="tns:SaveTrxWithDebitPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchTrxObject">
+      <wsdl:input message="tns:FetchTrxObjectSoapIn" />
+      <wsdl:output message="tns:FetchTrxObjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedWaiverSignedTranslatedDTOList">
+      <wsdl:input message="tns:GetUpdatedWaiverSignedTranslatedDTOListSoapIn" />
+      <wsdl:output message="tns:GetUpdatedWaiverSignedTranslatedDTOListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductWaiversSigningDTO">
+      <wsdl:input message="tns:GetProductWaiversSigningDTOSoapIn" />
+      <wsdl:output message="tns:GetProductWaiversSigningDTOSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TransactionServicesSoap" type="tns:TransactionServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PurchaseNewCardProduct">
+      <soap:operation soapAction="http://semnox.com/PurchaseNewCardProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseNewCardWithPOSMachine">
+      <soap:operation soapAction="http://semnox.com/PurchaseNewCardWithPOSMachine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseTickets">
+      <soap:operation soapAction="http://semnox.com/PurchaseTickets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardProduct">
+      <soap:operation soapAction="http://semnox.com/PurchaseRechargeCardProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardWithPOSMachine">
+      <soap:operation soapAction="http://semnox.com/PurchaseRechargeCardWithPOSMachine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTicket">
+      <soap:operation soapAction="http://semnox.com/CancelTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchase">
+      <soap:operation soapAction="http://semnox.com/CancelPurchase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseCardProduct">
+      <soap:operation soapAction="http://semnox.com/PurchaseCardProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransaction">
+      <soap:operation soapAction="http://semnox.com/SaveTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransactionWithDebitPayment">
+      <soap:operation soapAction="http://semnox.com/SaveTransactionWithDebitPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxPayment">
+      <soap:operation soapAction="http://semnox.com/SaveTrxPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerformAlohaTransaction">
+      <soap:operation soapAction="http://semnox.com/PerformAlohaTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionDetailsById">
+      <soap:operation soapAction="http://semnox.com/GetTransactionDetailsById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionLines">
+      <soap:operation soapAction="http://semnox.com/GetTransactionLines" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmCardProductPurchase">
+      <soap:operation soapAction="http://semnox.com/ConfirmCardProductPurchase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoPayment">
+      <soap:operation soapAction="http://semnox.com/DoPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePurchaseTransaction">
+      <soap:operation soapAction="http://semnox.com/SavePurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransactionLine">
+      <soap:operation soapAction="http://semnox.com/CancelPurchaseTransactionLine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmPurchaseTransaction">
+      <soap:operation soapAction="http://semnox.com/ConfirmPurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransaction">
+      <soap:operation soapAction="http://semnox.com/CancelPurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchaseTransactions">
+      <soap:operation soapAction="http://semnox.com/GetPurchaseTransactions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePurchaseTransaction">
+      <soap:operation soapAction="http://semnox.com/UpdatePurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentModeList">
+      <soap:operation soapAction="http://semnox.com/GetPaymentModeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <soap:operation soapAction="http://semnox.com/SendMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionReceipt">
+      <soap:operation soapAction="http://semnox.com/GetTransactionReceipt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintTrxReceipt">
+      <soap:operation soapAction="http://semnox.com/PrintTrxReceipt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTransaction">
+      <soap:operation soapAction="http://semnox.com/FetchTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxWithDebitPayment">
+      <soap:operation soapAction="http://semnox.com/SaveTrxWithDebitPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTrxObject">
+      <soap:operation soapAction="http://semnox.com/FetchTrxObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedWaiverSignedTranslatedDTOList">
+      <soap:operation soapAction="http://semnox.com/GetUpdatedWaiverSignedTranslatedDTOList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductWaiversSigningDTO">
+      <soap:operation soapAction="http://semnox.com/GetProductWaiversSigningDTO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TransactionServicesSoap12" type="tns:TransactionServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PurchaseNewCardProduct">
+      <soap12:operation soapAction="http://semnox.com/PurchaseNewCardProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseNewCardWithPOSMachine">
+      <soap12:operation soapAction="http://semnox.com/PurchaseNewCardWithPOSMachine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseTickets">
+      <soap12:operation soapAction="http://semnox.com/PurchaseTickets" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardProduct">
+      <soap12:operation soapAction="http://semnox.com/PurchaseRechargeCardProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseRechargeCardWithPOSMachine">
+      <soap12:operation soapAction="http://semnox.com/PurchaseRechargeCardWithPOSMachine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTicket">
+      <soap12:operation soapAction="http://semnox.com/CancelTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchase">
+      <soap12:operation soapAction="http://semnox.com/CancelPurchase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseCardProduct">
+      <soap12:operation soapAction="http://semnox.com/PurchaseCardProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransaction">
+      <soap12:operation soapAction="http://semnox.com/SaveTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransactionWithDebitPayment">
+      <soap12:operation soapAction="http://semnox.com/SaveTransactionWithDebitPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxPayment">
+      <soap12:operation soapAction="http://semnox.com/SaveTrxPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerformAlohaTransaction">
+      <soap12:operation soapAction="http://semnox.com/PerformAlohaTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionDetailsById">
+      <soap12:operation soapAction="http://semnox.com/GetTransactionDetailsById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionLines">
+      <soap12:operation soapAction="http://semnox.com/GetTransactionLines" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmCardProductPurchase">
+      <soap12:operation soapAction="http://semnox.com/ConfirmCardProductPurchase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoPayment">
+      <soap12:operation soapAction="http://semnox.com/DoPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePurchaseTransaction">
+      <soap12:operation soapAction="http://semnox.com/SavePurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransactionLine">
+      <soap12:operation soapAction="http://semnox.com/CancelPurchaseTransactionLine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmPurchaseTransaction">
+      <soap12:operation soapAction="http://semnox.com/ConfirmPurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPurchaseTransaction">
+      <soap12:operation soapAction="http://semnox.com/CancelPurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchaseTransactions">
+      <soap12:operation soapAction="http://semnox.com/GetPurchaseTransactions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePurchaseTransaction">
+      <soap12:operation soapAction="http://semnox.com/UpdatePurchaseTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentModeList">
+      <soap12:operation soapAction="http://semnox.com/GetPaymentModeList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://semnox.com/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionReceipt">
+      <soap12:operation soapAction="http://semnox.com/GetTransactionReceipt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintTrxReceipt">
+      <soap12:operation soapAction="http://semnox.com/PrintTrxReceipt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTransaction">
+      <soap12:operation soapAction="http://semnox.com/FetchTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTrxWithDebitPayment">
+      <soap12:operation soapAction="http://semnox.com/SaveTrxWithDebitPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTrxObject">
+      <soap12:operation soapAction="http://semnox.com/FetchTrxObject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedWaiverSignedTranslatedDTOList">
+      <soap12:operation soapAction="http://semnox.com/GetUpdatedWaiverSignedTranslatedDTOList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductWaiversSigningDTO">
+      <soap12:operation soapAction="http://semnox.com/GetProductWaiversSigningDTO" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TransactionServices">
+    <wsdl:port name="TransactionServicesSoap" binding="tns:TransactionServicesSoap">
+      <soap:address location="https://localhost:444/TransactionServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TransactionServicesSoap12" binding="tns:TransactionServicesSoap12">
+      <soap12:address location="https://localhost:444/TransactionServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

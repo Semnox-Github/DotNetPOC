@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A20E3DE-4198-46C4-8C5B-0AC1FCB727A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Redemption</RootNamespace>
+    <AssemblyName>RedemptionUtils</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\..\..\..\OTS\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\..\OTS\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authenticate.cs" />
+    <Compile Include="CardReader.cs" />
+    <Compile Include="CommonFuncs.cs" />
+    <Compile Include="CommonUIDisplay.cs" />
+    <Compile Include="RedemptionTemplateKeywordFormatter.cs" />
+    <Compile Include="frmRedemptionCurrencyRuleUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRedemptionCurrencyRuleUI.Designer.cs">
+      <DependentUpon>frmRedemptionCurrencyRuleUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IRedemptionCurrencyRuleProvider.cs" />
+    <Compile Include="IRedemptionCurrencyRuleUseCases.cs" />
+    <Compile Include="IRedemptionCurrencyUseCases.cs" />
+    <Compile Include="IRedemptionUseCases.cs" />
+    <Compile Include="ITicketReceiptUseCases.cs" />
+    <Compile Include="ITicketStationUseCases.cs" />
+    <Compile Include="LocalRedemptionCurrencyRuleUseCases.cs" />
+    <Compile Include="LocalRedemptionCurrencyUseCases.cs" />
+    <Compile Include="LocalRedemptionUseCases.cs" />
+    <Compile Include="LocalTicketReceiptUseCases.cs" />
+    <Compile Include="LocalTicketStationUseCases.cs" />
+    <Compile Include="ModuleTenWtThreeTicketStationBL.cs" />
+    <Compile Include="POSCounterTicketStationBL.cs" />
+    <Compile Include="PrintRedemptionReceipt.cs" />
+    <Compile Include="PrizeMachineFilterDTO.cs" />
+    <Compile Include="PrizeMachineInfoBL.cs" />
+    <Compile Include="PrizeMachineInfoDTO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="RDSUtils.cs" />
+    <Compile Include="RedemptionActivityDTO.cs" />
+    <Compile Include="RedemptionBL.cs" />
+    <Compile Include="RedemptionCurrencyRuleCalculator.cs" />
+    <Compile Include="RedemptionCurrencyRuleDetailContainerDTO.cs" />
+    <Compile Include="RedemptionCurrencyRuleProvider.cs" />
+    <Compile Include="RedemptionLoadToCardRequestDTO.cs" />
+    <Compile Include="RedemptionPriceContainer.cs" />
+    <Compile Include="RedemptionPriceContainerDTO.cs" />
+    <Compile Include="RedemptionPriceContainerDTOCollection.cs" />
+    <Compile Include="RedemptionPriceContainerList.cs" />
+    <Compile Include="RemoteTicketStationUseCases.cs" />
+    <Compile Include="TicketStationContainerDTO.cs" />
+    <Compile Include="TicketStationContainerDTOCollection.cs" />
+    <Compile Include="TicketStationContainerList.cs" />
+    <Compile Include="TicketStationsContainer.cs" />
+    <Compile Include="V2\RedemptionUseCaseBL.cs" />
+    <Compile Include="RedemptionCardsBL.cs" />
+    <Compile Include="RedemptionCardsDataHandler.cs" />
+    <Compile Include="RedemptionCardsDTO.cs" />
+    <Compile Include="RedemptionCurrency.cs" />
+    <Compile Include="RedemptionCurrencyContainer.cs" />
+    <Compile Include="RedemptionCurrencyContainerDTO.cs" />
+    <Compile Include="RedemptionCurrencyContainerDTOCollection.cs" />
+    <Compile Include="RedemptionCurrencyDataHandler.cs" />
+    <Compile Include="RedemptionCurrencyDTO.cs" />
+    <Compile Include="RedemptionCurrencyExcelDTODefinition.cs" />
+    <Compile Include="RedemptionCurrencyContainerList.cs" />
+    <Compile Include="RedemptionCurrencyRuleBL.cs" />
+    <Compile Include="RedemptionCurrencyRuleContainer.cs" />
+    <Compile Include="RedemptionCurrencyRuleContainerDTO.cs" />
+    <Compile Include="RedemptionCurrencyRuleContainerDTOCollection.cs" />
+    <Compile Include="RedemptionCurrencyRuleDataHandler.cs" />
+    <Compile Include="RedemptionCurrencyRuleDetailBL.cs" />
+    <Compile Include="RedemptionCurrencyRuleDetailDataHandler.cs" />
+    <Compile Include="RedemptionCurrencyRuleDetailDTO.cs" />
+    <Compile Include="RedemptionCurrencyRuleDTO.cs" />
+    <Compile Include="RedemptionCurrencyRuleExcelDTODefinition.cs" />
+    <Compile Include="RedemptionCurrencyRuleContainerList.cs" />
+    <Compile Include="RedemptionCurrencyUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RedemptionCurrencyUI.Designer.cs">
+      <DependentUpon>RedemptionCurrencyUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RedemptionDataHandler.cs" />
+    <Compile Include="RedemptionDTO.cs" />
+    <Compile Include="RedemptionGiftsBL.cs" />
+    <Compile Include="RedemptionGiftsDataHandler.cs" />
+    <Compile Include="RedemptionGiftsDTO.cs" />
+    <Compile Include="RedemptionParams.cs" />
+    <Compile Include="RedemptionTicketAllocationBL.cs" />
+    <Compile Include="RedemptionTicketAllocationDataHandler.cs" />
+    <Compile Include="RedemptionTicketAllocationDTO.cs" />
+    <Compile Include="RedemptionUseCaseFactory.cs" />
+    <Compile Include="RedemptionUserLogsBL.cs" />
+    <Compile Include="RedemptionUserLogsDataHandler.cs" />
+    <Compile Include="RedemptionUserLogsDTO.cs" />
+    <Compile Include="RemoteRedemptionCurrencyRuleUseCases.cs" />
+    <Compile Include="RemoteRedemptionCurrencyUseCases.cs" />
+    <Compile Include="RemoteRedemptionUseCases.cs" />
+    <Compile Include="RemoteTicketReceiptUseCases.cs" />
+    <Compile Include="TicketReceipt.cs" />
+    <Compile Include="TicketReceiptDataHandler.cs" />
+    <Compile Include="TicketReceiptDTO.cs" />
+    <Compile Include="TicketReceiptUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TicketReceiptUI.designer.cs">
+      <DependentUpon>TicketReceiptUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TicketStationBL.cs" />
+    <Compile Include="TicketStationContainer.cs" />
+    <Compile Include="TicketStationDataHandler.cs" />
+    <Compile Include="TicketStationDTO.cs" />
+    <Compile Include="TicketStationFactory.cs" />
+    <Compile Include="frmTicketStationSetupUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTicketStationSetupUI.Designer.cs">
+      <DependentUpon>frmTicketStationSetupUI.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardCoreDTO\CardCoreDTO.csproj">
+      <Project>{d7b2505f-76db-46fe-a58b-2386268fd5ff}</Project>
+      <Name>CardCoreDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CardCore\CardCore.csproj">
+      <Project>{e1bd4cc7-8efc-4565-a533-39802828d243}</Project>
+      <Name>CardCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09ec39cf-3dd3-4920-a155-cade5b252b8a}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{970a8e60-83be-4559-a67c-3ef7135a3e8d}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inventory\Inventory.csproj">
+      <Project>{AF244E4D-B6F8-4FB7-979D-3E82236FE4AD}</Project>
+      <Name>Inventory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{edd835a5-1862-4aed-b3f0-1c134b40fdb4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Publish\Publish.csproj">
+      <Project>{a707f773-c706-429b-b031-70c69c9adfd1}</Project>
+      <Name>Publish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedemptionBarcodeUtils\RedemptionBarcodeUtils\RedemptionBarcodeUtils.csproj">
+      <Project>{9e3c0dfc-dea4-4a14-839d-08f4f50efed2}</Project>
+      <Name>RedemptionBarcodeUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.csproj">
+      <Project>{266543a2-b12c-46fe-bcf1-a67319b9cfb8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vendor\Vendor.csproj">
+      <Project>{585e3765-3096-451d-89c0-97c9b845dbe7}</Project>
+      <Name>Vendor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmRedemptionCurrencyRuleUI.resx">
+      <DependentUpon>frmRedemptionCurrencyRuleUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RedemptionCurrencyUI.resx">
+      <DependentUpon>RedemptionCurrencyUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TicketReceiptUI.resx">
+      <DependentUpon>TicketReceiptUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTicketStationSetupUI.resx">
+      <DependentUpon>frmTicketStationSetupUI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\TicketStationDTO.datasource" />
+    <None Include="Properties\DataSources\RedemptionCurrencyRuleDetailDTO.datasource" />
+    <None Include="Properties\DataSources\RedemptionCurrencyRuleDTO.datasource" />
+    <None Include="Resources\CancelLine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CancelLinePressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CompleteTrx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CompleteTrxPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pressed3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redemption.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search_Btn_Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search_Btn_Pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClearTrx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

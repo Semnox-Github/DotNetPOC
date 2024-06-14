@@ -1,0 +1,40 @@
+﻿[
+  {
+    "POSMachineId": 1,
+    "POSName": "FaizanTesting",
+    "LegalEntity": "Ok",
+    "Remarks": "10",
+    "FriendlyName": "MD",
+    "POSTypeId": 1,
+    "InventoryLocationId": 2,
+    "IPAddress": "192.22.212.11",
+    "ComputerName": "ThinkPad",
+    "Guid": "5dd65688-9d9e-4e51-ba45-2a21365f2cf9",
+    "SiteId": -1,
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "DayBeginTime": "0001-01-01T00:00:00",
+    "DayEndTime": "0001-01-01T00:00:00",
+    "XReportRunTime": "0001-01-01T00:00:00",
+    "IsChanged": false
+  },
+  {
+    "POSMachineId": 2,
+    "POSName": "FTest",
+    "LegalEntity": "",
+    "Remarks": "",
+    "FriendlyName": "",
+    "POSTypeId": 2,
+    "InventoryLocationId": -1,
+    "IPAddress": "",
+    "ComputerName": "Lenovo",
+    "Guid": "518c28ad-3cfb-4869-a342-5f5c5930f36e",
+    "SiteId": -1,
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "DayBeginTime": "0001-01-01T00:00:00",
+    "DayEndTime": "0001-01-01T00:00:00",
+    "XReportRunTime": "0001-01-01T00:00:00",
+    "IsChanged": false
+  }
+]

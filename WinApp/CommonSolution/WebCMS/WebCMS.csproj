@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F73134AF-2B47-49DD-AF15-4BEE29B519DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.WebCMS</RootNamespace>
+    <AssemblyName>WebCMS</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CMSBannerBL.cs" />
+    <Compile Include="CMSBannerDTO.cs" />
+    <Compile Include="CMSBannerItemsBL.cs" />
+    <Compile Include="CMSBannerItemsDataHandler.cs" />
+    <Compile Include="CMSBannerItemsDTO.cs" />
+    <Compile Include="CMSBannersDataHandler.cs" />
+    <Compile Include="CMSContentBL.cs" />
+    <Compile Include="CMSContentDataHandler.cs" />
+    <Compile Include="CMSContentDTO.cs" />
+    <Compile Include="CMSContentTemplateBL.cs" />
+    <Compile Include="CMSContentTemplateDataHandler.cs" />
+    <Compile Include="CMSContentTemplateDTO.cs" />
+    <Compile Include="CMSGroups.cs" />
+    <Compile Include="CMSGroupsDataHandler.cs" />
+    <Compile Include="CMSGroupsDTO.cs" />
+    <Compile Include="CMSGroupsParams.cs" />
+    <Compile Include="CMSMenuItemBL.cs" />
+    <Compile Include="CMSMenuItemDataHandler.cs" />
+    <Compile Include="CMSMenuItemsDTO.cs" />
+    <Compile Include="CMSMenusBL.cs" />
+    <Compile Include="CMSMenusDataHandler.cs" />
+    <Compile Include="CMSMenusDTO.cs" />
+    <Compile Include="CMSModuleMenuBL.cs" />
+    <Compile Include="CMSModuleMenuDataHandler.cs" />
+    <Compile Include="CMSModuleMenuDTO.cs" />
+    <Compile Include="CMSModulePageBL.cs" />
+    <Compile Include="CMSModulePageDataHandler.cs" />
+    <Compile Include="CMSModulePageDTO.cs" />
+    <Compile Include="CMSModulesBL.cs" />
+    <Compile Include="CMSModulesDatahandler.cs" />
+    <Compile Include="CMSModulesDTO.cs" />
+    <Compile Include="CMSPageParams.cs" />
+    <Compile Include="CMSPagesBL.cs" />
+    <Compile Include="CMSPagesDataHandler.cs" />
+    <Compile Include="CMSPagesDTO.cs" />
+    <Compile Include="CMSSocalLinksDataHandler.cs" />
+    <Compile Include="CMSSocialLinks.cs" />
+    <Compile Include="CMSSocialLinksDTO.cs" />
+    <Compile Include="CMSThemesBL.cs" />
+    <Compile Include="CMSThemesDataHandler.cs" />
+    <Compile Include="CMSThemesDTO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

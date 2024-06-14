@@ -1,0 +1,30 @@
+"AllowanceCharge" :
+ [ {
+	"ChargeIndicator" :
+		[ {"IndicatorContent" : "@AllowanceChargeIndicator" } ],
+	"AllowanceChargeReasonCode" :
+		[ {
+			"CodeContent" : "@AllowanceChargeReasonCodeValue", 
+			"CodeListAgencyNameText" : "@AllowanceChargeReasonCodelistAgencyName", 
+			"CodeListNameText" : "@AllowanceChargeReasonCodelistName", 
+			"CodeListSchemeUniformResourceIdentifier" : "@AllowanceChargeReasonCodelistURI" 
+		  }
+		],
+	"MultiplierFactorNumeric": [
+		{
+		  "NumericContent": @MultiplierFactorNumeric
+		}
+	],
+	"Amount" :
+		[ {
+			"AmountContent" : "@AllowanceChargeDiscountAmount", 
+			"AmountCurrencyIdentifier" : "@AllowanceChargeAmountCurrencyID" 
+		  }
+  	    ], 
+	"BaseAmount" :
+		[ {
+			"AmountContent" : "@AllowanceChargeBaseAmount", 
+			"AmountCurrencyIdentifier" : "@AllowanceChargeAmountCurrencyID" 
+		  } ]
+   }
+ ], 

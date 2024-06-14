@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="10.7770792643229in" Name="SubscriptionExpiryAndPaymentFailuresDetails" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="SELECT ISNULL((SELECT top 1 c.Master_Site_Id FROM site s, Company c WHERE c.Master_Site_Id = s.site_id),-1) SiteId&#xD;&#xA;" Name="dsSite" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="select s.site_name, sh.SubscriptionHeaderId, sh.ProductSubscriptionName, sh.SubscriptionStartDate, sh.SubscriptionEndDate,sh.Status, p.product_name&#xD;&#xA; from SubscriptionHeader sh, products p, site s&#xD;&#xA;where ISNULL(sh.Status,'ACTIVE') = 'ACTIVE'&#xD;&#xA; and (s.site_id = sh.site_id or sh.site_id is null)&#xD;&#xA;  AND ISNULL((SELECT max(sbs.BillToDate)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM SubscriptionBillingSchedule sbs  &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE sbs.SubscriptionHeaderId = sh.SubscriptionHeaderId &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;AND ISNULL(sbs.Status,'ACTIVE') != 'CANCELLED'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;AND ISNULL(sbs.IsActive,0) = 1),GETDATE()+1000) &lt;= GETDATE()+ @XDays&#xD;&#xA;  and p.product_id = sh.ProductsId&#xD;&#xA;  and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site ) ) &#xD;&#xA;  order by site_name&#xD;&#xA;" Name="dsSubscriptionDueExpiryDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@XDays">
+          <Value>
+            <String>= Parameters.SubscriptionExpiryInXdays.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="select s.site_name, cc.*, c.customer_name, c.email, c.contact_phone1&#xD;&#xA; from &#xD;&#xA;   (Select CustomerCreditCardsId &#xD;&#xA;          ,CONVERT(NVARCHAR(MAX),DECRYPTBYPASSPHRASE(@PassPhrase,CustomerNameOnCard)) AS CustomerNameOnCard   &#xD;&#xA;           ,CONVERT(NVARCHAR(MAX),DECRYPTBYPASSPHRASE(@PassPhrase,CreditCardNumber)) AS CreditCardNumber &#xD;&#xA;&#x9;&#x9;   ,CONVERT(NVARCHAR(MAX),DECRYPTBYPASSPHRASE(@PassPhrase,CardExpiry)) ccExpiry ,&#xD;&#xA;&#x9;&#x9;   customerId&#xD;&#xA;    from CustomerCreditCards) cc , CustomerView(@PassPhrase) c,site s&#xD;&#xA;where EXISTS (SELECT 1&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM SubscriptionBillingSchedule sbs ,SubscriptionHeader sh&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE sbs.SubscriptionHeaderId = sh.SubscriptionHeaderId  &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;AND ISNULL(sbs.IsActive,0) = 1 &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;AND ISNULL(sh.Status,'ACTIVE') = 'ACTIVE'&#xD;&#xA;                 AND sh.CustomerCreditCardsID = cc.CustomerCreditCardsId&#xD;&#xA;                  and    (s.site_id = sh.site_id or sh.site_id is null)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;    and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site ) ) )&#xD;&#xA;  AND LEN(cc.ccExpiry) = 4 &#xD;&#xA;  and datefromparts(CONCAT('20', SUBSTRING(cc.ccExpiry,3,2)), SUBSTRING(cc.ccExpiry,1,2), 01) &lt; getdate()+@XDays &#xD;&#xA;  and cc.CustomerId = c.customer_id" Name="dsCreditCardsDueExpiryDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@PassPhrase">
+          <Value>
+            <String>= Parameters.CustomerPassPhrase.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@XDays">
+          <Value>
+            <String>= Parameters.CreditCardsExpiryInXdays.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="select s.site_name, sh.SubscriptionHeaderId, sh.ProductSubscriptionName, sh.SubscriptionStartDate, sh.SubscriptionEndDate, sh.SubscriptionPrice,&#xD;&#xA;       sh.Status&#xD;&#xA;  from SubscriptionHeader sh join (&#xD;&#xA;&#x9;&#x9;select  distinct sjp.SubscriptionHeaderId &#xD;&#xA;&#x9;&#x9; from SubscriptionJobProcess sjp&#xD;&#xA;&#x9;&#x9; where EXISTS( SELECT 1 &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM ConcurrentRequests cr &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE cr.RequestId = sjp.ConcurrentRequestId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;AND cr.ActualStartTime &gt;= GETDATE() - @XDays)&#xD;&#xA;&#x9;&#x9;  and EXISTS (select 1 from SubscriptionJobProcessLog sjpl&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;where sjp.SubscriptionJobProcessId = sjpl.SubscriptionJobProcessId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  and sjpl.LogType='PaymentError')&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  ) as sjpd on sjpd.SubscriptionHeaderId = sh.SubscriptionHeaderId , site s&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  where &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  (s.site_id = sh.site_id or sh.site_id is null)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  and  ( sh.site_id IN ( @Site ) OR -1 IN ( @Site ) ) " Name="dsSubscriptionsBillingFailuresDetails">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@XDays">
+          <Value>
+            <String>= Parameters.SubsWithBillingFailureInXdays.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="3.00007883707682in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="10.7770789464315in" Height="0.200000002980232in" Left="0in" Top="0.199999809265137in" Value="=MessagesFunctions.getMessage('Subscriptions due for expiry in next') + ' ' + Parameters.SubscriptionExpiryInXdays.Value +  ' ' + MessagesFunctions.getMessage('days')" Name="textBox50">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="10.7666622797648in" Height="0.200000002980232in" Left="0in" Top="1.19999996821086in" Value="=MessagesFunctions.getMessage('Credit Cards due for expiry in next') + ' ' + Parameters.CreditCardsExpiryInXdays.Value +  ' ' +  MessagesFunctions.getMessage('days')" Name="textBox3">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="10.7666622797648in" Height="0.200000002980232in" Left="0in" Top="2.19999980926514in" Value="=MessagesFunctions.getMessage('Subscriptions with billing failures for last ') + ' ' + Parameters.SubsWithBillingFailureInXdays.Value +  ' ' +  MessagesFunctions.getMessage('days')" Name="textBox15">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsSubscriptionDueExpiryDetails" Width="8.89166330417853in" Height="0.4in" Left="0in" Top="0.399999777475993in" Name="crosstab1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.33124961205614in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox21" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Bindings>
+                      <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                    </Bindings>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.945833486118669in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionHeaderId" Name="textBox22" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.77916656520038in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.ProductSubscriptionName" Name="textBox23" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.16458322668611in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionStartDate" Format="{0:d}" Name="textBox24" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.00833246188667in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionEndDate" Format="{0:d}" Name="textBox25" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.914582737621672in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Status" Name="textBox26" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.74791647679114in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.product_name" Name="textBox27" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.33124961205614in" />
+              <Column Width="0.94583347167757in" />
+              <Column Width="1.77916608785536in" />
+              <Column Width="1.16458302257253in" />
+              <Column Width="1.00833148841633in" />
+              <Column Width="0.914582807106838in" />
+              <Column Width="1.7479166157496in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_name">
+              <ReportItem>
+                <TextBox Width="1.33124961205614in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox1" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <Bindings>
+                    <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                  </Bindings>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionHeaderId">
+              <ReportItem>
+                <TextBox Width="0.945833486118669in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Header Id')" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="productSubscriptionName">
+              <ReportItem>
+                <TextBox Width="1.77916656520038in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Subscription Name')" Name="textBox10" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionStartDate">
+              <ReportItem>
+                <TextBox Width="1.16458322668611in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Start Date')" Name="textBox11" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionEndDate">
+              <ReportItem>
+                <TextBox Width="1.00833246188667in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription End Date')" Name="textBox16" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="status">
+              <ReportItem>
+                <TextBox Width="0.914582737621672in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Status')" Name="textBox18" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="product_name">
+              <ReportItem>
+                <TextBox Width="1.74791647679114in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Name')" Name="textBox19" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <Crosstab DataSourceName="dsCreditCardsDueExpiryDetails" Width="10.7666627032636in" Height="0.4in" Left="0in" Top="1.40000009536743in" Name="crosstab2" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.956249214347167in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.CustomerCreditCardsId" Name="textBox28" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000438666697in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.customerId" Name="textBox29" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.4041661634281in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.CreditCardNumber" Name="textBox31" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.11249958549744in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.customer_name" Name="textBox32" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.747917327857735in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.ccExpiry" Name="textBox33" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.13333248841047in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.email" Name="textBox34" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916628442444in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.contact_phone1" Name="textBox35" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.1041669947271in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.CustomerNameOnCard" Name="textBox30" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.22916603125769in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox36" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Bindings>
+                      <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                    </Bindings>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.22916538518741in" />
+              <Column Width="0.956248968246175in" />
+              <Column Width="0.799999522718144in" />
+              <Column Width="1.10416698390258in" />
+              <Column Width="1.40416616317878in" />
+              <Column Width="1.11249961704253in" />
+              <Column Width="0.74791733682346in" />
+              <Column Width="2.13333248841046in" />
+              <Column Width="1.27916647840773in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group1">
+              <ReportItem>
+                <TextBox Width="1.22916603125769in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox38" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <Bindings>
+                    <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                  </Bindings>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="creditCardNumber">
+              <ReportItem>
+                <TextBox Width="0.956249214347167in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer CreditCards Id')" Name="textBox4" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="customerId">
+              <ReportItem>
+                <TextBox Width="0.800000438666697in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Id')" Name="textBox5" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group">
+              <ReportItem>
+                <TextBox Width="1.1041669947271in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Name On Card')" Name="textBox7" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="creditCardNumber2">
+              <ReportItem>
+                <TextBox Width="1.4041661634281in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Credit Card Number')" Name="textBox8" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="customer_name">
+              <ReportItem>
+                <TextBox Width="1.11249958549744in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Name')" Name="textBox9" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="ccExpiry">
+              <ReportItem>
+                <TextBox Width="0.747917327857735in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('CC Expiry')" Name="textBox12" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="email">
+              <ReportItem>
+                <TextBox Width="2.13333248841047in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Email')" Name="textBox14" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="contact_phone1">
+              <ReportItem>
+                <TextBox Width="1.27916628442444in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Contact Phone')" Name="textBox17" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <Crosstab DataSourceName="dsSubscriptionsBillingFailuresDetails" Width="9.49583285448265in" Height="0.4in" Left="0in" Top="2.40007877349854in" Name="crosstab3" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.26874995388115in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox48" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Bindings>
+                      <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                    </Bindings>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.883333210683091in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionHeaderId" Name="textBox49" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.87291625830083in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.ProductSubscriptionName" Name="textBox51" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.52916621052268in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionStartDate" Format="{0:d}" Name="textBox52" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.42499961759563in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionEndDate" Format="{0:d}" Name="textBox53" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.27916640540647in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.SubscriptionPrice" Name="textBox54" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.23749988693208in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Status" Name="textBox55" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.26875006845423in" />
+              <Column Width="0.883332931751071in" />
+              <Column Width="1.8729172730715in" />
+              <Column Width="1.52916654981826in" />
+              <Column Width="1.4249998440735in" />
+              <Column Width="1.27916637113148in" />
+              <Column Width="1.23749988693208in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_name1">
+              <ReportItem>
+                <TextBox Width="1.26874995388115in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox37" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <Bindings>
+                    <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                  </Bindings>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionHeaderId1">
+              <ReportItem>
+                <TextBox Width="0.883333210683091in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Header Id')" Name="textBox39" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="productSubscriptionName1">
+              <ReportItem>
+                <TextBox Width="1.87291625830083in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Product Subscription Name')" Name="textBox40" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionStartDate1">
+              <ReportItem>
+                <TextBox Width="1.52916621052268in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Start Date')" Name="textBox41" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionEndDate1">
+              <ReportItem>
+                <TextBox Width="1.42499961759563in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription End Date')" Name="textBox42" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionPrice">
+              <ReportItem>
+                <TextBox Width="1.27916640540647in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Price')" Name="textBox46" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="status1">
+              <ReportItem>
+                <TextBox Width="1.23749988693208in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Status')" Name="textBox47" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000063578288in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000190734863in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.21667035420736in" Height="0.300000190734863in" Left="4.60000006357829in" Top="0.100000381469727in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.5in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="10.7770792643229in" Height="0.299960672855377in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Expiry and Payment Failures Details')" Name="textBox6">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Bottom="Solid" />
+            <BorderColor Bottom="50, 50, 50" />
+            <BorderWidth Default="2px" />
+          </Style>
+        </TextBox>
+        <TextBox Width="10.777079264323in" Height="0.199921324849129in" Left="0in" Top="0.299999952316284in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox13">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Custom" PaperSize="8.5in, 12in" Landscape="True" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" />
+    <ReportParameter Name="fromdate" Type="DateTime" Text="From Date" AllowBlank="False" />
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" />
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Sites" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="SiteId" Type="Integer" Mergeable="False" AllowBlank="False">
+      <AvailableValues DataSourceName="dsSite" ValueMember="= Fields.SiteId" />
+      <Value>
+        <String>= Fields.SiteId</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SubscriptionExpiryInXdays" Type="Integer" Text="=MessagesFunctions.getMessage('Subscriptions due for expiry in next X days (Enter no. of days)')" Visible="True" AllowBlank="False">
+      <Value>
+        <String>7</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CreditCardsExpiryInXdays" Type="Integer" Text="=MessagesFunctions.getMessage('Credit Cards due for expiry in next X days (Enter no. of days)')" Visible="True" AllowBlank="False">
+      <Value>
+        <String>7</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="SubsWithBillingFailureInXdays" Type="Integer" Text="=MessagesFunctions.getMessage('Subscriptions with billing failures for last X days (Enter no. of days)')" Visible="True" AllowBlank="False">
+      <Value>
+        <String>7</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CustomerPassPhrase" Text="CustomerPassPhrase" AllowNull="True" />
+  </ReportParameters>
+</Report>

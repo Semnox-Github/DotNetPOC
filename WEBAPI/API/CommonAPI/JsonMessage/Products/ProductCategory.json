@@ -1,0 +1,62 @@
+﻿[
+  {
+    "CategoryId": 0,
+    "ParentCategoryId": 4,
+    "Name": "Indra",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "8309cf06-6d9b-434e-8ca9-5b8b5e76a805",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 1,
+    "ParentCategoryId": 0,
+    "Name": "innu",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "399f4697-7ac9-475d-9160-74fcbb2183be",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 2,
+    "ParentCategoryId": 1,
+    "Name": "Hie",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "351ec2c1-0537-4e0a-9ccb-d31255d7a3ad",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 3,
+    "ParentCategoryId": 0,
+    "Name": "Chocolate",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "a1732c7e-8ca2-4480-8efe-f21fb4eb0391",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "CategoryId": 4,
+    "ParentCategoryId": 0,
+    "Name": "Demo Test",
+    "IsActive": "Y",
+    "LastUpdatedUserId": "",
+    "Site_Id": -1,
+    "Guid": "49a487c9-0ca7-4bfd-ac99-53cb097282d7",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

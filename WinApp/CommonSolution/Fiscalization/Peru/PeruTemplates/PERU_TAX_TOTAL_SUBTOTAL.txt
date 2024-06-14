@@ -1,0 +1,38 @@
+{ 
+			"TaxableAmount" :
+			[ { 
+				"AmountContent" : "@TaxTotalAmountTaxableAmountContent", 
+				"AmountCurrencyIdentifier" : "@TaxTotalAmountCurrencyID"
+				} ], 
+			"TaxAmount" :
+			[ { 
+				"AmountContent" : "@TaxTotalTaxSubtotalAmountContent", 
+				"AmountCurrencyIdentifier" : "@TaxTotalTaxSubtotalAmountCurrencyID" 
+				} ], 
+			"TaxCategory" :
+			[ { 
+				"TaxScheme" :
+					[ { 
+						"ID" :
+							[ { 
+								"IdentifierContent" : "@TaxTotalTaxSubtotalTaxCategoryID", 
+								"IdentificationSchemeNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeNameText", 
+								"IdentificationSchemeUniformResourceIdentifier" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeURI", 
+								"IdentificationSchemeAgencyNameText" : "@ILTaxTotalTaxSubtotalTaxCategoryTaxSchemeIdentificationSchemeAgencyNameText" 
+								}
+							], 
+						"Name" :
+							[ { 
+								"TextContent" : "@TaxTotalTaxSubtotalTaxCategoryName" 
+								}
+							], 
+						"TaxTypeCode" :
+							[ { 
+								"CodeContent" : "@TaxTotalTaxSubtotalTaxCategoryTaxTypeCode" 
+								}
+							]
+						}
+					] 
+				}
+			]
+		 }

@@ -1,0 +1,223 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TaskLoadTicketView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:commonUI="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:accountsUI="clr-namespace:Semnox.Parafait.AccountsUI;assembly=AccountsUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="TaskLoadTicketView"
+        Style="{StaticResource TaskWindowStyle}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0"
+                    Background="{StaticResource LeftPane.Selected.Border}"
+                    CornerRadius="8,0,8,0"
+                    Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnBack"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Command="{Binding NavigationClickCommand}"
+                            Style="{StaticResource BackButtonStyle}" />
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <commonUI:CustomTextBlock x:Name="tbLoad"
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                                        HorizontalAlignment="Stretch"
+                                                        Text="Load" />
+                        <commonUI:CustomTextBlock x:Name="tbTicket"
+                                                        TextSize="Medium"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        Foreground="{StaticResource LeftPane.Foreground}"
+                                                        HorizontalAlignment="Stretch"
+                                                        Text="{Binding TicketNameVariant}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <accountsUI:CardDetailsUserControl x:Name="CardDetailsUserControl"
+                                               Grid.Column="1"
+                                               DataContext="{Binding CardDetailsVM}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CardAdded">
+                        <i:InvokeCommandAction Command="{Binding DataContext.CardAddedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" 
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=accountsUI:CardDetailsUserControl}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </accountsUI:CardDetailsUserControl>
+        </Grid>
+        
+        <Grid Grid.Row="1" Margin="16">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowTicketSourceScreen}"
+                                     Value="false">
+                            <Setter Property="Visibility"
+                                    Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBlock Text="Consider for Loyalty"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              FontWeight="Bold"
+                                              Margin="4,0,0,0"/>
+                    <commonUI:CustomCheckBox Grid.Column="1" 
+                                             VerticalAlignment="Center"
+                                             Margin="0,20,0,0"
+                                             IsChecked="{Binding ConsiderForLoyalty, Mode=TwoWay}"
+                                             />
+                </Grid>
+                <commonUI:CustomRadioButton x:Name="rboEnterTicket" Grid.Column="1" Content="{Binding RboEnterTicketContent}" IsChecked="{Binding IsRboEnterManualTicketsChecked}" HorizontalAlignment="Center"/>
+                <commonUI:CustomRadioButton x:Name="rboScanTickets" Grid.Column="2" Content="{Binding RboScanTicketContent}" IsChecked="{Binding IsRboScanTicketsChecked}" Margin="10,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding RboScanTicketClick}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </commonUI:CustomRadioButton>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid x:Name="ManualTicketsGrid">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName = rboScanTickets, Path=IsChecked }"
+                                                    Value="true">
+                                    <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <commonUI:CustomTextBox x:Name="ManualTicketCustomNumericUpDown"
+                                                Size="Medium"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Margin="50,0"
+                                                Text="{Binding ManualTickets, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                                ValidationType="NumberOnly"
+                                                NumberKeyboardType="Both"/>
+                </Grid>
+                <Grid x:Name="ScanTicketsGrid" Margin="0,10">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=rboEnterTicket, Path=IsChecked}"
+                                             Value="true">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ShowScanReceiptScreen}"
+                                             Value="false">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1.7*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center">
+                        <commonUI:CustomTextBox x:Name="txtTotal"
+                                            IsReadOnly="True"
+                                            Text="{Binding TotalScannedTickets, Mode=OneWay}"
+                                            Margin="50,0"/>
+                        <commonUI:CustomActionButton x:Name="btnManualTicketEntry"
+                                                     Content="ENTER TKT"
+                                                     Margin="50,0,50,0"
+                                                     Height="{StaticResource CustomActionButton.Height.Medium}"
+                                                     Command="{Binding  ManualTicketEntryClicked}"
+                                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                     HorizontalAlignment="Stretch">
+                            <commonUI:CustomActionButton.Style>
+                                <Style TargetType="{x:Type commonUI:CustomActionButton}"
+                                       BasedOn="{StaticResource {x:Type commonUI:CustomActionButton}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEnabledManualTicketEntry}"
+                                                     Value="true">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </commonUI:CustomActionButton.Style>
+                        </commonUI:CustomActionButton>
+                    </StackPanel>
+                    <Border Grid.Column="2"
+                            BorderThickness="1,0,0,0"
+                            BorderBrush="{StaticResource Control.BorderBrush}">
+                        <commonUI:CustomScrollViewer VerticalScrollBarVisibility="Auto"
+                                                     HorizontalScrollBarVisibility="Auto">
+                            <commonUI:CustomDataGridUserControl x:Name="scannedTicketsCustomDataGridUserControl"                                                       
+                                                            DataContext="{Binding CustomDataGridVM}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="DeleteClicked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                               CommandParameter="{Binding SelectedItem}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="DeleteAllClicked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.DeleteAllCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                               CommandParameter="{Binding SelectedItems}"/>
+                                    </i:EventTrigger>
+                                    
+                                </i:Interaction.Triggers>
+                            </commonUI:CustomDataGridUserControl>
+                        </commonUI:CustomScrollViewer>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

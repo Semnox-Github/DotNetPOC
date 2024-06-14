@@ -1,0 +1,6 @@
+    "descripcion": @DocType,
+    "subtotal_0": @SubAmount,
+    "subtotal_12": @SubTotal12,
+    "iva": @TaxAmount,
+    "total": @TotalAmount,
+    "adicional1": @TransactionId,

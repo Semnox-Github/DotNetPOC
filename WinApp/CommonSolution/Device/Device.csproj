@@ -1,0 +1,1201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{24D8C63F-8F14-42CE-BC91-CFE34A088B38}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Device</RootNamespace>
+    <AssemblyName>Device</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Adyen, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Adyen.dll</HintPath>
+    </Reference>
+    <Reference Include="AdyenWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AdyenWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AopSdk">
+      <HintPath>..\..\..\..\OTS\AopSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="AxDPSEFTXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxDPSEFTXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.COECRCOMLib, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.COECRCOMLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.CSDEFTLib, Version=1.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.CSDEFTLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.ctlUSBHID, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.ctlUSBHID.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.PosEftLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.PosEftLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.RCHGlobe, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.RCHGlobe.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxInterop.WMPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="AxSB100PCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\AxSB100PCLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CardEaseXMLClient">
+      <HintPath>..\..\..\..\OTS\CardEaseXMLClient.dll</HintPath>
+    </Reference>
+    <Reference Include="CloverConnector">
+      <HintPath>..\..\..\..\OTS\CloverConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="CloverWindowsSDK, Version=4.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\CloverWindowsSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="CloverWindowsTransport">
+      <HintPath>..\..\..\..\OTS\CloverWindowsTransport.dll</HintPath>
+    </Reference>
+    <!-- <Reference Include="Interop.EltradeFPAx"> -->
+    <!-- <HintPath>..\..\..\SourceCode\Software\OTS\Interop.EltradeFPAx.dll</HintPath> -->
+    <!-- <EmbedInteropTypes>True</EmbedInteropTypes> -->
+    <!-- </Reference> -->
+    <Reference Include="DitronDirverInterface, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DitronDirverInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="DLISDK.RFID, Version=1.0.2.4, Culture=neutral, PublicKeyToken=1338fec611dbf001, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\DLISDK.RFID.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetIntegrationKit">
+      <HintPath>..\..\..\..\OTS\DotNetIntegrationKit.dll</HintPath>
+    </Reference>
+    <Reference Include="ECR">
+      <HintPath>..\..\..\..\OTS\ECR.dll</HintPath>
+    </Reference>
+    <Reference Include="eSELECTplus_dotNet_API">
+      <HintPath>..\..\..\..\OTS\eSELECTplus_dotNet_API.dll</HintPath>
+    </Reference>
+    <Reference Include="F2FPayDll">
+      <HintPath>..\..\..\..\OTS\F2FPayDll.dll</HintPath>
+    </Reference>
+    <Reference Include="FABECR">
+      <HintPath>..\..\..\..\OTS\FABECR.dll</HintPath>
+    </Reference>
+    <Reference Include="FABPOSLINK">
+      <HintPath>..\..\..\..\OTS\FABPOSLINK.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.AlohaFOHLib, Version=5.3.26.131, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.AlohaFOHLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.COECRCOMLib">
+      <HintPath>..\..\..\..\OTS\Interop.COECRCOMLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.DSIEMVXLib">
+      <HintPath>..\..\..\..\OTS\Interop.DSIEMVXLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.Excel, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.GrFingerXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\OTS\Interop.GrFingerXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Core, Version=2.4.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\..\..\..\OTS\Interop.Microsoft.Office.Core.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.PlutusExchangeLib">
+      <HintPath>..\..\..\..\OTS\Interop.PlutusExchangeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.PosEftLib">
+      <HintPath>..\..\..\..\OTS\Interop.PosEftLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.SB100PCLib">
+      <HintPath>..\..\..\..\OTS\Interop.SB100PCLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.WMPLib">
+      <HintPath>..\..\..\..\OTS\Interop.WMPLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="IPADLib, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\IPADLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\..\..\..\OTS\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="MCPG.CCA.Util">
+      <HintPath>..\..\..\..\OTS\MCPG.CCA.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Morpho.MorphoAcquisition, Version=1.2.9.0, Culture=neutral, PublicKeyToken=6c88356942c144bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Morpho.MorphoAcquisition.dll</HintPath>
+    </Reference>
+    <Reference Include="MTLIB, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\MTLIB.dll</HintPath>
+    </Reference>
+    <Reference Include="MTSCRANET, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\MTSCRANET.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nst, Version=2.3.0.43, Culture=neutral, PublicKeyToken=e007d59c2fec9b35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Nst.dll</HintPath>
+    </Reference>
+    <Reference Include="PaytmQrDisplay">
+      <HintPath>..\..\..\..\OTS\PaytmQrDisplay.dll</HintPath>
+    </Reference>
+    <Reference Include="RBA_SDK_CS, Version=4.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\RBA_SDK_CS.dll</HintPath>
+    </Reference>
+    <Reference Include="SB100PCLib">
+      <HintPath>..\..\..\..\OTS\SB100PCLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SDKShim, Version=2.0.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\SDKShim.dll</HintPath>
+    </Reference>
+    <Reference Include="SevenZipSharp">
+      <HintPath>..\..\..\..\OTS\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="sgEftInterface">
+      <HintPath>..\..\..\..\OTS\sgEftInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=37.35.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>..\..\..\..\OTS\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.ServiceProcess.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TfhkaNet, Version=1.7.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\TfhkaNet.dll</HintPath>
+    </Reference>
+    <Reference Include="TPSLAESSecurityCipher">
+      <HintPath>..\..\..\..\OTS\TPSLAESSecurityCipher.dll</HintPath>
+    </Reference>
+    <Reference Include="Transbank">
+      <HintPath>..\..\..\..\OTS\Transbank.dll</HintPath>
+    </Reference>
+    <Reference Include="Tyro.Integ, Version=1.1.1.0, Culture=neutral, PublicKeyToken=20bcf5a82bebf581, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\Tyro.Integ.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\..\..\..\OTS\zxing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACR1222L.cs" />
+    <Compile Include="ACR122U.cs" />
+    <Compile Include="ACR1252U.cs" />
+    <Compile Include="Acr1281UC1.cs" />
+    <Compile Include="ACRReader.cs" />
+    <Compile Include="ACSProvider.cs" />
+    <Compile Include="Apdu.cs" />
+    <Compile Include="BarcodeReader.cs" />
+    <Compile Include="Biometric\BiometricFactory.cs" />
+    <Compile Include="Biometric\FingerPrintReader.cs" />
+    <Compile Include="Biometric\FutronicFS84\FamComm.cs" />
+    <Compile Include="Biometric\FutronicFS84\FamDefs.cs" />
+    <Compile Include="Biometric\FutronicFS84\FamSerialComm.cs" />
+    <Compile Include="Biometric\FutronicFS84\FamSocketComm.cs" />
+    <Compile Include="Biometric\FutronicFS84\ftrNativeLib.cs" />
+    <Compile Include="Biometric\FutronicFS84\FutronicFS84.cs" />
+    <Compile Include="Biometric\iFingerPrintReader.cs" />
+    <Compile Include="Biometric\UserFingerPrintDetailDTO.cs" />
+    <Compile Include="CardException.cs" />
+    <Compile Include="DeviceCollection.cs" />
+    <Compile Include="DeviceFactory.cs" />
+    <Compile Include="DLI8.cs" />
+    <Compile Include="PaymentGateway\AEONCreditHandler.cs" />
+    <Compile Include="PaymentGateway\AEONCreditPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\AliPay\AlipayPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\AliPay\AlipayResponse.cs" />
+    <Compile Include="PaymentGateway\AliPay\TradeResponse.cs" />
+    <Compile Include="PaymentGateway\CloverCardConnect\CloverCardConnectCommandHandler.cs" />
+    <Compile Include="PaymentGateway\CloverCardConnect\CloverCardConnectPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\CloverCardConnect\CloverRequestDTO.cs" />
+    <Compile Include="PaymentGateway\CloverCardConnect\CloverResponseDTO.cs" />
+    <Compile Include="PaymentGateway\ClubSpeedCommandHandler.cs" />
+    <Compile Include="PaymentGateway\ClubSpeedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\ClubSpeedRequestDTO.cs" />
+    <Compile Include="PaymentGateway\ClubSpeedResponseDTO.cs" />
+    <Compile Include="PaymentGateway\CompatiablePaymentModesBL.cs" />
+    <Compile Include="PaymentGateway\CompatiablePaymentModesContainerDTO.cs" />
+    <Compile Include="PaymentGateway\CompatiablePaymentModesDataHandler.cs" />
+    <Compile Include="PaymentGateway\CompatiablePaymentModesDTO.cs" />
+    <Compile Include="PaymentGateway\Geidea\GeideaCommandHandler.cs" />
+    <Compile Include="PaymentGateway\Geidea\GeideaPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\Geidea\GeideaRequestDTO.cs" />
+    <Compile Include="PaymentGateway\Geidea\GeideaResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\BamboraHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CardConnectCallbackHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CardConnectHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CCAvenueCallbackHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CCAvenueHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\ChinaUMSPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\CloverCommandHandler.cs" />
+    <Compile Include="PaymentGateway\CloverPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\ClsResponseMessageAttributes.cs" />
+    <Compile Include="PaymentGateway\CyberSourceHandler.cs" />
+    <Compile Include="PaymentGateway\CyberSourcePaymentGateway.cs" />
+    <Compile Include="PaymentGateway\FreedomPayBL.cs" />
+    <Compile Include="PaymentGateway\FreedomPayDTO.cs" />
+    <Compile Include="PaymentGateway\FreedomPayPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\FreedomPayResponseSchema.cs" />
+    <Compile Include="PaymentGateway\HostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CommonWebHostedPayment.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CorvuspayHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CreditCallHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CyberSource\CyberSourceCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CyberSource\CyberSourceHostedPayment.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CyberSource\CyberSourceRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\CyberSource\CyberSourceResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\EcommpayHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Ipay88HostedCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Ipay88CallbackHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Ipay88HostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Ipay88HostedRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Ipay88HostedResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\MidtransHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Moneris\MonerisHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Moneris\MonerisHostedResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Moneris\MonerisHostedRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Moneris\MonerisHostedCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayeezyHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayFort\PayFortCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayFort\PayFortHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayFort\PayFortRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayFort\PayFortResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\PayNimoHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Paytm\PaytmCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Paytm\PaytmHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Paytm\PaytmRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Paytm\PaytmResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\StripeHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\StripePaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\VisaNetHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WebRequestClient.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WorldPayHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCyberSourceCallbackHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCyberSourceCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCyberSourceHostedPayment.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCyberSourceRequestDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCyberSourceResponseDTO.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\WPCyberSource\WPCybersourceSecurity.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Thawani\ThawaniPayCommandHandler.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Thawani\ThawaniPayConfigurations.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Thawani\ThawaniPayHostedPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Thawani\ThawaniPayRequestDto.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\Thawani\ThawaniPayResponseDto.cs" />
+    <Compile Include="PaymentGateway\HostedPayment\XMLSerializeDeserialize.cs" />
+    <Compile Include="PaymentGateway\InnovitiHandler.cs" />
+    <Compile Include="PaymentGateway\InnovitiPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\InnovitiResponseSchema.cs" />
+    <Compile Include="PaymentGateway\IPaymentModesUseCases.cs" />
+    <Compile Include="PaymentGateway\IpayPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\IpayRequerySchema.cs" />
+    <Compile Include="PaymentGateway\IpayRequestResponseSchema.cs" />
+    <Compile Include="PaymentGateway\IpayVoidTransactionSchema.cs" />
+    <Compile Include="PaymentGateway\LocalPaymentModesUseCases.cs" />
+    <Compile Include="PaymentGateway\Mada\MadaCommandHandler.cs" />
+    <Compile Include="PaymentGateway\Mada\MadaPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\Mada\MadaRequest.cs" />
+    <Compile Include="PaymentGateway\Mada\MadaResponse.cs" />
+    <Compile Include="PaymentGateway\MashreqKioskPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\Mashreq\MashreqCommandHandler.cs" />
+    <Compile Include="PaymentGateway\Mashreq\MashreqCommonRequestHandler.cs" />
+    <Compile Include="PaymentGateway\Mashreq\MashreqPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\Mashreq\MashreqRequestDTO.cs" />
+    <Compile Include="PaymentGateway\Mashreq\MashreqResponseDTO.cs" />
+    <Compile Include="PaymentGateway\NetEpay\CommandResponse.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayAccount.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayAmount.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayBatchReportTransaction.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayCommandhandler.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayRequestDTO.cs" />
+    <Compile Include="PaymentGateway\NetEpay\NetEpayResponseDTO.cs" />
+    <Compile Include="PaymentGateway\NetEpay\TransactionResponse.cs" />
+    <Compile Include="PaymentGateway\PaymentChannel.cs" />
+    <Compile Include="PaymentGateway\PaymentExpClsResponseMessageAttributes.cs" />
+    <Compile Include="PaymentGateway\PaymentGateway.cs" />
+    <Compile Include="PaymentGateway\PaymentMode.cs" />
+    <Compile Include="PaymentGateway\PaymentModeChannel.cs" />
+    <Compile Include="PaymentGateway\PaymentModeChannelsContainerDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDisplayGroupsBL.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDisplayGroupsContainerDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDisplayGroupsDataHandler.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDisplayGroupsDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModesContainer.cs" />
+    <Compile Include="PaymentGateway\PaymentModesContainerDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModesContainerDTOCollection.cs" />
+    <Compile Include="PaymentGateway\PaymentModesContainerList.cs" />
+    <Compile Include="PaymentGateway\PaymentModesUseCaseFactory.cs" />
+    <Compile Include="PaymentGateway\PaytmDQR\PayTMDQRCommandHandler.cs" />
+    <Compile Include="PaymentGateway\PaytmDQR\PaytmDQRPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\PaytmDQR\PayTMDQRRequestDTO.cs" />
+    <Compile Include="PaymentGateway\PaytmDQR\PayTMDQRResponseDTO.cs" />
+    <Compile Include="PaymentGateway\PaytmDQR\ResponseCodesDTO.cs" />
+    <Compile Include="PaymentGateway\PineLabs\PineLabsPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\PineLabs\PineLabsPlutusA920CommandHandler.cs" />
+    <Compile Include="PaymentGateway\PineLabs\PineLabsPlutusA920Configurations.cs" />
+    <Compile Include="PaymentGateway\PineLabs\PineLabsPlutusA920RequestDTO.cs" />
+    <Compile Include="PaymentGateway\PineLabs\PineLabsPlutusA920ResponseDTO.cs" />
+    <Compile Include="PaymentGateway\RemotePaymentModesUseCases.cs" />
+    <Compile Include="PaymentGateway\SCR200.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentGateway\TransBankPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\WorldpayIPP350Handler.cs" />
+    <Compile Include="PaymentGateway\WorldpayPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\WorldPayServicePaymentGateway.cs" />
+    <Compile Include="Peripherals\PeripheralsBL.cs" />
+    <Compile Include="Peripherals\PeripheralsDatahandler.cs" />
+    <Compile Include="Peripherals\PeripheralContainerDTO.cs" />
+    <Compile Include="Peripherals\PeripheralsDTO.cs" />
+    <Compile Include="Printer\FiscalPrinter\BowaPegas\BowaPegas.cs" />
+    <Compile Include="Printer\FiscalPrinter\CroatiaFiscalization\CroatiaFiscalization.cs" />
+    <Compile Include="Printer\FiscalPrinter\CroatiaFiscalization\CroatiaFiscalizationInterface.cs" />
+    <Compile Include="Printer\FiscalPrinter\CroatiaFiscalization\CroatiaFiscalReceipt.cs" />
+    <Compile Include="Printer\FiscalPrinter\CroatiaFiscalization\FiskalizacijaService.cs" />
+    <Compile Include="Printer\FiscalPrinter\DITRON\DITRON.cs" />
+    <Compile Include="Printer\FiscalPrinter\ELTRADE\Eltrade.cs" />
+    <Compile Include="Printer\FiscalPrinter\FiscalizationRequest.cs" />
+    <Compile Include="Printer\FiscalPrinter\FiscalPrinter.cs" />
+    <Compile Include="Printer\FiscalPrinter\FiscalPrinterFactory.cs" />
+    <Compile Include="Printer\FiscalPrinter\fiskaltrust\FiscaltrustDefaults.cs" />
+    <Compile Include="Printer\FiscalPrinter\fiskaltrust\FiskaltrustMapper.cs" />
+    <Compile Include="Printer\FiscalPrinter\fiskaltrust\FiskaltrustPrinter.cs" />
+    <Compile Include="Printer\FiscalPrinter\fiskaltrust\ReceiptRequest.cs" />
+    <Compile Include="Printer\FiscalPrinter\HUGIN\HUGIN.cs" />
+    <Compile Include="Printer\FiscalPrinter\Incotex\Incotex.cs" />
+    <Compile Include="Printer\FiscalPrinter\RCHGlobe\RCHGlobe.cs" />
+    <Compile Include="Printer\FiscalPrinter\BIXOLON_SRP_812\BIXOLON_SRP_812.cs" />
+    <Compile Include="Printer\FiscalPrinter\Smartro\Smartro.cs" />
+    <Compile Include="Printer\FiscalPrinter\Smartro\SmartroDefaults.cs" />
+    <Compile Include="Printer\FiscalPrinter\Smartro\SmartroLib.cs" />
+    <Compile Include="Printer\FiscalPrinter\Smartro\SmartroPaymentResponseDTO.cs" />
+    <Compile Include="Printer\PrintDocument.cs" />
+    <Compile Include="PaymentGateway\TransactionPaymentsBL.cs" />
+    <Compile Include="PaymentGateway\TransactionPaymentsDataHandler.cs" />
+    <Compile Include="PaymentGateway\TransactionPaymentsDTO.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="KeyboardWedge.cs" />
+    <Compile Include="MIBlack.cs" />
+    <Compile Include="MifareClassic.cs" />
+    <Compile Include="MifareDevice.cs" />
+    <Compile Include="OmniKey.cs" />
+    <Compile Include="ParafaitCOMPort.cs" />
+    <Compile Include="PaymentGateway\Aloha.cs" />
+    <Compile Include="PaymentGateway\BoricaHandler.cs" />
+    <Compile Include="PaymentGateway\BoricaPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\CardConnectCommandHandler.cs" />
+    <Compile Include="PaymentGateway\CardConnectDeviceCommandHandler.cs" />
+    <Compile Include="PaymentGateway\CardConnectDeviceHandler.cs" />
+    <Compile Include="PaymentGateway\CardConnectGatewayCommandHandler.cs" />
+    <Compile Include="PaymentGateway\CardConnectGatewayHandler.cs" />
+    <Compile Include="PaymentGateway\CardConnectPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\CCGatewayUtils.cs" />
+    <Compile Include="PaymentGateway\CCRequestPGWBL.cs" />
+    <Compile Include="PaymentGateway\CCRequestPGWDataHandler.cs" />
+    <Compile Include="PaymentGateway\CCRequestPGWDTO.cs" />
+    <Compile Include="PaymentGateway\CCStatusPGWBL.cs" />
+    <Compile Include="PaymentGateway\CCStatusPGWDataHandler.cs" />
+    <Compile Include="PaymentGateway\CCStatusPGWDTO.cs" />
+    <Compile Include="PaymentGateway\CCTransactionsPGWBL.cs" />
+    <Compile Include="PaymentGateway\CCTransactionsPGWDataHandler.cs" />
+    <Compile Include="PaymentGateway\CCTransactionsPGWDTO.cs" />
+    <Compile Include="PaymentGateway\ChinaICBCPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\ChinaICBCTransactionRequest.cs" />
+    <Compile Include="PaymentGateway\ChinaICBCTransactionResponse.cs" />
+    <Compile Include="PaymentGateway\ChinaUMS.cs" />
+    <Compile Include="PaymentGateway\ChinaUMSTransactionRequest.cs" />
+    <Compile Include="PaymentGateway\ChinaUMSTransactionResponse.cs" />
+    <Compile Include="PaymentGateway\ClasResponseValidator.cs" />
+    <Compile Include="PaymentGateway\ClsDynamagMagnesafe.cs" />
+    <Compile Include="PaymentGateway\ClsRequestCreditMessageCreation.cs" />
+    <Compile Include="PaymentGateway\ClsRequestDebitMessageCreation.cs" />
+    <Compile Include="PaymentGateway\ClsRequestMessageAttributes.cs" />
+    <Compile Include="PaymentGateway\ClsValidations.cs" />
+    <Compile Include="PaymentGateway\ClsVoidSaleMessageCreation.cs" />
+    <Compile Include="PaymentGateway\Common.cs" />
+    <Compile Include="PaymentGateway\DataAccessCore.cs" />
+    <Compile Include="PaymentGateway\DBUpdates.cs" />
+    <Compile Include="PaymentGateway\DisplayUIFactory.cs" />
+    <Compile Include="PaymentGateway\eCustomerOk.cs" />
+    <Compile Include="PaymentGateway\eEpsConnectionStatus.cs" />
+    <Compile Include="PaymentGateway\eHostStatus.cs" />
+    <Compile Include="PaymentGateway\ElementExpressPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\ElementPSAdaper.cs" />
+    <Compile Include="PaymentGateway\ElementTransactionRequest.cs" />
+    <Compile Include="PaymentGateway\EnumsStructs.cs" />
+    <Compile Include="PaymentGateway\ErrorEventArgs.cs" />
+    <Compile Include="PaymentGateway\eSCATReady.cs" />
+    <Compile Include="PaymentGateway\eSCATStatus.cs" />
+    <Compile Include="PaymentGateway\eTenderType.cs" />
+    <Compile Include="PaymentGateway\eTenderTypeStatus.cs" />
+    <Compile Include="PaymentGateway\eTransactionType.cs" />
+    <Compile Include="PaymentGateway\eWicMode.cs" />
+    <Compile Include="PaymentGateway\FirstDataAdapter.cs" />
+    <Compile Include="PaymentGateway\FirstDataPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\FirstDataResponse.cs" />
+    <Compile Include="PaymentGateway\FirstDataTransactionRequest.cs" />
+    <Compile Include="PaymentGateway\HttpService.cs" />
+    <Compile Include="PaymentGateway\IDisplayStatusUI.cs" />
+    <Compile Include="PaymentGateway\IngenicoIUP250.cs" />
+    <Compile Include="PaymentGateway\IRequestCreateMessage.cs" />
+    <Compile Include="PaymentGateway\MercuryPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\MonerisIPP320.cs" />
+    <Compile Include="PaymentGateway\MonerisPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\MonerisUx300.cs" />
+    <Compile Include="PaymentGateway\NCRAdapter.cs" />
+    <Compile Include="PaymentGateway\NCRApiFunctions.cs" />
+    <Compile Include="PaymentGateway\NCRPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\NCRRequest.cs" />
+    <Compile Include="PaymentGateway\NCRResponse.cs" />
+    <Compile Include="PaymentGateway\ParafaitPCEFTPOSMgr.cs" />
+    <Compile Include="PaymentGateway\ParafaitQuestEFTPOS.cs" />
+    <Compile Include="PaymentGateway\ParafaitTyroEFTPOSMgr.cs" />
+    <Compile Include="PaymentGateway\PaymentExpressEFTPOS.cs" />
+    <Compile Include="PaymentGateway\PaymentGatewayFactory.cs" />
+    <Compile Include="PaymentGateway\PaymentModeChannelsDatahandler.cs" />
+    <Compile Include="PaymentGateway\PaymentModeChannelsDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDatahandler.cs" />
+    <Compile Include="PaymentGateway\PaymentModeDTO.cs" />
+    <Compile Include="PaymentGateway\PaymentModeParams.cs" />
+    <Compile Include="PaymentGateway\PCEFTPOSPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\PinPadResponseAttributes.cs" />
+    <Compile Include="PaymentGateway\PrintDocument.cs" />
+    <Compile Include="PaymentGateway\Program.cs" />
+    <Compile Include="PaymentGateway\QuestPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\SemnoxAdapter.cs" />
+    <Compile Include="PaymentGateway\SerialPortHandler.cs" />
+    <Compile Include="PaymentGateway\TransactionType.cs" />
+    <Compile Include="PaymentGateway\TyroPaymentGateway.cs" />
+    <Compile Include="PaymentGateway\UMFSchema.cs" />
+    <Compile Include="PaymentGateway\Utils.cs" />
+    <Compile Include="PaymentGateway\VerifoneHandler.cs" />
+    <Compile Include="PaymentGateway\WebRequestHandler.cs" />
+    <Compile Include="PaymentGateway\WebServiceInvoker.cs" />
+    <Compile Include="PaymentGateway\WeChatConfiguration.cs" />
+    <Compile Include="PaymentGateway\WeChatPayDTO.cs" />
+    <Compile Include="PaymentGateway\WechatPayment.cs" />
+    <Compile Include="PaymentGateway\WeChatPayMethods.cs" />
+    <Compile Include="PaymentGateway\WeChatPayResponseDTO.cs" />
+    <Compile Include="PaymentGateway\WSCore.cs" />
+    <Compile Include="PcscException.cs" />
+    <Compile Include="PcscProvider.cs" />
+    <Compile Include="PcscReader.cs" />
+    <Compile Include="Printer\MagiCard.cs" />
+    <Compile Include="Printer\POSPlus.cs" />
+    <Compile Include="Printer\POSPlusRequest.cs" />
+    <Compile Include="Printer\WristBandPrinters\BOCA\BOCAPrinter.cs" />
+    <Compile Include="Printer\WristBandPrinters\BOCA\BOCAPrinterAPI.cs" />
+    <Compile Include="Printer\WristBandPrinters\PrinterDataClass.cs" />
+    <Compile Include="Printer\WristBandPrinters\STIMA\StimaCLS.cs" />
+    <Compile Include="Printer\WristBandPrinters\STIMA\StimaCLSAPI.cs" />
+    <Compile Include="Printer\WristBandPrinters\STIMA\StimaCLSLib.cs" />
+    <Compile Include="Printer\WristBandPrinters\WristBandPrinter.cs" />
+    <Compile Include="Printer\WristBandPrinters\WristbandPrinterFactory.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RioPro.cs" />
+    <Compile Include="RWCardListener.cs" />
+    <Compile Include="Service References\ElementExpress\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SK310UR04.cs" />
+    <Compile Include="SK310UR04DllClass.cs" />
+    <Compile Include="SK310UR04Listener.cs" />
+    <Compile Include="SynchReceiveCOMPort.cs" />
+    <Compile Include="Turnstile\TControl.cs" />
+    <Compile Include="Thirdparty\AlohaItemDTO.cs" />
+    <Compile Include="Thirdparty\CreditCard.cs" />
+    <Compile Include="Thirdparty\ParafaitAlohaIntegrator.cs" />
+    <Compile Include="Thirdparty\ParafaitAlohaInterfaceItem.cs" />
+    <Compile Include="Thirdparty\ParafaitAlohaItem.cs" />
+    <Compile Include="Thirdparty\ParseDBF.cs" />
+    <Compile Include="Turnstile\TurnstileResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TurnstileResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmFinalizeTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmFinalizeTransaction.Designer.cs">
+      <DependentUpon>frmFinalizeTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmShowTurnstiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmShowTurnstiles.designer.cs">
+      <DependentUpon>frmShowTurnstiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Turnstile\TISO.cs" />
+    <Compile Include="Turnstile\TurnstileBL.cs" />
+    <Compile Include="Turnstile\TurnstileClass.cs" />
+    <Compile Include="Turnstile\TurnstileDataHandler.cs" />
+    <Compile Include="Turnstile\TurnstileDTO.cs" />
+    <Compile Include="Turnstile\TurnstileSearchParams.cs" />
+    <Compile Include="UI\frmSignatureCaptureUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmSignatureCaptureUI.Designer.cs">
+      <DependentUpon>frmSignatureCaptureUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmTurnstileUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmTurnstileUI.designer.cs">
+      <DependentUpon>frmTurnstileUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PaymentModeChannelUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PaymentModeChannelUI.designer.cs">
+      <DependentUpon>PaymentModeChannelUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SignaturePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\SignaturePanel.designer.cs">
+      <DependentUpon>SignaturePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TurnstileUI.cs" />
+    <Compile Include="UI\Adapter\frmEntryMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Adapter\frmEntryMode.designer.cs">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Adapter\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Adapter\frmStatus.designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChinafrmStatus\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChinafrmStatus\frmStatus.designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ElementPSCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ElementPSCore.designer.cs">
+      <DependentUpon>ElementPSCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBoricaCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBoricaCore.designer.cs">
+      <DependentUpon>frmBoricaCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmEntryMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmEntryMode.designer.cs">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmFirstDataCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmFirstDataCore.designer.cs">
+      <DependentUpon>frmFirstDataCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmKioskStatusUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmKioskStatusUI.designer.cs">
+      <DependentUpon>frmKioskStatusUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmPOSPaymentStatusUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmPOSPaymentStatusUI.designer.cs">
+      <DependentUpon>frmPOSPaymentStatusUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmStatus.designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmTransactionTypeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmTransactionTypeUI.designer.cs">
+      <DependentUpon>frmTransactionTypeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmUI.designer.cs">
+      <DependentUpon>frmUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Menories\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Menories\frmStatus.Designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Menories\frmUx300Status.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Menories\frmUx300Status.designer.cs">
+      <DependentUpon>frmUx300Status.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Menories\ftmTrnsactionType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Menories\ftmTrnsactionType.designer.cs">
+      <DependentUpon>ftmTrnsactionType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Mercury\frmEntryMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Mercury\frmEntryMode.designer.cs">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Mercury\frmStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Mercury\frmStatus.designer.cs">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NCRCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NCRCore.designer.cs">
+      <DependentUpon>NCRCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="USBListener.cs" />
+    <Compile Include="Web References\FirstdataReg\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\FirstDataTrxn\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="WinScard.cs" />
+    <Compile Include="WinScardAPI.cs" />
+    <Compile Include="WinScardLib.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PaymentGateway\SCR200.resx">
+      <DependentUpon>SCR200.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Turnstile\TurnstileResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TurnstileResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmFinalizeTransaction.resx">
+      <DependentUpon>frmFinalizeTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmShowTurnstiles.resx">
+      <DependentUpon>frmShowTurnstiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Adapter\frmEntryMode.resx">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Adapter\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChinafrmStatus\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ElementPSCore.resx">
+      <DependentUpon>ElementPSCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBoricaCore.resx">
+      <DependentUpon>frmBoricaCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmEntryMode.resx">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmFirstDataCore.resx">
+      <DependentUpon>frmFirstDataCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmKioskStatusUI.resx">
+      <DependentUpon>frmKioskStatusUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmPOSPaymentStatusUI.resx">
+      <DependentUpon>frmPOSPaymentStatusUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmSignatureCaptureUI.resx">
+      <DependentUpon>frmSignatureCaptureUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmTransactionTypeUI.resx">
+      <DependentUpon>frmTransactionTypeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmTurnstileUI.resx">
+      <DependentUpon>frmTurnstileUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmUI.resx">
+      <DependentUpon>frmUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Menories\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Menories\frmUx300Status.resx">
+      <DependentUpon>frmUx300Status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Menories\ftmTrnsactionType.resx">
+      <DependentUpon>ftmTrnsactionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Mercury\frmEntryMode.resx">
+      <DependentUpon>frmEntryMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Mercury\frmStatus.resx">
+      <DependentUpon>frmStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NCRCore.resx">
+      <DependentUpon>NCRCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PaymentModeChannelUI.resx">
+      <DependentUpon>PaymentModeChannelUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SignaturePanel.resx">
+      <DependentUpon>SignaturePanel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ElementExpress\express.wsdl" />
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.AccountTokenActivateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.AccountTokenCreateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.BatchCloseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.BatchItemQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.BatchTotalsQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.BINQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckCreditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckReturnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CheckVoidResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardAdjustmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardAuthorizationCompletionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardAuthorizationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardAVSOnlyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardBalanceInquiryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardCreditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardForceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardIncrementalAuthorizationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardReturnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.CreditCardVoidResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.DebitCardPinlessReturnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.DebitCardPinlessSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.DebitCardReturnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.DebitCardReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.DebitCardSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EBTBalanceInquiryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EBTCreditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EBTReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EBTSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EBTVoucherResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.EnhancedBINQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardActivateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardAuthorizationCompletionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardAuthorizationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardBalanceInquiryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardBalanceTransferResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardCloseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardCreditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardReloadResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardReturnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.GiftCardUnloadResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.MagneprintDataDecryptResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.TransactionSetupExpireResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElementExpress\Semnox.Parafait.Device.ElementExpress.TransactionSetupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Web References\FirstdataReg\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FirstdataReg\ResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FirstdataReg\srs.wsdl" />
+    <None Include="Web References\FirstDataTrxn\rcService.wsdl" />
+    <None Include="Web References\FirstDataTrxn\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FirstDataTrxn\ResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://stagingsupport.datawire.net/wsdl/srs.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FirstdataReg\</RelPath>
+      <UpdateFromURL>https://stagingsupport.datawire.net/wsdl/srs.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Device_FirstdataReg_srsService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://stg.dw.us.fdcnet.biz/wsdl/rcservice.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FirstDataTrxn\</RelPath>
+      <UpdateFromURL>https://stg.dw.us.fdcnet.biz/wsdl/rcservice.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Device_FirstDataTrxn_rcService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\timer_SmallBox.png" />
+    <None Include="Resources\YellowgreenMenuButton.jpg" />
+    <None Include="Resources\printer.gif" />
+    <None Include="Resources\status_ok.gif" />
+    <None Include="Resources\yellow 76x76.png" />
+    <None Include="Resources\Black 76x76.png" />
+    <None Include="Resources\Black_76x76.png" />
+    <None Include="Resources\cancel.gif" />
+    <None Include="Resources\button_normal.png" />
+    <None Include="Resources\button_pressed.png" />
+    <COMFileReference Include="Printer\FiscalPrinter\ELTRADE\EltradeFPAxG2_BG.dll" />
+    <Content Include="Resources\CancelButton.png" />
+    <None Include="Resources\cardsale.png" />
+    <None Include="Resources\DiplayGroupButton.png" />
+    <None Include="Resources\green 46x46.png" />
+    <None Include="Resources\green 76x76.png" />
+    <None Include="Resources\NewCard.png" />
+    <None Include="Resources\normal2.png" />
+    <None Include="Resources\OnlineLock.png" />
+    <None Include="Resources\orange 76x76.png" />
+    <None Include="Resources\orangeBatteryLow 76x76.png" />
+    <None Include="Resources\red 76x76.png" />
+    <None Include="Service References\ElementExpress\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ElementExpress\configuration.svcinfo" />
+    <None Include="Service References\ElementExpress\configuration91.svcinfo" />
+    <None Include="Service References\ElementExpress\express.disco" />
+    <None Include="Resources\CancelButton.png.bmp" />
+    <None Include="Resources\customer_button_pressed.png" />
+    <None Include="Resources\darkGreenMenuButton.jpg" />
+    <Content Include="Resources\PaymentScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ElementExpress\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61bd1eb5-df16-4a31-83fc-8d6944f02a20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Discounts\Discounts.csproj">
+      <Project>{F0FDE99A-725F-45C2-9CD8-B7961088EA2C}</Project>
+      <Name>Discounts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5eec3fd1-9ea6-404e-9c7a-554268a3ef80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobUtils\JobUtils.csproj">
+      <Project>{294cba54-bbea-40cf-ba8c-470d64def3d8}</Project>
+      <Name>JobUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\logger\logger.csproj">
+      <Project>{36b671d0-ef70-42db-940b-6a3622023f58}</Project>
+      <Name>logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TableAttributeSetup\TableAttributeSetup.csproj">
+      <Project>{662f83d7-b7dd-4690-9d21-62188991cb29}</Project>
+      <Name>TableAttributeSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Printer\FutronicFS84\" />
+    <Folder Include="UI\CreditcallUI\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

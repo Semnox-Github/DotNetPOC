@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="4.20000012715658in" Name="CoinDrop" xmlns="http://schemas.telerik.com/reporting/2012/3.5">
+  <DataSources>
+    <SqlDataSource ConnectionString="ProductCost1" SelectCommand="IF OBJECT_ID('tempdb..#tempAMPM') IS NOT NULL DROP Table #tempAMPM&#xD;&#xA;select M.*,g.[AM/PM1] into #tempAMPM from &#xD;&#xA;(select machine_id,machine_name,A.[AM/PM],count(*) over() Total from machines m cross join (select 'AM'[AM/PM]&#xD;&#xA;union all select 'PM' )A&#xD;&#xA;                                      where machine_name !='Demo Reader' &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  and machine_name not like 'pause%'  and machine_name not like 'Check%Balance%'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; and machine_name not like 'Pause%Station%'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    and ReferenceMachineID IS NULL&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    and active_flag='Y') M&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;left join (&#xD;&#xA;&#xD;&#xA;SELECT gp.machine_id,machine_name,case when datepart(HH,play_date)&lt;13 then 'AM' &#xD;&#xA;when datepart(HH,play_date)&gt;=13 and datepart(HH,play_date)&lt;19 then'PM' end [AM/PM1],&#xD;&#xA; datepart(HH,play_date) time,gameplay_id--COUNT(case when gp.technician_card='Y' then gameplay_id else null end) gameplay_count&#xD;&#xA;  FROM GameMetricViewHopper gp &#xD;&#xA; WHERE PLAY_DATE BETWEEN @FromDate and @ToDate&#xD;&#xA;   and gp.machine_name !='Demo Reader'&#xD;&#xA;and gp.machine_name not like 'pause%' and  gp.machine_name not like '%Check%Balance%'   and  technician_card='Y'&#xD;&#xA;  -- group by gp.machine_id&#xD;&#xA;  ) G on m.machine_id=g.machine_id and m.[AM/PM]=g.[AM/PM1]&#xD;&#xA;&#xD;&#xA;  select  distinct machine_name,2 COIN_DROP from #TempAMPM where [AM/PM1] is not null and datepart(HH,getdate())&lt;13&#xD;&#xA;  union all&#xD;&#xA;  select  distinct machine_name,2 COIN_DROP from #TempAMPM where [AM/PM1] is not null and datepart(HH,getdate())&gt;=13 &#xD;&#xA; union all&#xD;&#xA;&#xD;&#xA;  select  distinct machine_name,0  COIN_DROP from #TempAMPM where [AM/PM]='AM' and [AM/PM1] is  null&#xD;&#xA;&#xD;&#xA;  union all&#xD;&#xA;&#xD;&#xA;  select  distinct machine_name,1 COIN_DROP from #TempAMPM where [AM/PM]='PM'  and [AM/PM1] is null" CommandTimeout="600" Name="dsCoinDrop">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FromDate">
+          <Value>
+            <String>= Parameters.FromDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@ToDate">
+          <Value>
+            <String>= Parameters.ToDate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+      <DefaultValues>
+        <SqlDataSourceParameter DbType="DateTime" Name="@FromDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@ToDate" />
+      </DefaultValues>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.5in" Name="detailSection1">
+      <Style BackgroundColor="White" />
+      <Items>
+        <Table DataSourceName="dsCoinDrop" Width="2.5000002861023in" Height="0.800000026869396in" Left="0.700000047683716in" Top="0.5in" Name="table1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.5000002861023in" Height="0.400000013434698in" Left="0in" Top="0in" Value="= Fields.machine_name" Name="textBox4" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <BorderColor Default="Silver" />
+                      <Font Size="10pt" Bold="False" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="2.5000002861023in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.400000026029728in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style BackgroundColor="White">
+            <BorderStyle Default="None" />
+            <BorderColor Default="Silver" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="2.5000002861023in" Height="0.400000026869396in" Left="0in" Top="0in" Value="Machine Name" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <BorderColor Default="Silver" />
+                    <Font Bold="True" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Filters>
+            <Filter Expression="= Fields.Coin_Drop" Operator="Equal" Value="= Parameters.Count.Value" />
+          </Filters>
+        </Table>
+        <TextBox Width="4.19992129007975in" Height="0.400000095367432in" Left="0.00003937880198154in" Top="0in" Value=" &quot; Detailed Report&quot;" Name="textBox5">
+          <Style TextAlign="Center" VerticalAlign="Middle">
+            <Font Name="Tahoma" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </DetailSection>
+  </Items>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="10pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <PageSettings>
+    <PageSettings PaperKind="Letter" Landscape="False" ColumnCount="1" ColumnSpacing="0in">
+      <Margins>
+        <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+      </Margins>
+    </PageSettings>
+  </PageSettings>
+  <ReportParameters>
+    <ReportParameter Name="FromDate" Type="DateTime" Text="FromDate" />
+    <ReportParameter Name="ToDate" Type="DateTime" Text="ToDate" />
+    <ReportParameter Name="Count" Type="Integer" Text="Count" />
+  </ReportParameters>
+</Report>

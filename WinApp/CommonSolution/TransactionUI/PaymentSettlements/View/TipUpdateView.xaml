@@ -1,0 +1,67 @@
+﻿<Window x:Class="Semnox.Parafait.TransactionUI.TipUpdateView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TransactionUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource ChildWindowStyle}"
+        Title="TipUpdateView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height ="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <common:CustomDataGridUserControl x:Name="CustomDataGridUserControl"
+                                                  Grid.Row="0"
+                                                  DataContext="{Binding TransactionPaymentsCustomDataGridVM}"
+                                                  Margin="0,0,0,8">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.IsSelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </common:CustomDataGridUserControl>
+
+        <Border Grid.Row="1"
+                        BorderThickness="0,1,0,0"
+                        BorderBrush="{StaticResource Control.BorderBrush}"
+                        Padding="0,8">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CustomDataGridVM.UICollectionToBeRendered.Count}"
+                                             Value="0">
+                            <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <UniformGrid Columns="2" HorizontalAlignment="Center">
+                <common:CustomActionButton x:Name="btnComplete"
+                                                   Content="COMPLETE"
+                                                   ActionStyle="Active"
+                                                   MinWidth="{StaticResource ActionButton.Width}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+                <common:CustomActionButton x:Name="btnCancel"
+                                                   Margin="{StaticResource OkAndYearMargin}"
+                                                   MinWidth="{StaticResource ActionButton.Width}"
+                                                   ActionStyle="Passive"
+                                                   Content="CANCEL"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"/>
+
+            </UniformGrid>
+        </Border>
+    </Grid>
+</Window>

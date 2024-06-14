@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4419625-2D92-4E3B-99B3-2DF03A45CD59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.Waiver</RootNamespace>
+    <AssemblyName>Waiver</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.AcroPDFLib">
+      <HintPath>..\..\..\..\OTS\AxInterop.AcroPDFLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IWaiverSetSigningOptionsUseCases.cs" />
+    <Compile Include="IWaiverSetUseCases.cs" />
+    <Compile Include="LocalWaiverSetSigningOptionsUseCases.cs" />
+    <Compile Include="LocalWaiverSetUseCases.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoteWaiverSetSigningOptionsUseCases.cs" />
+    <Compile Include="RemoteWaiverSetUseCases.cs" />
+    <Compile Include="WaiverLaunch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaiverLaunch.designer.cs">
+      <DependentUpon>WaiverLaunch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaiversContainerDTO.cs" />
+    <Compile Include="WaiverSetBL.cs" />
+    <Compile Include="WaiverSetContainerDTO.cs" />
+    <Compile Include="WaiverSetContainerDTOCollection.cs" />
+    <Compile Include="WaiverSetContainerList.cs" />
+    <Compile Include="WaiverSetContainers.cs" />
+    <Compile Include="WaiverSetDataHandler.cs" />
+    <Compile Include="WaiversBL.cs" />
+    <Compile Include="WaiversDataHandler.cs" />
+    <Compile Include="WaiversDTO.cs" />
+    <Compile Include="WaiverSetDetailSigningOptionsBL.cs" />
+    <Compile Include="WaiverSetDetailSigningOptionsDataHandler.cs" />
+    <Compile Include="WaiverSetDetailSigningOptionsDTO.cs" />
+    <Compile Include="WaiverSetDTO.cs" />
+    <Compile Include="WaiverSetSigningOptionsBL.cs" />
+    <Compile Include="WaiverSetSigningOptionsContainerDTO.cs" />
+    <Compile Include="WaiverSetSigningOptionsDataHandler.cs" />
+    <Compile Include="WaiverSetSigningOptionsDTO.cs" />
+    <Compile Include="WaiverSetContainer.cs" />
+    <Compile Include="WaiverSignatureDetailsDTO.cs" />
+    <Compile Include="WaiverSignatureBL.cs" />
+    <Compile Include="WaiverSignatureDataHandler.cs" />
+    <Compile Include="WaiverSignatureDTO.cs" />
+    <Compile Include="WaiverSignedUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaiverSignedUI.designer.cs">
+      <DependentUpon>WaiverSignedUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaiverSigningOptionUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaiverSigningOptionUI.designer.cs">
+      <DependentUpon>WaiverSigningOptionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaiverUseCaseFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaiverLaunch.resx">
+      <DependentUpon>WaiverLaunch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaiverSignedUI.resx">
+      <DependentUpon>WaiverSignedUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaiverSigningOptionUI.resx">
+      <DependentUpon>WaiverSigningOptionUI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{e7ceb68f-78bb-44f8-9b4e-ea3fb43dac9a}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{F1BA74AA-2DC7-48C1-8CBD-254F8C2B63F8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

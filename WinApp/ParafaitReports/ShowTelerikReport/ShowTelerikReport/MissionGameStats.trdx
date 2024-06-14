@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="8.1833750406901in" Name="MissionGameStats" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Data Source=toshiba\sqlexpress;Initial Catalog=Parafait;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="select card_number&#xD;&#xA;from cards&#xD;&#xA;where card_id = @card_id&#xD;&#xA;" Name="dsCardNumber">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@card_id">
+          <Value>
+            <String>= Parameters.cardid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=Parafait;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="select c.card_number, &#xD;&#xA;          customer_name+ ' '+ last_name Player_Name, &#xD;&#xA;       machine_name game_name, &#xD;&#xA;          attempts Number_Attempts,&#xD;&#xA;          play_date Attempt_StartTime, &#xD;&#xA;          AttemptTime Successful_Attempt_EndTime,&#xD;&#xA;          case &#xD;&#xA;&#x9;&#x9;  when AttemptTime is null&#xD;&#xA;&#x9;&#x9;  then 0&#xD;&#xA;&#x9;&#x9;  when (isnull(cv.customDataNumber,0) - 5*(floor(datediff(ss,play_date,AttemptTime)/10)&#xD;&#xA;&#x9;&#x9;                                          )&#xD;&#xA;&#x9;&#x9;       ) &lt; 0&#xD;&#xA;&#x9;&#x9;  then 0&#xD;&#xA;&#x9;&#x9;  else cast((isnull(cv.customDataNumber,0) - 5*(floor(datediff(ss,play_date,AttemptTime)/10)&#xD;&#xA;&#x9;&#x9;                                          )&#xD;&#xA;&#x9;&#x9;       ) as numeric)&#xD;&#xA;&#x9;&#x9;  END Score&#xD;&#xA;from cards c &#xD;&#xA;left outer join customers cu on c.customer_id = cu.customer_id&#xD;&#xA;left outer join GameMetricView gv on gv.card_id = c.card_id&#xD;&#xA;left outer join (select gameplay_id,max(GameEndTime) AttemptTime&#xD;&#xA;                             from gameplayInfo&#xD;&#xA;                            WHERE Status='SUCCESS'&#xD;&#xA;                            group by gameplay_id)gi on gv.gameplay_id = gi.gameplay_id&#xD;&#xA;left outer join (select CustomDataNumber ,m.machine_id&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  from customdataview cv,machines m&#xD;&#xA;&#x9;&#x9;&#x9;&#x9; where applicability='MACHINE'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9; and m.customDataSetId=cv.customDataSetId&#xD;&#xA;&#x9;&#x9;&#x9;&#x9; and Name='Score'&#xD;&#xA;&#x9;&#x9;&#x9;&#x9; ) cv on cv.machine_id=gv.machine_id&#xD;&#xA;left outer join (select gameplay_id,count(1) attempts&#xD;&#xA;                             from gameplayInfo&#xD;&#xA;                            group by gameplay_id)gia on gv.gameplay_id = gia.gameplay_id&#xD;&#xA; left outer join              (&#xD;&#xA;              select distinct ParentCardId cardid&#xD;&#xA;              from ParentChildCards&#xD;&#xA;              where ParentCardId = @card_id or ChildCardId = @card_id&#xD;&#xA;              union all&#xD;&#xA;              select distinct ChildCardId&#xD;&#xA;              from ParentChildCards&#xD;&#xA;              where ParentCardId = @card_id or ChildCardId = @card_id)pc on c.card_id=pc.cardid&#xD;&#xA;where c.card_id = @card_id&#xD;&#xA; or pc.cardid=@card_id&#xD;&#xA;" CommandTimeout="600" Name="dsGamePlays">
+      <Parameters>
+        <SqlDataSourceParameter DbType="String" Name="@card_id">
+          <Value>
+            <String>=Parameters.cardid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="0.500078837076823in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsGamePlays" Width="8.18333554646102in" Height="0.400000417093032in" Left="0.00003937880319427in" Top="0in" ColumnHeadersPrintOnEveryPage="True" Name="crosstab2" StyleName="Civic.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.4666675513566in" Height="0.199999919463855in" Left="0in" Top="0in" Value="= Fields.Attempt_StartTime" Format="{0:dd-MM-yyyy HH:mm:ss }" TextWrap="False" Name="textBox20" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.6020847468343in" Height="0.199999979068489in" Left="0in" Top="0in" Value="=Fields.Successful_Attempt_EndTime" Format="{0:dd-MM-yyyy HH:mm:ss }" TextWrap="False" Name="textBox46" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.18750036607582in" Height="0.199999925424332in" Left="0in" Top="0in" Value="= Fields.game_name" TextWrap="False" Name="textBox101" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Right" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.03124989319923in" Height="0.199999931384801in" Left="0in" Top="0in" Value="= Fields.card_number" TextWrap="False" Name="textBox103" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.09375005283651in" Height="0.199999931384798in" Left="0in" Top="0in" Value="= Fields.Player_Name" TextWrap="False" Name="textBox39" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.843749970270496in" Height="0.200000175763896in" Left="0in" Top="0in" Value="= Fields.Number_Attempts" Name="textBox3" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.958333346390585in" Height="0.200000351597813in" Left="0in" Top="0in" Value="= Fields.Score" Name="textBox5" StyleName="Civic.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="8pt" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style BackgroundColor="218, 226, 232" />
+                        <Filters>
+                          <Filter Expression="= RowNumber()%2" Operator="Equal" Value="1" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.03124894176343in" />
+              <Column Width="1.09374978294892in" />
+              <Column Width="1.18750025210936in" />
+              <Column Width="0.843750137413604in" />
+              <Column Width="1.46666817221189in" />
+              <Column Width="1.60208473071143in" />
+              <Column Width="0.958333346390585in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.200000351597813in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <Font Name="Tahoma" Size="8pt" />
+            <BorderStyle Default="Solid" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="1.03124989319923in" Height="0.200000062515013in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Card Number' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox105" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group6">
+              <ReportItem>
+                <TextBox Width="1.09375005283651in" Height="0.200000062515011in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Player Name' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox38" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="1.18750036607582in" Height="0.200000056554541in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Game Name' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox106" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group">
+              <ReportItem>
+                <TextBox Width="0.843749970270496in" Height="0.200000259210487in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Number of Attempts' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox2" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.4666675513566in" Height="0.200000050594075in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Attempt Start Time' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox107" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.6020847468343in" Height="0.200000086356871in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Successful Attempt End Time' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox108" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group1">
+              <ReportItem>
+                <TextBox Width="0.958333346390585in" Height="0.20000006549522in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Score' , Parameters.LangID.Value, Parameters.connectionstring.Value)" Name="textBox4" StyleName="Civic.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" Color="White" TextAlign="Center">
+                    <Font Name="Arial" Size="8pt" Bold="True" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.499999682108562in" Name="pageFooterSection1">
+      <Items>
+        <TextBox Width="3.40000033378601in" Height="0.200000122189522in" Left="0in" Top="0.0750001271565755in" Value="=MessagesFunctions.getMessage('Printed at' , Parameters.LangID.Value, Parameters.connectionstring.Value) + ' ' + ExecutionTime.ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox72">
+          <Style>
+            <Font Name="Arial" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.67085337638855in" Height="0.300000190734863in" Left="4.50000031789144in" Top="0.0750001271565755in" Value="= MessagesFunctions.getMessage('Page' , Parameters.LangID.Value, Parameters.connectionstring.Value) + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of' , Parameters.LangID.Value, Parameters.connectionstring.Value) + '  ' + PageCount" Name="textBox73">
+          <Style TextAlign="Right">
+            <Font Name="Arial" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.399921337763468in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="8.18325678507487in" Height="0.400000015894572in" Left="0.00007883707682277in" Top="0in" Value="='Mission Room Game Stats For Card ' + Parameters.cardNumber.Value" Name="textBox1">
+          <Style TextAlign="Left" VerticalAlign="Middle">
+            <Font Name="Arial" Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="True">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="cardid" Text="cardid" AllowBlank="False" />
+    <ReportParameter Name="cardNumber" Text="cardNumber" AllowBlank="False">
+      <AvailableValues DataSourceName="dsCardNumber" DisplayMember="= Fields.card_number" ValueMember="= Fields.card_number" />
+      <Value>
+        <String>= Fields.card_number</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="connectionstring" Mergeable="False" Text="connectionstring" AllowBlank="False" />
+    <ReportParameter Name="LangID" Type="Integer" Mergeable="False" Text="LangID" AllowBlank="False" />
+  </ReportParameters>
+</Report>

@@ -1,0 +1,158 @@
+﻿<Window x:Class="Semnox.Parafait.TableAttributeSetupUI.TableAttributeFieldsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.TableAttributeSetupUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        mc:Ignorable="d"
+        Style="{StaticResource PopupWithFooterWindowStyle}"
+        Title="TableAttributeFieldsView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TableAttributeFieldsView}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <local:DataEntryTemplateSelector x:Key="DataEntryTemplateSelector"/>
+        <DataTemplate x:Key="CustomTextBlockDataTemplate">
+            <common:CustomTextBlock x:Name="headingField"
+                                  VerticalAlignment="Top"
+                                  Text="{Binding Text}"
+                                  Margin="0,0,0,0"
+                                  FontSize="{StaticResource FontSize.Medium}"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  FontFamily="{StaticResource FontFamily}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="CustomTextBoxDataTemplate">
+            <common:CustomTextBox x:Name="txtField"
+                                  ErrorState="{Binding ErrorState}"
+                                  VerticalAlignment="Top"
+                                  Heading="{Binding Heading}"
+                                  DefaultValue="{Binding DefaultValue}"
+                                  IsMandatory="{Binding IsMandatory}"
+                                  MaxLength="500"
+                                  ValidationType="{Binding ValidationType}"                                  
+                                  Text="{Binding Text}"
+                                  IsReadOnly="{Binding IsReadOnly}"
+                                  IsEnabled="{Binding IsEnabled}"
+                                  ErrorTextVisible="True"
+                                  Size="Small"
+                                  Margin="0,0,0,0"
+                                  FontSize="{StaticResource FontSize.Small}"
+                                  FontWeight="{StaticResource FontWeight.Bold}"
+                                  FontFamily="{StaticResource FontFamily}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CustomComboBoxDataTemplate">
+            <common:CustomComboBox x:Name="cmbField"
+                                   VerticalAlignment="Top"
+                                   Heading="{Binding Heading}"
+                                   DefaultValue="{Binding DefaultValue}"
+                                   DisplayMemberPathCollection="{Binding DisplayMemberPathCollection}"
+                                   IsMandatory="{Binding IsMandatory}"
+                                   EditableItemsSource="{Binding Options}"
+                                   DisplayMemberPath="{Binding DisplayMemberPath}"
+                                   SelectedItem="{Binding SelectedItem}"
+                                   IsEditable="true"
+                                   IsEnabled="{Binding IsEnabled}"
+                                   Size="Small"                                   
+                                   ErrorTextVisible="True"
+                                   IsReadOnly="{Binding IsReadOnly}"
+                                   Margin="0,0,0,0"
+                                   FontSize="{StaticResource FontSize.Small}"
+                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                   FontFamily="{StaticResource FontFamily}">
+            </common:CustomComboBox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CustomDatePickerDataTemplate">
+            <common:CustomTextBoxDatePicker x:Name="txtdpField"
+                                            ShowTimePicker="True"
+                                            VerticalAlignment="Top"
+                                            Heading="{Binding Heading}"
+                                            DefaultValue="{Binding DefaultValue}"
+                                            IsMandatory="{Binding IsMandatory}"
+                                            Text="{Binding Text}"
+                                            Size="Small"
+                                            ErrorState="{Binding ErrorState}"
+                                            ErrorTextVisible="True"
+                                            IsReadOnly="{Binding IsReadOnly}"
+                                            IsEnabled="{Binding IsEnabled}"
+                                            Margin="0,0,0,0"
+                                            FontWeight="{StaticResource FontWeight.Bold}"
+                                            FontSize="{StaticResource FontSize.Small}"
+                                            FontFamily="{StaticResource FontFamily}"/>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="StackPanelTemplate">
+            <StackPanel Width="600px"  />
+        </ItemsPanelTemplate>
+
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderSectionGrid"
+              Grid.Row="0" >
+            <common:CustomTextBlock x:Name="HeaderSectionCustomTextBlock"
+                                    Text="{Binding HeaderSection}" 
+                                    HorizontalAlignment="Center" 
+                                    Margin="0,4"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource FontFamily}"
+                                    FontSize="{StaticResource FontSize.Medium}"/>
+        </Grid>
+        <Grid x:Name="MainContentGrid"  
+              Grid.Row="1"
+              Width="Auto">
+            <Border x:Name="MainContentTopBorder"
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.BorderBrush}"
+                BorderThickness="0,1"
+                Padding="16,8">
+                <common:CustomScrollViewer x:Name="MainContentCustomScrollViewer">
+                    <ItemsControl x:Name="MainContentItemControl"
+                              ItemsSource="{Binding DataEntryElements}"
+                              ItemsPanel="{StaticResource StackPanelTemplate}"
+                              ItemTemplateSelector="{StaticResource DataEntryTemplateSelector}"/>
+                </common:CustomScrollViewer>
+            </Border>
+        </Grid>
+        <Grid x:Name="ButtonSectionGrid" 
+              Grid.Row="2">
+            <StackPanel x:Name="ButtonSectionStackPanel"
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <common:CustomActionButton x:Name="btnCancel"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Right" 
+                                    Content="CANCEL"
+                                    ActionStyle="Passive"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding CancelCommand}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    FontFamily="{StaticResource FontFamily}"     
+                                    />
+                <common:CustomActionButton x:Name="btnOK"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Right" 
+                                    Margin="{StaticResource OkAndYearMargin}"
+                                    Content="OK"
+                                    IsEnabled="{Binding IsOkButtonEnable}"
+                                    ActionStyle="Active"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding OkCommand}"
+                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    FontFamily="{StaticResource FontFamily}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

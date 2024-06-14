@@ -1,0 +1,12 @@
+  "RECEPTOR": {
+    "RUTRECEP": @GenericStoreRut,
+    "CDGINTRECEP": @StorePOSIdSiteName,
+    "RZNSOCRECEP": @CustomerName,
+    "CONTACTO": @WaiterName,
+    "DIRRECEP": @GuestCount,
+    "CMNARECEP": @CashierName,
+    "CIUDADRECEP": @OrderDescr,
+    "DIRPOSTAL": @DescrServ,
+    "CMNAPOSTAL": @TransId,
+    "CIUDADPOSTAL": @ServiceType
+  },

@@ -1,0 +1,234 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.NavigationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d"
+             Background="Transparent"
+             VerticalAlignment="Top">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NavigationUserControl}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+
+        <local:IndexConverter x:Key="IndexConverter" />
+
+        <Style TargetType="{x:Type Button}"
+               x:Key="BackButtonStyle">
+            <Setter Property="Width"
+                    Value="32" />
+            <Setter Property="Height"
+                    Value="{Binding RelativeSource={RelativeSource Mode=Self}}" />
+            <Setter Property="Margin"
+                    Value="0,0,16,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent">
+                            <Path x:Name="ArrowPath"
+                                  Data="M12 24l-2.105-2.105 8.35-8.421H0v-2.948h18.246l-8.421-8.42L12 0l12 12z"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  Stretch="Uniform"
+                                  RenderTransformOrigin=".5,.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding NavigationTags.Count}"
+                                         Value="0">
+                                <Setter Property="IsEnabled"
+                                        Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding NavigationTags.Count}"
+                                         Value="1">
+                                <Setter Property="IsEnabled"
+                                        Value="False" />
+
+                            </DataTrigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="Fill"
+                                        TargetName="ArrowPath"
+                                        Value="{StaticResource Control.BorderBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ToggleButton}"
+               x:Key="PreviousNavigationButtonStyle">
+            <Setter Property="Width"
+                    Value="32" />
+            <Setter Property="Height"
+                    Value="{Binding RelativeSource={RelativeSource Mode=Self}}" />
+            <Setter Property="Margin"
+                    Value="0,0,16,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="Transparent">
+                            <Path Data="M9.132 0c-.181 0-.354.027-.516.081-.166.056-.318.14-.456.25a1.163 1.163 0 0 0-.458.926c0 .263.083.504.257.722l.094.106.107.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.164.676.459.914.275.222.61.332.986.332.26 0 .5-.053.73-.168l.136-.077.12-.087 13.263-10.693.108-.1a1.125 1.125 0 0 0 .072-1.508l-.094-.106-.107-.096L10.079.313 9.955.227A1.656 1.656 0 0 0 9.132 0zM1.43 0c-.181 0-.354.027-.516.081-.166.056-.319.14-.456.25A1.163 1.163 0 0 0 0 1.258c0 .263.083.504.256.722l.094.106.108.097 12.276 9.897-12.13 9.78-.107.098c-.215.222-.33.495-.33.797 0 .361.163.676.459.914.274.222.61.332.985.332.26 0 .501-.053.73-.168l.137-.077.12-.087L15.86 12.975l.107-.1a1.125 1.125 0 0 0 .073-1.508l-.094-.106-.107-.096L2.377.313 2.253.227A1.656 1.656 0 0 0 1.43 0z"
+                                  Fill="{StaticResource Control.BorderBrush.Focused}"
+                                  Stretch="Uniform"
+                                  RenderTransformOrigin=".5,.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowPreviousNavigation}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Path}"
+               x:Key="ArrowStyle">
+            <Setter Property="Data"
+                    Value="M12 16L4 8 20 8z" />
+            <Setter Property="Margin"
+                    Value="8,0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Fill"
+                    Value="{StaticResource Control.BorderBrush.Focused}" />
+            <Setter Property="RenderTransformOrigin"
+                    Value=".5,.5" />
+            <Setter Property="Stretch"
+                    Value="Uniform" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="-90" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="btnBack"
+                Grid.Column="0"
+                Style="{StaticResource BackButtonStyle}"
+                Command="{Binding BackNavigationCommand}" />
+
+        <ToggleButton x:Name="btnPreviousNavigations"
+                      Grid.Column="1"
+                      Style="{StaticResource PreviousNavigationButtonStyle}" />
+        <Popup x:Name="PreviousNavigationPopup"
+               IsOpen="{Binding IsChecked, ElementName=btnPreviousNavigations}"
+               Grid.Column="1"
+               StaysOpen="False"
+               Height="258"
+               Width="250"
+               Placement="Bottom">
+            <Border Background="{StaticResource Control.BackGround}"
+                    BorderBrush="{StaticResource Control.BorderBrush}"
+                    BorderThickness="1"
+                    Padding="16">
+                <local:CustomScrollViewer x:Name="scvPopup"
+                                          VerticalScrollBarVisibility="Visible"
+                                          HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="PopupItemsControl"
+                                  ItemsSource="{Binding PreviousNavigationTags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Height="48">
+                                    <Border.Style>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver"
+                                                         Value="true">
+                                                    <Setter Property="Background"
+                                                            Value="AliceBlue" />
+                                                    <Setter Property="BorderThickness"
+                                                            Value="1" />
+                                                    <Setter Property="Background"
+                                                            Value="Blue" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseUp">
+                                            <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                                   Command="{Binding DataContext.ClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NavigationUserControl}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <local:CustomTextBlock x:Name="tbText"
+                                                           VerticalAlignment="Center"
+                                                           Text="{Binding Text}"
+                                                           TextSize="Medium"
+                                                           FontWeight="{StaticResource FontWeight.Bold}" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </local:CustomScrollViewer>
+            </Border>
+        </Popup>
+
+        <local:CustomScrollViewer x:Name="scvContentArea"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  Grid.Column="2">
+            <ItemsControl x:Name="ContentItemsControl"
+                          ItemsSource="{Binding NavigationTags}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel x:Name="parentStackPanel"
+                                    Orientation="Horizontal">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseUp">
+                                    <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                           Command="{Binding DataContext.ClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NavigationUserControl}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Path Style="{StaticResource ArrowStyle}" />
+                            <Border BorderThickness="0" 
+                                    Background = "{StaticResource ActionBar.Background}"
+                                    CornerRadius="8,8,8,8" 
+                                    Padding="5">
+                                <local:CustomTextBlock x:Name="tbText"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Text}"
+                                                   TextSize="Medium"
+                                                   FontWeight="{StaticResource FontWeight.Bold}" />
+                            </Border>
+                            
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </local:CustomScrollViewer>
+    </Grid>
+</UserControl>

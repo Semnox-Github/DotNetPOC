@@ -1,0 +1,215 @@
+﻿<Window x:Name="frmNotificationTags" x:Class="Semnox.Parafait.TagsUI.NotificationTagsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:Semnox.Parafait.TagsUI"
+        Style="{StaticResource ChildWindowStyle}"
+        mc:Ignorable="d"
+        Title="Notification Tags View" Loaded="frmNotificationTags_Loaded">
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type common:CustomScrollViewer}}" TargetType="{x:Type common:CustomScrollViewer}" x:Key="MultiScreenCustomScrollViewerStyle">
+            <Setter Property="Padding" Value="0,0,8,0" />
+            <Setter Property="Margin"  Value="20" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding MultiScreenMode}" Value="True">
+                    <Setter Property="Margin" Value="0,16" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding MultiScreenMode}" Value="False">
+                    <Setter Property="Margin" Value="0,16" />
+                </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding MultiScreenMode}"  Value="True" />
+                        <Condition Binding="{Binding IsMultiScreenRowTwo}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Size"  Value="XSmall" />
+                    <Setter Property="Margin" Value="0" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Margin" Value="0,0,16,0" />
+            <Setter Property="FontStyle" Value="{StaticResource FontStyle.Normal}"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontSize" Value="14 px"/>
+            <Setter Property="FontStretch" Value="Condensed"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="FontWeight" Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid>
+                            <Border x:Name="columnHeaderBorder" BorderThickness="1" Padding="3,0,3,0">
+
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid  RenderTransformOrigin="0.506,0.553">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" x:Name="NotificationTagsFilterRow" />
+            <RowDefinition Height="6*" x:Name="NotificationTagsGridRow" />
+            <RowDefinition Height="2*" x:Name="NotificationTagsButtonRow" />
+        </Grid.RowDefinitions>
+        <Border x:Name="TopBorder"
+                Grid.Row="0"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <common:CustomComboBox x:Name ="cbStatus"
+                                                   Grid.Column="0"   ErrorTextVisible="False" Margin="8"
+                                                   DefaultValue="Select Status"
+                                                   DisplayMemberPath="Value"
+                                                   SelectedItem="{Binding SelectedTagStatus}" FontWeight="{StaticResource FontWeight.Bold}"
+                                                   ItemsSource="{Binding TagStatus}" FontSize="{StaticResource FontSize.Medium}"
+                                                   IsEditable="True"   Size="Small" Heading="Status"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" />
+                <common:CustomComboBox x:Name ="cbFields"
+                                                   Grid.Column="1"    ErrorTextVisible="False"  Margin="8"
+                                                   DefaultValue="Select Field " DisplayMemberPath="Value" 
+                                                   FontSize="{StaticResource FontSize.Medium}"
+                                                   SelectedItem="{Binding SelectedFieldName}" 
+                                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                                   ItemsSource="{Binding TagFields}"   
+                                                   IsEditable="True"     Size="Small" Heading="Search By"
+                                                   MaxWidth="{Binding ActualWidth, ElementName=LeftContentGridContainer}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                   Command="{Binding DataContext.SelectionChangedCmd,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </common:CustomComboBox>
+                <common:CustomTextBox x:Name="txtSearchValue" ErrorTextVisible="False"  Margin="8"
+                                                  Heading="Enter Value" FontWeight="{StaticResource FontWeight.Bold}"
+                                                  DefaultValue="Enter Value"   
+                                                    Text="{Binding SelectedTextValue}"
+                                                  FontSize="{StaticResource FontSize.Medium}"
+                                                  Size="Small"   
+                                                  Grid.Column="2"/>
+                <common:CustomComboBox x:Name ="cbListFields" 
+                                                   Foreground="#FF151111" Margin="8,40,8,8"
+                                                   ErrorTextVisible="False" Grid.Column="2"
+                                                   FontSize="{StaticResource FontSize.Medium}"
+                                                   DisplayMemberPath="Value"  
+                                                   SelectedItem="{Binding SelectedSearchName}" 
+                                                   FontWeight="{StaticResource FontWeight.Bold}"
+                                                   ItemsSource="{Binding TagSearchFields}"   
+                                                           Size="Small"    />
+                <common:CustomActionButton x:Name="btnSearch"
+                                                       Grid.Column="4"   Margin="8,16,8,16" VerticalAlignment="Bottom"
+                                                       ActionStyle="Active"
+                                                       IsEnabled="True"   
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding SearchCommand}"  
+                                                       Content="SEARCH" />
+                <common:CustomActionButton x:Name="btnClear"
+                                                       Grid.Column="3"  Margin="8,16,8,16"  VerticalAlignment="Bottom"
+                                                       ActionStyle="Passive"  
+                                                       IsEnabled="True"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding ClearCommand}"  
+                                                       Content="CLEAR" />
+            </Grid>
+        </Border>
+        <Border x:Name="GridTopBorder"
+                Grid.Row="1"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <Grid   Grid.Row="1"  VerticalAlignment="Top" Margin="8" >
+                <common:CustomDataGridUserControl x:Name="CustomDataGrid" DataContext="{Binding CustomDataGridVM}"  >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="OnGridRowSelected">
+                            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                       Command="{Binding DataContext.RowSectionCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </common:CustomDataGridUserControl>
+            </Grid>
+        </Border>
+        <Border x:Name="FooterTopBorder"
+                Grid.Row="2"
+                BorderBrush="{StaticResource Control.ComboBackground}"
+                BorderThickness="0,1,0,0"
+                VerticalAlignment="Top">
+            <Grid x:Name="FooterGrid"
+                  Margin="30,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="FooterActionAreaColumn"
+                                      Width="9*" />
+                    <ColumnDefinition x:Name="FooterKeyBoardColumn"
+                                      Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel x:Name="FooterActionAreaStackPanel"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center">
+                    <common:CustomActionButton x:Name="btnSave"
+                                                       Grid.Column="0"
+                                                       ActionStyle="Active"
+                                                       IsEnabled="True"  Margin="16,0,0,0"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding SaveCommand}"
+                                                       Content="SAVE" />
+                    <common:CustomActionButton x:Name="btnRefresh"
+                                                       Grid.Column="1"
+                                                       ActionStyle="Active"
+                                                       IsEnabled="True"  Margin="16,0,0,0"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding RefreshCommand}"
+                                                       Content="REFRESH" />
+                    <common:CustomActionButton x:Name="btnClose"
+                                                       Grid.Column="2"
+                                                       ActionStyle="Active"
+                                                       IsEnabled="True"  Margin="16,0,0,0"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding CloseCommand}"  
+                                                       Content="CLOSE" />
+                    <common:CustomActionButton x:Name="btnPeform"
+                                                       Grid.Column="3"
+                                                       ActionStyle="Active"
+                                                       IsEnabled="True"  Margin="16,0,0,0"
+                                                       Width="{StaticResource ActionButton.Width}"
+                                                       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:NotificationTagsView}}"
+                                                       Command="{Binding PerformCommand}"   
+                                                       Content="MANUAL EVENTS" />
+
+
+                    <!--</Grid>-->
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

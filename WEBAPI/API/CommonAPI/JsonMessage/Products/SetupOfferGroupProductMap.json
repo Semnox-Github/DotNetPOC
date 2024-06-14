@@ -1,0 +1,18 @@
+[
+  {
+    "TypeMapId": 1,
+    "SaleGroupId": 1,
+    "ProductId": 5,
+    "SequenceId": 10,
+    "IsActive": true,
+    "CreatedBy": "semnox",
+    "CreationDate": "2019-01-21T10:54:05.52",
+    "LastUpdatedUserId": "semnox",
+    "LastUpdatedDate": "2019-01-21T10:54:05.52",
+    "SiteId": -1,
+    "Guid": "56fdead3-9e6e-4159-ae1d-13b1ca188101",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

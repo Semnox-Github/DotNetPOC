@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="6.5in" Name="MachineDown" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafait22" SelectCommand="SELECT m.machine_name,&#xD;&#xA;       CASE&#xD;&#xA;         WHEN Isnull(gpav.attributevalue, 0) = 1 THEN 'Y'&#xD;&#xA;         ELSE NULL&#xD;&#xA;       END  No_Gameplay_Marked_Out_of_Service,&#xD;&#xA;       CASE&#xD;&#xA;         WHEN Isnull(gpav.attributevalue, 0) = 0 THEN 'Y'&#xD;&#xA;         ELSE NULL&#xD;&#xA;       END  No_Gameplay_Not_Marked_Out_of_Service,&#xD;&#xA;       NULL Out_of_Service_Machines&#xD;&#xA;FROM   site s,&#xD;&#xA;       games g,&#xD;&#xA;       game_profile gp,&#xD;&#xA;       machines m&#xD;&#xA;       LEFT OUTER JOIN (SELECT GPAV.attributevalue,&#xD;&#xA;                               gpav.machine_id&#xD;&#xA;                        FROM   gameprofileattributevalues gpav,&#xD;&#xA;                               gameprofileattributes gpa&#xD;&#xA;                        WHERE  gpav.attributeid = gpa.attributeid&#xD;&#xA;                               AND gpa.attribute = 'OUT_OF_SERVICE') gpav&#xD;&#xA;                    ON gpav.machine_id = m.machine_id&#xD;&#xA;WHERE  m.game_id = g.game_id&#xD;&#xA;       AND m.referencemachineid IS NULL&#xD;&#xA;       AND g.game_profile_id = gp.game_profile_id&#xD;&#xA;       AND m.active_flag = 'Y'&#xD;&#xA;       AND gp.profile_name != 'Token Dispenser'&#xD;&#xA;       AND gp.profile_name != 'Check Balance'&#xD;&#xA;       AND gp.profile_name != 'Pause Station'&#xD;&#xA;       AND gp.profile_name != 'Demo Reader'&#xD;&#xA;       AND NOT EXISTS (SELECT 'x'&#xD;&#xA;                       FROM   gameplay gv,&#xD;&#xA;                              cards c&#xD;&#xA;                       WHERE  gv.machine_id = m.machine_id&#xD;&#xA;                              AND c.card_id = gv.card_id&#xD;&#xA;                              AND c.technician_card = 'N'&#xD;&#xA;                              AND play_date &gt; Dateadd(hh, -48, Getdate()))&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT m.machine_name,&#xD;&#xA;       NULL,&#xD;&#xA;       NULL,&#xD;&#xA;       'Y'&#xD;&#xA;FROM   gameprofileattributevalues gpav,&#xD;&#xA;       gameprofileattributes gpa,&#xD;&#xA;       machines M&#xD;&#xA;WHERE  gpav.attributeid = gpa.attributeid&#xD;&#xA;       AND gpav.attributevalue = 1&#xD;&#xA;       AND m.active_flag = 'Y'&#xD;&#xA;       AND m.referencemachineid IS NULL&#xD;&#xA;       AND gpav.machine_id = m.machine_id&#xD;&#xA;       AND gpa.attribute = 'OUT_OF_SERVICE'&#xD;&#xA;ORDER  BY machine_name " CommandTimeout="600" Name="dsMachineDown" />
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.69999996821085in" Name="detailSection1">
+      <Style BackgroundColor="White">
+        <Font Size="8pt" />
+      </Style>
+      <Items>
+        <TextBox Width="6.49992100397746in" Height="0.400000095367432in" Left="0.00003937880198149in" Top="0in" Value="= &quot;Machines with &quot; + Replace(Parameters.Type.Value, &quot;_&quot;, &quot; &quot;)" Name="textBox5">
+          <Style TextAlign="Center" VerticalAlign="Middle">
+            <Font Size="12pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Table DataSourceName="dsMachineDown" Width="3.05000047683716in" Height="0.799999954965381in" Left="1.60000006357829in" Top="0.600000063578288in" Name="table1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="3.05000047683716in" Height="0.399999968210856in" Left="0in" Top="0in" Value="= Fields.machine_name" Name="textBox4" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" Color="Black" TextAlign="Center" VerticalAlign="Middle">
+                      <Font Name="Arial" Size="10pt" Bold="False" />
+                      <BorderColor Default="Silver" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="3.05000047683716in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.399999929798977in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style BackgroundColor="255, 128, 0" Color="White">
+            <BorderColor Default="Silver" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="3.05000047683716in" Height="0.400000025166403in" Left="0in" Top="0in" Value="Machine Name" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="113, 140, 161" TextAlign="Center">
+                    <Font Name="Arial" Size="10pt" Bold="True" />
+                    <BorderColor Default="Silver" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+          <Filters>
+            <Filter Expression="=iif(Parameters.Type.Value=&quot;No_Gameplay_Marked_Out_of_Service&quot;, Fields.No_Gameplay_Marked_Out_of_Service,iif(Parameters.Type.Value=&quot;No_Gameplay_Not_Marked_Out_of_Service&quot;, Fields.No_Gameplay_Not_Marked_Out_of_Service, Fields.Out_of_Service_Machines))" Operator="Equal" Value="Y" />
+          </Filters>
+        </Table>
+      </Items>
+    </DetailSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False" ColumnCount="1" ColumnSpacing="0in">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="Type" Text="type" />
+  </ReportParameters>
+</Report>

@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{88B4257F-C545-4EAF-8ADA-37F374F0A6FD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Semnox.Parafait.TransactionUI</RootNamespace>
+    <AssemblyName>TransactionUI</AssemblyName>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\OTS\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\..\..\..\OTS\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\..\OTS\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PaymentSettlements\View\AdvancedFilterView.xaml.cs">
+      <DependentUpon>AdvancedFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\ViewModel\ProductQuantityPromptVM.cs" />
+    <Compile Include="Sales\View\ProductQuantityPromptView.xaml.cs">
+      <DependentUpon>ProductQuantityPromptView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\LinkCardsView.xaml.cs">
+      <DependentUpon>LinkCardsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\MasterCardsView.xaml.cs">
+      <DependentUpon>MasterCardsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\ViewModel\MasterCardsVM.cs" />
+    <Compile Include="PaymentSettlements\Model\AdvancedFiltersSummaryDTO.cs" />
+    <Compile Include="PaymentSettlements\Model\TransactionPaymentSummaryDTO.cs" />
+    <Compile Include="PaymentSettlements\ViewModel\AdvancedFilterVM.cs" />
+    <Compile Include="PaymentSettlements\ViewModel\EditPaymentsVM.cs" />
+    <Compile Include="PaymentSettlements\ViewModel\PaymentSettlementVM.cs" />
+    <Compile Include="PaymentSettlements\ViewModel\TipUpdateVM.cs" />
+    <Compile Include="PaymentSettlements\View\EditPaymentsView.xaml.cs">
+      <DependentUpon>EditPaymentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentSettlements\View\PaymentSettlementView.xaml.cs">
+      <DependentUpon>PaymentSettlementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentSettlements\View\TipUpdateView.xaml.cs">
+      <DependentUpon>TipUpdateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\View\TaskLoadTicketView.xaml.cs">
+      <DependentUpon>TaskLoadTicketView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\ViewModel\TaskLoadTicketVM.cs" />
+    <Compile Include="Tasks\Model\AccountRelationShipModel.cs" />
+    <Compile Include="Tasks\Model\CardConverter.cs" />
+    <Compile Include="Tasks\Model\IssuedDateConverter.cs" />
+    <Compile Include="Tasks\Model\LoyaltyRedemptionRuleModel.cs" />
+    <Compile Include="Tasks\Model\RedemptionValueConverter.cs" />
+    <Compile Include="Tasks\Model\RoleConverter.cs" />
+    <Compile Include="Tasks\Model\TaskTransferChildModel.cs" />
+    <Compile Include="Tasks\ViewModel\LinkCardsVM.cs" />
+    <Compile Include="Tasks\ViewModel\StaffCardsVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskChangeTicketModeVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskConvertPointsTimeVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskExchangeCreditTokenVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskLoadBonusVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskPauseTimeVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskRedeemBonusForTicketsVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskRedeemLoyaltyVM.cs" />
+    <Compile Include="Tasks\ViewModel\TaskTransferBalanceVM.cs" />
+    <Compile Include="Tasks\ViewModel\TokenInventoryVM.cs" />
+    <Compile Include="Tasks\View\StaffCardsView.xaml.cs">
+      <DependentUpon>StaffCardsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskChangeTicketModeView.xaml.cs">
+      <DependentUpon>TaskChangeTicketModeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskConvertPointsTimeView.xaml.cs">
+      <DependentUpon>TaskConvertPointsTimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskExchangeCreditTokenView.xaml.cs">
+      <DependentUpon>TaskExchangeCreditTokenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskLoadBonusView.xaml.cs">
+      <DependentUpon>TaskLoadBonusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskPauseTimeView.xaml.cs">
+      <DependentUpon>TaskPauseTimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskRedeemBonusForTicketsView.xaml.cs">
+      <DependentUpon>TaskRedeemBonusForTicketsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskRedeemLoyaltyView.xaml.cs">
+      <DependentUpon>TaskRedeemLoyaltyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TaskTransferBalanceView.xaml.cs">
+      <DependentUpon>TaskTransferBalanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\View\TokenInventoryView.xaml.cs">
+      <DependentUpon>TokenInventoryView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AccountsUI\AccountsUI.csproj">
+      <Project>{6c58d4f0-b831-42f6-a819-17699a258d18}</Project>
+      <Name>AccountsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{800EDADC-F5A6-4A74-94EC-1267A91065D1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonUI\CommonUI.csproj">
+      <Project>{48630ece-833d-4683-8cc6-24c4a7cb2941}</Project>
+      <Name>CommonUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.csproj">
+      <Project>{09EC39CF-3DD3-4920-A155-CADE5B252B8A}</Project>
+      <Name>Customer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeliveryIntegration\DeliveryIntegration.csproj">
+      <Project>{5BA13E6A-641C-4C51-9C15-256003F0E063}</Project>
+      <Name>DeliveryIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24d8c63f-8f14-42ce-bc91-cfe34a088b38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{b8974cd4-806b-4027-afe3-d35da8e949ee}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Product\Product.csproj">
+      <Project>{f1ba74aa-2dc7-48c1-8cbd-254f8c2b63f8}</Project>
+      <Name>Product</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Promotions\Promotions.csproj">
+      <Project>{9f184af5-e406-4fc8-ac22-dc29351d016c}</Project>
+      <Name>Promotions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Redemption\RedemptionUtils.csproj">
+      <Project>{1a20e3de-4198-46c4-8c5b-0ac1fcb727a1}</Project>
+      <Name>RedemptionUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{B0419249-F9F6-425F-9B56-13D2E12F319F}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TableAttributeDetailsUtils\TableAttributeDetailsUtils.csproj">
+      <Project>{AEB18543-EA36-40E4-B956-9B6DEF17209A}</Project>
+      <Name>TableAttributeDetailsUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TableAttributeSetupUI\TableAttributeSetupUI.csproj">
+      <Project>{ACB8E96D-21A4-45D7-8E66-B2699B5389D9}</Project>
+      <Name>TableAttributeSetupUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TableAttributeSetup\TableAttributeSetup.csproj">
+      <Project>{662F83D7-B7DD-4690-9D21-62188991CB29}</Project>
+      <Name>TableAttributeSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.csproj">
+      <Project>{266543A2-B12C-46FE-BCF1-A67319B9CFB8}</Project>
+      <Name>Transaction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667EAB12-6C89-48ED-9FCB-934697CC2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewContainer\ViewContainer.csproj">
+      <Project>{b73af819-c0b5-4aa6-8c09-e8643f1437d1}</Project>
+      <Name>ViewContainer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sales\Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="PaymentSettlements\View\AdvancedFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Sales\View\ProductQuantityPromptView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Tasks\View\LinkCardsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tasks\View\MasterCardsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tasks\View\TaskLoadTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tasks\View\StaffCardsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PaymentSettlements\View\EditPaymentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PaymentSettlements\View\PaymentSettlementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="PaymentSettlements\View\TipUpdateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tasks\View\TaskChangeTicketModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskConvertPointsTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskExchangeCreditTokenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskLoadBonusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskPauseTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskRedeemBonusForTicketsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TaskRedeemLoyaltyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tasks\View\TaskTransferBalanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tasks\View\TokenInventoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

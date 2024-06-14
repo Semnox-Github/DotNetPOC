@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="17.0292002360026in" Name="StaffClockInOut-Biweekly" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="GameTimeHQ" SelectCommand="--declare @fromDate datetime='2021-08-04 6:00'&#xD;&#xA;--declare @toDate   datetime='2021-08-05 6:00'&#xD;&#xA;--declare @offset int=0&#xD;&#xA;--declare @doffset int&#xD;&#xA;--declare @timecor int&#xD;&#xA;--declare @siteid int=-1&#xD;&#xA;;WITH x&#xD;&#xA;     AS (SELECT CONVERT(DATE, CASE&#xD;&#xA;                                WHEN Datepart(hour, Dateadd(mi, @offset *- 1,&#xD;&#xA;                                                    timestamp)&#xD;&#xA;                                     ) &lt;&#xD;&#xA;                                     Isnull(pd.default_value, 6) THEN&#xD;&#xA;                                Dateadd(hour, Cast(&#xD;&#xA;                                Isnull(pd.default_value, 6) AS INT),&#xD;&#xA;                                Dateadd(day, -1, Cast(&#xD;&#xA;                                CONVERT(DATE, Dateadd(mi, @offset *- 1,&#xD;&#xA;                                              timestamp)) AS&#xD;&#xA;                                DATETIME&#xD;&#xA;                                )))&#xD;&#xA;                                ELSE Dateadd(hour, Cast(&#xD;&#xA;                                     Isnull(pd.default_value, 6)&#xD;&#xA;                                     AS&#xD;&#xA;                                     INT),&#xD;&#xA;                                     Cast(&#xD;&#xA;                                            CONVERT(DATE, Dateadd(mi,&#xD;&#xA;                                                          @offset *- 1,&#xD;&#xA;                                                          timestamp))&#xD;&#xA;                                            AS DATETIME))&#xD;&#xA;                              END)                              attendancedate,&#xD;&#xA;                Row_number()&#xD;&#xA;                  OVER (&#xD;&#xA;                    ORDER BY username, timestamp, l.id, r.role) row_num,&#xD;&#xA;                l.id,&#xD;&#xA;                username,&#xD;&#xA;                empnumber,&#xD;&#xA;                u.user_id,&#xD;&#xA;                CASE type&#xD;&#xA;                  WHEN 'ATTENDANCE_IN' THEN 'IN'&#xD;&#xA;                  WHEN 'ATTENDANCE_OUT' THEN 'OUT'&#xD;&#xA;                  ELSE type&#xD;&#xA;                END                                             type,&#xD;&#xA;                timestamp,&#xD;&#xA;                CASE&#xD;&#xA;                  WHEN l.status = 'Back from Break' THEN l.notes&#xD;&#xA;                  ELSE l.status&#xD;&#xA;                END                                             status,&#xD;&#xA;                r.role                                          role1,&#xD;&#xA;                emplastname,&#xD;&#xA;                r.role_id,&#xD;&#xA;                l.posmachineid,&#xD;&#xA;                l.tipvalue,&#xD;&#xA;                u.loginid,&#xD;&#xA;                s.site_name,&#xD;&#xA;                r.role_id                                       a_role,&#xD;&#xA;                CASE&#xD;&#xA;                  WHEN originalattendancelogid IS NULL THEN 'N'&#xD;&#xA;                  ELSE 'Y'&#xD;&#xA;                END                                             Edited,&#xD;&#xA;                Pm.posname&#xD;&#xA;         FROM   attendance a&#xD;&#xA;                LEFT OUTER JOIN attendancelog l&#xD;&#xA;                             ON l.attendanceid = a.attendanceid&#xD;&#xA;                LEFT OUTER JOIN parafait_defaults pd&#xD;&#xA;                             ON ( pd.site_id = l.site_id&#xD;&#xA;                                   OR l.site_id IS NOT NULL )&#xD;&#xA;                                AND&#xD;&#xA;                pd.default_value_name = 'BUSINESS_DAY_START_TIME'&#xD;&#xA;                --       left outer join attendanceroles ar on ar.AttendanceRoleId = l.AttendanceRoleId&#xD;&#xA;                LEFT OUTER JOIN user_roles r&#xD;&#xA;                             ON l.attendanceroleid = r.role_id,&#xD;&#xA;                users u,&#xD;&#xA;                site s,&#xD;&#xA;                posmachines pm&#xD;&#xA;         WHERE  a.userid = u.user_id&#xD;&#xA;                AND l.isactive = 'Y'&#xD;&#xA;                AND l.posmachineid = pm.posmachineid&#xD;&#xA;                AND ( a.site_id = s.site_id&#xD;&#xA;                       OR a.site_id IS NULL )&#xD;&#xA;                AND timestamp BETWEEN dbo.Converttoservertime(@fromdate, @offset&#xD;&#xA;                                      ) AND&#xD;&#xA;                                          dbo.Converttoservertime(@todate,&#xD;&#xA;                                          @offset)&#xD;&#xA;                AND ( a.site_id IN ( @SiteId )&#xD;&#xA;                       OR -1 IN ( @SiteId ) )),&#xD;&#xA;     px&#xD;&#xA;     AS (SELECT userid,&#xD;&#xA;                userroleid,&#xD;&#xA;                regularpayrate,&#xD;&#xA;                overtimepayrate,&#xD;&#xA;                effectivedate,&#xD;&#xA;                lastupdatedate,&#xD;&#xA;                Isnull(Lead(effectivedate, 1)&#xD;&#xA;                         OVER(&#xD;&#xA;                           partition BY userid, userroleid&#xD;&#xA;                           ORDER BY effectivedate ASC), Getdate())&#xD;&#xA;                EffectiveEnddate&#xD;&#xA;         FROM   userpayrate&#xD;&#xA;         WHERE  isactive = 1)&#xD;&#xA;SELECT site_name,&#xD;&#xA;       CONVERT(VARCHAR, attendanceweek, 106)  Attendance_Week,&#xD;&#xA;       CONVERT(VARCHAR, Min(start_date), 106) start_date,&#xD;&#xA;       CONVERT(VARCHAR, Max(end_date), 106)   end_date,&#xD;&#xA;       full_name,&#xD;&#xA;       user_id,&#xD;&#xA;       empnumber,&#xD;&#xA;       role,&#xD;&#xA;       Sum(total_hours)                       Total_Hours,&#xD;&#xA;       Sum(registered_hours)                  Registered_Hours,&#xD;&#xA;       Sum(ot_hours)                          OT_Hours,&#xD;&#xA;       Sum(gross_sales)                       Gross_Sales,&#xD;&#xA;       Sum(declare_tips)                      Declare_Tips,&#xD;&#xA;       CONVERT(DECIMAL(18, 2), ( 100 * ( Sum(declare_tips) / ( CASE&#xD;&#xA;                                                                 WHEN&#xD;&#xA;                                         ( Sum(gross_sales&#xD;&#xA;                                           ) - Sum(cc_sales) ) = 0&#xD;&#xA;                                             THEN&#xD;&#xA;                                                                 NULL&#xD;&#xA;                                                                 ELSE&#xD;&#xA;                                         ( Sum(gross_sales&#xD;&#xA;                                           ) - Sum(cc_sales) )&#xD;&#xA;                                                               END ) ) ))&#xD;&#xA;                                              [Declare_Tips_%_ofCashSales ],&#xD;&#xA;       Sum(cc_sales)                          CC_Sales,&#xD;&#xA;       Sum(direct_tips)                       Direct_Tips,&#xD;&#xA;       CONVERT(DECIMAL(18, 2), ( 100 * ( Sum(direct_tips) / (&#xD;&#xA;                                         CASE&#xD;&#xA;                                           WHEN Sum(cc_sales) = 0&#xD;&#xA;                                         THEN NULL&#xD;&#xA;                                           ELSE Sum(cc_sales)&#xD;&#xA;                                         END ) ) ))&#xD;&#xA;                                              [Direct_Tips_%_ofCCSales],&#xD;&#xA;       role_id,&#xD;&#xA;       regularpayrate,&#xD;&#xA;       overtimepayrate,&#xD;&#xA;       Max(edited)                            Edited,&#xD;&#xA;       pos&#xD;&#xA;FROM   (SELECT site_name,&#xD;&#xA;               CONVERT(VARCHAR, Dateadd(dd, -( ( Datepart(dw, attendancedate) +&#xD;&#xA;                                                 5 ) % 7&#xD;&#xA;                                             ),&#xD;&#xA;                                attendancedate), 106)Attendance_Week,&#xD;&#xA;               CASE&#xD;&#xA;                 WHEN ( Datediff(dd, CONVERT(DATE, '02-Apr-2018'),&#xD;&#xA;                        Dateadd(dd, -( (&#xD;&#xA;                                 Datepart(dw, attendancedate) + 5 ) % 7 ),&#xD;&#xA;                        attendancedate)) / 7&#xD;&#xA;                        % 2 ) = 0 THEN Dateadd(dd, -( (&#xD;&#xA;                                       Datepart(dw, attendancedate) +&#xD;&#xA;                                       5 ) % 7&#xD;&#xA;                                                    ), attendancedate)&#xD;&#xA;                 ELSE Dateadd(dd, -7, ( Dateadd(dd, -( (&#xD;&#xA;                                        Datepart(dw, attendancedate) +&#xD;&#xA;                                        5 ) % 7&#xD;&#xA;                                                     ),&#xD;&#xA;                                               attendancedate) ))&#xD;&#xA;               END                                   attendanceweek,&#xD;&#xA;               Min(attendancedate)                   start_date,&#xD;&#xA;               Max(attendancedate)                   end_date,&#xD;&#xA;               user_id,&#xD;&#xA;               username                              Full_Name,&#xD;&#xA;               empnumber,&#xD;&#xA;               role,--min(timestamp) from_time,max(timestamp) to_time,&#xD;&#xA;               Sum(hours)                            Total_Hours,&#xD;&#xA;               --case when isnull(sum(isnull(hours,0)),0) &lt;= 40 then isnull(sum(isnull(hours,0)),0) else 40 end Registered_Hours,&#xD;&#xA;               --case when isnull(sum(isnull(hours,0)),0) &lt;= 40 then 0 else isnull(sum(isnull(hours,0)),0)-40 end OT_Hours,&#xD;&#xA;               Sum(regular_hours)                    Registered_Hours,&#xD;&#xA;               Sum(ot_hours)                         OT_Hours,&#xD;&#xA;               Sum(gross_sales)                      Gross_Sales,&#xD;&#xA;               Sum(declare_tips)                     Declare_Tips,&#xD;&#xA;               Sum(cc_sales)                         CC_Sales,&#xD;&#xA;               Sum(direct_tips)                      Direct_Tips,&#xD;&#xA;               role_id,&#xD;&#xA;               Max(edited)                           Edited,&#xD;&#xA;               pos,&#xD;&#xA;               regularpayrate,&#xD;&#xA;               overtimepayrate&#xD;&#xA;        FROM   (SELECT site_name,&#xD;&#xA;                       attendancedate,&#xD;&#xA;                       user_id,&#xD;&#xA;                       username,&#xD;&#xA;                       empnumber,&#xD;&#xA;                       role,&#xD;&#xA;                       type,&#xD;&#xA;                       day,&#xD;&#xA;                       date,&#xD;&#xA;                       time,&#xD;&#xA;                       timestamp,&#xD;&#xA;                       hours,&#xD;&#xA;                       status,&#xD;&#xA;                       declare_tips,&#xD;&#xA;                       CASE&#xD;&#xA;                         WHEN ( CASE&#xD;&#xA;                                  WHEN hours IS NULL THEN NULL&#xD;&#xA;                                  ELSE Sum(hours)&#xD;&#xA;                                         OVER (&#xD;&#xA;                                           partition BY attendweek, username,&#xD;&#xA;                                         empnumber&#xD;&#xA;                                           ORDER BY attendweek, username,&#xD;&#xA;                                         empnumber,&#xD;&#xA;                                         attendancedate,&#xD;&#xA;                                         timestamp&#xD;&#xA;                                         )&#xD;&#xA;                                END ) &gt; 40 THEN&#xD;&#xA;                           CASE&#xD;&#xA;                             WHEN ( CASE&#xD;&#xA;                                      WHEN hours IS NULL THEN NULL&#xD;&#xA;                                      ELSE Sum(hours)&#xD;&#xA;                                             OVER (&#xD;&#xA;                                               partition BY attendweek, username&#xD;&#xA;                                             ,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                               ORDER BY attendweek, username,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                             ,&#xD;&#xA;                                             attendancedate&#xD;&#xA;                                             ,&#xD;&#xA;                                             timestamp&#xD;&#xA;                                             )&#xD;&#xA;                                    END ) - hours &gt; 40 THEN 0&#xD;&#xA;                             ELSE -( ( CASE&#xD;&#xA;                                         WHEN hours IS NULL THEN NULL&#xD;&#xA;                                         ELSE Sum(hours)&#xD;&#xA;                                                OVER (&#xD;&#xA;                                                  partition BY attendweek,&#xD;&#xA;                                                username,&#xD;&#xA;                                                empnumber&#xD;&#xA;                                                  ORDER BY attendweek, username,&#xD;&#xA;                                                empnumber,&#xD;&#xA;                                                attendancedate,&#xD;&#xA;                                                timestamp&#xD;&#xA;                                                )&#xD;&#xA;                                       END ) - hours ) + 40&#xD;&#xA;                           END&#xD;&#xA;                         ELSE hours&#xD;&#xA;                       END                                   regular_hours,&#xD;&#xA;                       CASE&#xD;&#xA;                         WHEN ( CASE&#xD;&#xA;                                  WHEN hours IS NULL THEN NULL&#xD;&#xA;                                  ELSE Sum(hours)&#xD;&#xA;                                         OVER (&#xD;&#xA;                                           partition BY attendweek, username,&#xD;&#xA;                                         empnumber&#xD;&#xA;                                           ORDER BY attendweek, username,&#xD;&#xA;                                         empnumber,&#xD;&#xA;                                         attendancedate,&#xD;&#xA;                                         timestamp&#xD;&#xA;                                         )&#xD;&#xA;                                END ) &gt; 40 THEN&#xD;&#xA;                           CASE&#xD;&#xA;                             WHEN ( CASE&#xD;&#xA;                                      WHEN hours IS NULL THEN NULL&#xD;&#xA;                                      ELSE Sum(hours)&#xD;&#xA;                                             OVER (&#xD;&#xA;                                               partition BY attendweek, username&#xD;&#xA;                                             ,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                               ORDER BY attendweek, username,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                             ,&#xD;&#xA;                                             attendancedate&#xD;&#xA;                                             ,&#xD;&#xA;                                             timestamp&#xD;&#xA;                                             )&#xD;&#xA;                                    END ) - hours &gt; 40 THEN hours&#xD;&#xA;                             ELSE ( CASE&#xD;&#xA;                                      WHEN hours IS NULL THEN NULL&#xD;&#xA;                                      ELSE Sum(hours)&#xD;&#xA;                                             OVER (&#xD;&#xA;                                               partition BY attendweek, username&#xD;&#xA;                                             ,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                               ORDER BY attendweek, username,&#xD;&#xA;                                             empnumber&#xD;&#xA;                                             ,&#xD;&#xA;                                             attendancedate&#xD;&#xA;                                             ,&#xD;&#xA;                                             timestamp&#xD;&#xA;                                             )&#xD;&#xA;                                    END ) - 40&#xD;&#xA;                           END&#xD;&#xA;                         ELSE 0&#xD;&#xA;                       END                                   OT_hours,&#xD;&#xA;                       (SELECT Sum(Isnull(tp.amount, 0))&#xD;&#xA;                        FROM   trxpayments tp,&#xD;&#xA;                               trx_header th&#xD;&#xA;                        WHERE  tp.paymentdate BETWEEN&#xD;&#xA;                               prev_timestamp AND timestamp&#xD;&#xA;                               AND tp.trxid = th.trxid&#xD;&#xA;                               AND th.user_id = K.user_id)   Gross_Sales,&#xD;&#xA;                       (SELECT Sum(Isnull(tp.amount, 0))&#xD;&#xA;                        FROM   trxpayments tp,&#xD;&#xA;                               trx_header th,&#xD;&#xA;                               paymentmodes pm&#xD;&#xA;                        WHERE  tp.paymentdate BETWEEN&#xD;&#xA;                               prev_timestamp AND timestamp&#xD;&#xA;                               AND tp.trxid = th.trxid&#xD;&#xA;                               AND th.user_id = K.user_id&#xD;&#xA;                               AND tp.paymentmodeid = pm.paymentmodeid&#xD;&#xA;                               AND pm.iscreditcard = 'Y')    CC_Sales,&#xD;&#xA;                       (SELECT Sum(Isnull(tp.tipamount, 0))&#xD;&#xA;                        FROM   trxpayments tp,&#xD;&#xA;                               trx_header th&#xD;&#xA;                        WHERE  tp.paymentdate BETWEEN&#xD;&#xA;                               prev_timestamp AND timestamp&#xD;&#xA;                               AND tp.trxid = th.trxid&#xD;&#xA;                               AND tp.createdby = k.loginid) Direct_tips,&#xD;&#xA;                       role_id,&#xD;&#xA;                       edited,&#xD;&#xA;                       pos,&#xD;&#xA;                       regularpayrate,&#xD;&#xA;                       overtimepayrate&#xD;&#xA;                FROM   (SELECT site_name,&#xD;&#xA;                               attendweek,&#xD;&#xA;                               attendancedate,&#xD;&#xA;                               username,&#xD;&#xA;                               empnumber,&#xD;&#xA;                               role,&#xD;&#xA;                               role_id,&#xD;&#xA;                               type,&#xD;&#xA;                               day,&#xD;&#xA;                               date,&#xD;&#xA;                               time,&#xD;&#xA;                               loginid,&#xD;&#xA;                               timestamp,&#xD;&#xA;                               hours,&#xD;&#xA;                               status,&#xD;&#xA;                               declare_tips,&#xD;&#xA;                               prev_timestamp,&#xD;&#xA;                               user_id,&#xD;&#xA;                               username1,&#xD;&#xA;                               edited,&#xD;&#xA;                               pos,&#xD;&#xA;                               (SELECT Isnull(Isnull(&#xD;&#xA;                                       (SELECT TOP 1&#xD;&#xA;                                       regularpayrate&#xD;&#xA;                                        FROM   px ut&#xD;&#xA;                                        WHERE  ( ut.userid =&#xD;&#xA;                                                 att.user_id&#xD;&#xA;                                                 AND ut.userroleid&#xD;&#xA;                                                     =&#xD;&#xA;                                                     att.role_id&#xD;&#xA;                                               )&#xD;&#xA;                                               AND CONVERT(DATE,&#xD;&#xA;                                                   intime)&#xD;&#xA;                                                   &gt;=&#xD;&#xA;                                                   CONVERT(DATE,&#xD;&#xA;                                                   Dateadd(&#xD;&#xA;                                                   mi,&#xD;&#xA;                                       -1&#xD;&#xA;                                                 *&#xD;&#xA;                                                 @offset,&#xD;&#xA;                                                   effectivedate))&#xD;&#xA;                                               AND CONVERT(DATE,&#xD;&#xA;                                                   intime)&#xD;&#xA;                                                   &lt;&#xD;&#xA;                                                   CONVERT(DATE,&#xD;&#xA;                                                   Dateadd(&#xD;&#xA;                                                   mi,&#xD;&#xA;                                       -1 *&#xD;&#xA;                                                 @offset,&#xD;&#xA;                                                   effectiveenddate&#xD;&#xA;                                                   ))&#xD;&#xA;                                        ORDER  BY userid,&#xD;&#xA;                                                  userroleid,&#xD;&#xA;                                                  lastupdatedate DESC),&#xD;&#xA;                                              (SELECT TOP 1 regularpayrate&#xD;&#xA;                                               FROM   px ut&#xD;&#xA;                                               WHERE&#xD;&#xA;                                              CONVERT(DATE, intime) &gt;=&#xD;&#xA;                                              CONVERT(&#xD;&#xA;                                              DATE,&#xD;&#xA;                                              Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                  @offset,&#xD;&#xA;                                              effectivedate))&#xD;&#xA;                                              AND CONVERT(DATE, intime)&#xD;&#xA;                                                  &lt;&#xD;&#xA;                                              CONVERT(DATE, Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                            @offset,&#xD;&#xA;                                                            effectiveenddate&#xD;&#xA;                                                            ))&#xD;&#xA;                                                             AND (&#xD;&#xA;                                              ut.userid = att.user_id&#xD;&#xA;                                              AND ut.userroleid IS NULL )&#xD;&#xA;                                                                  ORDER&#xD;&#xA;                                              BY&#xD;&#xA;                                              userid,&#xD;&#xA;                                              userroleid,&#xD;&#xA;                                              lastupdatedate DESC)),&#xD;&#xA;                                               (SELECT TOP 1 regularpayrate&#xD;&#xA;                                       FROM   px ut&#xD;&#xA;                                       WHERE  CONVERT(DATE, intime) &gt;= CONVERT(&#xD;&#xA;                                              DATE,&#xD;&#xA;                                                                       Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                                       @offset,&#xD;&#xA;                                              effectivedate))&#xD;&#xA;                                              AND CONVERT(DATE, intime) &lt;&#xD;&#xA;                                                  CONVERT(DATE, Dateadd(mi, -1&#xD;&#xA;                                                                *&#xD;&#xA;                                                                @offset,&#xD;&#xA;                                                                effectiveenddate&#xD;&#xA;                                                                ))&#xD;&#xA;                                              AND ( ut.userid IS NULL&#xD;&#xA;                                                    AND ut.userroleid =&#xD;&#xA;                                                        att.role_id )&#xD;&#xA;                                       ORDER  BY userid,&#xD;&#xA;                                                 userroleid,&#xD;&#xA;                                                 lastupdatedate DESC)))&#xD;&#xA;                               RegularPayRate,&#xD;&#xA;                               (SELECT Isnull(Isnull((SELECT TOP 1&#xD;&#xA;                                                     overtimepayrate&#xD;&#xA;                                                      FROM   px ut&#xD;&#xA;                                                      WHERE&#xD;&#xA;                                              CONVERT(DATE, intime) &gt;=&#xD;&#xA;                                              CONVERT(&#xD;&#xA;                                              DATE,&#xD;&#xA;                                              Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                  @offset,&#xD;&#xA;                                              effectivedate))&#xD;&#xA;                                              AND CONVERT(DATE, intime)&#xD;&#xA;                                                  &lt;&#xD;&#xA;                                                  CONVERT(DATE, Dateadd(&#xD;&#xA;                                                  mi, -1 *&#xD;&#xA;                                                                @offset,&#xD;&#xA;                                                  effectiveenddate&#xD;&#xA;                                                  ))&#xD;&#xA;                                              AND (&#xD;&#xA;                                                     ut.userid = att.user_id&#xD;&#xA;                                                     AND ut.userroleid =&#xD;&#xA;                                                         att.role_id )&#xD;&#xA;                                                      ORDER  BY userid,&#xD;&#xA;                                                                userroleid,&#xD;&#xA;                                                                lastupdatedate&#xD;&#xA;                                                                DESC),&#xD;&#xA;                                              (SELECT TOP 1 overtimepayrate&#xD;&#xA;                                               FROM   px ut&#xD;&#xA;                                               WHERE&#xD;&#xA;                                              CONVERT(DATE, intime) &gt;=&#xD;&#xA;                                              CONVERT(&#xD;&#xA;                                              DATE,&#xD;&#xA;                                              Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                  @offset,&#xD;&#xA;                                              effectivedate))&#xD;&#xA;                                              AND CONVERT(DATE, intime)&#xD;&#xA;                                                  &lt;&#xD;&#xA;                                              CONVERT(DATE, Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                            @offset,&#xD;&#xA;                                                            effectiveenddate&#xD;&#xA;                                                            ))&#xD;&#xA;                                                             AND (&#xD;&#xA;                                              ut.userid = att.user_id&#xD;&#xA;                                              AND ut.userroleid IS NULL )&#xD;&#xA;                                                                  ORDER&#xD;&#xA;                                              BY&#xD;&#xA;                                              userid,&#xD;&#xA;                                              userroleid,&#xD;&#xA;                                              lastupdatedate DESC)),&#xD;&#xA;                                               (SELECT TOP 1 overtimepayrate&#xD;&#xA;                                       FROM   px ut&#xD;&#xA;                                       WHERE  CONVERT(DATE, intime) &gt;= CONVERT(&#xD;&#xA;                                              DATE,&#xD;&#xA;                                                                       Dateadd(&#xD;&#xA;                                              mi, -1 *&#xD;&#xA;                                                                       @offset,&#xD;&#xA;                                              effectivedate))&#xD;&#xA;                                              AND CONVERT(DATE, intime) &lt;&#xD;&#xA;                                                  CONVERT(DATE, Dateadd(mi, -1&#xD;&#xA;                                                                *&#xD;&#xA;                                                                @offset,&#xD;&#xA;                                                                effectiveenddate&#xD;&#xA;                                                                ))&#xD;&#xA;                                              AND ( ut.userid IS NULL&#xD;&#xA;                                                    AND ut.userroleid =&#xD;&#xA;                                                        att.role_id )&#xD;&#xA;                                       ORDER  BY userid,&#xD;&#xA;                                                 userroleid,&#xD;&#xA;                                                 lastupdatedate DESC)))&#xD;&#xA;                               OverTimePayRate&#xD;&#xA;                        FROM   (SELECT site_name,&#xD;&#xA;                                       attendweek,&#xD;&#xA;                                       attendancedate,&#xD;&#xA;                                       username,&#xD;&#xA;                                       empnumber,&#xD;&#xA;                                       Isnull(role1, role)                 role,&#xD;&#xA;                                       Isnull(a_role, role_id)&#xD;&#xA;                                       role_id,&#xD;&#xA;                                       type,&#xD;&#xA;                                       day,&#xD;&#xA;                                       date,&#xD;&#xA;                                       CONVERT(VARCHAR(5), timestamp, 108) Time,&#xD;&#xA;                                       loginid,&#xD;&#xA;                                       timestamp,&#xD;&#xA;                                       Round(( CASE&#xD;&#xA;                                                 WHEN hour &lt; in_hour THEN (&#xD;&#xA;                                                 CONVERT(DECIMAL(18, 6), ( hour&#xD;&#xA;                                                 - in_hour ))&#xD;&#xA;                                                 * 24&#xD;&#xA;                                                                          )&#xD;&#xA;                                                                          + 24&#xD;&#xA;                                                 ELSE CONVERT(DECIMAL(18, 6),&#xD;&#xA;                                                      ( hour - in_hour )) * 24&#xD;&#xA;                                               END ), 2)                   Hours&#xD;&#xA;                                       ,&#xD;&#xA;                       status,&#xD;&#xA;                       tipvalue                            Declare_Tips&#xD;&#xA;                       ,&#xD;&#xA;                       Lag(timestamp)&#xD;&#xA;                         OVER (&#xD;&#xA;                           partition BY username&#xD;&#xA;                           ORDER BY timestamp)&#xD;&#xA;                       prev_timestamp,&#xD;&#xA;                       user_id,&#xD;&#xA;                       username1,&#xD;&#xA;                       edited,&#xD;&#xA;                       pos,&#xD;&#xA;                       Isnull(CASE&#xD;&#xA;                                WHEN type = 'In' THEN NULL&#xD;&#xA;                                ELSE Lag(timestamp)&#xD;&#xA;                                       OVER(&#xD;&#xA;                                         partition BY username,&#xD;&#xA;                                       empnumber, role&#xD;&#xA;                                         ORDER BY username, empnumber,&#xD;&#xA;                                       role,&#xD;&#xA;                                       timestamp)&#xD;&#xA;                              END, timestamp)              Intime&#xD;&#xA;                                FROM   (SELECT site_name,&#xD;&#xA;                                               Dateadd(dd, -( (&#xD;&#xA;                                               Datepart(dw, attendancedate) +&#xD;&#xA;                                               5 ) % 7&#xD;&#xA;                                                            ),&#xD;&#xA;                                               attendancedate)&#xD;&#xA;                                               attendweek,&#xD;&#xA;                                               attendancedate,&#xD;&#xA;                                               CASE&#xD;&#xA;                                                 WHEN emplastname IS NULL THEN&#xD;&#xA;                                                 username&#xD;&#xA;                                                 ELSE emplastname + ' ' +&#xD;&#xA;                                                      username&#xD;&#xA;                                               END&#xD;&#xA;                                               username&#xD;&#xA;                                               ,&#xD;&#xA;                                               emplastname,&#xD;&#xA;                                               username&#xD;&#xA;                                               username1,&#xD;&#xA;                                               empnumber,&#xD;&#xA;                                               user_id,&#xD;&#xA;                                               loginid,&#xD;&#xA;                                               (SELECT role&#xD;&#xA;                                                FROM   user_roles&#xD;&#xA;                                                WHERE  role_id = S1.role_id)&#xD;&#xA;                                               role,&#xD;&#xA;                                               type,&#xD;&#xA;                                               edited,&#xD;&#xA;                                               (SELECT Stuff((SELECT DISTINCT&#xD;&#xA;                                                             ', ' +&#xD;&#xA;                                                             p.posname&#xD;&#xA;                                                              FROM&#xD;&#xA;                                                       posmachines p,&#xD;&#xA;                                                       x ss&#xD;&#xA;                                                              WHERE&#xD;&#xA;                                                       p.posname = ss.posname&#xD;&#xA;                                                       AND ss.user_id =&#xD;&#xA;                                                           s1.user_id&#xD;&#xA;                                                       AND ss.a_role = s1.a_role&#xD;&#xA;                                                       AND Dateadd(dd, -&#xD;&#xA;                                                           ( (&#xD;&#xA;                                                           Datepart(dw,&#xD;&#xA;                                                           ss.attendancedate) +&#xD;&#xA;                                                           5&#xD;&#xA;                                                             )&#xD;&#xA;                                                             % 7 ),&#xD;&#xA;                                                           attendancedate) =&#xD;&#xA;                                                           Dateadd(dd, -&#xD;&#xA;                                                           ( (&#xD;&#xA;                                                           Datepart(dw,&#xD;&#xA;                                                           s1.attendancedate) +&#xD;&#xA;                                                           5&#xD;&#xA;                                                             )&#xD;&#xA;                                                             % 7 ),&#xD;&#xA;                                                           attendancedate&#xD;&#xA;                                                           )&#xD;&#xA;                                                              FOR xml path(''),&#xD;&#xA;                                                       type).value('.',&#xD;&#xA;                                                       'NVARCHAR(MAX)'), 1, 2&#xD;&#xA;                                                       , ''))&#xD;&#xA;                                               PoS,&#xD;&#xA;                                               dbo.Converttolocaltime(timestamp,&#xD;&#xA;                                               -1 * 0&#xD;&#xA;                                               )&#xD;&#xA;                                               timestamp,&#xD;&#xA;                                               Substring(Datename(dw,&#xD;&#xA;       dbo.Converttolocaltime(timestamp,&#xD;&#xA;       -1 *&#xD;&#xA;       @offset)),&#xD;&#xA;       1, 3)&#xD;&#xA;       day,&#xD;&#xA;       Replace(CONVERT(VARCHAR(11),&#xD;&#xA;       dbo.Converttolocaltime(timestamp,&#xD;&#xA;       -1 *&#xD;&#xA;       @offset),&#xD;&#xA;       106), ' ', '-')&#xD;&#xA;       date,&#xD;&#xA;       dbo.Converttolocaltime(timestamp, -1 * @offset)&#xD;&#xA;       hour,&#xD;&#xA;       status,&#xD;&#xA;       role1,&#xD;&#xA;       a_role,&#xD;&#xA;       s1.role_id,&#xD;&#xA;       (SELECT TOP 1 dbo.Converttolocaltime(timestamp,&#xD;&#xA;           -1 *&#xD;&#xA;           @offset)&#xD;&#xA;       FROM   x s2&#xD;&#xA;       WHERE  s2.empnumber = s1.empnumber&#xD;&#xA;       AND s2.user_id = s1.user_id&#xD;&#xA;       AND ( s2.type = 'IN'&#xD;&#xA;            OR s2.status LIKE '%Clock%In'&#xD;&#xA;            OR s2.status LIKE '%From Break%'&#xD;&#xA;            OR s2.status LIKE 'On Time%' )&#xD;&#xA;       AND ( s1.type = 'OUT'&#xD;&#xA;            OR s1.status LIKE '%Clock%Out'&#xD;&#xA;            OR s1.status = 'On Break' )&#xD;&#xA;       AND s2.timestamp &lt; s1.timestamp&#xD;&#xA;       AND s2.timestamp &gt; Dateadd(dd, -2,&#xD;&#xA;                        s1.timestamp)&#xD;&#xA;       AND CONVERT(DATE, Dateadd(hh, -5,&#xD;&#xA;                       s2.timestamp))&#xD;&#xA;         =&#xD;&#xA;         CONVERT(DATE, Dateadd(hh, -5,&#xD;&#xA;                       s1.timestamp))&#xD;&#xA;       AND Datediff(dd, s2.timestamp,&#xD;&#xA;         s1.timestamp) &lt;=&#xD;&#xA;         1&#xD;&#xA;       AND NOT EXISTS(SELECT 1&#xD;&#xA;                    FROM   x s3&#xD;&#xA;                    WHERE  s3.empnumber =&#xD;&#xA;                           s1.empnumber&#xD;&#xA;                           AND s3.user_id =&#xD;&#xA;                               s1.user_id&#xD;&#xA;                           AND s3.timestamp &gt;&#xD;&#xA;                               s2.timestamp&#xD;&#xA;                           AND (&#xD;&#xA;                   s3.id &lt; s1.id )&#xD;&#xA;                           AND s3.timestamp&#xD;&#xA;                               &lt;=&#xD;&#xA;                               s1.timestamp&#xD;&#xA;                           AND (&#xD;&#xA;                   s3.type = 'OUT'&#xD;&#xA;                    OR s3.status LIKE&#xD;&#xA;                       '%Clock%Out'&#xD;&#xA;                    OR s3.status =&#xD;&#xA;                       'On Break' )&#xD;&#xA;                   )&#xD;&#xA;       ORDER  BY username,&#xD;&#xA;        timestamp DESC,&#xD;&#xA;        role1)&#xD;&#xA;       AS&#xD;&#xA;       in_hour,&#xD;&#xA;       tipvalue&#xD;&#xA;       FROM   x S1) V)att) K) L&#xD;&#xA;        GROUP  BY site_name,&#xD;&#xA;                  username,&#xD;&#xA;                  user_id,&#xD;&#xA;                  empnumber,&#xD;&#xA;                  role,&#xD;&#xA;                  Dateadd(dd, -( ( Datepart(dw, attendancedate) + 5 ) % 7 ),&#xD;&#xA;                  attendancedate),&#xD;&#xA;                  role_id,&#xD;&#xA;                  pos,&#xD;&#xA;                  regularpayrate,&#xD;&#xA;                  overtimepayrate) b&#xD;&#xA;GROUP  BY site_name,&#xD;&#xA;          attendanceweek,&#xD;&#xA;          full_name,&#xD;&#xA;          empnumber,&#xD;&#xA;          role,&#xD;&#xA;          user_id,&#xD;&#xA;          role_id,&#xD;&#xA;          pos,&#xD;&#xA;          regularpayrate,&#xD;&#xA;          overtimepayrate&#xD;&#xA;ORDER  BY site_name,&#xD;&#xA;          attendanceweek,&#xD;&#xA;          full_name,&#xD;&#xA;          user_id " Name="dsStaffClockInOut">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@offset">
+          <Value>
+            <String>= Parameters.offset.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@fromdate">
+          <Value>
+            <String>= Parameters.fromdate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="DateTime" Name="@todate">
+          <Value>
+            <String>= Parameters.todate.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@SiteId">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="1.19999996821085in" Name="detailSection1">
+      <Style BackgroundColor="White">
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <Crosstab DataSourceName="dsStaffClockInOut" Width="16.2166614548935in" Height="0.8in" Left="0.00003937880198161in" Top="0.199999809265137in" Name="crosstab1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.945833428059804in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Attendance_Week" Name="textBox39" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872917096202851in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.start_date" Name="textBox40" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.800000093050986in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.end_date" Name="textBox41" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.768749937474677in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Full_Name" Name="textBox42" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="5" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.768749940632991in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.EmpNumber" Name="textBox46" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="6" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.727083206230945in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.role" Name="textBox47" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789583249620896in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Total_Hours" Format="{0:N2}" Name="textBox48" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="11" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Registered_Hours" Format="{0:N2}" Name="textBox49" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="12" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.OT_Hours" Format="{0:N2}" Name="textBox50" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="13" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916688483055in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Gross_Sales" Format="{0:N2}" Name="textBox51" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="14" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.852083313717961in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Declare_Tips" Format="{0:N2}" Name="textBox52" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="15" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.03958321602388in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Declare_Tips_%_ofCashSales ]" Format="{0:N2}" Name="textBox53" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="16" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.904166721996656in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.CC_Sales" Format="{0:N2}" Name="textBox54" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="17" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916775822955in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Direct_Tips" Format="{0:N2}" Name="textBox55" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="18" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Direct_Tips_%_ofCCSales]" Format="{0:N2}" Name="textBox56" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789583249620896in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Total_Hours)" Format="{0:N2}" Name="textBox63" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="11" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Registered_Hours)" Format="{0:N2}" Name="textBox64" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="12" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.OT_Hours)" Format="{0:N2}" Name="textBox65" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="13" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916688483055in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Gross_Sales)" Format="{0:N2}" Name="textBox66" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="14" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.852083313717961in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Declare_Tips)" Format="{0:N2}" Name="textBox67" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="15" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.03958321602388in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.[Declare_Tips_%_ofCashSales ])" Format="{0:N2}" Name="textBox68" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="16" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.904166721996656in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.CC_Sales)" Format="{0:N2}" Name="textBox69" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="17" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916775822955in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Direct_Tips)" Format="{0:N2}" Name="textBox70" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="18" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.[Direct_Tips_%_ofCCSales])" Format="{0:N2}" Name="textBox71" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="10" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.789583249620896in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Total_Hours)" Format="{0:N2}" Name="textBox78" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="11" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Registered_Hours)" Format="{0:N2}" Name="textBox79" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="12" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.OT_Hours)" Format="{0:N2}" Name="textBox80" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="13" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916688483055in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Gross_Sales)" Format="{0:N2}" Name="textBox81" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="14" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.852083313717961in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Declare_Tips)" Format="{0:N2}" Name="textBox82" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="15" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.03958321602388in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.[Declare_Tips_%_ofCashSales ])" Format="{0:N2}" Name="textBox83" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="16" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.904166721996656in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.CC_Sales)" Format="{0:N2}" Name="textBox84" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="17" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.872916775822955in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.Direct_Tips)" Format="{0:N2}" Name="textBox86" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="18" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="= Sum(Fields.[Direct_Tips_%_ofCCSales])" Format="{0:N2}" Name="textBox87" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.906249676491623in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox89" StyleName="Normal.TableBody">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="7">
+                <ReportItem>
+                  <TextBox Width="5.78958062986252in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name + ' Total'" Name="textBox90" StyleName="Normal.SubTotal">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="7">
+                <ReportItem>
+                  <TextBox Width="5.78958062986252in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Grand Total')" Name="textBox57" StyleName="Normal.GrandTotal">
+                    <Style Visible="True" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.645832830446385in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.Edited" Name="textBox7" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.645832830446385in" Height="0.2in" Left="0in" Top="0in" Name="textBox8" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="9" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.645832830446385in" Height="0.2in" Left="0in" Top="0in" Name="textBox9" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.718750117035479in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.OverTimePayRate" Name="textBox11" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.718750117035479in" Height="0.2in" Left="0in" Top="0in" Name="textBox12" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="8" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.718750117035479in" Height="0.2in" Left="0in" Top="0in" Name="textBox14" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333020984038in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.RegularPayRate" Name="textBox16" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="1" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333020984038in" Height="0.2in" Left="0in" Top="0in" Name="textBox17" StyleName="Normal.SubTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="2" ColumnIndex="7" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.833333020984038in" Height="0.2in" Left="0in" Top="0in" Name="textBox18" StyleName="Normal.GrandTotal">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="8.5pt" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="0.906247980584361in" />
+              <Column Width="0.945832612684283in" />
+              <Column Width="0.872916752197176in" />
+              <Column Width="0.799999925121724in" />
+              <Column Width="0.768749761442318in" />
+              <Column Width="0.768749761442318in" />
+              <Column Width="0.727083098046272in" />
+              <Column Width="0.833332905450286in" />
+              <Column Width="0.718749898272961in" />
+              <Column Width="0.645832648315108in" />
+              <Column Width="0.789582458816739in" />
+              <Column Width="0.799999925121724in" />
+              <Column Width="0.799999925121724in" />
+              <Column Width="0.872916752197176in" />
+              <Column Width="0.852083329881496in" />
+              <Column Width="1.03958304331073in" />
+              <Column Width="0.904166674229496in" />
+              <Column Width="0.872916752197176in" />
+              <Column Width="0.799999925121724in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+              <Row Height="0.2in" />
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="0.497916651445963in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox35" StyleName="Normal.TableHeader">
+                    <Style Visible="False" BackgroundColor="PowderBlue" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+          </Corner>
+          <Style>
+            <BorderStyle Default="None" />
+            <BorderColor Default="LightGray" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="site_name">
+              <ReportItem>
+                <TextBox Width="0.497916651445963in" Height="0.4in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox36" StyleName="Normal.TableGroup">
+                  <Style Visible="False" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+              <ChildGroups>
+                <TableGroup Name="detail">
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+                <TableGroup />
+              </ChildGroups>
+              <Groupings>
+                <Grouping Expression="= Fields.site_name" />
+              </Groupings>
+              <Sortings>
+                <Sorting Expression="= Fields.site_name" Direction="Asc" />
+              </Sortings>
+            </TableGroup>
+            <TableGroup Name="total1">
+              <ReportItem>
+                <TextBox Width="0.497916651445963in" Height="0.2in" Left="0in" Top="0in" Name="textBox37" StyleName="Normal.GrandTotal">
+                  <Style Visible="False" BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="8.5pt" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="group">
+              <ReportItem>
+                <TextBox Width="0.906249676491623in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox88" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="attendance_Week">
+              <ReportItem>
+                <TextBox Width="0.945833428059804in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Attendance Week')" Name="textBox58" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="start_date">
+              <ReportItem>
+                <TextBox Width="0.872917096202851in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Start Date')" Name="textBox21" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="end_date">
+              <ReportItem>
+                <TextBox Width="0.800000093050986in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('End Date')" Name="textBox22" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="full_Name">
+              <ReportItem>
+                <TextBox Width="0.768749937474677in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('FullName')" Name="textBox23" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="empNumber">
+              <ReportItem>
+                <TextBox Width="0.768749940632991in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('EmpId')" Name="textBox24" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="role">
+              <ReportItem>
+                <TextBox Width="0.727083206230945in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Role')" Name="textBox25" StyleName="Normal.TableHeader">
+                  <Style Visible="True" BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group4">
+              <ReportItem>
+                <TextBox Width="0.833333020984038in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Regular Pay Rate')" Name="textBox15" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group3">
+              <ReportItem>
+                <TextBox Width="0.718750117035479in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('OT Pay Rate')" Name="textBox19" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="group2">
+              <ReportItem>
+                <TextBox Width="0.645832830446385in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Edited')" Name="textBox10" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="total_Hours">
+              <ReportItem>
+                <TextBox Width="0.789583249620896in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Total Hours')" Name="textBox26" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="registered_Hours">
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage(' Registered Hours')" Name="textBox27" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="oT_Hours">
+              <ReportItem>
+                <TextBox Width="0.8in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('OT Hours')" Name="textBox28" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="gross_Sales">
+              <ReportItem>
+                <TextBox Width="0.872916688483055in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Gross Sales')" Name="textBox29" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="declare_Tips">
+              <ReportItem>
+                <TextBox Width="0.852083313717961in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Declare Tips')" Name="textBox30" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="declare_Tips__ofCashSales">
+              <ReportItem>
+                <TextBox Width="1.03958321602388in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Declare Tips of Cash Sales')" Name="textBox31" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="cC_Sales">
+              <ReportItem>
+                <TextBox Width="0.904166721996656in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('CC Sales')" Name="textBox32" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="direct_Tips">
+              <ReportItem>
+                <TextBox Width="0.872916775822955in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Direct Tips')" Name="textBox33" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="direct_Tips__ofCCSales">
+              <ReportItem>
+                <TextBox Width="0.800000011920929in" Height="0.200000002980232in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Direct  Tips of CCSales')" Name="textBox34" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000063578288in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000190734863in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="4.40000089009603in" Height="0.300000190734863in" Left="12.4458694458008in" Top="0.100000063578288in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.700000127156576in" Name="reportHeaderSection1">
+      <Style>
+        <BorderStyle Bottom="None" />
+        <BorderColor Bottom="WindowText" />
+      </Style>
+      <Items>
+        <TextBox Width="14.4249994913737in" Height="0.3in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Staff Attendance Summary Biweekly With OT Details')" Name="textBox6">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="15pt" Bold="True" Underline="False" />
+            <BorderStyle Bottom="None" />
+            <BorderColor Bottom="GrayText" />
+            <BorderWidth Bottom="2px" />
+          </Style>
+        </TextBox>
+        <TextBox Width="14.4249992370605in" Height="0.199921324849129in" Left="0in" Top="0.300000031789144in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox13">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="14.4249989191691in" Height="0.200000002980232in" Left="0in" Top="0.50000007947286in" Value="=MessagesFunctions.getMessage('Period: From') + ' ' + Parameters.fromdate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;) + ' ' + MessagesFunctions.getMessage('To') + ' ' + Parameters.todate.Value.ToString(&quot;ddd, dd-MMM-yyyy hh:mm tt&quot;)" Name="textBox20">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Custom" PaperSize="11in, 18in" Landscape="True" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Corporate.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Corporate.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="198, 206, 219">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Corporate.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="141, 156, 183">
+        <Font Name="Tahoma" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Corporate.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="28, 58, 112" Color="White" VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Corporate.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="227, 230, 237">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Corporate.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="10pt" Bold="True" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" />
+    <ReportParameter Name="fromdate" Type="DateTime" Text="From Date" AllowBlank="False" />
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" />
+    <ReportParameter Name="site" Mergeable="False" Text="Sites" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String>= IIf(Parameters.mode.Label = "W", Fields.Id, AllValues(Fields.Id))</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+  </ReportParameters>
+</Report>

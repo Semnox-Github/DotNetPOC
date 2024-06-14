@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="Semnox.Parafait.CommonUI.FileExplorerUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:Semnox.Parafait.CommonUI"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="CommonActionButtonStyle"
+               TargetType="{x:Type local:CustomActionButton}"
+               BasedOn="{StaticResource {x:Type local:CustomActionButton}}">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+            <Setter Property="Command"
+                    Value="{Binding ActionsCommand}"/>
+            <Setter Property="Width"
+                    Value="{StaticResource ActionButton.Width}"/>
+        </Style>
+
+        <Style x:Key="BrowseActionButtonStyle"
+               TargetType="{x:Type local:CustomActionButton}"
+               BasedOn="{StaticResource CommonActionButtonStyle}">
+            <Setter Property="Content"
+                    Value="BROWSE"/>
+            <Setter Property="CommandParameter"
+                   Value="Browse"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowBrowseButton}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ClearActionButtonStyle"
+               TargetType="{x:Type local:CustomActionButton}"
+               BasedOn="{StaticResource CommonActionButtonStyle}">
+            <Setter Property="Content"
+                    Value="CLEAR"/>
+            <Setter Property="CommandParameter"
+                   Value="Clear"/>
+            <Setter Property="ActionStyle"
+                    Value="Passive"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowClearButton}"
+                             Value="False">
+                    <Setter Property="Visibility"
+                            Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FileExplorerUserControl}}" 
+                                   Command="{Binding ActionsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <WebBrowser x:Name="WebBrowserContent"
+                        Grid.Column="0"/>
+            <local:CustomScrollViewer x:Name="scvWebBrowser"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      Grid.Column="1">
+                <local:CustomScrollViewer.Style>
+                    <Style TargetType="{x:Type local:CustomScrollViewer}"
+                           BasedOn="{StaticResource {x:Type local:CustomScrollViewer}}">
+                        <Setter Property="Visibility"
+                                Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsHTMLExtenstion}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:CustomScrollViewer.Style>
+                <Border x:Name="tempBorder"/>
+            </local:CustomScrollViewer>
+        </Grid>
+
+        <UniformGrid x:Name="RightActionUniformGrid"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Right"
+                     Rows="2"
+                     Grid.Column="1"
+                     Margin="16,0,0,0">
+            <UniformGrid.Style>
+                <Style TargetType="{x:Type UniformGrid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ButtonsOrientation}"
+                                     Value="Bottom">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UniformGrid.Style>
+            <local:CustomActionButton x:Name="btnBrowse"
+                                      Style="{StaticResource BrowseActionButtonStyle}"/>
+            <local:CustomActionButton x:Name="btnClear"
+                                      Margin="0,16,0,0"
+                                      Style="{StaticResource ClearActionButtonStyle}"/>
+        </UniformGrid>
+        <UniformGrid x:Name="BottomActionUniformGrid"
+                     HorizontalAlignment="Center"
+                     Grid.Row="1"
+                     Columns="2"
+                     Margin="0,16,0,0">
+            <UniformGrid.Style>
+                <Style TargetType="{x:Type UniformGrid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ButtonsOrientation}"
+                                     Value="Right">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UniformGrid.Style>
+            <local:CustomActionButton x:Name="btnClearBottom"
+                                      Margin ="16,0,0,0"
+                                      Style="{StaticResource ClearActionButtonStyle}"/>
+            <local:CustomActionButton x:Name="btnBrowseBottom"
+                                      Style="{StaticResource BrowseActionButtonStyle}"/>
+        </UniformGrid>
+    </Grid>
+</UserControl>

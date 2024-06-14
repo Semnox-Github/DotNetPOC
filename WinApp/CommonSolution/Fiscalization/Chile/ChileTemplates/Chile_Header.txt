@@ -1,0 +1,7 @@
+{
+ "IDDOC": {
+    "TIPODTE": @DocType,
+    "FOLIO": @FiscalNum,
+    "FCHEMIS": @DocIssueDate,
+    "INDSERVICIO": @ServiceIndicator
+  },

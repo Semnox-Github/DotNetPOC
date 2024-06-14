@@ -1,0 +1,175 @@
+﻿<UserControl x:Class="Semnox.Parafait.RedemptionUI.RedemptionHeaderTagsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:Semnox.Parafait.RedemptionUI"
+             xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+             mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionHeaderTagsUserControl}}"
+                                   Command="{Binding DataContext.LoadedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionHeaderTagsUserControl}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <ItemsControl ItemsSource="{Binding HeaderGroups}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Border CornerRadius="{StaticResource CornerRadius}"
+                        Padding="5"
+                        Margin="0,0,8,0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User1">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User1.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User2">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User2.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User3">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User3.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User4">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User4.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User5">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User5.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User6">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User6.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User7">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User7.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ColorCode}"
+                                             Value="User8">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Redemption.MultiUserControl.HeaderTag.User8.ScreenColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding DataContext.HeaderGroups.Count, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionHeaderTagsUserControl}}"
+                                             Value="1">
+                                    <Setter Property="Background"
+                                            Value="{StaticResource Control.BackGround}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Grid x:Name="MainGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+                        <common:CustomTextBlock x:Name="tbUserName"
+                                                Margin="0,0,0,4"
+                                                Width="{Binding Path=DesiredSize.Width,ElementName=HeaderGroupItemsControl,UpdateSourceTrigger=PropertyChanged}"
+                                                TextTrimming="CharacterEllipsis"
+                                                Text="{Binding UserName}"
+                                                HorizontalAlignment="Left"
+                                                TextSize="Medium"
+                                                Grid.Row="0"
+                                                FontWeight="{StaticResource FontWeight.Bold}" />
+                        <ItemsControl Grid.Row="1"
+                                      ItemsSource="{Binding RedemptionHeaderTags}"
+                                      x:Name="HeaderGroupItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="1,1,4,4"
+                                            BorderBrush="{StaticResource Control.BorderBrush.Focused}"
+                                            Margin="0,0,3,0"
+                                            CornerRadius="{StaticResource CornerRadius}"
+                                            x:Name="HeaderGroupMainBorder">
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsActive}"
+                                                                 Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="{Binding Path=Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
+                                                        <Setter Property="BorderThickness"
+                                                                Value="0,0,0,8" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsActive}"
+                                                                 Value="False">
+                                                        <Setter Property="Background"
+                                                                Value="Gray" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid Background="Transparent"
+                                              x:Name="HeaderGroupMainGrid">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseDown">
+                                                    <i:InvokeCommandAction CommandParameter="{Binding}"
+                                                                           Command="{Binding DataContext.HeaderTagClickedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:RedemptionHeaderTagsUserControl}}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="9*" />
+                                            </Grid.ColumnDefinitions>
+                                            <common:CustomTextBlock x:Name="tbScreenNumber"
+                                                                    Grid.Column="0"
+                                                                    Text="{Binding ScreenNumberText}"
+                                                                    Margin="6"
+                                                                    FontWeight="{StaticResource FontWeight.Bold}"
+                                                                    TextSize="Medium"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center" />
+                                            <UniformGrid Rows="2"
+                                                         Grid.Column="1">
+                                                <Border BorderThickness="1,0,0,0"
+                                                        BorderBrush="{StaticResource Control.BorderBrush.Focused}"
+                                                        Padding="4,0,0,0"
+                                                        MinWidth="{StaticResource Redemption.MultiUserControl.HeaderTag.MinWidth}">
+                                                    <common:CustomTextBlock x:Name="tbCardNumber"
+                                                                            Text="{Binding CardNumberText}"
+                                                                            HorizontalAlignment="Left"
+                                                                            VerticalAlignment="Center" />
+                                                </Border>
+                                                <Border BorderThickness="1,1,0,0"
+                                                        BorderBrush="{StaticResource Control.BorderBrush.Focused}"
+                                                        Padding="4,0,0,0">
+                                                    <common:CustomTextBlock x:Name="tbBalanceTicket"
+                                                                            Text="{Binding BalanceTicketText}"
+                                                                            HorizontalAlignment="Left"
+                                                                            VerticalAlignment="Center" />
+                                                </Border>
+                                            </UniformGrid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

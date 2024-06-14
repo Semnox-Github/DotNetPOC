@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="7.99999999999998in" Name="SubscriptionKeyStats" xmlns="http://schemas.telerik.com/reporting/2012/4.2">
+  <DataSources>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="SELECT ISNULL((SELECT top 1 c.Master_Site_Id FROM site s, Company c WHERE c.Master_Site_Id = s.site_id),-1) SiteId&#xD;&#xA;" Name="dsSite" />
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="select s.site_name, count(distinct customerId) ActiveCustomers, count(subscriptionheaderId) ActiveSubscriptions&#xD;&#xA; from SubscriptionHeader sh, site s&#xD;&#xA;where sh.Status = 'ACTIVE'  &#xD;&#xA;and (s.site_id = sh.site_id or sh.site_id is null)&#xD;&#xA;and  ( sh.site_id IN ( @Site ) OR -1 IN ( @Site ) )&#xD;&#xA;group by  s.site_name" Name="dsActiveCustomers">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="SET @startOfMonth = (SELECT DATEADD(DAY,1,EOMONTH(getdate(),-1)))&#xD;&#xA;set @tempDate = (SELECT DATEADD(DAY,-1,EOMONTH(@startOfMonth,-1)))&#xD;&#xA;set @startOfPrevMonth = (SELECT DATEADD(DAY,1,EOMONTH(@tempDate,-1)))&#xD;&#xA;set @countBeginOfLastMonth = (select count(1) from subscriptionHeader sh where sh.CreationDate &lt; @startOfPrevMonth &#xD;&#xA;                              and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site )))&#xD;&#xA;set @countEndOfLastMonth = (select count(1)  from subscriptionHeader sh where sh.CreationDate &lt; @startOfMonth  &#xD;&#xA;                            and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site )))&#xD;&#xA;SET @divserValue = (SELECT CASE WHEN @countBeginOfLastMonth &gt; 0 THEN @countBeginOfLastMonth ELSE 1 END)&#xD;&#xA;SET @subscriptionChurn = (Select (@countBeginOfLastMonth - @countEndOfLastMonth)/@divserValue)&#xD;&#xA;&#xD;&#xA;Select CASE WHEN @subscriptionChurn &gt; -1 THEN @subscriptionChurn ELSE 0 END as 'Subscription Churn',&#xD;&#xA;       @countBeginOfLastMonth as 'Subscription Count - Beginning Of Previous Month',&#xD;&#xA;&#x9;   @countEndOfLastMonth as 'Subscription Count - End Of Previous Month'" Name="dsSubscriptionMonthlyChurnRate">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfMonth" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@tempDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfPrevMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@countBeginOfLastMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+        <SqlDataSourceParameter DbType="Int32" Name="@countEndOfLastMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@divserValue" />
+        <SqlDataSourceParameter DbType="Double" Name="@subscriptionChurn" />
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="SET @startOfMonth = (SELECT DATEADD(DAY,1,EOMONTH(getdate(),-1)))&#xD;&#xA;set @tempDate = (SELECT DATEADD(DAY,-1,EOMONTH(@startOfMonth,-1)))&#xD;&#xA;set @startOfPrevMonth = (SELECT DATEADD(DAY,1,EOMONTH(@tempDate,-1)))&#xD;&#xA;set @custCountBeginOfLastMonth = (select count(distinct customerId) from subscriptionHeader sh where sh.CreationDate &lt; @startOfPrevMonth &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site )))&#xD;&#xA;set @custCountEndOfLastMonth = (select count(distinct customerId) from subscriptionHeader sh where sh.CreationDate &lt; @startOfMonth &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;and ( sh.site_id IN ( @Site ) OR -1 IN ( @Site )))&#xD;&#xA;SET @divserValue = (SELECT CASE WHEN @custCountBeginOfLastMonth &gt; 0 THEN @custCountBeginOfLastMonth ELSE 1 END)&#xD;&#xA;SET @custChurn = (Select (@custCountBeginOfLastMonth - @custCountEndOfLastMonth)/@divserValue)&#xD;&#xA;&#xD;&#xA;Select CASE WHEN @custChurn &gt; -1 THEN @custChurn ELSE 0 END as 'Customer Churn'&#xD;&#xA;       , @custCountBeginOfLastMonth as 'Customer Count - Begining Of Previous Month'&#xD;&#xA;&#x9;   , @custCountEndOfLastMonth as 'Customer Count - End Of Previous Month'" Name="dsCustomersMonthlyChurnRate">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfMonth" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@tempDate" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfPrevMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@custCountBeginOfLastMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@Site" />
+        <SqlDataSourceParameter DbType="Int32" Name="@custCountEndOfLastMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@divserValue" />
+        <SqlDataSourceParameter DbType="Double" Name="@custChurn" />
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource QueryDesignerState="null" ConnectionString="Parafaitsubscription" SelectCommand="SET @startOfThisMonth = (SELECT DATEADD(DAY,1,EOMONTH(getdate(),-1)))&#xD;&#xA;SET @startOfNextMonth = (SELECT DATEADD(DAY,1,EOMONTH(getdate(),0)))&#xD;&#xA;&#xD;&#xA;select s.site_name, SUM(ISNULL(sbs.OverridedBillAmount,sbs.BillAmount)) as MonthlyRevenue&#xD;&#xA; from SubscriptionBillingSchedule sbs, site s&#xD;&#xA;where&#xD;&#xA; (s.site_id = sbs.site_id or sbs.site_id is null)&#xD;&#xA; and sbs.Status = 'ACTIVE'&#xD;&#xA; and BillOnDate &gt;= @startOfThisMonth&#xD;&#xA; and BillOnDate &lt; @startOfNextMonth&#xD;&#xA; and  ( sbs.site_id IN ( @Site ) OR -1 IN ( @Site ) )&#xD;&#xA; group by s.site_name" Name="dsMonthlyRecurringRevenue">
+      <Parameters>
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfThisMonth" />
+        <SqlDataSourceParameter DbType="DateTime" Name="@startOfNextMonth" />
+        <SqlDataSourceParameter DbType="Int32" Name="@Site">
+          <Value>
+            <String>= Parameters.site.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <DetailSection Height="3.79984315236409in" Name="detailSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="7.99999968210858in" Height="0.200000002980232in" Left="0in" Top="0.199999809265137in" Value="=MessagesFunctions.getMessage('Active Customers')" Name="textBox50">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsActiveCustomers" Width="4.5770833073273in" Height="0.4in" Left="0.00003941853841146in" Top="0.400078614552816in" Name="crosstab1" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.65416659225336in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox4" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Bindings>
+                      <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                    </Bindings>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.51875010101849in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.ActiveSubscriptions" Format="{0:N0}" Name="textBox5" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.40416654105003in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.ActiveCustomers" Format="{0:N0}" Name="textBox7" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.65416640208565in" />
+              <Column Width="1.51875010101849in" />
+              <Column Width="1.40416680422316in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_name">
+              <ReportItem>
+                <TextBox Width="1.65416659225336in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox1" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <Bindings>
+                    <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                  </Bindings>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="activeSubscriptions">
+              <ReportItem>
+                <TextBox Width="1.51875010101849in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Active Subscriptions')" Name="textBox2" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="activeCustomers">
+              <ReportItem>
+                <TextBox Width="1.40416654105003in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Active Customers')" Name="textBox3" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="7.99999952316284in" Height="0.200000002980232in" Left="0in" Top="1.09999990463257in" Value="=MessagesFunctions.getMessage('Monthly Churn Rate')" Name="textBox8">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsSubscriptionMonthlyChurnRate" Width="6.21375143041731in" Height="0.4in" Left="0in" Top="1.30007870992025in" Name="crosstab2" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.67500094740035in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Subscription Churn]" Name="textBox12" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.26874999163342in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Subscription Count - Beginning Of Previous Month]" Name="textBox14" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.26999987663017in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Subscription Count - End Of Previous Month]" Name="textBox15" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.67500111511202in" />
+              <Column Width="2.2687502534909in" />
+              <Column Width="2.26999987663017in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="subscriptionChurn">
+              <ReportItem>
+                <TextBox Width="1.67500094740035in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Churn')" Name="textBox9" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionCountBeginingOfPreviousMonth">
+              <ReportItem>
+                <TextBox Width="2.26874999163342in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Count Begining Of Previous Month')" Name="textBox10" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="subscriptionCountEndOfPreviousMonth">
+              <ReportItem>
+                <TextBox Width="2.26999987663017in" Height="0.2in" Left="0in" Top="0in" Value="Subscription Count End Of Previous Month" Name="textBox11" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <Crosstab DataSourceName="dsCustomersMonthlyChurnRate" Width="6.20458260126327in" Height="0.4in" Left="0in" Top="1.89999993642171in" Name="crosstab3" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.66458328456457in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Customer Churn]" Name="textBox19" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.270000111214in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Customer Count - Begining Of Previous Month]" Name="textBox21" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.2699998087951in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.[Customer Count - End Of Previous Month]" Name="textBox22" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.66458242894015in" />
+              <Column Width="2.2699998087951in" />
+              <Column Width="2.2699998087951in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="customerChurn">
+              <ReportItem>
+                <TextBox Width="1.66458328456457in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Churn')" Name="textBox16" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="customerCountBeginingOfPreviousMonth">
+              <ReportItem>
+                <TextBox Width="2.270000111214in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Count Begining Of Previous Month')" Name="textBox17" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="customerCountEndOfPreviousMonth">
+              <ReportItem>
+                <TextBox Width="2.2699998087951in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Customer Count End Of Previous Month')" Name="textBox18" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+        <TextBox Width="7.99999952316284in" Height="0.200000002980232in" Left="0in" Top="2.60000006357829in" Value="=MessagesFunctions.getMessage('Monthly Recurring Revenue')" Name="textBox23">
+          <Style TextAlign="Left" VerticalAlign="Top">
+            <Font Name="Arial Unicode MS" Size="10.5pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <Crosstab DataSourceName="dsMonthlyRecurringRevenue" Width="3.74583259215519in" Height="0.4in" Left="0.00003941853841146in" Top="2.80007902781169in" Name="crosstab4" StyleName="Normal.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.7374999551624in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.site_name" Name="textBox26" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Left" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                    <Bindings>
+                      <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                    </Bindings>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.00833342272089in" Height="0.2in" Left="0in" Top="0in" Value="= Fields.MonthlyRevenue" Format="{0:N2}" Name="textBox27" StyleName="Normal.TableBody">
+                    <Style BackgroundColor="White" TextAlign="Right" VerticalAlign="Middle" LineColor="LightGray">
+                      <Font Name="Arial Unicode MS" />
+                      <BorderColor Default="LightGray" />
+                      <Padding Top="2pt" Bottom="2pt" />
+                    </Style>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.7374991694343in" />
+              <Column Width="2.00833319945187in" />
+            </Columns>
+            <Rows>
+              <Row Height="0.2in" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style>
+            <BorderStyle Default="None" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup Name="site_name1">
+              <ReportItem>
+                <TextBox Width="1.7374999551624in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Site Name')" Name="textBox24" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Left" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                  <Bindings>
+                    <Binding Path="Visible" Expression="=(Parameters.SiteId.Value = -1 ? false :true)" />
+                  </Bindings>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup Name="monthlyRevenue">
+              <ReportItem>
+                <TextBox Width="2.00833342272089in" Height="0.2in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Monthly Revenue')" Name="textBox25" StyleName="Normal.TableHeader">
+                  <Style BackgroundColor="PowderBlue" TextAlign="Right" LineColor="LightGray">
+                    <Font Name="Arial Unicode MS" Size="9pt" Bold="True" />
+                    <BorderColor Default="LightGray" />
+                    <Padding Top="2pt" Bottom="2pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Crosstab>
+      </Items>
+    </DetailSection>
+    <PageFooterSection Height="0.600000063578288in" Name="pageFooterSection1">
+      <Style>
+        <Font Name="Tahoma" />
+      </Style>
+      <Items>
+        <TextBox Width="3.40000025431315in" Height="0.200000127156575in" Left="0in" Top="0.100000063578288in" Value="=MessagesFunctions.getMessage('Printed at') + ' ' + ExecutionTime.AddMinutes( -1 * CDbl(Parameters.offset.Value)).ToString(&quot;dd-MMM-yyyy hh:mm tt&quot;)" Format="{0:dd-MMM-yyyy h:mm tt}" Name="textBox43">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.40000025431315in" Height="0.199999809265137in" Left="0in" Top="0.300000190734863in" Value="=MessagesFunctions.getMessage('Printed by') + ' ' + Parameters.user.Value" Name="textBox44">
+          <Style VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="3.21667035420736in" Height="0.300000190734863in" Left="4.60000006357829in" Top="0.100000381469727in" Value="= MessagesFunctions.getMessage('Page') + ' ' + PageNumber + ' ' + MessagesFunctions.getMessage('of') + '  ' + PageCount" Name="textBox45">
+          <Style TextAlign="Right" VerticalAlign="Middle">
+            <Font Name="Arial Unicode MS" Size="8pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="0.5in" Name="reportHeaderSection1">
+      <Items>
+        <TextBox Width="8in" Height="0.3in" Left="0in" Top="0in" Value="=MessagesFunctions.getMessage('Subscription Key Stats')" Name="textBox6">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="14pt" Bold="True" />
+            <BorderStyle Bottom="Solid" />
+            <BorderColor Bottom="50, 50, 50" />
+            <BorderWidth Default="2px" />
+          </Style>
+        </TextBox>
+        <TextBox Width="8.00000000000008in" Height="0.199921324849129in" Left="0in" Top="0.299999952316284in" Value="=MessagesFunctions.getMessage('Site') + &quot;: &quot; + Parameters.SiteName.Value" Format="{0:f}" Name="textBox13">
+          <Style>
+            <Font Name="Arial Unicode MS" Size="10pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+  </Items>
+  <PageSettings PaperKind="Letter" Landscape="False" ContinuousPaper="False">
+    <Margins>
+      <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+    </Margins>
+  </PageSettings>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Civic.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="140, 174, 173" Color="228, 238, 243" VerticalAlign="Middle">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="241, 245, 245">
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableGroup" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="226, 235, 234">
+        <Font Name="Georgia" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.SubTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="197, 214, 214">
+        <Font Name="Georgia" Size="10pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.GrandTotal" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Georgia" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Civic.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="8pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Normal.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <Font Name="Tahoma" Size="9pt" />
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Normal.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <ReportParameters>
+    <ReportParameter Name="offset" Type="Integer" Mergeable="False" Text="Offset" AllowBlank="False">
+      <Value>
+        <String>0</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="user" Mergeable="False" Text="User" />
+    <ReportParameter Name="fromdate" Type="DateTime" Text="From Date" AllowBlank="False" />
+    <ReportParameter Name="todate" Type="DateTime" Mergeable="False" Text="To Date" AllowBlank="False" />
+    <ReportParameter Name="site" Type="Integer" Mergeable="False" Text="Sites" MultiValue="True" AllowBlank="False">
+      <AvailableValues DisplayMember="= Fields.SiteName" ValueMember="= Fields.Id" />
+      <Value>
+        <String></String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCellFormat" Mergeable="False" Text="DateTimeCellFormat" AllowBlank="False" />
+    <ReportParameter Name="NumericCellFormat" Mergeable="False" Text="NumericCellFormat" AllowBlank="False" />
+    <ReportParameter Name="AmountCellFormat" Mergeable="False" Text="AmountCellFormat" AllowBlank="False" />
+    <ReportParameter Name="mode" Mergeable="False" Text="mode" AllowBlank="False" />
+    <ReportParameter Name="SiteName" Mergeable="False" AllowBlank="False" />
+    <ReportParameter Name="SiteId" Type="Integer" Mergeable="False" AllowBlank="False">
+      <AvailableValues DataSourceName="dsSite" ValueMember="= Fields.SiteId" />
+      <Value>
+        <String>= Fields.SiteId</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="CustomerPassPhrase" Text="CustomerPassPhrase" AllowNull="True" />
+  </ReportParameters>
+</Report>

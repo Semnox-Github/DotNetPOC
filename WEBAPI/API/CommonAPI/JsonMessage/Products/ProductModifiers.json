@@ -1,0 +1,38 @@
+[
+  {
+    "ProductModifierId": 2,
+    "ProductId": 117,
+    "CategoryId": -1,
+    "ModifierSetId": 0,
+    "AutoShowinPOS": "N",
+    "SortOrder": 1,
+    "IsActive": "Y",
+    "CreationDate": "0001-01-01T00:00:00",
+    "CreatedBy": "",
+    "LastUpdatedDate": "0001-01-01T00:00:00",
+    "LastUpdatedBy": "",
+    "Site_Id": -1,
+    "GUID": "cab4d362-29a2-481f-b2a8-50f5035e33b1",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  },
+  {
+    "ProductModifierId": 3,
+    "ProductId": 117,
+    "CategoryId": -1,
+    "ModifierSetId": 1,
+    "AutoShowinPOS": "N",
+    "SortOrder": 2,
+    "IsActive": "Y",
+    "CreationDate": "0001-01-01T00:00:00",
+    "CreatedBy": "",
+    "LastUpdatedDate": "0001-01-01T00:00:00",
+    "LastUpdatedBy": "",
+    "Site_Id": -1,
+    "GUID": "c591a6db-01a6-4fc1-9b01-4a9ebab5097c",
+    "SynchStatus": false,
+    "MasterEntityId": -1,
+    "IsChanged": false
+  }
+]

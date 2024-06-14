@@ -1,0 +1,84 @@
+﻿<Window x:Class="Semnox.Parafait.DeliveryUI.TransactionKOTView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semnox.Parafait.DeliveryUI"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Style="{StaticResource ChildWindowStyle}"
+        Title="TransactionKOTView">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TransactionKOTView}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="1.5*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <common:CustomDataGridUserControl DataContext="{Binding TransactionKOTCustomDataGridVM, Mode=TwoWay}"   
+                                          Grid.Row="0" Height="Auto" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.SelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TransactionKOTView}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="ButtonClicked">
+                        <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=common:CustomDataGridUserControl}}"
+                                                                   Command="{Binding DataContext.MoreClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TransactionKOTView}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </common:CustomDataGridUserControl>
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <common:CustomActionButton x:Name="btnAmmendTime"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Right" 
+                                    Margin="20,10"
+                                    Content="AMEND TIME"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding AmendTimeCommand}"
+                                    IsEnabled="{Binding AmendTimebtnEnableProperty}" />
+                    <common:CustomActionButton x:Name="btnReprintKOT"
+                                    Padding="32,0"
+                                    HorizontalAlignment="Right" 
+                                    Margin="20,10"
+                                    Content="RE-PRINT KOT"
+                                    MinWidth="{StaticResource ActionButton.Width}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                                    Command="{Binding ReprintKOTCommand}"
+                                    IsEnabled="True"/>
+                </StackPanel>
+                
+            </Grid>
+        </Grid>
+        <Border x:Name="GenericRigntSectionBorder"
+                Grid.Row="0"
+                BorderThickness="0,2,0,0"
+                Grid.Column="1"
+                Background="{StaticResource ActionBar.Background}"
+               Style="{StaticResource ActionBarShadowStyle}">
+            <common:GenericRightSectionContentUserControl  DataContext="{Binding GenericRightSectionContentVM}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviousNavigationClicked">
+                        <i:InvokeCommandAction Command="{Binding DataContext.PreviousNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="NextNavigationClicked">
+                        <i:InvokeCommandAction Command="{Binding DataContext.NextNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </common:GenericRightSectionContentUserControl>
+
+        </Border>
+
+    </Grid>
+</Window>

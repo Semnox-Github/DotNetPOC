@@ -1,0 +1,543 @@
+﻿<Window x:Class="Semnox.Parafait.POSUI.StaticMenu.ProductMenuSetupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:local="clr-namespace:Semnox.Parafait.POSUI.StaticMenu"
+        mc:Ignorable="d"
+        Style="{StaticResource BaseWindowStyle}"
+        Title="Setup Product Menu">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <Style TargetType="{x:Type ToggleButton}"
+               x:Key="ShowAllToggleButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Viewbox>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <common:CustomTextBlock x:Name="tbShowAll"
+                                                        Text="Show All"
+                                                        FontWeight="{StaticResource FontWeight.Bold}"
+                                                        HorizontalAlignment="Center" />
+                                <common:CustomCheckBox x:Name="chkShowAll"
+                                                       Grid.Row="1"
+                                                       HorizontalAlignment="Center"
+                                                       Size="XSmall"
+                                                       IsChecked="{Binding IsChecked, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ToggleButton}}" />
+                            </Grid>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="Button"
+               x:Key="PreviousNavigationButtonStyle">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="FontFamily"
+                    Value="{StaticResource FontFamily}" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="PreviousNavigationButtonOutsideBorder"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="true">
+                            <Grid x:Name="PreviousNavigationButtonLeftArrowGrid"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                                <Path x:Name="PreviousNavigationButtonLeftArrowAlignmentPath"
+                                      Data="M0 0h24v24H0z" />
+                                <Path x:Name="PreviousNavigationButtonLeftArrowPath"
+                                      Fill="{StaticResource Control.BorderBrush.Focused}"
+                                      Data="M16.667 0L19 2.4 9.74 12 19 21.6 16.667 24 5 12z" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter Property="Path.Fill"
+                                        TargetName="PreviousNavigationButtonLeftArrowPath"
+                                        Value="{StaticResource Control.BorderBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="true">
+                                <Setter Property="Path.Fill"
+                                        TargetName="PreviousNavigationButtonLeftArrowPath"
+                                        Value="{StaticResource Control.BorderBrush.Focused}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button"
+               x:Key="NextNavigationButtonStyle">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight.Bold}" />
+            <Setter Property="FontFamily"
+                    Value="{StaticResource FontFamily}" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="NextNavigationButtonOutsideBorder"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="true">
+                            <Grid x:Name="NextNavigationButtonRightArrowGrid"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                                <Path x:Name="NextNavigationButtonRightArrowAlignmentPath"
+                                      Data="M0 0H24V24H0z" />
+                                <Path Fill="{StaticResource Control.ComboBackground}"
+                                      x:Name="NextNavigationButtonRightArrowPath"
+                                      Data="M16.667 24L19 21.6 9.74 12 19 2.4 16.667 0 5 12z"
+                                      RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="180" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter Property="Path.Fill"
+                                        TargetName="NextNavigationButtonRightArrowPath"
+                                        Value="{StaticResource Control.BorderBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="true">
+                                <Setter Property="Path.Fill"
+                                        TargetName="NextNavigationButtonRightArrowPath"
+                                        Value="{StaticResource Control.BorderBrush.Focused}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"/>
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"/>
+            <ColumnDefinition Width="{StaticResource RightPaneWidth}"
+                              MaxWidth="{StaticResource MaxWidth}"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="0,0,16,0"
+              Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+                  Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" HorizontalAlignment="Left" Height="72">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedLeftPaneSelectedType}"
+                                         Value="Panels">
+                                    <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <common:GenericToggleButtonsUserControl x:Name="GenericToggleButtonsUserControl"
+                                                        DataContext="{Binding GenericToggleButtonsVM}"
+                                                        Height="72">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="ToggleChecked">
+                                <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                                   Command="{Binding DataContext.ToggleCheckedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </common:GenericToggleButtonsUserControl>
+                </Grid>
+                
+                <ToggleButton x:Name="tglbtnShowAll"
+                              IsChecked="{Binding ShowAll}"
+                              Grid.Column="1"
+                              Style="{StaticResource ShowAllToggleButtonStyle}"/>
+            </Grid>
+            <common:CustomDataGridUserControl x:Name="ContentCustomDataGridUserControl"                                              
+                                              DataContext="{Binding CustomDataGridVM}"
+                                              Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.OnSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </common:CustomDataGridUserControl>
+        </Grid>
+    <Border x:Name="ActionAreaBorder"
+                CornerRadius = "{StaticResource RightSection.CornerRadius}"
+                Background = "{StaticResource ActionBar.Background}"
+                Grid.Column = "1"
+                Grid.ColumnSpan = "3">
+            <Grid>
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedLeftPaneSelectedType}"
+                                             Value="Panels">
+                                    <Setter Property="Visibility"
+                                            Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <common:GenericRightSectionContentUserControl x:Name="GenericRightSectionContentUserControl"
+                                                                  Grid.Row="0"
+                                                                  VerticalAlignment="Top"
+                                                                  DataContext="{Binding GenericRightSectionContentVM}">
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviousNavigationClicked">
+                                <i:InvokeCommandAction Command="{Binding DataContext.PreviousNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="NextNavigationClicked">
+                                <i:InvokeCommandAction Command="{Binding DataContext.NextNavigationCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </common:GenericRightSectionContentUserControl>
+                    <Border Grid.Row="1"
+                            BorderBrush="{StaticResource Control.BorderBrush}"
+                            BorderThickness="0,1,0,0"
+                            Padding="16,8">
+                        <UniformGrid Columns="3">
+                            <common:CustomActionButton x:Name="btnPanelsNew"
+                                                       Content="NEW"
+                                                       Margin="0,0,8,0" Command="{Binding NewPanelClickedCommand}"/>
+                            <common:CustomActionButton x:Name="btnPanelsEdit"
+                                                       Content="EDIT"
+                                                       Margin="0,0,8,0" Command="{Binding EditPanelClickedCommand}"/>
+                            <common:CustomActionButton x:Name="btnPanelsDelete"
+                                                       Content="DELETE" Command="{Binding DeletePanelClickedCommand}"/>
+                            
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedLeftPaneSelectedType}"
+                                             Value="Panels">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="72"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                BorderThickness="0,0,0,2"
+                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                Padding="16,8">
+                            <Grid x:Name="HeaderGrid"
+                                  VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="btnPreviousNavigation"
+                                        Style="{StaticResource PreviousNavigationButtonStyle}"
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        IsEnabled="{Binding IsPreviousNavigationEnabled}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                        Command="{Binding PreviousNavigationCommand}" />
+
+                                <Grid x:Name="HeaderContentAreaGrid"
+                                      Grid.Column="1"
+                                      HorizontalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <!--Text="{Binding Heading}"-->
+                                    <common:CustomTextBlock x:Name="tbHeader"
+                                                            Grid.Row="0"
+                                                            Text="{Binding CustomDataGridVM.SelectedItem.Name}"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                                    <common:CustomTextBlock x:Name="tbSubHeader"
+                                                            Grid.Row="1"
+                                                            Text="{Binding CustomDataGridVM.SelectedItem.Description}"
+                                                            FontWeight="{StaticResource FontWeight.Bold}"/>
+                                    <!--Text="{Binding SubHeading}"-->
+                                </Grid>
+
+                                <Button x:Name="btnNextNavigation"
+                                        Style="{StaticResource NextNavigationButtonStyle}"
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        IsEnabled="{Binding IsNextNavigationEnabled}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                        Command="{Binding NextNavigationCommand}" />
+                            </Grid>
+                        </Border>
+
+                        <common:CustomScrollViewer Grid.Row="1"
+                                                  VerticalScrollBarVisibility="Visible"
+                                                  HorizontalScrollBarVisibility="Auto"
+                                                  Margin="8"
+                                                  Padding="0,0,8,8">
+                            <common:CustomScrollViewer.Style>
+                                <Style BasedOn="{StaticResource {x:Type common:CustomScrollViewer}}" TargetType="{x:Type common:CustomScrollViewer}">
+                                    <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedLeftPaneSelectedType}"
+                                                               Value="ProductMenu"/>
+                                                <Condition Binding="{Binding IsPosMachineTab}"
+                                                               Value="true"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </common:CustomScrollViewer.Style>
+                            <ItemsControl ItemsSource="{Binding CustomDataGridVM.SelectedItem.ProductMenuPanelMappingViewModelList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="{StaticResource CornerRadius}"
+                                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                                Margin="0,12,0,0"
+                                                BorderThickness="0,0,0,3"
+                                                Padding="16,8"
+                                                Grid.Row="1"
+                                                VerticalAlignment="Top"
+                                                Background="{StaticResource Control.BackGround}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <!--<common:CustomTextBlock Text="{Binding PanelId}"
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"/>-->
+                                                <common:CustomTextBlock Text="{Binding PanelName}"
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"/>
+                                                <Button Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Grid.RowSpan="2"
+                                                        Style="{StaticResource DeleteButtonStyle}"
+                                                        Command="{Binding Path=DataContext.DeletePanelMappingClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ProductMenuSetupView}}}"
+                                                        CommandParameter="{Binding}"/>
+
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </common:CustomScrollViewer>
+                        <common:CustomScrollViewer Grid.Row="1"
+                                                  VerticalScrollBarVisibility="Visible"
+                                                  HorizontalScrollBarVisibility="Auto"
+                                                  Margin="8"
+                                                  Padding="0,0,8,8">
+                            <common:CustomScrollViewer.Style>
+                                <Style BasedOn="{StaticResource {x:Type common:CustomScrollViewer}}" TargetType="{x:Type common:CustomScrollViewer}">
+                                    <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedLeftPaneSelectedType}"
+                                                               Value="ProductMenu"/>
+                                                <Condition Binding="{Binding IsPosMachineTab}"
+                                                               Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </common:CustomScrollViewer.Style>
+                            <ItemsControl ItemsSource="{Binding CustomDataGridVM.SelectedItem.ProductMenuPOSMachineMapViewModelList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="{StaticResource CornerRadius}"
+                                                BorderBrush="{StaticResource Control.BorderBrush}"
+                                                Margin="0,12,0,0"
+                                                BorderThickness="0,0,0,3"
+                                                Padding="16,8"
+                                                Grid.Row="1"
+                                                VerticalAlignment="Top"
+                                                Background="{StaticResource Control.BackGround}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <!--<common:CustomTextBlock Text="{Binding PanelId}"
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"/>-->
+                                                <common:CustomTextBlock Text="{Binding POSName}"
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"/>
+                                                <Button Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Grid.RowSpan="2"
+                                                        Style="{StaticResource DeleteButtonStyle}"
+                                                        Command="{Binding Path=DataContext.DeletePOSMachineMapClickedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ProductMenuSetupView}}}"
+                                                        CommandParameter="{Binding}"/>
+
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </common:CustomScrollViewer>
+                    </Grid>
+                    <!--<common:CustomTextBlock x:Name="tb"
+                                            Grid.Row="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="Product Menu, ProductMenuPOSMachineMap"/>-->
+                    <Border Grid.Row="1"
+                            BorderBrush="{StaticResource Control.BorderBrush}"
+                            BorderThickness="0,1,0,0"
+                            Padding="16,8">
+                        <Grid>
+                            <UniformGrid Rows="2"
+                                         Columns="2">
+                                <UniformGrid.Style>
+                                    <Style TargetType="{x:Type UniformGrid}">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding SelectedLeftPaneSelectedType}"
+                                                               Value="ProductMenu"/>
+                                                    <Condition Binding="{Binding IsPosMachineTab}"
+                                                               Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </UniformGrid.Style>
+                                <common:CustomActionButton x:Name="btnNew"
+                                                           Content="NEW"
+                                                           Margin="0,0,8,8"
+                                                           Command="{Binding NewProductMenuClickCommand}"/>
+                                <common:CustomActionButton x:Name="btnEdit"
+                                                           Content="EDIT"
+                                                           Margin="0,0,0,8"
+                                                           Command="{Binding EditProductMenuClickCommand}"/>
+                                <common:CustomActionButton x:Name="btnDelete"
+                                                           Content="DELETE"
+                                                           Margin="0,0,8,0"
+                                                           Command="{Binding DeleteProductMenuClickCommand}"/>                            
+                                <common:CustomActionButton x:Name="btnAddPanels"
+                                                           Content="ADD PANEL"
+                                                           Command="{Binding AddProductMenuPanelMappingClickCommand}"/>
+                            </UniformGrid>
+                            <common:CustomActionButton x:Name="btnAddPOSMachine"
+                                                       Content="ADD POS MACHINE"
+                                                       Command="{Binding AddPOSMachineMapClickCommand}">
+                                <common:CustomActionButton.Style>
+                                    <Style TargetType="{x:Type common:CustomActionButton}"
+                                           BasedOn="{StaticResource {x:Type common:CustomActionButton}}">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding SelectedLeftPaneSelectedType}"
+                                                               Value="ProductMenu"/>
+                                                    <Condition Binding="{Binding IsPosMachineTab}"
+                                                               Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </common:CustomActionButton.Style>
+                            </common:CustomActionButton>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

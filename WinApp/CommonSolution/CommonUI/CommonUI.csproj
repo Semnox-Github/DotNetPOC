@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48630ECE-833D-4683-8CC6-24C4A7CB2941}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Semnox.Parafait.CommonUI</RootNamespace>
+    <AssemblyName>CommonUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib, Version=1.0.0.23, Culture=neutral, PublicKeyToken=5eb605bede49d0d5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.4.4.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\OTS\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\..\..\..\OTS\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\PublicAssemblies\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="QRCoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OTS\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\..\OTS\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseUI\Model\CustomDataGridColumnElement.cs" />
+    <Compile Include="BaseUI\Model\CustomFamilyTypeFace.cs" />
+    <Compile Include="BaseUI\Model\DataEntryElement.cs" />
+    <Compile Include="BaseUI\Model\DayDetails.cs" />
+    <Compile Include="BaseUI\Model\DisplayItemDetails.cs" />
+    <Compile Include="BaseUI\Model\DisplayParameters.cs" />
+    <Compile Include="BaseUI\Model\EnableNegativeButtonConverter.cs" />
+    <Compile Include="BaseUI\Model\FontValueObject.cs" />
+    <Compile Include="BaseUI\Model\ItemInfoPopupTextBlockModel.cs" />
+    <Compile Include="BaseUI\Model\LowerCaseConverter.cs" />
+    <Compile Include="BaseUI\Model\PoleDisplay.cs" />
+    <Compile Include="BaseUI\Model\POSDeviceCollection.cs" />
+    <Compile Include="BaseUI\Model\POSPrintHelper.cs" />
+    <Compile Include="BaseUI\Model\TriggerTracing.cs" />
+    <Compile Include="BaseUI\Model\UpperCaseConverter.cs" />
+    <Compile Include="BaseUI\ViewModel\AuthenticateManagerVM.cs" />
+    <Compile Include="BaseUI\ViewModel\AuthenticateUserVM.cs" />
+    <Compile Include="BaseUI\ViewModel\BaseWindowViewModel.cs" />
+    <Compile Include="BaseUI\ViewModel\ByteToImageConverter.cs" />
+    <Compile Include="BaseUI\ViewModel\ChangePasswordVM.cs" />
+    <Compile Include="BaseUI\ViewModel\ColorPickerVM.cs" />
+    <Compile Include="BaseUI\ViewModel\ContextSearchVM.cs" />
+    <Compile Include="BaseUI\ViewModel\DatePickerVM.cs" />
+    <Compile Include="BaseUI\ViewModel\DateTimeValueCoverter.cs" />
+    <Compile Include="BaseUI\ViewModel\DelegateCommand.cs" />
+    <Compile Include="BaseUI\ViewModel\FontPickerVM.cs" />
+    <Compile Include="BaseUI\ViewModel\GenericDataEntryVM.cs" />
+    <Compile Include="BaseUI\ViewModel\GenericItemInfoPopUpVM.cs" />
+    <Compile Include="BaseUI\ViewModel\GenericMessagePopupVM.cs" />
+    <Compile Include="BaseUI\ViewModel\GenericScanPopupVM.cs" />
+    <Compile Include="BaseUI\ViewModel\KeyboardHelper.cs" />
+    <Compile Include="BaseUI\ViewModel\KeyboardVM.cs" />
+    <Compile Include="BaseUI\ViewModel\NumberKeyboardVM.cs" />
+    <Compile Include="BaseUI\ViewModel\PopupWindowViewModel.cs" />
+    <Compile Include="BaseUI\ViewModel\TranslateHelper.cs" />
+    <Compile Include="BaseUI\ViewModel\ViewModelBase.cs" />
+    <Compile Include="BaseUI\View\AuthenticateManagerView.xaml.cs">
+      <DependentUpon>AuthenticateManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\AuthenticateUserView.xaml.cs">
+      <DependentUpon>AuthenticateUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\ChangePasswordView.xaml.cs">
+      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\ColorPickerView.xaml.cs">
+      <DependentUpon>ColorPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\ContextSearchView.xaml.cs">
+      <DependentUpon>ContextSearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\DatePickerView.xaml.cs">
+      <DependentUpon>DatePickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\FontPickerView.xaml.cs">
+      <DependentUpon>FontPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\GenericItemInfoPopUp.xaml.cs">
+      <DependentUpon>GenericItemInfoPopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\GenericScanPopupView.xaml.cs">
+      <DependentUpon>GenericScanPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\GenericDataEntryView.xaml.cs">
+      <DependentUpon>GenericDataEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\GenericMessagePopupView.xaml.cs">
+      <DependentUpon>GenericMessagePopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\KeyboardView.xaml.cs">
+      <DependentUpon>KeyboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\View\NumberKeyboardView.xaml.cs">
+      <DependentUpon>NumberKeyboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomActionButton.cs" />
+    <Compile Include="CustomControls\CustomButtonTextBox.cs" />
+    <Compile Include="CustomControls\CustomCheckBox.cs" />
+    <Compile Include="CustomControls\CustomColorPicker.cs" />
+    <Compile Include="CustomControls\CustomComboBox.cs" />
+    <Compile Include="CustomControls\CustomDiscountTextBlock.cs" />
+    <Compile Include="CustomControls\CustomFontPicker.cs" />
+    <Compile Include="CustomControls\CustomNumericUpDown.cs" />
+    <Compile Include="CustomControls\CustomRadioButton.cs" />
+    <Compile Include="CustomControls\CustomScrollBar.cs" />
+    <Compile Include="CustomControls\CustomScrollViewer.cs" />
+    <Compile Include="CustomControls\CustomSearchTextBox.cs" />
+    <Compile Include="CustomControls\CustomTextBlock.cs" />
+    <Compile Include="CustomControls\CustomTextBox.cs" />
+    <Compile Include="CustomControls\CustomTextBoxDatePicker.cs" />
+    <Compile Include="CustomControls\CustomTextBoxValidationHelper.cs" />
+    <Compile Include="CustomControls\CustomToggleButton.cs" />
+    <Compile Include="CustomControls\GenericDisplayItemControl.cs" />
+    <Compile Include="CustomControls\GenericDisplayItemModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UserControls\Model\CheckDateMinConverter.cs" />
+    <Compile Include="UserControls\Model\ComboBoxField.cs" />
+    <Compile Include="UserControls\Model\ComboBoxGroupSelectedItem.cs" />
+    <Compile Include="UserControls\Model\CustomDataGridButtonModel.cs" />
+    <Compile Include="UserControls\Model\CustomDataGridComboBoxSelectionModel.cs" />
+    <Compile Include="UserControls\Model\CustomToggleButtonItem.cs" />
+    <Compile Include="UserControls\Model\DiscountItem.cs" />
+    <Compile Include="UserControls\Model\DisplayTag.cs" />
+    <Compile Include="UserControls\Model\DisplayValues.cs" />
+    <Compile Include="UserControls\Model\ExpanderMenuItem.cs" />
+    <Compile Include="UserControls\Model\GenericTransactionListItem.cs" />
+    <Compile Include="UserControls\Model\LeftPaneSelectedItem.cs" />
+    <Compile Include="UserControls\Model\MathConverter.cs" />
+    <Compile Include="UserControls\Model\NavigationTag.cs" />
+    <Compile Include="UserControls\Model\RightSectionPropertyValues.cs" />
+    <Compile Include="UserControls\Model\SecondarySourceConverter.cs" />
+    <Compile Include="UserControls\Model\SumConverter.cs" />
+    <Compile Include="UserControls\ViewModel\ButtonGroupVM.cs" />
+    <Compile Include="UserControls\ViewModel\CheckButtonTypeConverter.cs" />
+    <Compile Include="UserControls\ViewModel\ComboGroupVM.cs" />
+    <Compile Include="UserControls\ViewModel\CustomDataGridVM.cs" />
+    <Compile Include="UserControls\ViewModel\DisplayTagsVM.cs" />
+    <Compile Include="UserControls\ViewModel\FileExplorerVM.cs" />
+    <Compile Include="UserControls\ViewModel\FooterVM.cs" />
+    <Compile Include="UserControls\ViewModel\GenericContentVM.cs" />
+    <Compile Include="UserControls\ViewModel\GenericDisplayItemsVM.cs" />
+    <Compile Include="UserControls\ViewModel\GenericRightSectionContentVM.cs" />
+    <Compile Include="UserControls\ViewModel\GenericToggleButtonsVM.cs" />
+    <Compile Include="UserControls\ViewModel\GenericTransactionListVM.cs" />
+    <Compile Include="UserControls\ViewModel\IndexConverter.cs" />
+    <Compile Include="UserControls\ViewModel\LeftPaneHeadingConverter.cs" />
+    <Compile Include="UserControls\ViewModel\LeftPaneMenuSelectedConverter.cs" />
+    <Compile Include="UserControls\ViewModel\LeftPaneVM.cs" />
+    <Compile Include="UserControls\ViewModel\NavigationTagsVM.cs" />
+    <Compile Include="UserControls\ViewModel\PaginationVM.cs" />
+    <Compile Include="UserControls\ViewModel\SelectedItemConverter.cs" />
+    <Compile Include="UserControls\ViewModel\StringtoBoolConverter.cs" />
+    <Compile Include="UserControls\View\ButtonGroupUserControl.xaml.cs">
+      <DependentUpon>ButtonGroupUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\ComboGroupUserControl.xaml.cs">
+      <DependentUpon>ComboGroupUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\CustomDataGridUserControl.xaml.cs">
+      <DependentUpon>CustomDataGridUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\DisplayTagsUserControl.xaml.cs">
+      <DependentUpon>DisplayTagsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\FileExplorerUserControl.xaml.cs">
+      <DependentUpon>FileExplorerUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\FooterUserControl.xaml.cs">
+      <DependentUpon>FooterUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\GenericDataGridUserControl.xaml.cs">
+      <DependentUpon>GenericDataGridUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\GenericDisplayItemsUserControl.xaml.cs">
+      <DependentUpon>GenericDisplayItemsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\GenericRightSectionContentUserControl.xaml.cs">
+      <DependentUpon>GenericRightSectionContentUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\GenericToggleButtonsUserControl.xaml.cs">
+      <DependentUpon>GenericToggleButtonsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\GenericTransactionListUserControl.xaml.cs">
+      <DependentUpon>GenericTransactionListUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\LeftPaneUserControl.xaml.cs">
+      <DependentUpon>LeftPaneUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\NavigationUserControl.xaml.cs">
+      <DependentUpon>NavigationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\View\PaginationUserControl.xaml.cs">
+      <DependentUpon>PaginationUserControl.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="Styles\Resources\ColorSwatchSquare2.png" />
+    <Content Include="Styles\Resources\password.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{800EDADC-F5A6-4A74-94EC-1267A91065D1}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{61BD1EB5-DF16-4A31-83FC-8D6944F02A20}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{24D8C63F-8F14-42CE-BC91-CFE34A088B38}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericUtilities\GenericUtilities.csproj">
+      <Project>{5EEC3FD1-9EA6-404E-9C7A-554268A3EF80}</Project>
+      <Name>GenericUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages\Languages.csproj">
+      <Project>{E7CEB68F-78BB-44F8-9B4E-EA3FB43DAC9A}</Project>
+      <Name>Languages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{1a1bac8c-a16a-433c-8856-2ec4047d31fb}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS\POS.csproj">
+      <Project>{EDD835A5-1862-4AED-B3F0-1C134B40FDB4}</Project>
+      <Name>POS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Printer\Printer.csproj">
+      <Project>{B8974CD4-806B-4027-AFE3-D35DA8E949EE}</Project>
+      <Name>Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Project>{b0419249-f9f6-425f-9b56-13d2e12f319f}</Project>
+      <Name>Site</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User\User.csproj">
+      <Project>{E30D3295-E230-44D2-880D-22BF5A349119}</Project>
+      <Name>User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{667eab12-6c89-48ed-9fcb-934697cc2779}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewContainer\ViewContainer.csproj">
+      <Project>{b73af819-c0b5-4aa6-8c09-e8643f1437d1}</Project>
+      <Name>ViewContainer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="BaseUI\View\AuthenticateManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\AuthenticateUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\ChangePasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\ColorPickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseUI\View\ContextSearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\DatePickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\FontPickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseUI\View\GenericItemInfoPopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\GenericScanPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\GenericDataEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\GenericMessagePopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseUI\View\KeyboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Content Include="Styles\ControlsDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Styles_Blue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Styles_Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Styles_DarkYellow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Styles_Orange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Include="UserControls\View\FileExplorerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="UserControls\View\NavigationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\PaginationUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="Styles\Resources\POS_ScreenSaverLogo.png" />
+    <Content Include="Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Include="BaseUI\View\NumberKeyboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\ButtonGroupUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\ComboGroupUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\CustomDataGridUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\DisplayTagsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\FooterUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\GenericDataGridUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\GenericDisplayItemsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\GenericRightSectionContentUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\GenericToggleButtonsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\GenericTransactionListUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\View\LeftPaneUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

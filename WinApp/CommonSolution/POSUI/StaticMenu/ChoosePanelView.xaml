@@ -1,0 +1,116 @@
+﻿<Window x:Class="Semnox.Parafait.POSUI.StaticMenu.ChoosePanelView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:common="clr-namespace:Semnox.Parafait.CommonUI;assembly=CommonUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Semnox.Parafait.POSUI.StaticMenu"
+        Style="{StaticResource PopupWindowStyle}"
+        mc:Ignorable="d"
+        Title="Choose Product Menu Panel">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                   Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <common:CustomTextBlock x:Name="tbChoosePanel"
+                                Grid.Row="0"
+                                Text="Choose Panel"
+                                TextSize="Medium"
+                                Padding="32,16"
+                                FontWeight="{StaticResource FontWeight.Bold}"/>
+
+        <Border BorderBrush="{StaticResource Control.BorderBrush}"
+                Grid.Row="1"
+                BorderThickness="0,1"
+                Padding="0,16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="{StaticResource Control.BorderBrush}"
+                        Grid.Row="0"
+                        BorderThickness="0,0,0,1"
+                        Padding="32,0,32,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <common:CustomSearchTextBox x:Name="tbxName"
+                                                    Text="{Binding Name}"
+                                                    Size="Small"
+                                                    Heading="Name"
+                                                    Margin="0,0,32,0"
+                                                    DefaultValue="Enter Name"
+                                                    Grid.Column="0"/>                        
+                        <common:CustomActionButton x:Name="btnSearch"
+                                                   Grid.Column="4"
+                                                   Width="{StaticResource ActionButton.Width}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                   Command="{Binding ActionsCommand}"
+                                                   Content="SEARCH" 
+                                                   VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Border>
+                <common:GenericToggleButtonsUserControl x:Name="GenericToggleButtonUserControl"
+                                                        DataContext="{Binding GenericToggleButtonsVM}"
+                                                        Grid.Row="1"
+                                                        Margin="32,16"/>
+            </Grid>
+        </Border>
+        <Grid Margin="32,16"
+              Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+                <common:CustomActionButton x:Name="btnCancel"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           ActionStyle="Passive"
+                                           Content="CANCEL" />
+                <common:CustomActionButton x:Name="btnConfirm"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           Margin="{StaticResource OkAndYearMargin}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           Content="CONFIRM" />
+                <common:CustomActionButton x:Name="btnViewPanel"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           Margin="{StaticResource OkAndYearMargin}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           Content="VIEW"
+                                           ActionStyle="Passive"/>
+                <common:CustomActionButton x:Name="btnNewPanel"
+                                           Width="{StaticResource ActionButton.Width}"
+                                           Margin="{StaticResource OkAndYearMargin}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                           Command="{Binding ActionsCommand}"
+                                           Content="NEW"
+                                           ActionStyle="Passive"/>
+            </StackPanel>
+            <Button x:Name="btnKeyBoard"
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"                    
+                    Style="{StaticResource KeyboardButtonStyle}"/>
+
+        </Grid>
+    </Grid>
+</Window>
